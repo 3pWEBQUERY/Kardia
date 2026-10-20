@@ -1,0 +1,18 @@
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": {
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "apps/web/Dockerfile",
+    "watchPatterns": ["apps/web/**", "packages/**", "pnpm-lock.yaml"]
+  },
+  "deploy": {
+    "startCommand": "node apps/web/server.js",
+    "preDeployCommand": ["cd packages/db && npx --yes prisma@7.10.1 migrate deploy --config prisma.deploy.config.ts"],
+    "healthcheckPath": "/api/health",
+    "healthcheckTimeout": 60,
+    "numReplicas": 2,
+    "region": "europe-west4",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  }
+}

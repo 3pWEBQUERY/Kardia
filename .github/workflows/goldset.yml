@@ -1,0 +1,25 @@
+name: KI-1 Goldset (nächtlich)
+
+on:
+  schedule:
+    - cron: '17 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  goldset:
+    name: Feldgenauigkeit ≥ 95 %, 0 erfundene Werte (PRD 9.3)
+    runs-on: ubuntu-latest
+    if: ${{ vars.GOLDSET_ENABLED == 'true' }}
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .node-version, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm db:generate
+      - run: pnpm ai:goldset
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: goldset-report, path: packages/ai/goldset-report.json }

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "schedule": ["before 6am on monday"],
+  "timezone": "Europe/Zurich",
+  "lockFileMaintenance": { "enabled": true, "schedule": ["before 6am on monday"] },
+  "packageRules": [
+    { "matchPackageNames": ["next", "eslint-config-next", "@next/eslint-plugin-next"], "allowedVersions": "16.x", "groupName": "Next.js 16 LTS" },
+    { "matchPackageNames": ["prisma", "@prisma/client", "@prisma/adapter-pg"], "allowedVersions": "7.x", "groupName": "Prisma 7" },
+    { "matchUpdateTypes": ["minor", "patch"], "matchCurrentVersion": "!/^0/", "groupName": "Minor/Patch" }
+  ]
+}

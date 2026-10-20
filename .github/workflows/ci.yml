@@ -1,0 +1,122 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI: '1'
+  NEXT_TELEMETRY_DISABLED: '1'
+  DATABASE_URL: postgresql://kardia:kardia@localhost:5432/kardia_test
+  FIELD_ENCRYPTION_KEYS: k1:MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=
+  VOTER_HASH_SECRET: ci-voter-secret
+  BETTER_AUTH_SECRET: ci-better-auth-secret-0123456789abcdef
+  APP_ORIGIN: http://localhost:3000
+  KARDIA_QUEUE_DISABLED: '1'
+  RATE_LIMIT_DISABLED: 'true'
+
+jobs:
+  checks:
+    name: Lint, Typen, Unit-Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .node-version, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm db:generate
+      - name: Design-Tokens aktuell
+        run: pnpm --filter @kardia/ui tokens:check
+      - name: Designregeln (PRD 8.1)
+        run: pnpm lint:design && pnpm lint:styles
+      - run: pnpm typecheck
+      - run: pnpm turbo run lint
+      - run: pnpm test
+      - name: Abhängigkeiten prüfen
+        run: pnpm audit --prod --audit-level high
+
+  integration:
+    name: Integrationstests (Postgres)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env: { POSTGRES_USER: kardia, POSTGRES_PASSWORD: kardia, POSTGRES_DB: kardia_test }
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U kardia" --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .node-version, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm db:generate
+      - name: Migrationen anwenden und Drift prüfen
+        run: |
+          pnpm --filter @kardia/db migrate:deploy
+          pnpm --filter @kardia/db exec prisma migrate status
+      - name: AK-E1, AK-C2, AK-A1, AK-C1, AK-E2, AK-G1
+        run: pnpm test:integration
+
+  e2e:
+    name: E2E, Zugänglichkeit, Offline (Playwright + axe)
+    runs-on: ubuntu-latest
+    needs: [checks]
+    services:
+      postgres:
+        image: postgres:16
+        env: { POSTGRES_USER: kardia, POSTGRES_PASSWORD: kardia, POSTGRES_DB: kardia_test }
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U kardia" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      KARDIA_QUEUE_DISABLED: '0'
+      NODE_ENV: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .node-version, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm db:generate
+      - run: pnpm --filter @kardia/db migrate:deploy && pnpm db:seed
+      - run: pnpm --filter @kardia/web build
+      - run: pnpm --filter @kardia/web exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with: { name: playwright-report, path: apps/web/playwright-report }
+
+  visual:
+    name: Visuelle Regression (Storybook)
+    runs-on: ubuntu-latest
+    needs: [checks]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .node-version, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @kardia/ui build-storybook
+      - run: pnpm --filter @kardia/ui exec playwright install --with-deps chromium
+      - run: pnpm --filter @kardia/ui test:visual
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with: { name: visual-diff, path: packages/ui/test-results }
+
+  secrets:
+    name: Secret-Scan (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

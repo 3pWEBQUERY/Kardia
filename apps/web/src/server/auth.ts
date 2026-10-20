@@ -66,10 +66,17 @@ function createAuth() {
           const user = await db.user.findUnique({ where: { email }, include: { passkeys: { select: { id: true } } } });
           // Admins melden sich nur mit Passkey an; der E-Mail-Link dient nur der Ersteinrichtung.
           if (user?.isAdmin && user.passkeys.length > 0) return;
-          if (e.NODE_ENV !== 'production') {
+          // Entwicklung und E2E-Tests (nur gegen localhost): Link in eine Datei schreiben.
+          const linkFile =
+            e.NODE_ENV !== 'production'
+              ? (process.env.DEV_MAGIC_LINK_FILE ?? '/tmp/kardia-magic-links.log')
+              : e.APP_ORIGIN.startsWith('http://localhost')
+                ? process.env.E2E_MAGIC_LINK_FILE
+                : undefined;
+          if (linkFile) {
             console.warn(`[dev] Anmeldelink für ${email}: ${url}`);
             const { appendFile } = await import('node:fs/promises');
-            await appendFile(process.env.DEV_MAGIC_LINK_FILE ?? '/tmp/kardia-magic-links.log', `${email} ${url}\n`).catch(() => undefined);
+            await appendFile(linkFile, `${email} ${url}\n`).catch(() => undefined);
           }
           await enqueue(QUEUES.emailSend, { template: 'magic-link', to: email, data: { url } });
         },

@@ -1,3 +1,5 @@
+import path from 'node:path';
+
 import { withSentryConfig } from '@sentry/nextjs/config';
 import { withSerwist } from '@serwist/turbopack';
 import type { NextConfig } from 'next';
@@ -20,6 +22,8 @@ const securityHeaders = [
 
 const config: NextConfig = {
   output: 'standalone',
+  // Monorepo: Standalone-Tracing ab Repo-Wurzel, damit packages/* mitkommen.
+  outputFileTracingRoot: path.resolve(process.cwd(), '../..'),
   reactStrictMode: true,
   poweredByHeader: false,
   transpilePackages: ['@kardia/ui', '@kardia/core', '@kardia/ai', '@kardia/db'],

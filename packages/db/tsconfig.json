@@ -7,5 +7,5 @@
     "noEmit": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["src", "prisma.config.ts"]
+  "include": ["src", "prisma.config.ts", "prisma.deploy.config.ts"]
 }
