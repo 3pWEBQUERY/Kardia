@@ -16,7 +16,7 @@ import { Button, Callout, Card, CardBody, CardHeader, StatusChip } from '@kardia
 
 import { PlanCheckoutButton } from '@/components/employer/Billing';
 import { db } from '@/server/db';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 const PLANS = [PlanTier.PRAXIS, PlanTier.INSTITUTION, PlanTier.SPITALGRUPPE] as const;
 
@@ -26,7 +26,7 @@ export default async function BillingPage({
 }: {
   searchParams: Promise<{ ok?: string }>;
 }) {
-  const ctx = await requireOrg();
+  const ctx = await requireOrgPage();
   const { ok } = await searchParams;
   const [t, te] = await Promise.all([
     getTranslations('employer.billing'),

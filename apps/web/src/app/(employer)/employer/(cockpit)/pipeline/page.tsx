@@ -7,7 +7,7 @@ import { JobPicker } from '@/components/employer/JobPicker';
 import { PipelineBoard } from '@/components/employer/PipelineBoard';
 import { pipelineForJob } from '@/server/services/applications';
 import { listOrgJobs } from '@/server/services/jobs';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 /** Pipeline pro Stelle; ohne Auswahl die Stelle mit den meisten neuen Bewerbungen. */
 export default async function PipelinePage({
@@ -15,7 +15,7 @@ export default async function PipelinePage({
 }: {
   searchParams: Promise<{ job?: string }>;
 }) {
-  const ctx = await requireOrg('applications.read');
+  const ctx = await requireOrgPage('applications.read');
   const { job: jobParam } = await searchParams;
   const t = await getTranslations('employer.pipeline');
   const jobs = (await listOrgJobs(ctx.org.id)).filter((j) => j.status !== 'DRAFT');

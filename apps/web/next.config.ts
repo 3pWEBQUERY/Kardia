@@ -2,8 +2,9 @@ import path from 'node:path';
 
 import { withSentryConfig } from '@sentry/nextjs/config';
 import { withSerwist } from '@serwist/turbopack';
-import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
+
+import type { NextConfig } from 'next';
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
@@ -32,6 +33,7 @@ const config: NextConfig = {
   agentRules: false,
   experimental: {
     serverActions: { bodySizeLimit: '2mb' },
+    authInterrupts: true,
   },
   async headers() {
     return [

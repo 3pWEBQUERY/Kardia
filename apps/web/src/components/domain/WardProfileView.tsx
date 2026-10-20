@@ -44,7 +44,9 @@ export async function WardProfileView({
   return (
     <div className="flex flex-col gap-6">
       {grouped.map(({ group, fields }) => {
-        const visible = fields.filter((f) => !(f.group === 'reentry' && !profile.reentryFriendly));
+        // Der 13. Monatslohn steht bereits in der Lohnzeile, sobald es eine Lohnbandbreite gibt.
+        const salaryShown = profile.salaryMinChf != null && profile.salaryMaxChf != null;
+        const visible = fields.filter((f) => !(f.group === 'reentry' && !profile.reentryFriendly) && !(f.key === 'thirteenthSalary' && salaryShown));
         if (!visible.length) return null;
         return (
           <section key={group} aria-labelledby={`g-${group}`} className="flex flex-col">

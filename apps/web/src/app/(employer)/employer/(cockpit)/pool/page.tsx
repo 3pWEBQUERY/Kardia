@@ -7,11 +7,11 @@ import { Button, Callout, Card, CardBody, CardHeader, EmptyState, StatusChip } f
 import { PoolCreateForm, PoolInviteForm, ShiftForm, ShiftTable } from '@/components/employer/Pool';
 import { db } from '@/server/db';
 import { listPools } from '@/server/services/pool';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 /** Flex-Pool-Verwaltung (Modul C): Pools, Mitglieder, Schichten, Export. Kardia ist nie Arbeitgeber (AK-C3). */
 export default async function PoolPage() {
-  const ctx = await requireOrg('pool.manage');
+  const ctx = await requireOrgPage('pool.manage');
   const [t, te] = await Promise.all([getTranslations('employer.pool'), getTranslations('enums')]);
   const limits = limitsFor(ctx.org.plan as Parameters<typeof limitsFor>[0]);
   if (!limits?.flexPool) {

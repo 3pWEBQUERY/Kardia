@@ -16,11 +16,11 @@ import {
 import { ConfirmWardButton } from '@/components/employer/ConfirmWardButton';
 import { db } from '@/server/db';
 import { blockersFor } from '@/server/services/jobs';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 /** Übersicht: Kennzahlen der Organisation, veraltete Profile (AK-A3), Blocker, Prüfstatus (AK-C1). */
 export default async function EmployerOverview() {
-  const ctx = await requireOrg();
+  const ctx = await requireOrgPage();
   const t = await getTranslations('employer.overview');
   const now = new Date();
   const orgWhere = { ward: { location: { organizationId: ctx.org.id } } };

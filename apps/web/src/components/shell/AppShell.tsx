@@ -57,7 +57,7 @@ export function AppShell({
     <div className="flex min-h-dvh">
       <aside
         className={cx(
-          'sticky top-0 hidden h-dvh shrink-0 flex-col border-r border-line-200 bg-surface-0 transition-[width] duration-base ease-kardia md:flex',
+          'sticky top-0 hidden h-dvh shrink-0 flex-col border-r border-line-200 bg-surface-0 transition-[width] duration-base ease-kardia md:flex print:hidden',
           collapsed ? 'w-sidebar-collapsed' : 'w-sidebar',
         )}
       >
@@ -101,16 +101,16 @@ export function AppShell({
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 items-center justify-between border-b border-line-200 bg-surface-0 px-4 md:hidden">
+        <header className="flex h-14 items-center justify-between border-b border-line-200 bg-surface-0 px-4 md:hidden print:hidden">
           <Link href="/" className="text-h3 font-semibold">Kardia</Link>
           <span className="truncate text-caption text-ink-700">{title}</span>
         </header>
-        <main id="main" className="mx-auto w-full max-w-content flex-1 px-4 pt-6 pb-24 md:px-8 md:pb-12">
+        <main id="main" className="mx-auto w-full max-w-content flex-1 px-4 pt-6 pb-24 md:px-8 md:pb-12 print:p-0">
           {children}
         </main>
       </div>
 
-      <nav aria-label={labels.menu} className="fixed inset-x-0 bottom-0 z-30 border-t border-line-200 bg-surface-0 pb-[env(safe-area-inset-bottom)] md:hidden">
+      <nav aria-label={labels.menu} className="fixed inset-x-0 bottom-0 z-30 print:hidden border-t border-line-200 bg-surface-0 pb-[env(safe-area-inset-bottom)] md:hidden">
         <ul className="grid grid-cols-5">
           {primary.map((item) => {
             const active = isActive(pathname, item.href);

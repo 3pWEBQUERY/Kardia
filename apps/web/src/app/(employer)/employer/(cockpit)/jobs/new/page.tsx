@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { ImportFlow } from '@/components/employer/ImportFlow';
 import { wardDefaultsFor } from '@/components/employer/wardDefaultsServer';
 import { listLocations, listWardsForOrg } from '@/server/services/wards';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 /** Neue Stelle: Inserat importieren (KI-1) oder von Hand erfassen. */
 export default async function NewJobPage({
@@ -11,7 +11,7 @@ export default async function NewJobPage({
 }: {
   searchParams: Promise<{ ward?: string }>;
 }) {
-  const ctx = await requireOrg('jobs.edit');
+  const ctx = await requireOrgPage('jobs.edit');
   const { ward } = await searchParams;
   const t = await getTranslations('employer.import');
   const [wards, locations] = await Promise.all([

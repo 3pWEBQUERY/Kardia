@@ -3,14 +3,14 @@ import { getTranslations } from 'next-intl/server';
 import { emptyWardServer } from '@/components/employer/wardDefaults';
 import { WardEditor } from '@/components/employer/WardEditor';
 import { listLocations } from '@/server/services/wards';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 export default async function NewWardPage({
   searchParams,
 }: {
   searchParams: Promise<{ location?: string }>;
 }) {
-  const ctx = await requireOrg('wards.edit');
+  const ctx = await requireOrgPage('wards.edit');
   const t = await getTranslations('employer.ward');
   const { location } = await searchParams;
   const locations = await listLocations(ctx.org.id);

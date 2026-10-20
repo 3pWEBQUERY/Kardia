@@ -6,11 +6,11 @@ import { Button, Card, CardBody, CardHeader, EmptyState, StatusChip } from '@kar
 
 import { LocationSheet } from '@/components/employer/WardEditor';
 import { listLocations } from '@/server/services/wards';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 /** Standorte → Stationen. Die Station trägt die Arbeitsbedingungen (Modul A). */
 export default async function WardsPage() {
-  const ctx = await requireOrg();
+  const ctx = await requireOrgPage();
   const t = await getTranslations('employer.wards');
   const te = await getTranslations('enums');
   const locations = await listLocations(ctx.org.id);

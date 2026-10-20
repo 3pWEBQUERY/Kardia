@@ -1,7 +1,7 @@
 import 'server-only';
 
 import { headers } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { forbidden, redirect } from 'next/navigation';
 import { cache } from 'react';
 
 import { ADMIN_SESSION_MAX_AGE_SEC, ProblemError, can, type Permission } from '@kardia/core';
@@ -96,6 +96,16 @@ export async function requireOrg(permission?: Permission, next = '/employer'): P
       secoRegistryMatch: m.organization.secoRegistryMatch,
     },
   };
+}
+
+/** Wie `requireOrg`, aber für Seiten: fehlende Berechtigung ergibt eine echte 403-Seite. */
+export async function requireOrgPage(permission?: Permission, next = '/employer'): Promise<OrgContext> {
+  try {
+    return await requireOrg(permission, next);
+  } catch (e) {
+    if (e instanceof ProblemError && e.kind === 'forbidden') forbidden();
+    throw e;
+  }
 }
 
 /**

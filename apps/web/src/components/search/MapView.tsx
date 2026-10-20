@@ -3,6 +3,7 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import * as maplibregl from 'maplibre-gl';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 
 import { colors } from '@kardia/ui/tokens';
@@ -20,6 +21,7 @@ const STYLE = process.env.NEXT_PUBLIC_MAP_STYLE ?? 'https://vectortiles.geo.admi
 /** Kartenansicht: Stationen als Punkte; gleicher Filterzustand wie die Liste (AK-B2). */
 export default function MapView({ points, label }: { points: MapPoint[]; label: string }) {
   const ref = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (!ref.current) return;
@@ -44,7 +46,7 @@ export default function MapView({ points, label }: { points: MapPoint[]; label: 
       map.on('click', 'points', (ev) => {
         const f = ev.features?.[0];
         const id = f?.properties?.jobId as string | undefined;
-        if (id) window.location.href = `/jobs/${id}`;
+        if (id) router.push(`/jobs/${id}`);
       });
       map.on('mouseenter', 'points', () => (map.getCanvas().style.cursor = 'pointer'));
       map.on('mouseleave', 'points', () => (map.getCanvas().style.cursor = ''));
@@ -55,7 +57,7 @@ export default function MapView({ points, label }: { points: MapPoint[]; label: 
       }
     });
     return () => map.remove();
-  }, [points]);
+  }, [points, router]);
 
   return (
     <div className="flex flex-col gap-2">

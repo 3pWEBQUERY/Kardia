@@ -20,7 +20,7 @@ export async function PublicShell({ children }: { children: ReactNode }) {
   const theme = parseTheme((await cookies()).get(THEME_COOKIE)?.value);
   return (
     <div className="flex min-h-dvh flex-col">
-      <header className="sticky top-0 z-30 border-b border-line-200 bg-surface-0">
+      <header className="sticky top-0 z-30 border-b border-line-200 bg-surface-0 print:static">
         <div className="mx-auto flex h-14 max-w-content items-center gap-6 px-4 md:px-8">
           <Link href="/" className="text-h3 font-semibold text-ink-900">
             {t('brand')}

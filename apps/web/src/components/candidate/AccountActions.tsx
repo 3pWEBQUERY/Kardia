@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -11,6 +12,12 @@ import { useActionMessage } from '@/lib/useActionError';
 
 /** Datenexport als JSON per Klick, Selbstlöschung, Abmelden. */
 export function AccountActions({ email }: { email: string }) {
+  const router = useRouter();
+  // Nach Abmelden/Löschen Startseite neu vom Server laden, damit kein Sitzungszustand bleibt.
+  const home = () => {
+    router.replace('/');
+    router.refresh();
+  };
   const t = useTranslations('candidate.settings');
   const c = useTranslations('common');
   const message = useActionMessage();
@@ -30,7 +37,7 @@ export function AccountActions({ email }: { email: string }) {
   return (
     <div className="flex flex-wrap gap-3">
       <Button onClick={() => void download()}>{t('export')}</Button>
-      <Button onClick={() => void authClient.signOut().then(() => (window.location.href = '/'))}>{c('nav.signOut')}</Button>
+      <Button onClick={() => void authClient.signOut().then(home)}>{c('nav.signOut')}</Button>
       <Dialog
         open={open}
         onOpenChange={setOpen}
@@ -40,7 +47,7 @@ export function AccountActions({ email }: { email: string }) {
         footer={
           <>
             <Button onClick={() => setOpen(false)}>{c('actions.cancel')}</Button>
-            <Button variant="danger" disabled={confirm.trim().toLowerCase() !== email.toLowerCase()} onClick={() => void deleteAccount(confirm).then((r) => (r.ok ? (window.location.href = '/') : setError(message(r))))}>
+            <Button variant="danger" disabled={confirm.trim().toLowerCase() !== email.toLowerCase()} onClick={() => void deleteAccount(confirm).then((r) => (r.ok ? home() : setError(message(r))))}>
               {t('deleteConfirm')}
             </Button>
           </>

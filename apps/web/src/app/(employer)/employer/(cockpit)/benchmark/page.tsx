@@ -6,11 +6,11 @@ import { Button, Card, CardBody, CardHeader, EmptyState, StatusChip } from '@kar
 
 import { formatFieldValue } from '@/lib/fieldValue';
 import { db } from '@/server/db';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 /** Benchmark (R2): Werte je Station gegen den Median von Fachbereich und Region, erst ab 8 Vergleichsstationen. */
 export default async function BenchmarkPage() {
-  const ctx = await requireOrg();
+  const ctx = await requireOrgPage();
   const [t, tf, te, tc] = await Promise.all([
     getTranslations('employer.benchmark'),
     getTranslations('fields'),

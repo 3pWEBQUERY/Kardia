@@ -17,9 +17,14 @@ import { track } from '@/server/audit';
 import { db } from '@/server/db';
 import { getSession } from '@/server/session';
 
+const formText = (formData: FormData, key: string): string => {
+  const v = formData.get(key);
+  return typeof v === 'string' ? v : '';
+};
+
 /** Startseite: drei Fragen statt Suchfeld (PRD 7.3) – funktioniert auch ohne JavaScript. */
 export async function startSearch(formData: FormData): Promise<void> {
-  const profession = formData.get('profession')?.toString() || undefined;
+  const profession = formText(formData, 'profession') || undefined;
   const workload = Number(formData.get('workload') ?? 0) || undefined;
   const dealbreakers = formData.getAll('dealbreaker').map(String) as Dealbreaker[];
   const conditions: Condition[] = dealbreakers.filter((d) => d in DEALBREAKERS).map((d) => DEALBREAKERS[d]);
@@ -32,7 +37,7 @@ export async function startSearch(formData: FormData): Promise<void> {
  * klassische Stichwortsuche mit dem Satz als Suchbegriff (PRD 9.2).
  */
 export async function searchSentence(formData: FormData): Promise<void> {
-  const sentence = (formData.get('q')?.toString() ?? '').trim().slice(0, 300);
+  const sentence = formText(formData, 'q').trim().slice(0, 300);
   if (!sentence) redirect('/search');
   let filter: SearchFilterInput = { q: sentence };
   let viaAi = false;

@@ -31,12 +31,12 @@ import {
 import { formatFieldValue } from '@/lib/fieldValue';
 import { orNotFound } from '@/lib/orNotFound';
 import { getWardForOrg, listLocations } from '@/server/services/wards';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 /** Station bearbeiten: Profil, Realitäts-Check, Mitarbeitende, Übersetzungen, Videos, Benchmark. */
 export default async function WardDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const ctx = await requireOrg();
+  const ctx = await requireOrgPage();
   const { ward, reality } = await orNotFound(getWardForOrg(ctx.org.id, id));
   const [t, tf, te, tc] = await Promise.all([
     getTranslations('employer.ward'),

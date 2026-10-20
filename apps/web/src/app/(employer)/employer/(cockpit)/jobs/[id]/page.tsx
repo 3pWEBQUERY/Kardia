@@ -19,7 +19,7 @@ import { orNotFound } from '@/lib/orNotFound';
 import { db } from '@/server/db';
 import { getOrgJob } from '@/server/services/jobs';
 import { realityAggregates } from '@/server/services/wards';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 /** Stelle: Blocker, Vorschau wie Fachpersonen sie sehen, Bearbeiten, Status. */
 export default async function JobDetailPage({
@@ -31,7 +31,7 @@ export default async function JobDetailPage({
 }) {
   const { id } = await params;
   const sp = await searchParams;
-  const ctx = await requireOrg();
+  const ctx = await requireOrgPage();
   const { job, blockers } = await orNotFound(getOrgJob(ctx, id));
   const [t, te, tf, tb] = await Promise.all([
     getTranslations('employer.job'),

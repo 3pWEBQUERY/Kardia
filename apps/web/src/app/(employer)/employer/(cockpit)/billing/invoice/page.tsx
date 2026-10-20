@@ -7,7 +7,7 @@ import { Button, Callout } from '@kardia/ui';
 
 import { PrintButton } from '@/components/employer/Billing';
 import { createInvoice } from '@/server/services/billing';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 const chf = (v: number) => `CHF ${formatNumber(v, 2)}`;
 
@@ -17,7 +17,7 @@ export default async function InvoicePage({
 }: {
   searchParams: Promise<{ plan?: string; yearly?: string }>;
 }) {
-  const ctx = await requireOrg();
+  const ctx = await requireOrgPage();
   const sp = await searchParams;
   const [t, te] = await Promise.all([
     getTranslations('employer.billing'),

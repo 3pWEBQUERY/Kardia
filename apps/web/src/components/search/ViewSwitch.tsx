@@ -2,6 +2,7 @@
 
 import { List, Map } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
 import { encodeFilter, type SearchFilter } from '@kardia/core';
@@ -32,13 +33,14 @@ export function ViewSwitch({ filter }: { filter: SearchFilter }) {
 
 export function SortSelect({ filter }: { filter: SearchFilter }) {
   const t = useTranslations('common.search');
+  const router = useRouter();
   return (
     <label className="flex items-center gap-2 text-body-s text-ink-700">
       {t('sort')}
       <select
         className="h-control-s rounded-control border border-line-300 bg-surface-0 px-2 text-body-s text-ink-900"
         value={filter.sort}
-        onChange={(e) => (window.location.href = `/search?f=${encodeFilter({ ...filter, sort: e.target.value as SearchFilter['sort'] })}`)}
+        onChange={(e) => router.push(`/search?f=${encodeFilter({ ...filter, sort: e.target.value as SearchFilter['sort'] })}`)}
       >
         <option value="match">{t('sortMatch')}</option>
         <option value="newest">{t('sortNewest')}</option>

@@ -9,13 +9,13 @@ import { OrgSwitcher } from '@/components/employer/OrgSwitcher';
 import { AppShell, type NavItem } from '@/components/shell/AppShell';
 import { db } from '@/server/db';
 import { listMemberships } from '@/server/services/org';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 import type { ReactNode } from 'react';
 
 /** Arbeitgeber-Cockpit (PRD 6, 7.2): Seitenleiste, Organisationswechsel, Befehlspalette (Cmd/Ctrl + K). */
 export default async function CockpitLayout({ children }: { children: ReactNode }) {
-  const ctx = await requireOrg();
+  const ctx = await requireOrgPage();
   const t = await getTranslations('common');
   const te = await getTranslations('employer.palette');
   const memberships = await listMemberships(ctx.user.id);

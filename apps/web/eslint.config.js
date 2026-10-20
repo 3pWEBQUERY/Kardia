@@ -1,3 +1,3 @@
 import { nextConfig } from '@kardia/config/eslint/next';
 
-export default nextConfig;
+export default [...nextConfig, { ignores: ['scripts/**'] }];

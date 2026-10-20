@@ -23,7 +23,7 @@ import {
 import { MarketplaceSearch } from '@/components/employer/Marketplace';
 import { db } from '@/server/db';
 import { listOrgOffers } from '@/server/services/marketplace';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 const TONE: Record<string, Tone> = {
   SENT: 'neutral',
@@ -35,7 +35,7 @@ const TONE: Record<string, Tone> = {
 
 /** Marktplatz-Suche und eigene Angebote mit aggregierten Ablehnungsgründen (AK-E3). */
 export default async function MarketplacePage() {
-  const ctx = await requireOrg('marketplace.offer');
+  const ctx = await requireOrgPage('marketplace.offer');
   const [t, te] = await Promise.all([
     getTranslations('employer.marketplace'),
     getTranslations('enums'),

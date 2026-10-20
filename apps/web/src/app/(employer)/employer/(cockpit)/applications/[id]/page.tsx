@@ -7,7 +7,7 @@ import { Callout, Card, CardBody, CardHeader, StatusChip, type Tone } from '@kar
 import { MessageComposer, StatusControl } from '@/components/employer/ApplicationControls';
 import { orNotFound } from '@/lib/orNotFound';
 import { getApplicationForOrg } from '@/server/services/applications';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 const CRED_TONE: Record<string, Tone> = {
   VERIFIED: 'ok',
@@ -23,7 +23,7 @@ const CRED_TONE: Record<string, Tone> = {
  */
 export default async function ApplicationPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const ctx = await requireOrg('applications.read');
+  const ctx = await requireOrgPage('applications.read');
   const app = await orNotFound(getApplicationForOrg(ctx, id));
   const [t, te] = await Promise.all([
     getTranslations('employer.application'),

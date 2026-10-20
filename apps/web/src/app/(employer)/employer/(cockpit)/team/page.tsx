@@ -13,11 +13,11 @@ import {
 } from '@/components/employer/TeamSettings';
 import { db } from '@/server/db';
 import { listMembers, orgSettings } from '@/server/services/org';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 /** Team & Einstellungen: Mitglieder und Rollen, E-Mail-Domains, API, Webhooks, Feed-Import, SSO. */
 export default async function TeamPage() {
-  const ctx = await requireOrg();
+  const ctx = await requireOrgPage();
   const [t, te] = await Promise.all([getTranslations('employer.team'), getTranslations('enums')]);
   const limits = limitsFor(ctx.org.plan as Parameters<typeof limitsFor>[0]);
   const manage = can(ctx.role, 'team.manage');

@@ -5,7 +5,7 @@ import { formatDate } from '@kardia/core';
 import { Button, EmptyState, StatusChip, type Tone } from '@kardia/ui';
 
 import { listOrgJobs } from '@/server/services/jobs';
-import { requireOrg } from '@/server/session';
+import { requireOrgPage } from '@/server/session';
 
 const TONE: Record<string, Tone> = {
   DRAFT: 'neutral',
@@ -19,7 +19,7 @@ export default async function JobsPage({
 }: {
   searchParams: Promise<{ status?: string }>;
 }) {
-  const ctx = await requireOrg();
+  const ctx = await requireOrgPage();
   const { status } = await searchParams;
   const t = await getTranslations('employer.jobs');
   const te = await getTranslations('enums');
