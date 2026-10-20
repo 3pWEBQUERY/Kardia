@@ -1,0 +1,51 @@
+@import 'tailwindcss';
+@import '@kardia/ui/theme.css';
+
+@source '../../../../packages/ui/src';
+
+@layer base {
+  body {
+    min-height: 100dvh;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  .prose-k {
+    max-width: var(--k-size-prose);
+  }
+
+  .prose-k h2 {
+    margin-top: var(--k-space-8);
+    margin-bottom: var(--k-space-2);
+    font-size: var(--k-font-size-h2);
+    line-height: var(--k-font-size-h2--line-height);
+    font-weight: 600;
+  }
+
+  .prose-k p,
+  .prose-k ul {
+    margin-bottom: var(--k-space-4);
+    color: var(--k-color-ink-700);
+  }
+
+  .prose-k ul {
+    padding-left: var(--k-space-6);
+    list-style: disc;
+  }
+}
+
+/* MapLibre: Steuerelemente flach, ohne Schatten (PRD 8.1). */
+.maplibregl-ctrl-group {
+  border: 1px solid var(--k-color-line-300) !important;
+  border-radius: var(--k-radius-control) !important;
+  /* stylelint-disable-next-line property-disallowed-list -- überschreibt den Schatten der Bibliothek; design-rules-ignore */
+  box-shadow: none !important; /* design-rules-ignore */
+}

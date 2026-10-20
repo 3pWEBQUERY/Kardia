@@ -192,13 +192,13 @@ export async function searchJobs(
   const completeness = sql`((w."minShiftsPerWeek" IS NOT NULL)::int + (w."patientsPerNurseDay" IS NOT NULL)::int
     + (w."skillMixHfFhPct" IS NOT NULL)::int + (w."educationBudgetChf" IS NOT NULL)::int
     + (w."educationDays" IS NOT NULL)::int + (w."onCallChfDay" IS NOT NULL)::int + (w."description" IS NOT NULL)::int)`;
-  const rank = filter.q ? sql`ts_rank(j."searchVector", websearch_to_tsquery('german', ${filter.q}))` : sql`0`;
+  const rankOrder = filter.q ? sql`ts_rank(j."searchVector", websearch_to_tsquery('german', ${filter.q})) DESC,` : sql``;
   const order =
     filter.sort === 'newest'
       ? sql`j."publishedAt" DESC NULLS LAST, j."id"`
       : filter.sort === 'salary'
         ? sql`${eff('salaryMaxChf', 'int')} DESC, j."id"`
-        : sql`wish_score DESC, ${stale} ASC, ${rank} DESC, ${completeness} DESC, j."publishedAt" DESC NULLS LAST, j."id"`;
+        : sql`wish_score DESC, ${stale} ASC, ${rankOrder} ${completeness} DESC, j."publishedAt" DESC NULLS LAST, j."id"`;
   const where = whereClause(filter);
   const from = fromClause(filter.origin);
 

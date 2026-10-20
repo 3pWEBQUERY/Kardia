@@ -25,6 +25,7 @@ const config: NextConfig = {
   transpilePackages: ['@kardia/ui', '@kardia/core', '@kardia/ai', '@kardia/db'],
   serverExternalPackages: ['pg', 'pg-boss', '@prisma/client', '@prisma/adapter-pg'],
   typedRoutes: false,
+  agentRules: false,
   experimental: {
     serverActions: { bodySizeLimit: '2mb' },
   },

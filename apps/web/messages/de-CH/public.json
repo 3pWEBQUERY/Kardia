@@ -1,0 +1,333 @@
+{
+  "meta": {
+    "title": "Kardia – Stellen im Gesundheitswesen",
+    "description": "Arbeitsbedingungen statt Inseratetext: Lohnband, Dienstplan-Vorlauf, Schichtmodell und Betreuungsschlüssel pro Station – direkt beim Arbeitgeber."
+  },
+  "home": {
+    "title": "Wie es sich auf einer Station arbeiten lässt – bevor du dich bewirbst.",
+    "lead": "Kardia vergleicht Arbeitsbedingungen pro Station: Lohnband, Dienstplan-Vorlauf, Wochenenden, Betreuungsschlüssel. Direkt beim Arbeitgeber, ohne Personalvermittler.",
+    "q1": "Welcher Beruf?",
+    "q2": "Welches Pensum?",
+    "q3": "Was darf auf keinen Fall sein?",
+    "anyProfession": "Alle Berufe",
+    "anyWorkload": "Egal",
+    "dealbreakers": {
+      "nights": "Nachtdienste",
+      "weekends": "Wochenenddienste",
+      "splitShifts": "Geteilte Dienste",
+      "shortNotice": "Kurzfristige Planänderungen"
+    },
+    "submit": "Passende Stationen zeigen",
+    "noAccount": "Ergebnisse sofort, ohne Konto.",
+    "sentenceLabel": "Oder in einem Satz beschreiben",
+    "sentencePlaceholder": "IPS Zürich, keine Nächte, ab März, 80 %",
+    "sentenceSubmit": "Suchen",
+    "sentenceHint": "Erkannte Filter erscheinen als Chips, die Sie entfernen können.",
+    "uspTitle": "Was Kardia anders macht",
+    "usp": {
+      "ward": {
+        "title": "Pro Station, nicht pro Spital",
+        "body": "Bedingungen unterscheiden sich zwischen IPS und Geriatrie desselben Spitals. Jedes Profil hängt an einer Station und ist vom Arbeitgeber bestätigt."
+      },
+      "roster": {
+        "title": "Dienstrhythmus auf einen Blick",
+        "body": "Ein Muster-Dienstplan über vier Wochen, auf Ihr Pensum skaliert. Planbarkeit in zwei Sekunden sichtbar."
+      },
+      "reality": {
+        "title": "Realitäts-Check durch das Team",
+        "body": "Mitarbeitende bestätigen oder widersprechen jeder Angabe – anonym und erst ab fünf Antworten sichtbar."
+      }
+    }
+  },
+  "search": {
+    "title": "Stellen suchen",
+    "results": "Treffer",
+    "aiParsed": "Wir haben Ihren Satz in Filter übersetzt. Entfernen Sie Chips, die nicht passen.",
+    "empty": "Keine Treffer für diese Bedingungen. Filter zurücksetzen und neu beginnen.",
+    "emptyWithSuggestion": "Keine Treffer für diese Bedingungen.",
+    "relax": "{condition} ergäbe {count} Treffer",
+    "drop": "Ohne «{condition}» ergäbe {count} Treffer",
+    "reset": "Filter zurücksetzen",
+    "map": "Karte der Stationen",
+    "refine": "{shown} von {total} Treffern angezeigt. Bedingungen ergänzen, um einzugrenzen.",
+    "useHome": "Wohnort übernehmen",
+    "useHomeHint": "Pendelzeit ab Ihrem Wohnort berechnen (nur auf rund 150 m genau)."
+  },
+  "job": {
+    "start": "Start {date}",
+    "pendingRecog": "Anstellung während laufender Anerkennung",
+    "stale": "Profil veraltet",
+    "rhythm": "Dienstrhythmus",
+    "rhythmHint": "Muster-Dienstplan der Station über vier Wochen, auf das Pensum skaliert.",
+    "training": "Ärztliche Weiterbildung",
+    "noTraining": "Keine anerkannte Weiterbildung angegeben.",
+    "profile": "Stationsprofil",
+    "profileHint": "Jede Angabe mit Quelle und Datum der Bestätigung; Team-Werte ab fünf Antworten.",
+    "about": "Über die Station",
+    "commute": "Pendelzeit",
+    "direct": "Bewerbung direkt an den Arbeitgeber. Kardia ist nie Arbeitgeber und vermittelt nicht."
+  },
+  "ward": {
+    "verifiedEmployees": "{count} verifizierte Mitarbeitende",
+    "rhythm": "Dienstrhythmus",
+    "profile": "Arbeitsbedingungen",
+    "realityHint": "Team-Werte stammen von verifizierten Mitarbeitenden und erscheinen ab fünf Antworten.",
+    "benchmark": "Vergleich mit dem Fachbereich",
+    "benchmarkHint": "Median der Region und des Fachbereichs, ab {min} Vergleichsstationen, ohne Namen anderer Arbeitgeber.",
+    "median": "Median {value} ({peers} Stationen)",
+    "videos": "Einblicke",
+    "questions": "Frag das Team",
+    "questionsHint": "Antworten von freiwilligen Stations-Botschafter:innen, nach Moderation.",
+    "noQuestions": "Noch keine Fragen. Stellen Sie die erste.",
+    "unanswered": "Noch nicht beantwortet.",
+    "answeredAfter": "Beantwortet nach {hours} h",
+    "openJobs": "{count, plural, =0 {Keine offenen Stellen} one {# offene Stelle} other {# offene Stellen}}",
+    "noJobs": "Zurzeit keine offenen Stellen. Suche speichern, um informiert zu werden.",
+    "workHere": "Sie arbeiten hier?",
+    "workHereBody": "Bestätigen oder korrigieren Sie die Angaben – anonym.",
+    "workHereAction": "Zum Realitäts-Check"
+  },
+  "team": {
+    "title": "Realitäts-Check: {ward}",
+    "lead": "Bestätigen oder widersprechen Sie jeder Angabe. Ihre Antworten sind keiner Person zuordenbar und erscheinen erst ab {min} Antworten pro Feld.",
+    "verifyTitle": "Als Mitarbeitende:r bestätigen",
+    "verifyInvite": "Ihre E-Mail-Adresse gehört nicht zu {domains}. Bitten Sie Ihren Arbeitgeber um eine Einladung.",
+    "verifiedInvite": "Bestätigt per Einladung des Arbeitgebers (so gekennzeichnet).",
+    "verifiedDomain": "Bestätigt über die E-Mail-Domain der Institution."
+  },
+  "organization": {
+    "lead": "Arbeitsbedingungen sind pro Station erfasst. Wählen Sie eine Station.",
+    "verified": "Arbeitgeber verifiziert (UID)",
+    "jobs": "{count, plural, =0 {keine offenen Stellen} one {# offene Stelle} other {# offene Stellen}}"
+  },
+  "compare": {
+    "title": "Stellen vergleichen",
+    "empty": "Mindestens zwei Stellen zum Vergleich auswählen.",
+    "toSearch": "Zur Suche",
+    "onlyDifferences": "Nur Unterschiede",
+    "best": "beste Ausprägung"
+  },
+  "guide": {
+    "title": "Ratgeber Anerkennung",
+    "lead": "Was Sie wo arbeiten dürfen und wann: Schritte, Unterlagen und offizielle Links je Herkunftsabschluss und Zielberuf.",
+    "disclaimer": "Redaktionell gepflegt und mit Prüfdatum versehen. Keine Rechtsberatung – verbindlich sind die Angaben der zuständigen Behörden.",
+    "who": "Kardia betreibt keine aktive Anwerbung im Ausland und richtet sich nach dem WHO-Verhaltenskodex zur internationalen Rekrutierung von Gesundheitspersonal.",
+    "empty": "Noch keine Anleitungen veröffentlicht.",
+    "route": "{origin} → {profession}",
+    "authority": "Zuständig: {authority} · geprüft am {date}",
+    "steps": "Schritte",
+    "progress": "{done} von {total} erledigt",
+    "signInForProgress": "Anmelden, um den eigenen Fortschritt zu speichern.",
+    "outdated": "Diese Anleitung wurde vor mehr als zwölf Monaten geprüft. Angaben bei der Behörde verifizieren."
+  },
+  "employers": {
+    "title": "Stellen direkt besetzen – ohne Agenturaufschlag",
+    "lead": "Kardia zeigt Fachpersonen Ihre Arbeitsbedingungen pro Station. Wer sich bewirbt, weiss, worauf er oder sie sich einlässt – und Sie erhalten verifizierte Bewerbungen mit einem Klick.",
+    "cta": "Organisation registrieren",
+    "pricing": "Preise ansehen",
+    "points": {
+      "direct": {
+        "title": "Direkt statt vermittelt",
+        "body": "Nur Organisationen, die selbst Arbeitgeber sind, inserieren. Keine Erfolgsgebühr pro Einstellung."
+      },
+      "import": {
+        "title": "Inserat in 10 Minuten",
+        "body": "Bestehendes Inserat einfügen; die KI füllt das Stationsprofil vor, Sie bestätigen jedes Feld."
+      },
+      "pipeline": {
+        "title": "Pipeline mit Pass",
+        "body": "Bewerbungen mit verifizierten Diplomen und Registereinträgen, per Tastatur bedienbar."
+      },
+      "pool": {
+        "title": "Eigener Flex-Pool",
+        "body": "Einzelschichten für Ihren Springerpool – direkt buchbar statt über Temporärfirmen."
+      },
+      "marketplace": {
+        "title": "Umgekehrter Marktplatz",
+        "body": "Fachpersonen legen anonym ihre Bedingungen fest; Sie senden konkrete Angebote."
+      },
+      "benchmark": {
+        "title": "Benchmark",
+        "body": "Ihre Werte im Vergleich zum Median Ihres Fachbereichs und Ihrer Region."
+      }
+    },
+    "agencyTitle": "Agenturfrei",
+    "agencyBody": "Registrierung mit UID und Abgleich mit dem SECO-Verzeichnis der bewilligten Vermittlungs- und Verleihbetriebe. Inserate ohne konkrete Station und Adresse sind technisch nicht möglich.",
+    "foundingTitle": "Gründungspartner im Kanton Zürich",
+    "foundingBody": "Die ersten 30 Institutionen erhalten das Abo «Institution» sechs Monate kostenlos – gegen vollständige Stationsprofile und ein Feedback-Gespräch pro Monat."
+  },
+  "pricing": {
+    "title": "Preise",
+    "lead": "Fachpersonen zahlen nie. Arbeitgeber zahlen ein Software-Abo – ohne Erfolgsgebühr und ohne bezahlte Ranking-Plätze.",
+    "perMonth": "pro Monat, exkl. MWST",
+    "from": "ab ",
+    "yearly": "Jährlich {price} (2 Monate Rabatt)",
+    "single": {
+      "name": "Einzelinserat",
+      "meta": "pro Stelle, {days} Tage",
+      "includes": "1 Station, KI-Import, Pipeline"
+    },
+    "plans": {
+      "PRAXIS": {
+        "name": "Praxis",
+        "includes": "Bis 2 aktive Stellen, 1 Station, 2 Nutzer"
+      },
+      "INSTITUTION": {
+        "name": "Institution",
+        "includes": "Bis 25 aktive Stellen, unbegrenzt Stationen, 10 Nutzer, 20 Angebote/Monat, Benchmark, Flex-Pool bis 100 Mitglieder"
+      },
+      "SPITALGRUPPE": {
+        "name": "Spitalgruppe",
+        "includes": "Unbegrenzt Stellen und Nutzer, 100 Angebote/Monat, mehrere Standorte, SSO, API, Webhooks, Feed-Import, unbegrenzte Pools"
+      }
+    },
+    "notes": {
+      "vat": "Alle Preise in CHF, exklusive MWST.",
+      "payment": "Karte und TWINT; Rechnung mit QR-Einzahlungsschein für Institution und Spitalgruppe, Zahlungsfrist 30 Tage.",
+      "noFee": "Keine Erfolgsgebühr pro Einstellung – Kardia ist Software, nicht Vermittler.",
+      "noAds": "Kein Werbegeschäft: Sortierung folgt nur den Bedingungen der suchenden Person.",
+      "founding": "Gründungspartner (erste 30 Institutionen im Kanton Zürich): 6 Monate «Institution» kostenlos."
+    },
+    "cta": "Jetzt registrieren"
+  },
+  "legal": {
+    "draft": "Entwurf – vor dem Launch juristisch zu prüfen (PRD 14.3).",
+    "terms": {
+      "title": "AGB für Fachpersonen",
+      "sections": [
+        {
+          "h": "1. Gegenstand",
+          "p": [
+            "Kardia ist eine Software zur Suche nach Stellen im Schweizer Gesundheitswesen. Kardia ist nie Arbeitgeberin, stellt niemanden an und vermittelt keine Arbeitsverhältnisse.",
+            "Die Nutzung ist für Fachpersonen kostenlos."
+          ]
+        },
+        {
+          "h": "2. Konto und Qualifikations-Pass",
+          "p": [
+            "Sie sind für die Richtigkeit Ihrer Angaben verantwortlich. Nachweise werden von Kardia geprüft; der Entscheid wird Ihnen mit Begründung mitgeteilt.",
+            "Änderungen an verifizierten Angaben setzen den Status auf «eingereicht» zurück."
+          ]
+        },
+        {
+          "h": "3. Bewerbungen und Angebote",
+          "p": [
+            "Bewerbungen gehen direkt an den Arbeitgeber. Originaldokumente sieht der Arbeitgeber nur, wenn Sie sie pro Bewerbung freigeben.",
+            "Im Marktplatz bleibt Ihr Profil anonym, bis Sie «Interesse» an einem Angebot bekunden."
+          ]
+        },
+        {
+          "h": "4. Realitäts-Check und Team-Beiträge",
+          "p": [
+            "Beiträge müssen sachlich sein und dürfen keine Personen identifizieren. Kardia moderiert vor der Veröffentlichung.",
+            "Stimmen werden ohne Zuordnung zu Ihrer Person gespeichert und erst ab fünf Antworten angezeigt."
+          ]
+        },
+        {
+          "h": "5. Kündigung",
+          "p": [
+            "Sie können Ihr Konto jederzeit selbst löschen. Daten werden gemäss Datenschutzerklärung gelöscht."
+          ]
+        }
+      ]
+    },
+    "terms-employers": {
+      "title": "AGB für Arbeitgeber",
+      "sections": [
+        {
+          "h": "1. Gegenstand",
+          "p": [
+            "Kardia stellt Software für Stellenausschreibungen, Bewerbungsverwaltung, Angebote und Flex-Pools bereit. Arbeitsverträge kommen ausschliesslich zwischen Arbeitgeber und Fachperson zustande; Kardia speichert keine Arbeitsverträge."
+          ]
+        },
+        {
+          "h": "2. Zulassung",
+          "p": [
+            "Inserieren dürfen nur Organisationen, die selbst Arbeitgeber der ausgeschriebenen Stelle sind. Registrierung mit UID; Treffer im SECO-Verzeichnis der Vermittlungs- und Verleihbetriebe werden manuell geprüft."
+          ]
+        },
+        {
+          "h": "3. Stationsprofile",
+          "p": [
+            "Angaben sind wahrheitsgemäss und mindestens alle 180 Tage zu bestätigen; sonst werden sie als veraltet markiert und zurückgestuft.",
+            "Realitäts-Check-Werte können kommentiert, aber weder gelöscht noch ausgeblendet werden."
+          ]
+        },
+        {
+          "h": "4. Preise und Zahlung",
+          "p": [
+            "Es gelten die Preise gemäss Preisseite. Rechnungen sind innert 30 Tagen zahlbar. Keine Erfolgsgebühr pro Einstellung."
+          ]
+        },
+        {
+          "h": "5. Daten",
+          "p": [
+            "Bewerbungsdaten dürfen nur zur Besetzung der Stelle verwendet werden. Für Zugriffe auf Pass-Dokumente wird ein Audit-Log geführt."
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Datenschutzerklärung",
+      "sections": [
+        {
+          "h": "Verantwortliche Stelle",
+          "p": [
+            "Kardia AG (Arbeitstitel), Zürich. Kontakt: datenschutz@kardia.ch."
+          ]
+        },
+        {
+          "h": "Welche Daten wir bearbeiten",
+          "p": [
+            "Kontodaten (E-Mail, Sprache), Qualifikations-Pass (Diplome, Registereinträge, Erfahrung, Sprachen), Bewerbungen und Nachrichten, Suchfilter, technisch notwendige Protokolle.",
+            "Telefonnummern, Registernummern und Nachrichtentexte speichern wir verschlüsselt (AES-256-GCM)."
+          ]
+        },
+        {
+          "h": "Zweck und Datenminimierung",
+          "p": [
+            "Wir bearbeiten Daten nur zur Stellensuche, Bewerbung und Prüfung. Für den Marktplatz zeigen wir nur den Bezirk, für die Pendelzeit nur einen auf rund 150 m gerundeten Startpunkt.",
+            "Ranking ja, automatische Ablehnung nie (keine automatisierte Einzelentscheidung)."
+          ]
+        },
+        {
+          "h": "Hosting und Empfänger",
+          "p": [
+            "Hosting bei Railway in der Region EU West. Dienstleister: Anthropic (KI-Strukturierung, nur aufgabenbezogene Texte), Amazon SES (E-Mail), Stripe (Zahlungen der Arbeitgeber), Sentry (Fehlerüberwachung ohne Personendaten). Bekanntgaben in die USA nur mit geeigneten Garantien."
+          ]
+        },
+        {
+          "h": "Aufbewahrung",
+          "p": [
+            "Bewerbungen inkl. Nachrichten: 6 Monate nach Abschluss der Stelle. Inaktive Konten: nach 24 Monaten, mit Ankündigung 30 Tage vorher. Pass-Dokumente: sofort mit Löschung des Nachweises. KI-Rohtexte: 30 Tage. Backups: 30 Tage rollierend."
+          ]
+        },
+        {
+          "h": "Ihre Rechte",
+          "p": [
+            "Datenexport als JSON per Klick, Selbstlöschung des Kontos, Auskunft innert 30 Tagen.",
+            "Wir verwenden nur technisch notwendige Cookies und kein Tracking durch Dritte."
+          ]
+        }
+      ]
+    },
+    "imprint": {
+      "title": "Impressum",
+      "sections": [
+        {
+          "h": "Anbieterin",
+          "p": [
+            "Kardia AG (Arbeitstitel, in Gründung), Zürich, Schweiz.",
+            "E-Mail: kontakt@kardia.ch"
+          ]
+        },
+        {
+          "h": "Haftung",
+          "p": [
+            "Angaben in Stationsprofilen stammen von den Arbeitgebern; Realitäts-Check-Werte von verifizierten Mitarbeitenden. Kardia prüft Plausibilität, übernimmt aber keine Gewähr für die Richtigkeit."
+          ]
+        }
+      ]
+    }
+  }
+}

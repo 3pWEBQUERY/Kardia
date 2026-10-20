@@ -27,7 +27,12 @@ export interface CurrentSession {
 export const getSession = cache(async (): Promise<CurrentSession | null> => {
   const result = await auth().api.getSession({ headers: await headers() });
   if (!result) return null;
-  const u = result.user as typeof result.user & { isAdmin?: boolean; locale?: string };
+  const u = result.user as typeof result.user & { isAdmin?: boolean; locale?: string; lastActiveAt?: Date | string };
+  // Aktivität höchstens einmal pro Tag festhalten (Löschung inaktiver Konten nach 24 Monaten, PRD 14.1).
+  const last = u.lastActiveAt ? new Date(u.lastActiveAt).getTime() : 0;
+  if (Date.now() - last > 24 * 3600_000) {
+    void db.user.update({ where: { id: u.id }, data: { lastActiveAt: new Date() } }).catch(() => undefined);
+  }
   const s = result.session as typeof result.session & { authMethod?: string | null };
   return {
     user: { id: u.id, email: u.email, name: u.name, isAdmin: !!u.isAdmin, locale: u.locale ?? 'DE_CH' },

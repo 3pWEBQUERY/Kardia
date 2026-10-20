@@ -90,7 +90,7 @@ export const baseConfig = tseslint.config(
       'import-x/no-named-as-default-member': 'off',
       'no-console': ['error', { allow: ['warn', 'error'] }],
       'no-warning-comments': ['error', { terms: ['todo', 'fixme'], location: 'start' }],
-      eqeqeq: ['error', 'always'],
+      eqeqeq: ['error', 'always', { null: 'ignore' }],
       'no-restricted-syntax': [
         'error',
         {

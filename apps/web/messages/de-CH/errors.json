@@ -1,0 +1,41 @@
+{
+  "generic": "Das hat nicht geklappt. Bitte erneut versuchen; besteht das Problem, melden Sie sich bei support@kardia.ch.",
+  "notFound": "Diese Seite gibt es nicht (mehr). Zur Suche zurückkehren und neu beginnen.",
+  "forbidden": "Für diese Aktion fehlt die Berechtigung. Bitten Sie eine Owner-Person Ihrer Organisation um die passende Rolle.",
+  "unauthorized": "Bitte zuerst anmelden.",
+  "rateLimited": "Zu viele Anfragen in kurzer Zeit. Eine Minute warten und erneut versuchen.",
+  "validation": "Einige Angaben sind ungültig. Die markierten Felder korrigieren.",
+  "offline": "Keine Verbindung – Aktion nicht möglich.",
+  "shiftTaken": "Diese Schicht ist bereits vergeben. Eine andere offene Schicht wählen.",
+  "publishBlocked": "Die Stelle kann noch nicht veröffentlicht werden. Die aufgelisteten Angaben ergänzen.",
+  "quotaExceeded": "Das Kontingent Ihres Abos ist ausgeschöpft. Abo erweitern oder bis zum nächsten Monat warten.",
+  "upload": {
+    "tooLarge": "Die Datei ist zu gross. Bitte eine kleinere Datei wählen (Dokument max. 15 MB, Video 200 MB, Logo 2 MB).",
+    "type": "Dieser Dateityp wird nicht angenommen. Dokumente bitte als PDF, JPG oder PNG hochladen.",
+    "failed": "Der Upload wurde unterbrochen. Verbindung prüfen und erneut hochladen."
+  },
+  "fields": {
+    "salarySpread": "Die Lohnspanne darf höchstens 40 % des Minimums betragen. Das Maximum senken oder das Minimum erhöhen.",
+    "salaryOrder": "Der Maximallohn liegt unter dem Minimum. Werte tauschen.",
+    "workloadOrder": "Das maximale Pensum liegt unter dem minimalen. Werte prüfen.",
+    "skillMixSum": "Der Skill-Mix ergibt mehr als 100 %. Anteile anpassen.",
+    "childcareAllowance": "Bei «Beitrag» bitte den Betrag pro Monat angeben.",
+    "reentryDetails": "Wiedereinstiegsfreundliche Stationen brauchen Einarbeitung, begleitete Dienste und Refresher-Kurse.",
+    "ratioRequired": "Für Akut- und Langzeitstationen ist der Betreuungsschlüssel Pflicht.",
+    "required": "Dieses Feld ist Pflicht.",
+    "step10": "Pensum bitte in 10er-Schritten angeben, z. B. 60 oder 70.",
+    "roster": "Der Muster-Dienstplan braucht genau 28 Einträge.",
+    "belowSalaryBand": "Der Lohn liegt unter dem Minimum des Lohnbands der Station. Mindestens das Minimum anbieten.",
+    "workloadOutsideJob": "Das Pensum liegt ausserhalb der Spanne der Stelle.",
+    "startInPast": "Der Start liegt in der Vergangenheit.",
+    "invalidUid": "Die UID ist ungültig. Format CHE-123.456.789 mit gültiger Prüfziffer."
+  },
+  "blockers": {
+    "missingField": "Pflichtfeld fehlt: {field}",
+    "missingLocation": "Arbeitsort mit Adresse und Koordinaten fehlt.",
+    "orgNotVerified": "Ihre Organisation ist noch nicht verifiziert.",
+    "agencyReview": "Ihre Organisation wird manuell geprüft (Treffer im SECO-Verzeichnis). Veröffentlichung nach Freigabe.",
+    "planLimit": "Das Limit aktiver Stellen Ihres Abos ist erreicht.",
+    "jobWorkloadOutsideWard": "Das Pensum der Stelle liegt ausserhalb der Spanne der Station."
+  }
+}
