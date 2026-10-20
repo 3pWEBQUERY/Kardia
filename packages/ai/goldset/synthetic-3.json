@@ -1,0 +1,18 @@
+{
+  "id": "synthetic-3",
+  "synthetic": true,
+  "text": "FaGe Langzeitpflege 40–80 %\nIm Wohnbereich Lindenblick betreuen wir 24 Bewohnerinnen und Bewohner. Früh- und Spätdienst, keine Nachtdienste. Durchschnittlich ein Wochenende pro Monat. Vier garantierte Wunschfrei-Tage pro Monat. Kinderbetreuungsbeitrag CHF 300 pro Monat.",
+  "expected": {
+    "title": "FaGe Langzeitpflege 40–80 %",
+    "profession": "FAGE",
+    "department": "LONG_TERM_CARE",
+    "shiftTypes": ["EARLY", "LATE"],
+    "weekendsPerMonth": 1,
+    "guaranteedWishDays": 4,
+    "childcare": "ALLOWANCE",
+    "childcareAllowanceChf": 300,
+    "minWorkloadPct": 40,
+    "maxWorkloadPct": 80,
+    "wardName": "Wohnbereich Lindenblick"
+  }
+}

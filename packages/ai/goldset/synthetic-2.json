@@ -1,0 +1,16 @@
+{
+  "id": "synthetic-2",
+  "synthetic": true,
+  "text": "Medizinische Praxisassistentin MPA 60 %\nUnsere Hausarztpraxis in Kloten sucht eine MPA für 60 %, nur werktags. Sie arbeiten am Empfang, im Labor und beim Röntgen. Wir bieten 5 Wochen Ferien und CHF 800 Weiterbildungsbudget pro Jahr.",
+  "expected": {
+    "title": "Medizinische Praxisassistentin MPA 60 %",
+    "profession": "MPA",
+    "department": "PRACTICE",
+    "shiftTypes": ["WEEKDAYS_ONLY"],
+    "minWorkloadPct": 60,
+    "maxWorkloadPct": 60,
+    "vacationWeeks": 5,
+    "educationBudgetChf": 800,
+    "city": "Kloten"
+  }
+}

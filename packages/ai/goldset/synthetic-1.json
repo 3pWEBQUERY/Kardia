@@ -1,0 +1,23 @@
+{
+  "id": "synthetic-1",
+  "synthetic": true,
+  "text": "Dipl. Pflegefachperson HF/FH Intensivpflege 80–100 %\nFür unsere Intensivstation (IPS) mit 12 Betten suchen wir per 1. März eine engagierte Pflegefachperson. Jahreslohn CHF 88'000 bis CHF 112'000 bei 100 %, 13. Monatslohn. Früh-, Spät- und Nachtdienst. Der Dienstplan steht 6 Wochen im Voraus. Nachtzulage CHF 8 pro Stunde, Sonntagszulage 50 %. Einarbeitung 8 Wochen mit fester Bezugsperson. 5 Wochen Ferien. GAV Zürcher Spitäler. Parkplätze vorhanden.",
+  "expected": {
+    "title": "Dipl. Pflegefachperson HF/FH Intensivpflege 80–100 %",
+    "profession": "NURSE_HF_FH",
+    "department": "ICU",
+    "salaryMinChf": 88000,
+    "salaryMaxChf": 112000,
+    "thirteenthSalary": true,
+    "shiftTypes": ["EARLY", "LATE", "NIGHT"],
+    "rosterLeadWeeks": 6,
+    "nightAllowanceChfHour": 8,
+    "sundayAllowancePct": 50,
+    "onboardingWeeks": 8,
+    "vacationWeeks": 5,
+    "collectiveAgreement": "GAV Zürcher Spitäler",
+    "minWorkloadPct": 80,
+    "maxWorkloadPct": 100,
+    "hasParking": true
+  }
+}

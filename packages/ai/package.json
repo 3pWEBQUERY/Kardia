@@ -1,0 +1,30 @@
+{
+  "name": "@kardia/ai",
+  "version": "0.1.0",
+  "private": true,
+  "description": "KI-Funktionen KI-1 bis KI-6 mit Claude Haiku 5.5: strukturierte Ausgabe, Belegpflicht, Protokoll in AiRun.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run",
+    "goldset": "tsx src/goldset.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.136.0",
+    "@kardia/core": "workspace:*",
+    "@kardia/db": "workspace:*",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@kardia/config": "workspace:*",
+    "@types/node": "^22.19.0",
+    "eslint": "^9.39.0",
+    "tsx": "^4.21.0",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.5"
+  }
+}
