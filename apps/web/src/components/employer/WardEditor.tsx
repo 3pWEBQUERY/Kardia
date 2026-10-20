@@ -9,7 +9,7 @@ import { Button, Callout, Select, Sheet, useToast } from '@kardia/ui';
 import { saveWard } from '@/app/actions/employer';
 import { useActionMessage } from '@/lib/useActionError';
 
-import { LocationForm } from './LocationForm.tsx';
+import { LocationForm, type LocationPrefill } from './LocationForm.tsx';
 import { WardForm, type Evidence, type WardDraft } from './WardForm.tsx';
 
 import type { LocationInput } from '@kardia/core';
@@ -23,6 +23,7 @@ export function WardEditor({
   evidence,
   onSaved,
   submitLabel,
+  locationPrefill,
 }: {
   wardId?: string;
   locationId?: string;
@@ -31,12 +32,17 @@ export function WardEditor({
   evidence?: Partial<Record<string, Evidence>>;
   onSaved?: (id: string) => void;
   submitLabel?: string;
+  /** Adresse aus dem KI-Import: passenden Standort vorwählen oder zum Anlegen vorschlagen. */
+  locationPrefill?: LocationPrefill | undefined;
 }) {
   const t = useTranslations('employer.ward');
   const router = useRouter();
   const toast = useToast();
   const message = useActionMessage();
-  const [loc, setLoc] = useState(locationId ?? locations[0]?.id ?? '');
+  const importedCity = locationPrefill?.city?.trim().toLowerCase();
+  const matched = importedCity ? locations.find((l) => l.city.trim().toLowerCase() === importedCity) : undefined;
+  const [loc, setLoc] = useState(locationId ?? matched?.id ?? locations[0]?.id ?? '');
+  const suggestNew = !!locationPrefill?.city && !matched;
   const [newLoc, setNewLoc] = useState(false);
   const [busy, setBusy] = useState(false);
   const [serverErrors, setServerErrors] = useState<Record<string, string>>({});
@@ -87,6 +93,7 @@ export function WardEditor({
             trigger={<Button>{t('newLocation')}</Button>}
           >
             <LocationForm
+              prefill={locationPrefill}
               onSaved={(id) => {
                 setNewLoc(false);
                 setLoc(id);
@@ -95,6 +102,11 @@ export function WardEditor({
             />
           </Sheet>
         </div>
+      ) : null}
+      {!wardId && suggestNew ? (
+        <Callout action={<Button size="s" onClick={() => setNewLoc(true)}>{t('newLocation')}</Button>}>
+          {t('importedAddress', { address: [locationPrefill.street, [locationPrefill.postalCode, locationPrefill.city].filter(Boolean).join(' ')].filter(Boolean).join(', ') })}
+        </Callout>
       ) : null}
       {error ? <Callout tone="critical">{error}</Callout> : null}
       <WardForm

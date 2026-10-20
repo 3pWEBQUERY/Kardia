@@ -133,7 +133,8 @@
     "videoItem": "Video, {seconds} s",
     "benchmarkRow": "{value} · median {median} ({peers} wards)",
     "noBenchmark": "Shown only once there are 8 comparable wards in the same specialty and canton.",
-    "toBenchmark": "Go to benchmark"
+    "toBenchmark": "Go to benchmark",
+    "importedAddress": "Address from the job ad: {address}. No matching site yet – create it as a new site."
   },
   "reality": {
     "hint": "Verified staff confirm or dispute your details. Values appear from 5 responses. You can comment, but not delete or hide anything.",

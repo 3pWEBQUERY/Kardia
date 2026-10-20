@@ -133,7 +133,8 @@
     "videoItem": "Video, {seconds} s",
     "benchmarkRow": "{value} · mediana {median} ({peers} reparti)",
     "noBenchmark": "Visualizzazione solo a partire da 8 reparti di confronto nello stesso settore e nello stesso cantone.",
-    "toBenchmark": "Al benchmark"
+    "toBenchmark": "Al benchmark",
+    "importedAddress": "Indirizzo dall'annuncio: {address}. Nessuna sede corrispondente – crearla come nuova sede."
   },
   "reality": {
     "hint": "Collaboratori e collaboratrici verificati confermano o contestano le sue indicazioni. I valori appaiono a partire da 5 risposte. Può commentare, ma non eliminare né nascondere nulla.",

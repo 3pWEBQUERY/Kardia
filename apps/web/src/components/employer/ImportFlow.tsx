@@ -27,6 +27,7 @@ import { JobForm, type JobDraft } from './JobForm.tsx';
 import { emptyWardServer } from './wardDefaults.ts';
 import { WardEditor } from './WardEditor.tsx';
 
+import type { LocationPrefill } from './LocationForm.tsx';
 import type { Evidence, WardDraft } from './WardForm.tsx';
 
 interface ImportedField {
@@ -152,6 +153,16 @@ export function ImportFlow({
     evidence.name = { evidence: fields.wardName.evidence, confidence: fields.wardName.confidence };
   }
   const missing = missingRequiredFields(wardInitial);
+  const importedText = (k: string): string | undefined => {
+    const v = fields[k]?.value;
+    return typeof v === 'string' && v.trim() ? v.trim() : undefined;
+  };
+  const locationPrefill: LocationPrefill = {};
+  for (const k of ['street', 'postalCode', 'city'] as const) {
+    const v = importedText(k);
+    if (v) locationPrefill[k] = v;
+  }
+  if (typeof fields.hasParking?.value === 'boolean') locationPrefill.hasParking = fields.hasParking.value;
 
   const jobInitial: JobDraft = {
     wardId,
@@ -303,6 +314,7 @@ export function ImportFlow({
             locations={locations}
             initial={wardInitial}
             evidence={evidence}
+            locationPrefill={locationPrefill}
             submitLabel={t('saveWard')}
             onSaved={(id) => {
               setWardId(id);

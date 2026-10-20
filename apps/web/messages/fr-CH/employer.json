@@ -133,7 +133,8 @@
     "videoItem": "Vidéo, {seconds} s",
     "benchmarkRow": "{value} · médiane {median} ({peers} unités)",
     "noBenchmark": "Affichage seulement à partir de 8 unités comparables dans le même domaine et le même canton.",
-    "toBenchmark": "Vers le benchmark"
+    "toBenchmark": "Vers le benchmark",
+    "importedAddress": "Adresse tirée de l'annonce : {address}. Aucun site correspondant – le créer comme nouveau site."
   },
   "reality": {
     "hint": "Des collaborateur·rice·s vérifié·e·s confirment ou contestent vos indications. Les valeurs apparaissent à partir de 5 réponses. Vous pouvez commenter, mais ne pouvez rien supprimer ni masquer.",

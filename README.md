@@ -66,7 +66,7 @@ liefert direkt ein Session-Cookie. Seed-Personas: `lea@`, `marco@`, `sara@`, `na
 ```sh
 pnpm typecheck           # TypeScript strict, exactOptionalPropertyTypes
 pnpm lint                # ESLint + Stylelint + Designregeln (keine Schatten, Verläufe, Hex, Emoji)
-pnpm test                # Vitest: core, ai, worker, web (unit)
+pnpm test                # Vitest: core, ai, worker, ui (Kontrast), web (unit)
 pnpm test:integration    # gegen Postgres: AK-E1, AK-C2, AK-A1, AK-C1, AK-E2, AK-G1
 pnpm test:e2e            # Playwright gegen den Produktions-Build inkl. axe und Offline
 pnpm --filter @kardia/ui build-storybook && pnpm --filter @kardia/ui test:visual
@@ -74,6 +74,19 @@ pnpm --filter @kardia/ui build-storybook && pnpm --filter @kardia/ui test:visual
 
 CI führt alles bei jedem Pull Request aus (`.github/workflows/ci.yml`), dazu gitleaks
 und `pnpm audit`. Das KI-1-Goldset läuft nächtlich (`goldset.yml`).
+
+## Was ohne Zugangsdaten nicht geprüft ist
+
+Lokal und in der CI laufen alle Dienste ohne externe Konten. Folgende Anbindungen sind
+gebaut, aber erst mit echten Zugangsdaten verifizierbar:
+
+- Claude Haiku 5.5 (KI-1 bis KI-6): ohne `ANTHROPIC_API_KEY` fällt die Suche auf die
+  Stichwortsuche zurück, der Inserat-Import meldet einen Fehler und die Felder werden von
+  Hand erfasst. Das Goldset hat erst 3 synthetische Inserate.
+- E-Mail (SES), Web Push (VAPID), Bucket (S3) mit ClamAV, OSRM-Pendelzeiten, OJP (ÖV),
+  UID-Register und SECO-Liste. Für die SECO-Liste nimmt der Worker einen JSON-Spiegel an.
+- Stripe (Abo, Einzelinserat) und Sentry.
+- Docker-Images (`apps/*/Dockerfile`, `infra/osrm`) sind geschrieben, aber nicht gebaut.
 
 ## Betrieb
 

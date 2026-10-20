@@ -20,11 +20,16 @@ type Draft = Omit<LocationInput, 'lat' | 'lng' | 'canton'> & {
  * Arbeitsort (Pflicht, Modul A): Adresse, Koordinaten, Parkplatz. Koordinaten aus der
  * Adresse über die swisstopo-Suche; ohne Adresse ist kein Inserat möglich (Modul C).
  */
+export type LocationPrefill = Partial<Pick<LocationInput, 'street' | 'postalCode' | 'city' | 'hasParking'>>;
+
 export function LocationForm({
   initial,
+  prefill,
   onSaved,
 }: {
   initial?: (LocationInput & { id: string }) | undefined;
+  /** Vorschlag aus dem KI-Import; Koordinaten kommen weiterhin aus der Adresssuche. */
+  prefill?: LocationPrefill | undefined;
   onSaved: (id: string) => void;
 }) {
   const t = useTranslations('employer.location');
@@ -32,13 +37,13 @@ export function LocationForm({
   const message = useActionMessage();
   const [d, setD] = useState<Draft>(() => ({
     name: initial?.name ?? '',
-    street: initial?.street ?? '',
-    postalCode: initial?.postalCode ?? '',
-    city: initial?.city ?? '',
+    street: initial?.street ?? prefill?.street ?? '',
+    postalCode: initial?.postalCode ?? prefill?.postalCode ?? '',
+    city: initial?.city ?? prefill?.city ?? '',
     canton: initial?.canton ?? 'ZH',
     lat: initial ? String(initial.lat) : '',
     lng: initial ? String(initial.lng) : '',
-    hasParking: initial?.hasParking ?? false,
+    hasParking: initial?.hasParking ?? prefill?.hasParking ?? false,
   }));
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);

@@ -133,7 +133,8 @@
     "videoItem": "Video, {seconds} s",
     "benchmarkRow": "{value} · Median {median} ({peers} Stationen)",
     "noBenchmark": "Anzeige erst ab 8 Vergleichsstationen im gleichen Fachbereich und Kanton.",
-    "toBenchmark": "Zum Benchmark"
+    "toBenchmark": "Zum Benchmark",
+    "importedAddress": "Adresse aus dem Inserat: {address}. Noch kein passender Standort – als neuen Standort anlegen."
   },
   "reality": {
     "hint": "Verifizierte Mitarbeitende bestätigen oder widersprechen Ihren Angaben. Werte erscheinen ab 5 Antworten. Sie können kommentieren, aber nichts löschen oder ausblenden.",
