@@ -64,6 +64,7 @@ export default async function PassPage({ searchParams }: { searchParams: Promise
                 rejectReason: c.rejectReason,
                 fileId: c.fileId,
                 fileStatus: c.file?.status ?? null,
+                suggestion: c.suggestion,
               }))}
             />
           </CardBody>

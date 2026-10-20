@@ -91,7 +91,10 @@
       "hr": "Kroatisch",
       "tr": "Türkisch",
       "pl": "Polnisch"
-    }
+    },
+    "aiSuggestion": "KI-Vorschlag aus dem Dokument",
+    "aiApply": "Vorschlag übernehmen",
+    "aiSuggestionAvailable": "KI-Vorschlag verfügbar – zum Prüfen «Bearbeiten» öffnen"
   },
   "saved": {
     "title": "Merkliste & Vergleich",

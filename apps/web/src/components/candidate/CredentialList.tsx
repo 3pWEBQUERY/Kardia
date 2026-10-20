@@ -27,11 +27,12 @@ export interface CredentialRow {
   rejectReason: string | null;
   fileId: string | null;
   fileStatus: string | null;
+  suggestion?: { title: string | null; issuer: string | null; issuedAt: string | null } | null;
 }
 
 const TONE = { SUBMITTED: 'neutral', IN_REVIEW: 'accent', VERIFIED: 'ok', REJECTED: 'critical', EXPIRED: 'warn' } as const;
 
-type Draft = Omit<CredentialRow, 'status' | 'rejectReason' | 'fileStatus' | 'id'> & { id?: string };
+type Draft = Omit<CredentialRow, 'status' | 'rejectReason' | 'fileStatus' | 'id' | 'suggestion'> & { id?: string };
 
 const EMPTY: Draft = { type: 'DIPLOMA', title: '', issuer: null, issuedAt: null, validUntil: null, registry: null, registryNumber: null, fileId: null };
 
@@ -53,12 +54,14 @@ export function CredentialList({ credentials, defaultRegistry }: { credentials: 
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
+  const [suggestion, setSuggestion] = useState<CredentialRow['suggestion']>(null);
 
   const open = (row?: CredentialRow) => {
     setError(null);
     setFileName(null);
     setEditingVerified(row?.status === 'VERIFIED');
-    setDraft(row ? { ...row } : { ...EMPTY, registry: defaultRegistry });
+    setSuggestion(row?.suggestion ?? null);
+    setDraft(row ? { id: row.id, type: row.type, title: row.title, issuer: row.issuer, issuedAt: row.issuedAt, validUntil: row.validUntil, registry: row.registry, registryNumber: row.registryNumber, fileId: row.fileId } : { ...EMPTY, registry: defaultRegistry });
   };
 
   const onFile = async (file: File | undefined) => {
@@ -111,6 +114,7 @@ export function CredentialList({ credentials, defaultRegistry }: { credentials: 
               </span>
               {cr.status === 'REJECTED' && cr.rejectReason ? <span className="text-micro text-critical-600">{t('rejected', { reason: cr.rejectReason })}</span> : null}
               {cr.fileStatus === 'SCANNING' ? <span className="text-micro text-ink-500">{t('scanning')}</span> : null}
+              {cr.suggestion ? <span className="text-micro text-accent-600">{t('aiSuggestionAvailable')}</span> : null}
             </div>
             <div className="flex items-center gap-2">
               <StatusChip tone={TONE[cr.status as keyof typeof TONE] ?? 'neutral'}>{e(`CredentialStatus.${cr.status}`)}</StatusChip>
@@ -143,6 +147,24 @@ export function CredentialList({ credentials, defaultRegistry }: { credentials: 
         {draft ? (
           <div className="flex flex-col gap-4">
             {editingVerified ? <Callout tone="warn">{t('resetWarning')}</Callout> : null}
+            {suggestion ? (
+              <Callout
+                title={t('aiSuggestion')}
+                action={
+                  <Button
+                    size="s"
+                    onClick={() => {
+                      setDraft({ ...draft, title: suggestion.title ?? draft.title, issuer: suggestion.issuer ?? draft.issuer, issuedAt: suggestion.issuedAt ?? draft.issuedAt });
+                      setSuggestion(null);
+                    }}
+                  >
+                    {t('aiApply')}
+                  </Button>
+                }
+              >
+                {[suggestion.title, suggestion.issuer, suggestion.issuedAt].filter(Boolean).join(' · ')}
+              </Callout>
+            ) : null}
             <Select label={t('type')} value={draft.type} onChange={(ev) => setDraft({ ...draft, type: ev.target.value })} options={Object.values(CredentialType).map((x) => ({ value: x, label: e(`CredentialType.${x}`) }))} />
             <Input label={t('credTitle')} required value={draft.title} onChange={(ev) => setDraft({ ...draft, title: ev.target.value })} placeholder={t('credTitlePlaceholder')} />
             <Input label={t('issuer')} value={draft.issuer ?? ''} onChange={(ev) => setDraft({ ...draft, issuer: ev.target.value })} />

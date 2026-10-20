@@ -28,11 +28,35 @@ export async function getPass(userId: string) {
     },
   });
   if (!candidate) return null;
+  // KI-Vorschlag aus der Dokument-Vorprüfung (KI-3): die Person bestätigt jedes Feld selbst (PRD 7.3).
+  const prechecks = await db.event.findMany({
+    where: { name: 'credential.precheck', entityId: { in: candidate.credentials.map((c) => c.id) } },
+    orderBy: { createdAt: 'desc' },
+  });
   return {
     ...candidate,
     phone: decryptOptional(candidate.phone),
-    credentials: candidate.credentials.map((c) => ({ ...c, registryNumber: decryptOptional(c.registryNumber) })),
+    credentials: candidate.credentials.map((c) => ({
+      ...c,
+      registryNumber: decryptOptional(c.registryNumber),
+      suggestion: suggestionFrom(prechecks.find((p) => p.entityId === c.id)?.props),
+    })),
   };
+}
+
+export interface CredentialSuggestion {
+  title: string | null;
+  issuer: string | null;
+  issuedAt: string | null;
+}
+
+function suggestionFrom(props: unknown): CredentialSuggestion | null {
+  if (!props || typeof props !== 'object') return null;
+  const p = props as Record<string, unknown>;
+  const str = (v: unknown) => (typeof v === 'string' && v.trim() ? v.trim() : null);
+  const issuedAt = str(p.issuedAt);
+  const s = { title: str(p.title), issuer: str(p.issuer), issuedAt: issuedAt && /^\d{4}-\d{2}-\d{2}$/.test(issuedAt) ? issuedAt : null };
+  return s.title || s.issuer || s.issuedAt ? s : null;
 }
 
 export async function upsertPass(userId: string, input: PassInput) {

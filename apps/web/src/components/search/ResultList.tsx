@@ -8,9 +8,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { evaluateMatch, formatChfRange, type Condition, type MatchResult, type PartialWardProfile } from '@kardia/core';
 import { Button, Icon, StatusChip, useToast, type RosterCode } from '@kardia/ui';
 
-import { toggleSavedJob } from '@/app/actions/candidate';
 import { ConditionChips } from '@/components/domain/ConditionChips';
 import { Roster } from '@/components/domain/Roster';
+import { saveJob } from '@/lib/saveJob';
 import { useActionMessage } from '@/lib/useActionError';
 
 export interface ClientHit {
@@ -100,7 +100,7 @@ export function ResultList({
 
   const onSave = async (jobId: string) => {
     if (!signedIn) {
-      window.location.href = `/sign-in?next=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+      window.location.assign(new URL(`/sign-in?next=${encodeURIComponent(window.location.pathname + window.location.search)}`, window.location.origin).href);
       return;
     }
     // Optimistisch, weil umkehrbar (PRD 7.4) – mit Rückgängig im Toast.
@@ -113,7 +113,7 @@ export function ResultList({
         return next;
       });
     flip(!wasSaved);
-    const result = await toggleSavedJob(jobId);
+    const result = await saveJob(jobId, wasSaved);
     if (!result.ok) {
       flip(wasSaved);
       toast({ tone: 'critical', message: message(result) });
@@ -122,7 +122,7 @@ export function ResultList({
     toast({
       tone: 'neutral',
       message: result.data.saved ? t('search.savedToast') : t('search.unsavedToast'),
-      undo: { label: t('actions.undo'), onUndo: () => void toggleSavedJob(jobId).then((r) => r.ok && flip(r.data.saved)) },
+      undo: { label: t('actions.undo'), onUndo: () => void saveJob(jobId, result.data.saved).then((r) => r.ok && flip(r.data.saved)) },
     });
   };
 

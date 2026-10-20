@@ -1,6 +1,6 @@
 /// <reference lib="webworker" />
 import { defaultCache } from '@serwist/turbopack/worker';
-import { CacheFirst, ExpirationPlugin, NetworkFirst, NetworkOnly, Serwist, type PrecacheEntry, type SerwistGlobalConfig } from 'serwist';
+import { BackgroundSyncPlugin, CacheFirst, ExpirationPlugin, NetworkFirst, NetworkOnly, Serwist, type PrecacheEntry, type SerwistGlobalConfig } from 'serwist';
 
 declare global {
   interface WorkerGlobalScope extends SerwistGlobalConfig {
@@ -26,6 +26,17 @@ const serwist = new Serwist({
   clientsClaim: true,
   navigationPreload: true,
   runtimeCaching: [
+    // Hintergrund-Synchronisation nur für "Merken" (PRD 13.2): offline vorgemerkt, später gesendet.
+    {
+      matcher: ({ url, request }) => url.pathname.startsWith('/api/v1/me/saved/') && (request.method === 'PUT' || request.method === 'DELETE'),
+      method: 'PUT',
+      handler: new NetworkOnly({ plugins: [new BackgroundSyncPlugin('kardia-saved', { maxRetentionTime: 7 * 24 * 60 })] }),
+    },
+    {
+      matcher: ({ url, request }) => url.pathname.startsWith('/api/v1/me/saved/') && request.method === 'DELETE',
+      method: 'DELETE',
+      handler: new NetworkOnly({ plugins: [new BackgroundSyncPlugin('kardia-saved-delete', { maxRetentionTime: 7 * 24 * 60 })] }),
+    },
     { matcher: ({ url }) => url.pathname.startsWith('/api/files/') || url.searchParams.has('X-Amz-Signature'), handler: new NetworkOnly() },
     { matcher: ({ url }) => url.pathname.startsWith('/api/auth/'), handler: new NetworkOnly() },
     {

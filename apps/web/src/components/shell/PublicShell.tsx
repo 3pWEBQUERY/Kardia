@@ -8,6 +8,7 @@ import { Button } from '@kardia/ui';
 import { parseTheme, THEME_COOKIE } from '@/lib/theme';
 import { getSession } from '@/server/session';
 
+import { InstallPrompt } from './InstallPrompt.tsx';
 import { Preferences } from './Preferences.tsx';
 
 import type { ReactNode } from 'react';
@@ -55,6 +56,7 @@ export async function PublicShell({ children }: { children: ReactNode }) {
       <main id="main" className="flex-1">
         {children}
       </main>
+      <InstallPrompt />
       <footer className="border-t border-line-200 bg-surface-0">
         <div className="mx-auto flex max-w-content flex-col gap-4 px-4 py-8 md:flex-row md:items-center md:justify-between md:px-8">
           <p className="max-w-prose text-micro text-ink-500">{t('footer.claim')}</p>

@@ -291,7 +291,7 @@ const ORGS: OrgSeed[] = [
       lng: 8.5985,
       parking: true,
     },
-    wards: [icu(6, 5, 87_000), icu(7, 6, 90_000, 60)],
+    wards: [icu(6, 5, 87_000), icu(7, 6, 90_000, 60), icu(9, 4, 88_000)],
   },
   {
     name: 'Kinderspital Hirslanden-Berg (Demo)',
