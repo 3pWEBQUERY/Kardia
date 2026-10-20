@@ -1,8 +1,9 @@
-import type Anthropic from '@anthropic-ai/sdk';
 import { z } from 'zod';
 
 import { runStructured, type AiLogger } from '../runner.ts';
 import { nullable, obj, str } from '../schema.ts';
+
+import type Anthropic from '@anthropic-ai/sdk';
 
 /**
  * KI-6 Übersetzung: Freitextfelder eines Stationsprofils → FR, IT, EN. Der

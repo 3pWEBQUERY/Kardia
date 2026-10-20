@@ -6,6 +6,8 @@ import { ChildcareType, Department, Profession, ShiftType } from '@kardia/db/enu
 import { runStructured, type AiLogger } from '../runner.ts';
 import { arr, bool, enumOf, int, num, nullable, obj, str, type JsonSchema } from '../schema.ts';
 
+import type Anthropic from '@anthropic-ai/sdk';
+
 /**
  * KI-1 Inserat-Strukturierung: Inseratetext (max. 20'000 Zeichen) → Stationsprofil-
  * Felder, je Feld Belegstelle (≤ 200 Zeichen) und Konfidenz. Werte ohne Beleg im
@@ -179,7 +181,7 @@ export async function structureJobAd(input: {
   text: string;
   orgId: string;
   logger: AiLogger;
-  client?: import('@anthropic-ai/sdk').default;
+  client?: Anthropic;
 }): Promise<JobStructuringResult> {
   const text = input.text.slice(0, MAX_IMPORT_CHARS);
   const raw = await runStructured({

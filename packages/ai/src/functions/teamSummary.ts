@@ -1,10 +1,11 @@
-import type Anthropic from '@anthropic-ai/sdk';
 import { z } from 'zod';
 
 import { REALITY_CHECK_MIN_VOTES } from '@kardia/core';
 
 import { runStructured, type AiLogger } from '../runner.ts';
 import { obj, str } from '../schema.ts';
+
+import type Anthropic from '@anthropic-ai/sdk';
 
 /**
  * KI-5 Team-Zusammenfassung: ≥ 5 Freitexte einer Station zu einem Feld → 2 Sätze

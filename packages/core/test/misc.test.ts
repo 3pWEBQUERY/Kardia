@@ -1,15 +1,15 @@
 import { describe, expect, it } from 'vitest';
 
+import { sniffMime, uploadIssues } from '../src/files.ts';
+import { shiftsToIcs, canCandidateCancel } from '../src/flexpool.ts';
 import { formatChf, formatChfRange, formatDate, formatNumber, formatTime } from '../src/format.ts';
 import { decodeGeohash, encodeGeohash } from '../src/geo.ts';
 import { IDENTIFYING_KEYS, offerRuleIssues, toAnonymousProfile } from '../src/marketplace.ts';
 import { normalizeUid } from '../src/org.ts';
+import { credentialEditResetsStatus } from '../src/pass.ts';
 import { canTransition, statusChangeSchema } from '../src/pipeline.ts';
 import { countShifts, scaleRoster } from '../src/roster.ts';
 import { aggregateRealityChecks, computeBenchmark } from '../src/team.ts';
-import { shiftsToIcs, canCandidateCancel } from '../src/flexpool.ts';
-import { sniffMime, uploadIssues } from '../src/files.ts';
-import { credentialEditResetsStatus } from '../src/pass.ts';
 import { trainingGap, yearsClosedByJob } from '../src/training.ts';
 
 import { completeWard } from './fixtures.ts';
@@ -65,7 +65,7 @@ describe('Marktplatz', () => {
         credentials: [{ status: 'VERIFIED' }],
         // Zusätzliche Felder dürfen nie durchgereicht werden:
         ...({ firstName: 'Lea', lastName: 'Muster', email: 'lea@example.ch' } as object),
-      } as Parameters<typeof toAnonymousProfile>[0],
+      },
       'ref-1',
     );
     const json = JSON.stringify(anon);

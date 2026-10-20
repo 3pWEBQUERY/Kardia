@@ -1,7 +1,7 @@
 'use client';
 
-import { Toast as ToastPrimitive } from 'radix-ui';
 import { X } from 'lucide-react';
+import { Toast as ToastPrimitive } from 'radix-ui';
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 
 import { cx } from './cx.ts';

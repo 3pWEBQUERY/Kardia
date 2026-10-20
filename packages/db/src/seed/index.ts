@@ -6,6 +6,7 @@
 import 'dotenv/config';
 
 import { createDb } from '../client.ts';
+
 import type {
   Department,
   Prisma,
@@ -847,7 +848,9 @@ async function main(): Promise<void> {
       ['N', 22.5, 31.5],
     ];
     for (let d = 2; d < 16; d += 2) {
-      const [code, from, to] = codes[d % 3] ?? codes[0]!;
+      const slot = codes[d % 3];
+      if (!slot) continue;
+      const [code, from, to] = slot;
       const day = new Date(dateOnly(daysFromNow(d)));
       await db.shift.create({
         data: {

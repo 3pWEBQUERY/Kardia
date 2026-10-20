@@ -1,6 +1,7 @@
+import { cx } from './cx.ts';
+
 import type { ReactNode } from 'react';
 
-import { cx } from './cx.ts';
 
 /** Pipeline-Spalte: Kopf mit Anzahl, Karten mit Pass-Status, Tastatursteuerung. */
 export function PipelineColumn({ title, count, children, id }: { title: ReactNode; count: number; children: ReactNode; id: string }) {

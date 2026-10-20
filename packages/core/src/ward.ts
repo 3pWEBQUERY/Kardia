@@ -437,9 +437,7 @@ export type OverridableField = (typeof OVERRIDABLE_FIELDS)[number];
 
 export const jobOverridesSchema = wardProfileShape
   .pick(
-    Object.fromEntries(OVERRIDABLE_FIELDS.map((k) => [k, true])) as {
-      [K in OverridableField]: true;
-    },
+    Object.fromEntries(OVERRIDABLE_FIELDS.map((k) => [k, true])) as Record<OverridableField, true>,
   )
   .partial();
 

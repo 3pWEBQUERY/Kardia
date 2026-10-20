@@ -6,7 +6,7 @@ import { toSearchFilter } from '../src/functions/searchParsing.ts';
 import { NotEnoughTextsError, summarizeTeamComments } from '../src/functions/teamSummary.ts';
 import { AiError, costUsd, type AiRunRecord } from '../src/runner.ts';
 
-type Reply = { input?: unknown; stop?: Anthropic.StopReason; throws?: unknown };
+interface Reply { input?: unknown; stop?: Anthropic.StopReason; throws?: unknown }
 
 function fakeClient(replies: Reply[]) {
   const calls: Anthropic.MessageCreateParamsNonStreaming[] = [];
@@ -16,6 +16,7 @@ function fakeClient(replies: Reply[]) {
         calls.push(structuredClone(params));
         const r = replies.shift();
         if (!r) throw new Error('keine Antwort mehr');
+        // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors -- SDK-Fehlerobjekte im Test
         if (r.throws) return Promise.reject(r.throws);
         const toolName = params.tool_choice && 'name' in params.tool_choice ? params.tool_choice.name : 'x';
         return Promise.resolve({

@@ -67,14 +67,14 @@ export function bucketKeyFor(purpose: UploadPurpose, id: string, mimeType: strin
 export function sniffMime(head: Uint8Array): string | null {
   const starts = (...bytes: number[]) => bytes.every((b, i) => head[i] === b);
   const ascii = (offset: number, text: string) =>
-    [...text].every((c, i) => head[offset + i] === c.charCodeAt(0));
+    Array.from({ length: text.length }, (_, i) => i).every((i) => head[offset + i] === text.charCodeAt(i));
   if (starts(0x25, 0x50, 0x44, 0x46, 0x2d)) return 'application/pdf'; // %PDF-
   if (starts(0xff, 0xd8, 0xff)) return 'image/jpeg';
   if (starts(0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a)) return 'image/png';
   if (ascii(4, 'ftyp')) return ascii(8, 'qt  ') ? 'video/quicktime' : 'video/mp4';
   const text = new TextDecoder('utf-8', { fatal: false })
     .decode(head.slice(0, 256))
-    .replace(/^﻿/, '');
+    .replace(/^\uFEFF/, '');
   if (text.startsWith('WEBVTT')) return 'text/vtt';
   if (/^\s*(<\?xml[^>]*>\s*)?<svg[\s>]/i.test(text)) return 'image/svg+xml';
   return null;

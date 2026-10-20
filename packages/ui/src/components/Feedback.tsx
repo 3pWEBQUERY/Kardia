@@ -1,8 +1,10 @@
 import { CircleAlert, Info, TriangleAlert } from 'lucide-react';
-import type { ReactNode } from 'react';
+
 
 import { cx } from './cx.ts';
 import { Icon } from './Icon.tsx';
+
+import type { ReactNode } from 'react';
 
 /** Leerzustand: ein Satz + eine Handlung, keine Illustration (PRD 7.4, 8.5). */
 export function EmptyState({ children, action }: { children: ReactNode; action?: ReactNode }) {

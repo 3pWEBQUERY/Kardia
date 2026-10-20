@@ -1,10 +1,11 @@
-import type Anthropic from '@anthropic-ai/sdk';
 import { z } from 'zod';
 
 import { CredentialType } from '@kardia/db/enums';
 
 import { runStructured, type AiLogger } from '../runner.ts';
 import { arr, enumOf, nullable, obj, str } from '../schema.ts';
+
+import type Anthropic from '@anthropic-ai/sdk';
 
 /**
  * KI-3 Dokument-Vorprüfung (R2): Diplom-Scan + erfasste Angaben des Nachweises →

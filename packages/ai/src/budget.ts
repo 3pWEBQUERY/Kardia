@@ -1,7 +1,7 @@
+import type { AiLogger } from './runner.ts';
 import type { Db } from '@kardia/db';
 import type { AiFunction } from '@kardia/db/enums';
 
-import type { AiLogger } from './runner.ts';
 
 /** Budgetgrenzen im Code (PRD 9.3). */
 export const MAX_JOB_STRUCTURING_PER_ORG_PER_DAY = 200;
@@ -56,7 +56,7 @@ export function dbAiLogger(db: Db): AiLogger {
         status: r.status,
         inputHash: r.inputHash,
         rawInput: r.rawInput,
-        ...(r.rawOutput != null ? { rawOutput: r.rawOutput as object } : {}),
+        ...(r.rawOutput != null ? { rawOutput: r.rawOutput } : {}),
         orgId: r.orgId,
       },
     });

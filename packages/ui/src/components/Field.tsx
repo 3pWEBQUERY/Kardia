@@ -1,7 +1,7 @@
 'use client';
 
-import { Checkbox as CheckboxPrimitive, RadioGroup as RadioPrimitive, Switch as SwitchPrimitive } from 'radix-ui';
 import { Check } from 'lucide-react';
+import { Checkbox as CheckboxPrimitive, RadioGroup as RadioPrimitive, Switch as SwitchPrimitive } from 'radix-ui';
 import {
   forwardRef,
   useId,

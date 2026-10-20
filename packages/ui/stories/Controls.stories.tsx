@@ -1,9 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 
 import { Button } from '../src/components/Button.tsx';
 import { Combobox } from '../src/components/Combobox.tsx';
 import { Checkbox, Input, RadioGroup, Select, Switch, Textarea } from '../src/components/Field.tsx';
+
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta: Meta = { title: 'Komponenten/Steuerelemente' };
 export default meta;

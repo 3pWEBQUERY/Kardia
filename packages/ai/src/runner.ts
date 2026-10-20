@@ -1,9 +1,10 @@
 import { createHash } from 'node:crypto';
 
 import Anthropic from '@anthropic-ai/sdk';
-import type { z } from 'zod';
 
 import type { AiFunction, AiRunStatus } from '@kardia/db/enums';
+import type { z } from 'zod';
+
 
 /**
  * Gemeinsamer Ablauf aller KI-Funktionen (PRD 9.2):

@@ -9,7 +9,8 @@ import { fileURLToPath } from 'node:url';
 
 import { z } from 'zod';
 
-import { IMPORT_FIELD_KEYS, structureJobAd, type ImportFieldKey } from './functions/jobStructuring.ts';
+import { IMPORT_FIELD_KEYS, structureJobAd } from './functions/jobStructuring.ts';
+
 import type { AiRunRecord } from './runner.ts';
 
 const dir = fileURLToPath(new URL('../goldset', import.meta.url));
@@ -23,7 +24,11 @@ const sampleSchema = z.object({
 const ACCURACY_MIN = 0.95;
 
 function same(a: unknown, b: unknown): boolean {
-  if (Array.isArray(a) && Array.isArray(b)) return a.length === b.length && [...a].sort().join() === [...b].sort().join();
+  if (Array.isArray(a) && Array.isArray(b)) {
+    const sa = (a as unknown[]).map(String).sort();
+    const sb = (b as unknown[]).map(String).sort();
+    return sa.length === sb.length && sa.join() === sb.join();
+  }
   if (typeof a === 'number' && typeof b === 'number') return Math.abs(a - b) < 1e-6;
   if (typeof a === 'string' && typeof b === 'string') return a.trim().toLowerCase() === b.trim().toLowerCase();
   return a === b;
@@ -45,7 +50,7 @@ for (const file of files) {
   });
   const wrong: string[] = [];
   const inventedHere: string[] = [];
-  for (const key of IMPORT_FIELD_KEYS as ImportFieldKey[]) {
+  for (const key of IMPORT_FIELD_KEYS) {
     const expected = sample.expected[key] ?? null;
     const actual = result.fields[key]?.value ?? null;
     total += 1;

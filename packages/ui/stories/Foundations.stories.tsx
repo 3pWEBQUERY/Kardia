@@ -1,6 +1,7 @@
+import { colors } from '../src/tokens.generated.ts';
+
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { colors } from '../src/tokens.generated.ts';
 
 const meta: Meta = { title: 'Grundlagen/Tokens' };
 export default meta;

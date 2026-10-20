@@ -1,11 +1,13 @@
 'use client';
 
-import { Dialog as DialogPrimitive, DropdownMenu as MenuPrimitive, Popover as PopoverPrimitive, Tabs as TabsPrimitive, Tooltip as TooltipPrimitive } from 'radix-ui';
 import { X } from 'lucide-react';
-import type { ReactNode } from 'react';
+import { Dialog as DialogPrimitive, DropdownMenu as MenuPrimitive, Popover as PopoverPrimitive, Tabs as TabsPrimitive, Tooltip as TooltipPrimitive } from 'radix-ui';
+
 
 import { cx } from './cx.ts';
 import { Icon } from './Icon.tsx';
+
+import type { ReactNode } from 'react';
 
 /** Elevation = surface-0 + 1 px Rand line-300 + bei Dialogen Abdeckung overlay (PRD 8.1). */
 const ELEVATED = 'border border-line-300 bg-surface-0';

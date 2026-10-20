@@ -1,8 +1,9 @@
-import type Anthropic from '@anthropic-ai/sdk';
 import { z } from 'zod';
 
 import { runStructured, type AiLogger } from '../runner.ts';
 import { enumOf, obj, str } from '../schema.ts';
+
+import type Anthropic from '@anthropic-ai/sdk';
 
 /**
  * KI-4 Moderation: Fragen, Antworten und Realitäts-Check-Freitexte → Kategorie

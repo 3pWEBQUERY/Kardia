@@ -1,8 +1,10 @@
 import { TriangleAlert } from 'lucide-react';
-import type { ReactNode } from 'react';
+
 
 import { cx } from './cx.ts';
 import { Icon } from './Icon.tsx';
+
+import type { ReactNode } from 'react';
 
 /**
  * Profil-Feldzeile (PRD 8.5): Label · Arbeitgeberwert · Team-Wert · Bestätigungsdatum.

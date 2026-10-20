@@ -96,19 +96,20 @@ export function Combobox({
         />
         {name ? <input type="hidden" name={name} value={value ?? ''} /> : null}
         {open ? (
-          <ul
+          <div
             id={listId}
             role="listbox"
             className="absolute z-30 mt-1 max-h-64 w-full overflow-y-auto rounded-card border border-line-300 bg-surface-0 py-1"
           >
             {filtered.length === 0 ? (
-              <li className="px-3 py-2 text-body-s text-ink-500">{emptyLabel}</li>
+              <div className="px-3 py-2 text-body-s text-ink-500">{emptyLabel}</div>
             ) : (
               filtered.map((o, i) => (
-                <li
+                <div
                   key={o.value}
                   id={`${id}-opt-${i}`}
                   role="option"
+                  tabIndex={-1}
                   aria-selected={o.value === value}
                   onMouseDown={(e) => {
                     e.preventDefault();
@@ -121,10 +122,10 @@ export function Combobox({
                   )}
                 >
                   {o.label}
-                </li>
+                </div>
               ))
             )}
-          </ul>
+          </div>
         ) : null}
       </div>
     </FieldShell>

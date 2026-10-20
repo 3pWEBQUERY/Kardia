@@ -1,4 +1,5 @@
 import tailwindcss from '@tailwindcss/vite';
+
 import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {

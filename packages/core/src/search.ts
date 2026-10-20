@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { Department, Profession, ShiftType } from '@kardia/db/enums';
 
 import { COMMUTE_GEOHASH_PRECISION, isGeohash } from './geo.ts';
+
 import type { PartialWardProfile } from './ward.ts';
 
 /**

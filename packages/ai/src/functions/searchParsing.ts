@@ -6,6 +6,8 @@ import { Department, Profession } from '@kardia/db/enums';
 import { runStructured, type AiLogger } from '../runner.ts';
 import { arr, enumOf, int, nullable, num, obj, str } from '../schema.ts';
 
+import type Anthropic from '@anthropic-ai/sdk';
+
 /**
  * KI-2 Suchsatz zu Filter: "IPS Zürich, keine Nächte, ab März, 80 %" → Filterobjekt.
  * Läuft als einzige KI-Funktion im Request-Pfad der Suche, mit 1'500 ms Zeitlimit;
@@ -111,7 +113,7 @@ export async function parseSearchSentence(input: {
   sentence: string;
   logger: AiLogger;
   today?: string;
-  client?: import('@anthropic-ai/sdk').default;
+  client?: Anthropic;
 }): Promise<SearchFilter> {
   const sentence = input.sentence.slice(0, 300);
   const raw = await runStructured({

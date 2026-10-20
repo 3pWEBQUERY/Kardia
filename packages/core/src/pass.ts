@@ -78,7 +78,8 @@ export function credentialEditResetsStatus(
 
 function normalize(v: unknown): string {
   if (v instanceof Date) return v.toISOString().slice(0, 10);
-  return v == null ? '' : String(v);
+  if (v == null) return '';
+  return typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean' ? String(v) : JSON.stringify(v);
 }
 
 /**
