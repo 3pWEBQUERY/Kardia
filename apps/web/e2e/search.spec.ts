@@ -29,10 +29,11 @@ test.describe('Fachperson – erster Besuch bis Treffer', () => {
   });
 
   test('Leerzustand nennt die nächste Handlung', async ({ page }) => {
-    await page.goto('/');
-    await page.getByLabel('Welcher Beruf?').selectOption('MIDWIFE');
-    await page.getByRole('button', { name: 'Passende Stationen zeigen' }).click();
-    await expect(page.getByText(/Keine Treffer/)).toBeVisible();
+    // Hebammen sind nicht in den drei Startfragen (R1-Berufe), aber per Filter-URL suchbar.
+    const f = Buffer.from(JSON.stringify({ profession: 'MIDWIFE' })).toString('base64url');
+    await page.goto(`/search?f=${f}`);
+    await expect(page.getByText(/Keine Treffer für diese Bedingungen/)).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Filter zurücksetzen' })).toBeVisible();
   });
 
   test('Stelle zeigt Dienstrhythmus, Stationsprofil mit Bestätigungsdatum und JSON-LD', async ({ page }) => {

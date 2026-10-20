@@ -41,7 +41,7 @@ function createAuth() {
       cookiePrefix: 'kardia',
       useSecureCookies: e.APP_ORIGIN.startsWith('https://'),
     },
-    rateLimit: { enabled: true, window: 60, max: 30, storage: 'memory' },
+    rateLimit: { enabled: !e.RATE_LIMIT_DISABLED, window: 60, max: 30, storage: 'memory' },
     databaseHooks: {
       session: {
         create: {

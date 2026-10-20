@@ -20,7 +20,7 @@ export default defineConfig({
     ...(process.env.PW_CHROMIUM_PATH ? { launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } } : {}),
   },
   projects: [
-    { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
+    { name: 'desktop', use: { ...devices['Desktop Chrome'] }, testIgnore: /mobile\.spec\.ts/ },
     { name: 'mobile', use: { ...devices['Pixel 7'] }, testMatch: /mobile\.spec\.ts/ },
   ],
   webServer: {

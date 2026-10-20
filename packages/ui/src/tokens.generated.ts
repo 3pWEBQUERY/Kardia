@@ -29,7 +29,7 @@ export const colors = {
     "dark": "#C3C9D2"
   },
   "ink-500": {
-    "light": "#6B7383",
+    "light": "#646C7C",
     "dark": "#8E96A3"
   },
   "accent-600": {

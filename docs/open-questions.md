@@ -11,3 +11,9 @@
 | Q-7 Datenübermittlung USA | Anthropic-Aufrufe nur mit aufgabenbezogenen Daten; Wechsel auf Bedrock EU über einen anderen Client in `packages/ai/src/runner.ts` möglich. |
 | Q-8 Markenrecherche «Kardia» | Name ist Arbeitstitel; zentral in `common.json` (`brand`). |
 | Q-9 Muster-Dienstplan Pflicht ab R1 | `ROSTER_PATTERN_REQUIRED = true` in `packages/core/src/ward.ts` (ein Schalter). |
+
+## Abweichungen vom PRD
+
+| Stelle | Abweichung und Grund |
+| --- | --- |
+| Token `ink-500` (hell) | `#646C7C` statt `#6B7383`. Das PRD prüft den Kontrast nur gegen `surface-0` (4.8:1); auf dem Seitenhintergrund `surface-50` erreicht `#6B7383` nur 4.49:1 und fällt unter WCAG AA. `#646C7C` erreicht 5.3 / 5.0 / 4.6:1 auf `surface-0` / `-50` / `-100`. Der Dunkelmodus bleibt unverändert. |
