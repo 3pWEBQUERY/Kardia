@@ -1,0 +1,40 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "stream",
+  "globalEnv": ["NODE_ENV", "CI"],
+  "tasks": {
+    "generate": {
+      "outputs": ["src/generated/**"],
+      "cache": false
+    },
+    "build": {
+      "dependsOn": ["^build", "generate"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", "public/sw.js"],
+      "env": [
+        "NEXT_PUBLIC_*",
+        "APP_ORIGIN",
+        "DATABASE_URL",
+        "BETTER_AUTH_*",
+        "SENTRY_*"
+      ]
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["^build", "generate"]
+    },
+    "typecheck": {
+      "dependsOn": ["^build", "generate"]
+    },
+    "test": {
+      "dependsOn": ["^build", "generate"],
+      "outputs": ["coverage/**"]
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

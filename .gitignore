@@ -1,0 +1,31 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# builds
+.next/
+out/
+dist/
+.turbo/
+*.tsbuildinfo
+storybook-static/
+packages/db/src/generated/
+packages/ui/src/tokens.css
+packages/ui/src/tokens.generated.ts
+apps/web/public/sw.js
+apps/web/public/sw.js.map
+
+# tests
+coverage/
+playwright-report/
+test-results/
+
+# env
+.env
+.env.*
+!.env.example
+
+# misc
+.DS_Store
+*.log
+apps/web/next-env.d.ts

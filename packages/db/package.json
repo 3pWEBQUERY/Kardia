@@ -1,0 +1,36 @@
+{
+  "name": "@kardia/db",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Prisma-Schema, Migrationen, Client und Seed-Daten.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./enums": "./src/enums.ts"
+  },
+  "scripts": {
+    "generate": "prisma generate",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
+    "migrate:diff": "node scripts/check-migrations.mjs",
+    "seed": "tsx src/seed/index.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "7.10.1",
+    "@prisma/client": "7.10.1",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "@kardia/config": "workspace:*",
+    "@types/node": "^22.19.0",
+    "@types/pg": "^8.23.1",
+    "dotenv": "^17.2.0",
+    "tsx": "^4.21.0",
+    "eslint": "^9.39.0",
+    "prisma": "7.10.1",
+    "typescript": "~5.9.3"
+  }
+}

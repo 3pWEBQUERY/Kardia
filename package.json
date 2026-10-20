@@ -1,0 +1,39 @@
+{
+  "name": "kardia",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Kardia – Stellenplattform für Gesundheitsberufe in der Schweiz. Arbeitsbedingungen statt Inseratetext.",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22.12.0",
+    "pnpm": ">=10"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint && pnpm lint:styles && pnpm lint:design",
+    "lint:styles": "stylelint \"apps/web/src/**/*.css\" \"packages/ui/src/**/*.css\"",
+    "lint:design": "node scripts/check-design-rules.mjs",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:integration": "pnpm --filter @kardia/web test:integration",
+    "test:e2e": "pnpm --filter @kardia/web test:e2e",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "db:generate": "pnpm --filter @kardia/db generate",
+    "db:migrate": "pnpm --filter @kardia/db migrate:deploy",
+    "db:migrate:dev": "pnpm --filter @kardia/db migrate:dev",
+    "db:seed": "pnpm --filter @kardia/db seed",
+    "ai:goldset": "pnpm --filter @kardia/ai goldset"
+  },
+  "devDependencies": {
+    "@kardia/config": "workspace:*",
+    "eslint": "^9.39.0",
+    "prettier": "^3.9.10",
+    "stylelint": "^17.16.0",
+    "stylelint-config-standard": "^40.0.0",
+    "turbo": "^2.11.10",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.50.0"
+  }
+}
