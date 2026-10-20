@@ -618,8 +618,9 @@ model Shift {
   bookedByCandidateId String?
   bookedAt       DateTime?
 
-  pool FlexPool @relation(fields: [poolId], references: [id], onDelete: Cascade)
-  ward Ward     @relation(fields: [wardId], references: [id], onDelete: Cascade)
+  pool      FlexPool        @relation(fields: [poolId], references: [id], onDelete: Cascade)
+  ward      Ward            @relation(fields: [wardId], references: [id], onDelete: Cascade)
+  interests ShiftInterest[]
 
   @@index([poolId, status, startsAt])
   @@index([bookedByCandidateId])
@@ -807,6 +808,7 @@ model Session {
   expiresAt DateTime
   ipAddress String?
   userAgent String?
+  authMethod String? // passkey | magic-link | sso – Admins nur mit Passkey (PRD 14.2)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -1002,4 +1004,15 @@ model RecognitionProgress {
   guide     RecognitionGuide @relation(fields: [guideId], references: [id], onDelete: Cascade)
 
   @@id([candidateId, guideId])
+}
+
+// Flex-Pool im Modus "Arbeitgeber wählt aus": Interessensbekundungen pro Schicht
+model ShiftInterest {
+  shiftId     String
+  candidateId String
+  createdAt   DateTime @default(now())
+
+  shift Shift @relation(fields: [shiftId], references: [id], onDelete: Cascade)
+
+  @@id([shiftId, candidateId])
 }

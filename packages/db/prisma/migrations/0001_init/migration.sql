@@ -567,6 +567,7 @@ CREATE TABLE "Session" (
     "expiresAt" TIMESTAMP(3) NOT NULL,
     "ipAddress" TEXT,
     "userAgent" TEXT,
+    "authMethod" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -753,6 +754,15 @@ CREATE TABLE "RecognitionProgress" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "RecognitionProgress_pkey" PRIMARY KEY ("candidateId","guideId")
+);
+
+-- CreateTable
+CREATE TABLE "ShiftInterest" (
+    "shiftId" TEXT NOT NULL,
+    "candidateId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "ShiftInterest_pkey" PRIMARY KEY ("shiftId","candidateId")
 );
 
 -- CreateIndex
@@ -1069,6 +1079,9 @@ ALTER TABLE "RecognitionProgress" ADD CONSTRAINT "RecognitionProgress_candidateI
 
 -- AddForeignKey
 ALTER TABLE "RecognitionProgress" ADD CONSTRAINT "RecognitionProgress_guideId_fkey" FOREIGN KEY ("guideId") REFERENCES "RecognitionGuide"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ShiftInterest" ADD CONSTRAINT "ShiftInterest_shiftId_fkey" FOREIGN KEY ("shiftId") REFERENCES "Shift"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 -- Volltextsuche (PRD 11.2): generierte Spalte, GIN- und Trigramm-Index
