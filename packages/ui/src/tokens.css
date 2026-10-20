@@ -1,0 +1,118 @@
+/* Generiert aus tokens.json – nicht von Hand bearbeiten (pnpm --filter @kardia/ui tokens). */
+:root {
+  color-scheme: light;
+  --k-color-surface-0: #FFFFFF;
+  --k-color-surface-50: #F7F8FA;
+  --k-color-surface-100: #EEF0F3;
+  --k-color-line-200: #E3E6EB;
+  --k-color-line-300: #CDD2DA;
+  --k-color-ink-900: #0E1116;
+  --k-color-ink-700: #3A4250;
+  --k-color-ink-500: #6B7383;
+  --k-color-accent-600: #0F6B5E;
+  --k-color-accent-700: #0A5249;
+  --k-color-accent-50: #E8F3F1;
+  --k-color-on-accent: #FFFFFF;
+  --k-color-ok-600: #1F7A3D;
+  --k-color-warn-600: #A15C00;
+  --k-color-critical-600: #B42318;
+  --k-color-overlay: #0E111666;
+  --k-space-1: 4px;
+  --k-space-2: 8px;
+  --k-space-3: 12px;
+  --k-space-4: 16px;
+  --k-space-6: 24px;
+  --k-space-8: 32px;
+  --k-space-12: 48px;
+  --k-space-16: 64px;
+  --k-radius-control: 6px;
+  --k-radius-card: 10px;
+  --k-radius-chip: 999px;
+  --k-radius-table: 0px;
+  --k-font-size-display: 40px;
+  --k-font-size-display--line-height: 48px;
+  --k-font-size-display--weight: 600;
+  --k-font-size-h1: 32px;
+  --k-font-size-h1--line-height: 40px;
+  --k-font-size-h1--weight: 600;
+  --k-font-size-h2: 24px;
+  --k-font-size-h2--line-height: 32px;
+  --k-font-size-h2--weight: 600;
+  --k-font-size-h3: 20px;
+  --k-font-size-h3--line-height: 28px;
+  --k-font-size-h3--weight: 600;
+  --k-font-size-body: 16px;
+  --k-font-size-body--line-height: 24px;
+  --k-font-size-body--weight: 400;
+  --k-font-size-body-s: 14px;
+  --k-font-size-body-s--line-height: 20px;
+  --k-font-size-body-s--weight: 400;
+  --k-font-size-caption: 13px;
+  --k-font-size-caption--line-height: 18px;
+  --k-font-size-caption--weight: 500;
+  --k-font-size-micro: 12px;
+  --k-font-size-micro--line-height: 16px;
+  --k-font-size-micro--weight: 500;
+  --k-motion-fast: 120ms;
+  --k-motion-base: 200ms;
+  --k-motion-ease: cubic-bezier(0.2, 0, 0, 1);
+  --k-size-control-s: 32px;
+  --k-size-control-m: 40px;
+  --k-size-control-l: 48px;
+  --k-size-touch: 44px;
+  --k-size-row: 44px;
+  --k-size-sidebar: 240px;
+  --k-size-sidebar-collapsed: 64px;
+  --k-size-content: 1280px;
+  --k-size-prose: 68ch;
+  --k-size-icon: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --k-color-surface-0: #0F1215;
+    --k-color-surface-50: #15191D;
+    --k-color-surface-100: #1C2126;
+    --k-color-line-200: #262C33;
+    --k-color-line-300: #353C45;
+    --k-color-ink-900: #F2F4F7;
+    --k-color-ink-700: #C3C9D2;
+    --k-color-ink-500: #8E96A3;
+    --k-color-accent-600: #4FB3A3;
+    --k-color-accent-700: #7CCABD;
+    --k-color-accent-50: #12302C;
+    --k-color-on-accent: #0F1215;
+    --k-color-ok-600: #5CC07E;
+    --k-color-warn-600: #E3A13B;
+    --k-color-critical-600: #F07A70;
+    --k-color-overlay: #00000099;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --k-color-surface-0: #0F1215;
+  --k-color-surface-50: #15191D;
+  --k-color-surface-100: #1C2126;
+  --k-color-line-200: #262C33;
+  --k-color-line-300: #353C45;
+  --k-color-ink-900: #F2F4F7;
+  --k-color-ink-700: #C3C9D2;
+  --k-color-ink-500: #8E96A3;
+  --k-color-accent-600: #4FB3A3;
+  --k-color-accent-700: #7CCABD;
+  --k-color-accent-50: #12302C;
+  --k-color-on-accent: #0F1215;
+  --k-color-ok-600: #5CC07E;
+  --k-color-warn-600: #E3A13B;
+  --k-color-critical-600: #F07A70;
+  --k-color-overlay: #00000099;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --k-motion-fast: 0ms;
+    --k-motion-base: 0ms;
+  }
+}

@@ -1,0 +1,123 @@
+/*
+ * Kardia UI – Tailwind-v4-Theme (PRD 8). Flach: keine Schatten, keine Verläufe,
+ * kein Blur. Die Standardpalette von Tailwind wird entfernt, damit nur Tokens
+ * verwendbar sind ("Farben nur über Tokens"); Schatten-Utilities gibt es nicht.
+ */
+@import './tokens.css';
+
+@theme {
+  --color-*: initial;
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --text-shadow-*: initial;
+  --blur-*: initial;
+  --breakpoint-2xl: initial;
+
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-surface-0: var(--k-color-surface-0);
+  --color-surface-50: var(--k-color-surface-50);
+  --color-surface-100: var(--k-color-surface-100);
+  --color-line-200: var(--k-color-line-200);
+  --color-line-300: var(--k-color-line-300);
+  --color-ink-900: var(--k-color-ink-900);
+  --color-ink-700: var(--k-color-ink-700);
+  --color-ink-500: var(--k-color-ink-500);
+  --color-accent-600: var(--k-color-accent-600);
+  --color-accent-700: var(--k-color-accent-700);
+  --color-accent-50: var(--k-color-accent-50);
+  --color-on-accent: var(--k-color-on-accent);
+  --color-ok-600: var(--k-color-ok-600);
+  --color-warn-600: var(--k-color-warn-600);
+  --color-critical-600: var(--k-color-critical-600);
+  --color-overlay: var(--k-color-overlay);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --text-display: var(--k-font-size-display);
+  --text-display--line-height: var(--k-font-size-display--line-height);
+  --text-display--font-weight: 600;
+  --text-h1: var(--k-font-size-h1);
+  --text-h1--line-height: var(--k-font-size-h1--line-height);
+  --text-h1--font-weight: 600;
+  --text-h2: var(--k-font-size-h2);
+  --text-h2--line-height: var(--k-font-size-h2--line-height);
+  --text-h2--font-weight: 600;
+  --text-h3: var(--k-font-size-h3);
+  --text-h3--line-height: var(--k-font-size-h3--line-height);
+  --text-h3--font-weight: 600;
+  --text-body: var(--k-font-size-body);
+  --text-body--line-height: var(--k-font-size-body--line-height);
+  --text-body-s: var(--k-font-size-body-s);
+  --text-body-s--line-height: var(--k-font-size-body-s--line-height);
+  --text-caption: var(--k-font-size-caption);
+  --text-caption--line-height: var(--k-font-size-caption--line-height);
+  --text-caption--font-weight: 500;
+  --text-micro: var(--k-font-size-micro);
+  --text-micro--line-height: var(--k-font-size-micro--line-height);
+  --text-micro--font-weight: 500;
+
+  --radius-control: var(--k-radius-control);
+  --radius-card: var(--k-radius-card);
+  --radius-chip: var(--k-radius-chip);
+
+  --spacing-sidebar: var(--k-size-sidebar);
+  --spacing-sidebar-collapsed: var(--k-size-sidebar-collapsed);
+  --spacing-control-s: var(--k-size-control-s);
+  --spacing-control-m: var(--k-size-control-m);
+  --spacing-control-l: var(--k-size-control-l);
+  --spacing-touch: var(--k-size-touch);
+  --spacing-row: var(--k-size-row);
+  --container-content: var(--k-size-content);
+  --container-prose: var(--k-size-prose);
+
+  --ease-kardia: var(--k-motion-ease);
+  --default-transition-duration: var(--k-motion-fast);
+  --default-transition-timing-function: var(--k-motion-ease);
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility duration-fast {
+  transition-duration: var(--k-motion-fast);
+}
+
+@utility duration-base {
+  transition-duration: var(--k-motion-base);
+}
+
+@layer base {
+  html {
+    background: var(--k-color-surface-50);
+    color: var(--k-color-ink-900);
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizelegibility;
+  }
+
+  body {
+    font-size: var(--k-font-size-body);
+    line-height: var(--k-font-size-body--line-height);
+  }
+
+  /* Fokus = 2 px Outline in accent-600 mit 2 px Abstand, auf jedem interaktiven Element. */
+  :where(a, button, input, select, textarea, summary, [tabindex], [role='button'], [role='tab'], [role='option'], [role='menuitem']):focus-visible {
+    outline: 2px solid var(--k-color-accent-600);
+    outline-offset: 2px;
+  }
+
+  table,
+  td,
+  th {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background: var(--k-color-accent-50);
+    color: var(--k-color-ink-900);
+  }
+}

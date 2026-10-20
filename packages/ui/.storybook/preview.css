@@ -1,0 +1,12 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
+@import '../src/theme.css';
+
+@source '../src';
+@source '../stories';
+
+:root {
+  --font-geist-sans: 'Geist Variable';
+  --font-geist-mono: 'Geist Mono Variable';
+}

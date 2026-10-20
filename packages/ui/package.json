@@ -1,0 +1,58 @@
+{
+  "name": "@kardia/ui",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Kardia UI: flach, typografiegetrieben, dicht. Tokens, Tailwind-Theme und Komponenten auf Radix-Primitives.",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./tokens": "./src/tokens.generated.ts",
+    "./tokens.css": "./src/tokens.css",
+    "./theme.css": "./src/theme.css",
+    "./tokens.json": "./tokens.json"
+  },
+  "scripts": {
+    "tokens": "node scripts/build-tokens.mjs",
+    "tokens:check": "node scripts/build-tokens.mjs --check",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build -o storybook-static",
+    "test:visual": "playwright test -c visual/playwright.config.ts"
+  },
+  "dependencies": {
+    "cmdk": "^1.1.1",
+    "lucide-react": "^1.60.0",
+    "radix-ui": "^1.8.1"
+  },
+  "peerDependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@kardia/config": "workspace:*",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^22.19.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.0",
+    "jsdom": "^27.4.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "style-dictionary": "^5.7.0",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.5",
+    "storybook": "^10.6.3",
+    "@storybook/react-vite": "^10.6.3",
+    "vite": "^8.3.4",
+    "@tailwindcss/vite": "^4.3.3",
+    "tailwindcss": "^4.3.3",
+    "@playwright/test": "^1.64.1",
+    "@fontsource-variable/geist": "^5.3.0",
+    "@fontsource-variable/geist-mono": "^5.3.0"
+  }
+}
