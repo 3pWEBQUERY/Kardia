@@ -1,0 +1,83 @@
+{
+  "Profession": {
+    "NURSE_HF_FH": "Infermiere/a dipl. SSS/SUP",
+    "FAGE": "Operatore/trice socioassistenziale (OSS)",
+    "AGS": "Addetto/a alle cure sociosanitarie (ACSS)",
+    "NURSING_AID_SRK": "Ausiliario/a di cura CRS",
+    "PHYSICIAN": "Medico",
+    "MPA": "Assistente di studio medico (ASM)",
+    "PHYSIOTHERAPIST": "Fisioterapista",
+    "OCCUPATIONAL_THERAPIST": "Ergoterapista",
+    "SPEECH_THERAPIST": "Logopedista",
+    "MTRA": "Tecnico/a di radiologia medica (TRM)",
+    "BMA": "Tecnico/a in analisi biomediche (TAB)",
+    "PARAMEDIC": "Soccorritore/trice",
+    "OR_TECHNICIAN": "Tecnico/a di sala operatoria (TSO)",
+    "MIDWIFE": "Levatrice"
+  },
+  "Department": {
+    "ICU": "Cure intense",
+    "EMERGENCY": "Pronto soccorso",
+    "SURGERY": "Chirurgia",
+    "INTERNAL_MEDICINE": "Medicina interna",
+    "GERIATRICS": "Geriatria",
+    "PSYCHIATRY": "Psichiatria",
+    "PEDIATRICS": "Pediatria",
+    "ONCOLOGY": "Oncologia",
+    "OPERATING_ROOM": "Sala operatoria",
+    "ANESTHESIA": "Anestesia",
+    "LONG_TERM_CARE": "Cure di lunga durata",
+    "HOME_CARE": "Cure a domicilio",
+    "REHABILITATION": "Riabilitazione",
+    "MATERNITY": "Ostetricia",
+    "RADIOLOGY": "Radiologia",
+    "LABORATORY": "Laboratorio",
+    "PRACTICE": "Studio medico"
+  },
+  "ShiftType": {
+    "EARLY": "Mattino",
+    "LATE": "Pomeriggio",
+    "NIGHT": "Notte",
+    "DAY_12H": "Giorno 12 h",
+    "SPLIT": "Turno spezzato",
+    "WEEKDAYS_ONLY": "Solo giorni feriali"
+  },
+  "RosterCode": { "F": "Mattino", "S": "Pomeriggio", "N": "Notte", "T": "Giorno 12 h", "X": "libero" },
+  "ChildcareType": { "NONE": "Nessuna", "INTERNAL_DAYCARE": "Asilo nido interno", "ALLOWANCE": "Contributo" },
+  "OrgVerification": { "PENDING": "In verifica", "VERIFIED": "Verificata", "REJECTED": "Respinta", "AGENCY_REVIEW": "Verifica manuale (SECO)" },
+  "MemberRole": { "OWNER": "Owner", "RECRUITER": "Selezionatore/trice", "WARD_LEAD": "Capo reparto", "VIEWER": "Sola lettura" },
+  "JobStatus": { "DRAFT": "Bozza", "PUBLISHED": "Pubblicato", "PAUSED": "In pausa", "CLOSED": "Chiuso" },
+  "ApplicationStatus": {
+    "NEW": "Nuova",
+    "SCREENED": "Esaminata",
+    "INTERVIEW": "Colloquio",
+    "OFFER": "Offerta",
+    "HIRED": "Assunto/a",
+    "REJECTED": "Respinta",
+    "WITHDRAWN": "Ritirata"
+  },
+  "RejectionReason": {
+    "QUALIFICATION_MISSING": "Qualifica mancante",
+    "POSITION_FILLED": "Posto occupato",
+    "LANGUAGE": "Conoscenze linguistiche",
+    "AVAILABILITY": "Disponibilità",
+    "OTHER": "Altro motivo"
+  },
+  "CredentialType": {
+    "DIPLOMA": "Diploma/titolo",
+    "RECOGNITION_SRK": "Riconoscimento CRS",
+    "RECOGNITION_MEBEKO": "Riconoscimento MEBEKO",
+    "REGISTRY_ENTRY": "Iscrizione al registro",
+    "FURTHER_EDUCATION": "Formazione continua (SPD, CAS, MAS)",
+    "LANGUAGE_CERTIFICATE": "Certificato di lingua"
+  },
+  "CredentialStatus": { "SUBMITTED": "Inoltrato", "IN_REVIEW": "In verifica", "VERIFIED": "Verificato", "REJECTED": "Respinto", "EXPIRED": "Scaduto" },
+  "Registry": { "MEDREG": "MedReg", "GESREG": "GesReg", "NAREG": "NAREG" },
+  "OfferStatus": { "SENT": "Aperta", "INTERESTED": "Interesse", "DECLINED": "Rifiutata", "EXPIRED": "Scaduta", "WITHDRAWN": "Ritirata" },
+  "ShiftStatus": { "OPEN": "Aperto", "BOOKED": "Prenotato", "CANCELLED": "Annullato", "COMPLETED": "Svolto" },
+  "PoolBookingMode": { "FIRST_CONFIRMS": "Conferma il primo/la prima", "EMPLOYER_SELECTS": "Sceglie il datore di lavoro" },
+  "ModerationStatus": { "PENDING": "Aperto", "APPROVED": "Approvato", "REJECTED": "Respinto" },
+  "AlertFrequency": { "INSTANT": "Immediatamente", "DAILY": "Ogni giorno", "WEEKLY": "Ogni settimana" },
+  "PlanTier": { "PRAXIS": "Studio medico", "INSTITUTION": "Istituzione", "SPITALGRUPPE": "Gruppo ospedaliero" },
+  "DeclineReason": { "salary": "Salario", "workload": "Grado d'occupazione", "location": "Luogo di lavoro", "conditions": "Condizioni di lavoro", "timing": "Tempistica", "other": "Altro", "none": "Nessuna indicazione" }
+}

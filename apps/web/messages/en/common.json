@@ -1,0 +1,337 @@
+{
+  "brand": "Kardia",
+  "tagline": "Healthcare jobs in Switzerland",
+  "skipToContent": "Skip to content",
+  "nav": {
+    "search": "Search",
+    "employers": "For employers",
+    "pricing": "Pricing",
+    "guide": "Recognition guide",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "more": "More",
+    "menu": "Menu",
+    "collapse": "Collapse sidebar",
+    "expand": "Expand sidebar",
+    "me": {
+      "search": "Search",
+      "saved": "Saved & compare",
+      "applications": "Applications",
+      "pass": "Qualification passport",
+      "marketplace": "Marketplace & offers",
+      "shifts": "Shifts",
+      "training": "Postgraduate training",
+      "recognition": "Recognition",
+      "team": "My ward",
+      "settings": "Settings"
+    },
+    "employer": {
+      "overview": "Overview",
+      "jobs": "Jobs",
+      "wards": "Wards",
+      "pipeline": "Pipeline",
+      "marketplace": "Marketplace search",
+      "pool": "Flex pool",
+      "benchmark": "Benchmark",
+      "team": "Team & settings",
+      "billing": "Billing"
+    },
+    "admin": {
+      "queues": "Review queues",
+      "credentials": "Qualification passport",
+      "organizations": "Organisations",
+      "moderation": "Moderation",
+      "editorial": "Editorial",
+      "audit": "Audit log",
+      "kpis": "Key figures"
+    }
+  },
+  "actions": {
+    "save": "Save",
+    "saving": "Saving …",
+    "cancel": "Cancel",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "edit": "Edit",
+    "delete": "Delete",
+    "remove": "Remove",
+    "add": "Add",
+    "confirm": "Confirm",
+    "apply": "Apply",
+    "remember": "Save",
+    "remembered": "Saved",
+    "compare": "Compare",
+    "undo": "Undo",
+    "showMore": "Show more",
+    "loadMore": "Load more results",
+    "download": "Download",
+    "upload": "Upload",
+    "send": "Send",
+    "publish": "Publish",
+    "copy": "Copy",
+    "copied": "Copied"
+  },
+  "states": {
+    "met": "met",
+    "unmet": "not met",
+    "unknown": "unknown",
+    "must": "Must",
+    "wish": "Nice to have",
+    "verified": "verified",
+    "stale": "outdated",
+    "yes": "yes",
+    "no": "no",
+    "none": "none",
+    "notSpecified": "not specified",
+    "deviation": "Deviation"
+  },
+  "offline": {
+    "title": "No connection",
+    "action": "No connection – action not possible",
+    "body": "Saved jobs, your own applications and booked shifts remain readable.",
+    "available": "Available offline",
+    "retry": "Try again"
+  },
+  "theme": {
+    "label": "Appearance",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "language": {
+    "label": "Language",
+    "de-CH": "Deutsch",
+    "fr-CH": "Français",
+    "it-CH": "Italiano",
+    "en": "English"
+  },
+  "footer": {
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "imprint": "Legal notice",
+    "api": "API",
+    "claim": "Directly with the employer, no recruitment agencies. Kardia is never the employer."
+  },
+  "confirmedBy": "confirmed by employer on {date}",
+  "teamValue": "Team {value} · {votes} responses",
+  "teamAgrees": "Team confirms · {votes} responses",
+  "employerComment": "Employer: {comment}",
+  "aiSummary": "AI summary",
+  "conditions": {
+    "noNights": {
+      "wanted": "No nights",
+      "actual": "No nights"
+    },
+    "noSplitShifts": {
+      "wanted": "No split shifts",
+      "actual": "No split shifts"
+    },
+    "weekdaysOnly": {
+      "wanted": "Weekdays only",
+      "actual": "Weekdays only"
+    },
+    "maxWeekendsPerMonth": {
+      "wanted": "Weekends ≤ {value}/mo",
+      "actual": "Weekends {actual}/mo"
+    },
+    "minRosterLeadWeeks": {
+      "wanted": "Roster ≥ {value} wk ahead",
+      "actual": "Roster {actual} wk ahead"
+    },
+    "minWishDays": {
+      "wanted": "Requested days off ≥ {value}",
+      "actual": "Requested days off {actual}"
+    },
+    "minSalary": {
+      "wanted": "Salary ≥ {value}",
+      "actual": "Salary ≥ {value}"
+    },
+    "thirteenthSalary": {
+      "wanted": "13th-month salary",
+      "actual": "13th-month salary"
+    },
+    "minNightAllowance": {
+      "wanted": "Night allowance ≥ CHF {value}/h",
+      "actual": "Night allowance CHF {actual}/h"
+    },
+    "maxPatientsDay": {
+      "wanted": "≤ {value} pat. day",
+      "actual": "{actual} pat. day"
+    },
+    "maxPatientsNight": {
+      "wanted": "≤ {value} pat. night",
+      "actual": "{actual} pat. night"
+    },
+    "minOnboardingWeeks": {
+      "wanted": "Onboarding ≥ {value} wk",
+      "actual": "Onboarding {actual} wk"
+    },
+    "minVacationWeeks": {
+      "wanted": "Holidays ≥ {value} wk",
+      "actual": "Holidays {actual} wk"
+    },
+    "minEducationDays": {
+      "wanted": "Continuing education ≥ {value} days",
+      "actual": "Continuing education {actual} days"
+    },
+    "childcare": {
+      "wanted": "Childcare",
+      "actual": "Childcare"
+    },
+    "collectiveAgreement": {
+      "wanted": "With CBA (GAV)",
+      "actual": "With CBA (GAV)"
+    },
+    "parking": {
+      "wanted": "Parking",
+      "actual": "Parking"
+    },
+    "reentryFriendly": {
+      "wanted": "Return-to-work friendly",
+      "actual": "Return-to-work friendly"
+    },
+    "pendingRecognition": {
+      "wanted": "Recognition pending – employment possible",
+      "actual": "Recognition pending – employment possible"
+    },
+    "recognizedTraining": {
+      "wanted": "Accredited postgraduate training",
+      "actual": "Accredited postgraduate training"
+    },
+    "maxCommute": {
+      "wanted": "Commute ≤ {value} min ({transport})",
+      "actual": "Commute {actual} min (preferred {value})"
+    },
+    "transport": {
+      "PT": "Public transport",
+      "CAR": "Car"
+    }
+  },
+  "roster": {
+    "caption": "Sample 4-week roster at {pct} %",
+    "weekdays": [
+      "Mo",
+      "Tu",
+      "We",
+      "Th",
+      "Fr",
+      "Sa",
+      "Su"
+    ],
+    "shifts": "{count} shifts in 4 weeks"
+  },
+  "pagination": {
+    "results": "{count, plural, =0 {No results} one {# result} other {# results}}"
+  },
+  "install": {
+    "title": "Install Kardia",
+    "body": "As an app on your home screen: readable offline and with notifications.",
+    "action": "Install",
+    "dismiss": "Later",
+    "iosTitle": "Add to home screen",
+    "iosStep1": "Tap «Share» at the bottom.",
+    "iosStep2": "Choose «Add to Home Screen».",
+    "pushTitle": "Receive notifications?",
+    "pushBody": "We notify you of new results, status changes and shifts. You can turn this off at any time.",
+    "pushAllow": "Allow"
+  },
+  "commandPalette": {
+    "title": "Command palette",
+    "placeholder": "Search for a job, application, ward or action …",
+    "empty": "Nothing found. Try a different search term.",
+    "groups": {
+      "actions": "Actions",
+      "jobs": "Jobs",
+      "wards": "Wards",
+      "applications": "Applications"
+    },
+    "hint": "Cmd/Ctrl + K"
+  },
+  "search": {
+    "profession": "Profession",
+    "workload": "Workload",
+    "any": "All",
+    "departments": "Specialties",
+    "conditions": "Conditions",
+    "conditionsHint": "Must: results without this condition are never shown. Nice to have: only affects the order.",
+    "off": "Off",
+    "commute": "Commute",
+    "place": "Place of residence",
+    "placePlaceholder": "Postcode or town, e.g. 8610",
+    "originSet": "Place of residence set – enter again to change",
+    "setPlace": "Apply",
+    "placeNotFound": "Place not found. Please enter a postcode or municipality, e.g. 8610 or Uster.",
+    "minutes": "Minutes",
+    "transport": "Mode of transport",
+    "mode": "Must or nice to have",
+    "filters": "Filters",
+    "list": "List",
+    "map": "Map",
+    "view": "View",
+    "sort": "Sort by",
+    "sortMatch": "Best match for my conditions",
+    "sortNewest": "Newest",
+    "sortSalary": "Salary",
+    "active": "Selected conditions",
+    "save": "Save search",
+    "saveHint": "We notify you of new results by email and push.",
+    "name": "Name",
+    "defaultName": "My search",
+    "frequency": "Notification",
+    "savedSearch": "Search saved.",
+    "savedToast": "Job saved.",
+    "unsavedToast": "Removed from saved jobs.",
+    "compareCount": "{count} of 4 jobs selected for comparison",
+    "commutePt": "Public transport {minutes} min",
+    "commuteCar": "Car {minutes} min",
+    "commutePending": "calculating",
+    "ptLabel": "Public transport",
+    "carLabel": "Car",
+    "jobOverride": "different for this job",
+    "commuteUnavailable": "currently unavailable"
+  },
+  "apply": {
+    "message": "Personal message (optional)",
+    "messageHint": "Up to {max} characters, {left} left. No cover letter needed.",
+    "share": "Share original documents for this application",
+    "shareHint": "Without sharing, the employer only sees the status «verified».",
+    "done": "Your application has been received. You will get status updates by email and push.",
+    "doneTitle": "Applied",
+    "signInHint": "Sign in with a passkey or email link, no password.",
+    "createPass": "Create qualification passport and apply",
+    "passHint": "Create it once, then apply with one click."
+  },
+  "team": {
+    "ask": "Question for the team",
+    "askHint": "Up to 500 characters. Public after moderation, without your name.",
+    "askSubmit": "Send question",
+    "askSignIn": "Sign in to ask a question",
+    "asked": "Question sent. It will appear after moderation.",
+    "verifyDomain": "Your account email belongs to the institution. With one click you confirm that you work here.",
+    "verifyAction": "Confirm as employee",
+    "ambassadorTitle": "Ward ambassador",
+    "ambassador": "I answer questions from interested people (voluntary)",
+    "employerSays": "Employer: {value}",
+    "agree": "Correct",
+    "disagree": "Not correct",
+    "proposed": "Correct value in my view",
+    "comment": "Comment",
+    "commentHint": "Optional, up to 400 characters, no names of individuals.",
+    "submitVote": "Save response",
+    "voted": "Saved. Anonymous, visible only from 5 responses."
+  },
+  "auth": {
+    "passkey": "Sign in with passkey",
+    "or": "or",
+    "email": "Email address",
+    "sendLink": "Send sign-in link",
+    "linkHint": "The link is valid for 15 minutes. New here? Your account is created when you first sign in.",
+    "sentTitle": "Link sent",
+    "sent": "We have sent a sign-in link to {email}. Please check your inbox.",
+    "passkeyFailed": "Signing in with a passkey did not work. Try again or use the email link.",
+    "linkFailed": "The link could not be sent. Check the address and try again.",
+    "adminPasskey": "The admin console requires a passkey sign-in (valid for up to 12 hours)."
+  },
+  "external": "opens in a new window"
+}

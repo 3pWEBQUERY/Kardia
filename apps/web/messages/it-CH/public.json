@@ -1,0 +1,333 @@
+{
+  "meta": {
+    "title": "Kardia – Posti di lavoro nel settore sanitario",
+    "description": "Condizioni di lavoro anziché testo d'annuncio: fascia salariale, anticipo del piano dei turni, modello dei turni e rapporto di cura per reparto – direttamente presso il datore di lavoro."
+  },
+  "home": {
+    "title": "Come si lavora in un reparto – prima di candidarsi.",
+    "lead": "Kardia confronta le condizioni di lavoro per reparto: fascia salariale, anticipo del piano dei turni, fine settimana, rapporto di cura. Direttamente presso il datore di lavoro, senza agenzie di collocamento.",
+    "q1": "Quale professione?",
+    "q2": "Quale grado d'occupazione?",
+    "q3": "Che cosa è assolutamente escluso?",
+    "anyProfession": "Tutte le professioni",
+    "anyWorkload": "Indifferente",
+    "dealbreakers": {
+      "nights": "Turni di notte",
+      "weekends": "Turni nel fine settimana",
+      "splitShifts": "Turni spezzati",
+      "shortNotice": "Modifiche del piano a breve termine"
+    },
+    "submit": "Mostra i reparti adatti",
+    "noAccount": "Risultati subito, senza conto.",
+    "sentenceLabel": "Oppure descrivere in una frase",
+    "sentencePlaceholder": "Cure intense Lugano, niente notti, da marzo, 80 %",
+    "sentenceSubmit": "Cerca",
+    "sentenceHint": "I filtri riconosciuti appaiono come etichette che può rimuovere.",
+    "uspTitle": "Che cosa fa Kardia in modo diverso",
+    "usp": {
+      "ward": {
+        "title": "Per reparto, non per ospedale",
+        "body": "Le condizioni variano tra le cure intense e la geriatria dello stesso ospedale. Ogni profilo è legato a un reparto ed è confermato dal datore di lavoro."
+      },
+      "roster": {
+        "title": "Il ritmo dei turni a colpo d'occhio",
+        "body": "Un piano dei turni tipo su quattro settimane, adattato al suo grado d'occupazione. La pianificabilità visibile in due secondi."
+      },
+      "reality": {
+        "title": "Verifica della realtà da parte del team",
+        "body": "Le collaboratrici e i collaboratori confermano o contestano ogni indicazione – in forma anonima e visibile solo a partire da cinque risposte."
+      }
+    }
+  },
+  "search": {
+    "title": "Cerca posti",
+    "results": "risultati",
+    "aiParsed": "Abbiamo tradotto la sua frase in filtri. Rimuova le etichette che non corrispondono.",
+    "empty": "Nessun risultato per queste condizioni. Reimpostare i filtri e ricominciare.",
+    "emptyWithSuggestion": "Nessun risultato per queste condizioni.",
+    "relax": "{condition} darebbe {count} risultati",
+    "drop": "Senza «{condition}» si otterrebbero {count} risultati",
+    "reset": "Reimposta i filtri",
+    "map": "Mappa dei reparti",
+    "refine": "{shown} risultati visualizzati su {total}. Aggiungere condizioni per restringere.",
+    "useHome": "Usa il domicilio",
+    "useHomeHint": "Calcolare il tragitto dal suo domicilio (precisione solo di circa 150 m)."
+  },
+  "job": {
+    "start": "Inizio {date}",
+    "pendingRecog": "Assunzione durante il riconoscimento in corso",
+    "stale": "Profilo non aggiornato",
+    "rhythm": "Ritmo dei turni",
+    "rhythmHint": "Piano dei turni tipo del reparto su quattro settimane, adattato al grado d'occupazione.",
+    "training": "Perfezionamento medico",
+    "noTraining": "Nessun perfezionamento riconosciuto indicato.",
+    "profile": "Profilo del reparto",
+    "profileHint": "Ogni indicazione con fonte e data della conferma; valori del team a partire da cinque risposte.",
+    "about": "Il reparto",
+    "commute": "Tragitto",
+    "direct": "Candidatura direttamente al datore di lavoro. Kardia non è mai datore di lavoro e non fa collocamento."
+  },
+  "ward": {
+    "verifiedEmployees": "{count} collaboratori/trici verificati/e",
+    "rhythm": "Ritmo dei turni",
+    "profile": "Condizioni di lavoro",
+    "realityHint": "I valori del team provengono da collaboratori/trici verificati/e e appaiono a partire da cinque risposte.",
+    "benchmark": "Confronto con il settore",
+    "benchmarkHint": "Mediana della regione e del settore, a partire da {min} reparti di confronto, senza nomi di altri datori di lavoro.",
+    "median": "Mediana {value} ({peers} reparti)",
+    "videos": "Uno sguardo all'interno",
+    "questions": "Chieda al team",
+    "questionsHint": "Risposte di ambasciatori/trici volontari/e del reparto, dopo moderazione.",
+    "noQuestions": "Ancora nessuna domanda. Ponga la prima.",
+    "unanswered": "Non ancora risposta.",
+    "answeredAfter": "Risposta dopo {hours} h",
+    "openJobs": "{count, plural, =0 {Nessun posto aperto} one {# posto aperto} other {# posti aperti}}",
+    "noJobs": "Al momento nessun posto aperto. Salvare la ricerca per essere informati.",
+    "workHere": "Lavora qui?",
+    "workHereBody": "Confermi o corregga le indicazioni – in forma anonima.",
+    "workHereAction": "Alla verifica della realtà"
+  },
+  "team": {
+    "title": "Verifica della realtà: {ward}",
+    "lead": "Confermi o contesti ogni indicazione. Le sue risposte non sono attribuibili ad alcuna persona e appaiono solo a partire da {min} risposte per campo.",
+    "verifyTitle": "Confermare come collaboratore/trice",
+    "verifyInvite": "Il suo indirizzo e-mail non appartiene a {domains}. Chieda un invito al suo datore di lavoro.",
+    "verifiedInvite": "Confermato tramite invito del datore di lavoro (contrassegnato come tale).",
+    "verifiedDomain": "Confermato tramite il dominio e-mail dell'istituzione."
+  },
+  "organization": {
+    "lead": "Le condizioni di lavoro sono registrate per reparto. Scelga un reparto.",
+    "verified": "Datore di lavoro verificato (IDI)",
+    "jobs": "{count, plural, =0 {nessun posto aperto} one {# posto aperto} other {# posti aperti}}"
+  },
+  "compare": {
+    "title": "Confronta posti",
+    "empty": "Selezionare almeno due posti da confrontare.",
+    "toSearch": "Alla ricerca",
+    "onlyDifferences": "Solo differenze",
+    "best": "valore migliore"
+  },
+  "guide": {
+    "title": "Guida al riconoscimento",
+    "lead": "Che cosa può esercitare, dove e quando: passi, documenti e link ufficiali secondo il diploma di provenienza e la professione di destinazione.",
+    "disclaimer": "Curata dalla redazione e corredata della data di verifica. Nessuna consulenza legale – fanno stato le indicazioni delle autorità competenti.",
+    "who": "Kardia non pratica alcun reclutamento attivo all'estero e si attiene al Codice di condotta globale dell'OMS sul reclutamento internazionale del personale sanitario.",
+    "empty": "Ancora nessuna guida pubblicata.",
+    "route": "{origin} → {profession}",
+    "authority": "Competente: {authority} · verificato il {date}",
+    "steps": "Passi",
+    "progress": "{done} di {total} completati",
+    "signInForProgress": "Accedere per salvare i propri progressi.",
+    "outdated": "Questa guida è stata verificata più di dodici mesi fa. Verificare le indicazioni presso l'autorità."
+  },
+  "employers": {
+    "title": "Occupare i posti direttamente – senza supplemento d'agenzia",
+    "lead": "Kardia mostra ai professionisti e alle professioniste le sue condizioni di lavoro per reparto. Chi si candida sa a che cosa va incontro – e lei riceve candidature verificate con un clic.",
+    "cta": "Registrare l'organizzazione",
+    "pricing": "Vedere i prezzi",
+    "points": {
+      "direct": {
+        "title": "Diretto anziché tramite intermediari",
+        "body": "Pubblicano annunci solo le organizzazioni che sono esse stesse datori di lavoro. Nessuna commissione di successo per assunzione."
+      },
+      "import": {
+        "title": "Annuncio in 10 minuti",
+        "body": "Incollare un annuncio esistente; l'IA precompila il profilo del reparto, lei conferma ogni campo."
+      },
+      "pipeline": {
+        "title": "Pipeline con passaporto",
+        "body": "Candidature con diplomi e iscrizioni al registro verificati, utilizzabile da tastiera."
+      },
+      "pool": {
+        "title": "Il proprio pool flessibile",
+        "body": "Turni singoli per il suo pool di sostituti – prenotabili direttamente anziché tramite agenzie di lavoro temporaneo."
+      },
+      "marketplace": {
+        "title": "Mercato inverso",
+        "body": "I professionisti e le professioniste definiscono in forma anonima le loro condizioni; lei invia offerte concrete."
+      },
+      "benchmark": {
+        "title": "Benchmark",
+        "body": "I suoi valori a confronto con la mediana del suo settore e della sua regione."
+      }
+    },
+    "agencyTitle": "Senza agenzie",
+    "agencyBody": "Registrazione con IDI e confronto con il registro della SECO delle agenzie di collocamento e di fornitura di personale a prestito autorizzate. Gli annunci senza reparto concreto e indirizzo sono tecnicamente impossibili.",
+    "foundingTitle": "Partner fondatori nel Cantone di Zurigo",
+    "foundingBody": "Le prime 30 istituzioni ricevono gratuitamente per sei mesi l'abbonamento «Istituzione» – in cambio di profili di reparto completi e di un colloquio di feedback al mese."
+  },
+  "pricing": {
+    "title": "Prezzi",
+    "lead": "I professionisti e le professioniste non pagano mai. I datori di lavoro pagano un abbonamento software – senza commissione di successo e senza posizioni a pagamento nella classifica.",
+    "perMonth": "al mese, IVA esclusa",
+    "from": "da ",
+    "yearly": "Annuale {price} (2 mesi di sconto)",
+    "single": {
+      "name": "Annuncio singolo",
+      "meta": "per posto, {days} giorni",
+      "includes": "1 reparto, importazione IA, pipeline"
+    },
+    "plans": {
+      "PRAXIS": {
+        "name": "Studio medico",
+        "includes": "Fino a 2 posti attivi, 1 reparto, 2 utenti"
+      },
+      "INSTITUTION": {
+        "name": "Istituzione",
+        "includes": "Fino a 25 posti attivi, reparti illimitati, 10 utenti, 20 offerte/mese, benchmark, pool flessibile fino a 100 membri"
+      },
+      "SPITALGRUPPE": {
+        "name": "Gruppo ospedaliero",
+        "includes": "Posti e utenti illimitati, 100 offerte/mese, più sedi, SSO, API, webhook, importazione di feed, pool illimitati"
+      }
+    },
+    "notes": {
+      "vat": "Tutti i prezzi in CHF, IVA esclusa.",
+      "payment": "Carta e TWINT; fattura con QR-fattura per Istituzione e Gruppo ospedaliero, termine di pagamento 30 giorni.",
+      "noFee": "Nessuna commissione di successo per assunzione – Kardia è un software, non un intermediario.",
+      "noAds": "Nessuna attività pubblicitaria: l'ordinamento segue solo le condizioni della persona che cerca.",
+      "founding": "Partner fondatori (prime 30 istituzioni nel Cantone di Zurigo): 6 mesi «Istituzione» gratuiti."
+    },
+    "cta": "Registrarsi ora"
+  },
+  "legal": {
+    "draft": "Bozza – da sottoporre a verifica giuridica prima del lancio (PRD 14.3).",
+    "terms": {
+      "title": "CG per professionisti/e",
+      "sections": [
+        {
+          "h": "1. Oggetto",
+          "p": [
+            "Kardia è un software per la ricerca di posti di lavoro nel settore sanitario svizzero. Kardia non è mai datore di lavoro, non assume nessuno e non colloca rapporti di lavoro.",
+            "L'utilizzo è gratuito per i professionisti e le professioniste."
+          ]
+        },
+        {
+          "h": "2. Conto e passaporto delle qualifiche",
+          "p": [
+            "Lei è responsabile della correttezza delle sue indicazioni. I documenti giustificativi vengono verificati da Kardia; la decisione le viene comunicata con motivazione.",
+            "Le modifiche a indicazioni verificate riportano lo stato a «inoltrato»."
+          ]
+        },
+        {
+          "h": "3. Candidature e offerte",
+          "p": [
+            "Le candidature vanno direttamente al datore di lavoro. Il datore di lavoro vede i documenti originali solo se lei li condivide per ogni singola candidatura.",
+            "Nel mercato il suo profilo resta anonimo finché lei non manifesta «interesse» per un'offerta."
+          ]
+        },
+        {
+          "h": "4. Verifica della realtà e contributi del team",
+          "p": [
+            "I contributi devono essere oggettivi e non devono permettere di identificare alcuna persona. Kardia li modera prima della pubblicazione.",
+            "I voti vengono salvati senza attribuzione alla sua persona e mostrati solo a partire da cinque risposte."
+          ]
+        },
+        {
+          "h": "5. Disdetta",
+          "p": [
+            "Può eliminare autonomamente il suo conto in qualsiasi momento. I dati vengono cancellati conformemente all'informativa sulla protezione dei dati."
+          ]
+        }
+      ]
+    },
+    "terms-employers": {
+      "title": "CG per datori di lavoro",
+      "sections": [
+        {
+          "h": "1. Oggetto",
+          "p": [
+            "Kardia mette a disposizione un software per annunci di lavoro, gestione delle candidature, offerte e pool flessibili. I contratti di lavoro sono conclusi esclusivamente tra il datore di lavoro e il/la professionista; Kardia non salva contratti di lavoro."
+          ]
+        },
+        {
+          "h": "2. Ammissione",
+          "p": [
+            "Possono pubblicare annunci solo le organizzazioni che sono esse stesse datori di lavoro del posto messo a concorso. Registrazione con IDI; le corrispondenze nel registro della SECO delle agenzie di collocamento e di fornitura di personale a prestito vengono verificate manualmente."
+          ]
+        },
+        {
+          "h": "3. Profili dei reparti",
+          "p": [
+            "Le indicazioni devono essere veritiere e confermate almeno ogni 180 giorni; altrimenti vengono contrassegnate come non aggiornate e retrocesse.",
+            "I valori della verifica della realtà possono essere commentati, ma né eliminati né nascosti."
+          ]
+        },
+        {
+          "h": "4. Prezzi e pagamento",
+          "p": [
+            "Valgono i prezzi indicati nella pagina dei prezzi. Le fatture sono pagabili entro 30 giorni. Nessuna commissione di successo per assunzione."
+          ]
+        },
+        {
+          "h": "5. Dati",
+          "p": [
+            "I dati delle candidature possono essere utilizzati solo per occupare il posto. Per gli accessi ai documenti del passaporto viene tenuto un registro di audit."
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Informativa sulla protezione dei dati",
+      "sections": [
+        {
+          "h": "Titolare del trattamento",
+          "p": [
+            "Kardia SA (titolo provvisorio), Zurigo. Contatto: datenschutz@kardia.ch."
+          ]
+        },
+        {
+          "h": "Quali dati trattiamo",
+          "p": [
+            "Dati del conto (e-mail, lingua), passaporto delle qualifiche (diplomi, iscrizioni al registro, esperienza, lingue), candidature e messaggi, filtri di ricerca, protocolli tecnicamente necessari.",
+            "Salviamo in forma cifrata (AES-256-GCM) i numeri di telefono, i numeri di registro e i testi dei messaggi."
+          ]
+        },
+        {
+          "h": "Scopo e minimizzazione dei dati",
+          "p": [
+            "Trattiamo i dati solo per la ricerca di posti, la candidatura e la verifica. Per il mercato mostriamo solo il distretto, per il tragitto solo un punto di partenza arrotondato a circa 150 m.",
+            "Classifica sì, rifiuto automatico mai (nessuna decisione individuale automatizzata)."
+          ]
+        },
+        {
+          "h": "Hosting e destinatari",
+          "p": [
+            "Hosting presso Railway nella regione EU West. Fornitori di servizi: Anthropic (strutturazione tramite IA, solo testi legati al compito), Amazon SES (e-mail), Stripe (pagamenti dei datori di lavoro), Sentry (monitoraggio degli errori senza dati personali). Comunicazioni negli Stati Uniti solo con garanzie adeguate."
+          ]
+        },
+        {
+          "h": "Conservazione",
+          "p": [
+            "Candidature, messaggi compresi: 6 mesi dopo la chiusura del posto. Conti inattivi: dopo 24 mesi, con preavviso di 30 giorni. Documenti del passaporto: immediatamente con la cancellazione del documento giustificativo. Testi grezzi dell'IA: 30 giorni. Backup: 30 giorni a rotazione."
+          ]
+        },
+        {
+          "h": "I suoi diritti",
+          "p": [
+            "Esportazione dei dati in formato JSON con un clic, eliminazione autonoma del conto, informazioni entro 30 giorni.",
+            "Utilizziamo solo cookie tecnicamente necessari e nessun tracciamento da parte di terzi."
+          ]
+        }
+      ]
+    },
+    "imprint": {
+      "title": "Colophon",
+      "sections": [
+        {
+          "h": "Fornitore",
+          "p": [
+            "Kardia SA (titolo provvisorio, in costituzione), Zurigo, Svizzera.",
+            "E-mail: kontakt@kardia.ch"
+          ]
+        },
+        {
+          "h": "Responsabilità",
+          "p": [
+            "Le indicazioni nei profili dei reparti provengono dai datori di lavoro; i valori della verifica della realtà da collaboratori/trici verificati/e. Kardia ne verifica la plausibilità, ma non garantisce la loro correttezza."
+          ]
+        }
+      ]
+    }
+  }
+}

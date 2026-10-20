@@ -1,0 +1,41 @@
+{
+  "generic": "Cela n'a pas fonctionné. Veuillez réessayer ; si le problème persiste, contactez support@kardia.ch.",
+  "notFound": "Cette page n'existe pas (ou plus). Revenir à la recherche et recommencer.",
+  "forbidden": "L'autorisation pour cette action manque. Demandez le rôle approprié à une personne Owner de votre organisation.",
+  "unauthorized": "Veuillez d'abord vous connecter.",
+  "rateLimited": "Trop de requêtes en peu de temps. Attendre une minute et réessayer.",
+  "validation": "Certaines indications ne sont pas valables. Corriger les champs marqués.",
+  "offline": "Pas de connexion – action impossible.",
+  "shiftTaken": "Ce service est déjà attribué. Choisir un autre service ouvert.",
+  "publishBlocked": "Le poste ne peut pas encore être publié. Compléter les indications listées.",
+  "quotaExceeded": "Le contingent de votre abonnement est épuisé. Étendre l'abonnement ou attendre le mois prochain.",
+  "upload": {
+    "tooLarge": "Le fichier est trop volumineux. Choisir un fichier plus petit (document max. 15 MB, vidéo 200 MB, logo 2 MB).",
+    "type": "Ce type de fichier n'est pas accepté. Téléverser les documents au format PDF, JPG ou PNG.",
+    "failed": "Le téléversement a été interrompu. Vérifier la connexion et téléverser à nouveau."
+  },
+  "fields": {
+    "salarySpread": "La fourchette salariale peut représenter au maximum 40 % du minimum. Baisser le maximum ou augmenter le minimum.",
+    "salaryOrder": "Le salaire maximal est inférieur au minimum. Intervertir les valeurs.",
+    "workloadOrder": "Le taux d'activité maximal est inférieur au minimal. Vérifier les valeurs.",
+    "skillMixSum": "Le skill-mix dépasse 100 %. Ajuster les parts.",
+    "childcareAllowance": "Pour «Contribution», indiquer le montant par mois.",
+    "reentryDetails": "Les unités favorables à la réinsertion doivent indiquer la mise au courant, les services accompagnés et les cours de remise à niveau.",
+    "ratioRequired": "Pour les unités de soins aigus et de longue durée, le ratio de soins est obligatoire.",
+    "required": "Ce champ est obligatoire.",
+    "step10": "Indiquer le taux d'activité par paliers de 10, p. ex. 60 ou 70.",
+    "roster": "Le planning type doit compter exactement 28 entrées.",
+    "belowSalaryBand": "Le salaire est inférieur au minimum de la fourchette salariale de l'unité. Proposer au moins le minimum.",
+    "workloadOutsideJob": "Le taux d'activité se situe en dehors de la fourchette du poste.",
+    "startInPast": "Le début se situe dans le passé.",
+    "invalidUid": "L'IDE n'est pas valable. Format CHE-123.456.789 avec chiffre de contrôle valable."
+  },
+  "blockers": {
+    "missingField": "Champ obligatoire manquant : {field}",
+    "missingLocation": "Le lieu de travail avec adresse et coordonnées manque.",
+    "orgNotVerified": "Votre organisation n'est pas encore vérifiée.",
+    "agencyReview": "Votre organisation est vérifiée manuellement (correspondance dans le répertoire du SECO). Publication après validation.",
+    "planLimit": "La limite de postes actifs de votre abonnement est atteinte.",
+    "jobWorkloadOutsideWard": "Le taux d'activité du poste se situe en dehors de la fourchette de l'unité."
+  }
+}

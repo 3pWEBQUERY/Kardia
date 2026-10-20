@@ -1,0 +1,333 @@
+{
+  "meta": {
+    "title": "Kardia – Postes dans le domaine de la santé",
+    "description": "Des conditions de travail plutôt qu'un texte d'annonce : fourchette salariale, délai du planning, modèle d'horaires et ratio de soins par unité – directement auprès de l'employeur."
+  },
+  "home": {
+    "title": "Comment on travaille dans une unité – avant de postuler.",
+    "lead": "Kardia compare les conditions de travail par unité : fourchette salariale, délai du planning, week-ends, ratio de soins. Directement auprès de l'employeur, sans agence de placement.",
+    "q1": "Quelle profession ?",
+    "q2": "Quel taux d'activité ?",
+    "q3": "Qu'est-ce qui est exclu à tout prix ?",
+    "anyProfession": "Toutes les professions",
+    "anyWorkload": "Peu importe",
+    "dealbreakers": {
+      "nights": "Services de nuit",
+      "weekends": "Services le week-end",
+      "splitShifts": "Services coupés",
+      "shortNotice": "Changements de planning à court terme"
+    },
+    "submit": "Afficher les unités correspondantes",
+    "noAccount": "Résultats immédiats, sans compte.",
+    "sentenceLabel": "Ou décrire en une phrase",
+    "sentencePlaceholder": "SI Lausanne, pas de nuits, dès mars, 80 %",
+    "sentenceSubmit": "Rechercher",
+    "sentenceHint": "Les filtres reconnus s'affichent sous forme de pastilles que vous pouvez retirer.",
+    "uspTitle": "Ce que Kardia fait autrement",
+    "usp": {
+      "ward": {
+        "title": "Par unité, pas par hôpital",
+        "body": "Les conditions diffèrent entre les soins intensifs et la gériatrie d'un même hôpital. Chaque profil est rattaché à une unité et confirmé par l'employeur."
+      },
+      "roster": {
+        "title": "Le rythme de travail en un coup d'œil",
+        "body": "Un planning type sur quatre semaines, adapté à votre taux d'activité. La prévisibilité visible en deux secondes."
+      },
+      "reality": {
+        "title": "Contrôle de réalité par l'équipe",
+        "body": "Les collaborateur·rice·s confirment ou contestent chaque indication – de manière anonyme et visible uniquement à partir de cinq réponses."
+      }
+    }
+  },
+  "search": {
+    "title": "Rechercher des postes",
+    "results": "résultats",
+    "aiParsed": "Nous avons traduit votre phrase en filtres. Retirez les pastilles qui ne conviennent pas.",
+    "empty": "Aucun résultat pour ces conditions. Réinitialiser les filtres et recommencer.",
+    "emptyWithSuggestion": "Aucun résultat pour ces conditions.",
+    "relax": "{condition} donnerait {count} résultats",
+    "drop": "Sans «{condition}», on obtiendrait {count} résultats",
+    "reset": "Réinitialiser les filtres",
+    "map": "Carte des unités",
+    "refine": "{shown} résultats affichés sur {total}. Ajouter des conditions pour affiner.",
+    "useHome": "Reprendre le domicile",
+    "useHomeHint": "Calculer le temps de trajet depuis votre domicile (précision d'environ 150 m seulement)."
+  },
+  "job": {
+    "start": "Début {date}",
+    "pendingRecog": "Engagement pendant la reconnaissance en cours",
+    "stale": "Profil obsolète",
+    "rhythm": "Rythme de travail",
+    "rhythmHint": "Planning type de l'unité sur quatre semaines, adapté au taux d'activité.",
+    "training": "Formation postgraduée médicale",
+    "noTraining": "Aucune formation postgraduée reconnue indiquée.",
+    "profile": "Profil de l'unité",
+    "profileHint": "Chaque indication avec source et date de confirmation ; valeurs de l'équipe à partir de cinq réponses.",
+    "about": "À propos de l'unité",
+    "commute": "Temps de trajet",
+    "direct": "Candidature directement auprès de l'employeur. Kardia n'est jamais employeur et ne fait pas de placement."
+  },
+  "ward": {
+    "verifiedEmployees": "{count} collaborateur·rice·s vérifié·e·s",
+    "rhythm": "Rythme de travail",
+    "profile": "Conditions de travail",
+    "realityHint": "Les valeurs de l'équipe proviennent de collaborateur·rice·s vérifié·e·s et s'affichent à partir de cinq réponses.",
+    "benchmark": "Comparaison avec le domaine",
+    "benchmarkHint": "Médiane de la région et du domaine, à partir de {min} unités de comparaison, sans nom d'autres employeurs.",
+    "median": "Médiane {value} ({peers} unités)",
+    "videos": "Aperçus",
+    "questions": "Demandez à l'équipe",
+    "questionsHint": "Réponses d'ambassadeur·rice·s bénévoles de l'unité, après modération.",
+    "noQuestions": "Pas encore de questions. Posez la première.",
+    "unanswered": "Pas encore de réponse.",
+    "answeredAfter": "Réponse après {hours} h",
+    "openJobs": "{count, plural, =0 {Aucun poste ouvert} one {# poste ouvert} other {# postes ouverts}}",
+    "noJobs": "Aucun poste ouvert actuellement. Enregistrer la recherche pour être informé·e.",
+    "workHere": "Vous travaillez ici ?",
+    "workHereBody": "Confirmez ou corrigez les indications – de manière anonyme.",
+    "workHereAction": "Vers le contrôle de réalité"
+  },
+  "team": {
+    "title": "Contrôle de réalité : {ward}",
+    "lead": "Confirmez ou contestez chaque indication. Vos réponses ne peuvent être attribuées à aucune personne et ne s'affichent qu'à partir de {min} réponses par champ.",
+    "verifyTitle": "Confirmer en tant que collaborateur·rice",
+    "verifyInvite": "Votre adresse e-mail n'appartient pas à {domains}. Demandez une invitation à votre employeur.",
+    "verifiedInvite": "Confirmé par invitation de l'employeur (signalé comme tel).",
+    "verifiedDomain": "Confirmé via le domaine e-mail de l'institution."
+  },
+  "organization": {
+    "lead": "Les conditions de travail sont saisies par unité. Choisissez une unité.",
+    "verified": "Employeur vérifié (IDE)",
+    "jobs": "{count, plural, =0 {aucun poste ouvert} one {# poste ouvert} other {# postes ouverts}}"
+  },
+  "compare": {
+    "title": "Comparer des postes",
+    "empty": "Sélectionner au moins deux postes à comparer.",
+    "toSearch": "Vers la recherche",
+    "onlyDifferences": "Différences uniquement",
+    "best": "meilleure valeur"
+  },
+  "guide": {
+    "title": "Guide de la reconnaissance",
+    "lead": "Ce que vous pouvez exercer, où et quand : étapes, documents et liens officiels selon le diplôme d'origine et la profession visée.",
+    "disclaimer": "Tenu à jour par la rédaction et daté de la dernière vérification. Pas de conseil juridique – seules les indications des autorités compétentes font foi.",
+    "who": "Kardia ne pratique aucun recrutement actif à l'étranger et se conforme au Code de pratique mondial de l'OMS pour le recrutement international des personnels de santé.",
+    "empty": "Aucun guide publié pour l'instant.",
+    "route": "{origin} → {profession}",
+    "authority": "Compétence : {authority} · vérifié le {date}",
+    "steps": "Étapes",
+    "progress": "{done} sur {total} effectuées",
+    "signInForProgress": "Se connecter pour enregistrer sa propre progression.",
+    "outdated": "Ce guide a été vérifié il y a plus de douze mois. Vérifier les indications auprès de l'autorité."
+  },
+  "employers": {
+    "title": "Pourvoir les postes directement – sans majoration d'agence",
+    "lead": "Kardia montre aux professionnel·le·s vos conditions de travail par unité. Les personnes qui postulent savent à quoi elles s'engagent – et vous recevez des candidatures vérifiées en un clic.",
+    "cta": "Enregistrer l'organisation",
+    "pricing": "Voir les prix",
+    "points": {
+      "direct": {
+        "title": "Direct plutôt que par intermédiaire",
+        "body": "Seules les organisations qui sont elles-mêmes employeurs publient des annonces. Aucun honoraire de succès par engagement."
+      },
+      "import": {
+        "title": "Annonce en 10 minutes",
+        "body": "Coller une annonce existante ; l'IA pré-remplit le profil de l'unité, vous confirmez chaque champ."
+      },
+      "pipeline": {
+        "title": "Pipeline avec passeport",
+        "body": "Candidatures avec diplômes et inscriptions au registre vérifiés, utilisable au clavier."
+      },
+      "pool": {
+        "title": "Votre propre pool flexible",
+        "body": "Services individuels pour votre pool de remplacement – réservables directement plutôt que via des entreprises de travail temporaire."
+      },
+      "marketplace": {
+        "title": "Marché inversé",
+        "body": "Les professionnel·le·s définissent anonymement leurs conditions ; vous envoyez des offres concrètes."
+      },
+      "benchmark": {
+        "title": "Benchmark",
+        "body": "Vos valeurs comparées à la médiane de votre domaine et de votre région."
+      }
+    },
+    "agencyTitle": "Sans agences",
+    "agencyBody": "Enregistrement avec IDE et comparaison avec le répertoire du SECO des entreprises autorisées de placement et de location de services. Les annonces sans unité concrète ni adresse sont techniquement impossibles.",
+    "foundingTitle": "Partenaires fondateurs dans le canton de Zurich",
+    "foundingBody": "Les 30 premières institutions reçoivent l'abonnement «Institution» gratuitement pendant six mois – en échange de profils d'unité complets et d'un entretien de feed-back par mois."
+  },
+  "pricing": {
+    "title": "Prix",
+    "lead": "Les professionnel·le·s ne paient jamais. Les employeurs paient un abonnement logiciel – sans honoraire de succès et sans places de classement payantes.",
+    "perMonth": "par mois, hors TVA",
+    "from": "dès ",
+    "yearly": "Annuel {price} (2 mois de rabais)",
+    "single": {
+      "name": "Annonce individuelle",
+      "meta": "par poste, {days} jours",
+      "includes": "1 unité, import IA, pipeline"
+    },
+    "plans": {
+      "PRAXIS": {
+        "name": "Cabinet",
+        "includes": "Jusqu'à 2 postes actifs, 1 unité, 2 utilisateur·rice·s"
+      },
+      "INSTITUTION": {
+        "name": "Institution",
+        "includes": "Jusqu'à 25 postes actifs, unités illimitées, 10 utilisateur·rice·s, 20 offres/mois, benchmark, pool flexible jusqu'à 100 membres"
+      },
+      "SPITALGRUPPE": {
+        "name": "Groupe hospitalier",
+        "includes": "Postes et utilisateur·rice·s illimités, 100 offres/mois, plusieurs sites, SSO, API, webhooks, import de flux, pools illimités"
+      }
+    },
+    "notes": {
+      "vat": "Tous les prix en CHF, hors TVA.",
+      "payment": "Carte et TWINT ; facture avec QR-facture pour Institution et Groupe hospitalier, délai de paiement 30 jours.",
+      "noFee": "Aucun honoraire de succès par engagement – Kardia est un logiciel, pas un intermédiaire.",
+      "noAds": "Aucune activité publicitaire : le tri suit uniquement les conditions de la personne qui cherche.",
+      "founding": "Partenaires fondateurs (30 premières institutions du canton de Zurich) : 6 mois «Institution» gratuits."
+    },
+    "cta": "S'inscrire maintenant"
+  },
+  "legal": {
+    "draft": "Projet – à faire vérifier juridiquement avant le lancement (PRD 14.3).",
+    "terms": {
+      "title": "CG pour les professionnel·le·s",
+      "sections": [
+        {
+          "h": "1. Objet",
+          "p": [
+            "Kardia est un logiciel de recherche de postes dans le domaine de la santé en Suisse. Kardia n'est jamais employeur, n'engage personne et ne fait pas de placement de rapports de travail.",
+            "L'utilisation est gratuite pour les professionnel·le·s."
+          ]
+        },
+        {
+          "h": "2. Compte et passeport de qualifications",
+          "p": [
+            "Vous êtes responsable de l'exactitude de vos indications. Les justificatifs sont vérifiés par Kardia ; la décision vous est communiquée avec motivation.",
+            "Toute modification d'indications vérifiées remet le statut sur «soumis»."
+          ]
+        },
+        {
+          "h": "3. Candidatures et offres",
+          "p": [
+            "Les candidatures sont adressées directement à l'employeur. L'employeur ne voit les documents originaux que si vous les partagez pour chaque candidature.",
+            "Sur le marché, votre profil reste anonyme jusqu'à ce que vous manifestiez votre «intérêt» pour une offre."
+          ]
+        },
+        {
+          "h": "4. Contrôle de réalité et contributions de l'équipe",
+          "p": [
+            "Les contributions doivent être factuelles et ne doivent permettre d'identifier aucune personne. Kardia les modère avant publication.",
+            "Les votes sont enregistrés sans lien avec votre personne et ne sont affichés qu'à partir de cinq réponses."
+          ]
+        },
+        {
+          "h": "5. Résiliation",
+          "p": [
+            "Vous pouvez supprimer vous-même votre compte à tout moment. Les données sont supprimées conformément à la déclaration de protection des données."
+          ]
+        }
+      ]
+    },
+    "terms-employers": {
+      "title": "CG pour les employeurs",
+      "sections": [
+        {
+          "h": "1. Objet",
+          "p": [
+            "Kardia met à disposition un logiciel pour les annonces de postes, la gestion des candidatures, les offres et les pools flexibles. Les contrats de travail sont conclus exclusivement entre l'employeur et la personne professionnelle ; Kardia n'enregistre aucun contrat de travail."
+          ]
+        },
+        {
+          "h": "2. Admission",
+          "p": [
+            "Seules les organisations qui sont elles-mêmes employeurs du poste mis au concours peuvent publier des annonces. Enregistrement avec IDE ; les correspondances dans le répertoire du SECO des entreprises de placement et de location de services sont vérifiées manuellement."
+          ]
+        },
+        {
+          "h": "3. Profils d'unité",
+          "p": [
+            "Les indications doivent être conformes à la vérité et confirmées au moins tous les 180 jours ; à défaut, elles sont signalées comme obsolètes et rétrogradées.",
+            "Les valeurs du contrôle de réalité peuvent être commentées, mais ni supprimées ni masquées."
+          ]
+        },
+        {
+          "h": "4. Prix et paiement",
+          "p": [
+            "Les prix figurant sur la page des prix s'appliquent. Les factures sont payables dans les 30 jours. Aucun honoraire de succès par engagement."
+          ]
+        },
+        {
+          "h": "5. Données",
+          "p": [
+            "Les données de candidature ne peuvent être utilisées que pour pourvoir le poste. Un journal d'audit est tenu pour les accès aux documents du passeport."
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Déclaration de protection des données",
+      "sections": [
+        {
+          "h": "Responsable du traitement",
+          "p": [
+            "Kardia SA (titre de travail), Zurich. Contact : datenschutz@kardia.ch."
+          ]
+        },
+        {
+          "h": "Données que nous traitons",
+          "p": [
+            "Données de compte (e-mail, langue), passeport de qualifications (diplômes, inscriptions au registre, expérience, langues), candidatures et messages, filtres de recherche, journaux techniquement nécessaires.",
+            "Nous enregistrons les numéros de téléphone, les numéros de registre et le texte des messages sous forme chiffrée (AES-256-GCM)."
+          ]
+        },
+        {
+          "h": "Finalité et minimisation des données",
+          "p": [
+            "Nous traitons les données uniquement pour la recherche de postes, la candidature et la vérification. Pour le marché, nous n'affichons que le district ; pour le temps de trajet, uniquement un point de départ arrondi à environ 150 m.",
+            "Classement oui, refus automatique jamais (aucune décision individuelle automatisée)."
+          ]
+        },
+        {
+          "h": "Hébergement et destinataires",
+          "p": [
+            "Hébergement chez Railway dans la région EU West. Prestataires : Anthropic (structuration par IA, uniquement des textes liés à la tâche), Amazon SES (e-mail), Stripe (paiements des employeurs), Sentry (surveillance des erreurs sans données personnelles). Communications aux États-Unis uniquement avec des garanties appropriées."
+          ]
+        },
+        {
+          "h": "Conservation",
+          "p": [
+            "Candidatures, messages compris : 6 mois après la clôture du poste. Comptes inactifs : après 24 mois, avec un avis 30 jours auparavant. Documents du passeport : immédiatement à la suppression du justificatif. Textes bruts de l'IA : 30 jours. Sauvegardes : 30 jours en rotation."
+          ]
+        },
+        {
+          "h": "Vos droits",
+          "p": [
+            "Export des données au format JSON en un clic, suppression du compte par vous-même, renseignements dans les 30 jours.",
+            "Nous utilisons uniquement des cookies techniquement nécessaires et aucun suivi par des tiers."
+          ]
+        }
+      ]
+    },
+    "imprint": {
+      "title": "Mentions légales",
+      "sections": [
+        {
+          "h": "Éditrice",
+          "p": [
+            "Kardia SA (titre de travail, en cours de fondation), Zurich, Suisse.",
+            "E-mail : kontakt@kardia.ch"
+          ]
+        },
+        {
+          "h": "Responsabilité",
+          "p": [
+            "Les indications des profils d'unité proviennent des employeurs ; les valeurs du contrôle de réalité proviennent de collaborateur·rice·s vérifié·e·s. Kardia en vérifie la plausibilité, mais ne garantit pas leur exactitude."
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "generic": "That did not work. Please try again; if the problem persists, contact support@kardia.ch.",
+  "notFound": "This page does not exist (any more). Go back to the search and start again.",
+  "forbidden": "You do not have permission for this action. Ask an Owner in your organisation for the appropriate role.",
+  "unauthorized": "Please sign in first.",
+  "rateLimited": "Too many requests in a short time. Wait a minute and try again.",
+  "validation": "Some entries are not valid. Correct the highlighted fields.",
+  "offline": "No connection – action not possible.",
+  "shiftTaken": "This shift has already been assigned. Choose another open shift.",
+  "publishBlocked": "The job cannot be published yet. Complete the listed details.",
+  "quotaExceeded": "Your plan's quota is used up. Upgrade your plan or wait until next month.",
+  "upload": {
+    "tooLarge": "The file is too large. Choose a smaller file (document max. 15 MB, video 200 MB, logo 2 MB).",
+    "type": "This file type is not accepted. Upload documents as PDF, JPG or PNG.",
+    "failed": "The upload was interrupted. Check your connection and upload again."
+  },
+  "fields": {
+    "salarySpread": "The salary band may be at most 40 % of the minimum. Lower the maximum or raise the minimum.",
+    "salaryOrder": "The maximum salary is below the minimum. Swap the values.",
+    "workloadOrder": "The maximum workload is below the minimum. Check the values.",
+    "skillMixSum": "The skill mix exceeds 100 %. Adjust the shares.",
+    "childcareAllowance": "For «Allowance», enter the amount per month.",
+    "reentryDetails": "Return-to-work friendly wards must specify onboarding, accompanied shifts and the refresher course.",
+    "ratioRequired": "For acute and long-term care wards, the nurse-to-patient ratio is required.",
+    "required": "This field is required.",
+    "step10": "Enter the workload in steps of 10, e.g. 60 or 70.",
+    "roster": "The sample roster must have exactly 28 entries.",
+    "belowSalaryBand": "The salary is below the minimum of the ward's salary band. Offer at least the minimum.",
+    "workloadOutsideJob": "The workload is outside the job's range.",
+    "startInPast": "The start date is in the past.",
+    "invalidUid": "The UID is not valid. Format CHE-123.456.789 with a valid check digit."
+  },
+  "blockers": {
+    "missingField": "Required field missing: {field}",
+    "missingLocation": "The place of work with address and coordinates is missing.",
+    "orgNotVerified": "Your organisation has not been verified yet.",
+    "agencyReview": "Your organisation is being reviewed manually (match in the SECO directory). Publication after approval.",
+    "planLimit": "Your plan's limit of active jobs has been reached.",
+    "jobWorkloadOutsideWard": "The job's workload is outside the ward's range."
+  }
+}

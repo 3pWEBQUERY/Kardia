@@ -1,0 +1,83 @@
+{
+  "Profession": {
+    "NURSE_HF_FH": "Infirmier·ère diplômé·e ES/HES",
+    "FAGE": "Assistant·e en soins et santé communautaire (ASSC)",
+    "AGS": "Aide en soins et accompagnement (ASA)",
+    "NURSING_AID_SRK": "Auxiliaire de santé CRS",
+    "PHYSICIAN": "Médecin",
+    "MPA": "Assistant·e médical·e (AM)",
+    "PHYSIOTHERAPIST": "Physiothérapeute",
+    "OCCUPATIONAL_THERAPIST": "Ergothérapeute",
+    "SPEECH_THERAPIST": "Logopédiste",
+    "MTRA": "Technicien·ne en radiologie médicale (TRM)",
+    "BMA": "Technicien·ne en analyses biomédicales (TAB)",
+    "PARAMEDIC": "Ambulancier·ère",
+    "OR_TECHNICIAN": "Technicien·ne en salle d'opération (TSO)",
+    "MIDWIFE": "Sage-femme"
+  },
+  "Department": {
+    "ICU": "Soins intensifs (SI)",
+    "EMERGENCY": "Urgences",
+    "SURGERY": "Chirurgie",
+    "INTERNAL_MEDICINE": "Médecine",
+    "GERIATRICS": "Gériatrie",
+    "PSYCHIATRY": "Psychiatrie",
+    "PEDIATRICS": "Pédiatrie",
+    "ONCOLOGY": "Oncologie",
+    "OPERATING_ROOM": "Bloc opératoire",
+    "ANESTHESIA": "Anesthésie",
+    "LONG_TERM_CARE": "Soins de longue durée",
+    "HOME_CARE": "Soins à domicile",
+    "REHABILITATION": "Réadaptation",
+    "MATERNITY": "Obstétrique",
+    "RADIOLOGY": "Radiologie",
+    "LABORATORY": "Laboratoire",
+    "PRACTICE": "Cabinet"
+  },
+  "ShiftType": {
+    "EARLY": "Matin",
+    "LATE": "Soir",
+    "NIGHT": "Nuit",
+    "DAY_12H": "Jour 12 h",
+    "SPLIT": "Service coupé",
+    "WEEKDAYS_ONLY": "Jours ouvrables uniquement"
+  },
+  "RosterCode": { "F": "Matin", "S": "Soir", "N": "Nuit", "T": "Jour 12 h", "X": "congé" },
+  "ChildcareType": { "NONE": "Aucune", "INTERNAL_DAYCARE": "Crèche interne", "ALLOWANCE": "Contribution" },
+  "OrgVerification": { "PENDING": "En vérification", "VERIFIED": "Vérifiée", "REJECTED": "Refusée", "AGENCY_REVIEW": "Vérification manuelle (SECO)" },
+  "MemberRole": { "OWNER": "Owner", "RECRUITER": "Recruteur·euse", "WARD_LEAD": "Responsable d'unité", "VIEWER": "Lecture seule" },
+  "JobStatus": { "DRAFT": "Brouillon", "PUBLISHED": "Publié", "PAUSED": "En pause", "CLOSED": "Clôturé" },
+  "ApplicationStatus": {
+    "NEW": "Nouvelle",
+    "SCREENED": "Examinée",
+    "INTERVIEW": "Entretien",
+    "OFFER": "Offre",
+    "HIRED": "Engagé·e",
+    "REJECTED": "Refusée",
+    "WITHDRAWN": "Retirée"
+  },
+  "RejectionReason": {
+    "QUALIFICATION_MISSING": "Qualification manquante",
+    "POSITION_FILLED": "Poste pourvu",
+    "LANGUAGE": "Connaissances linguistiques",
+    "AVAILABILITY": "Disponibilité",
+    "OTHER": "Autre motif"
+  },
+  "CredentialType": {
+    "DIPLOMA": "Diplôme/titre",
+    "RECOGNITION_SRK": "Reconnaissance CRS",
+    "RECOGNITION_MEBEKO": "Reconnaissance MEBEKO",
+    "REGISTRY_ENTRY": "Inscription au registre",
+    "FURTHER_EDUCATION": "Formation continue (EPD, CAS, MAS)",
+    "LANGUAGE_CERTIFICATE": "Certificat de langue"
+  },
+  "CredentialStatus": { "SUBMITTED": "Soumis", "IN_REVIEW": "En vérification", "VERIFIED": "Vérifié", "REJECTED": "Refusé", "EXPIRED": "Expiré" },
+  "Registry": { "MEDREG": "MedReg", "GESREG": "GesReg", "NAREG": "NAREG" },
+  "OfferStatus": { "SENT": "Ouverte", "INTERESTED": "Intérêt", "DECLINED": "Refusée", "EXPIRED": "Expirée", "WITHDRAWN": "Retirée" },
+  "ShiftStatus": { "OPEN": "Ouvert", "BOOKED": "Réservé", "CANCELLED": "Annulé", "COMPLETED": "Effectué" },
+  "PoolBookingMode": { "FIRST_CONFIRMS": "Premier·ère à confirmer", "EMPLOYER_SELECTS": "L'employeur choisit" },
+  "ModerationStatus": { "PENDING": "Ouvert", "APPROVED": "Validé", "REJECTED": "Refusé" },
+  "AlertFrequency": { "INSTANT": "Immédiatement", "DAILY": "Quotidiennement", "WEEKLY": "Hebdomadairement" },
+  "PlanTier": { "PRAXIS": "Cabinet", "INSTITUTION": "Institution", "SPITALGRUPPE": "Groupe hospitalier" },
+  "DeclineReason": { "salary": "Salaire", "workload": "Taux d'activité", "location": "Lieu de travail", "conditions": "Conditions de travail", "timing": "Moment", "other": "Autre", "none": "Sans indication" }
+}

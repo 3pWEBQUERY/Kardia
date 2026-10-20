@@ -1,0 +1,337 @@
+{
+  "brand": "Kardia",
+  "tagline": "Emplois dans la santé",
+  "skipToContent": "Aller au contenu",
+  "nav": {
+    "search": "Recherche",
+    "employers": "Pour les employeurs",
+    "pricing": "Tarifs",
+    "guide": "Guide de reconnaissance",
+    "signIn": "Se connecter",
+    "signOut": "Se déconnecter",
+    "more": "Plus",
+    "menu": "Menu",
+    "collapse": "Réduire la barre latérale",
+    "expand": "Développer la barre latérale",
+    "me": {
+      "search": "Recherche",
+      "saved": "Favoris & comparaison",
+      "applications": "Candidatures",
+      "pass": "Passeport de qualifications",
+      "marketplace": "Place de marché & offres",
+      "shifts": "Services",
+      "training": "Formation postgraduée",
+      "recognition": "Reconnaissance",
+      "team": "Mon unité",
+      "settings": "Paramètres"
+    },
+    "employer": {
+      "overview": "Aperçu",
+      "jobs": "Postes",
+      "wards": "Unités",
+      "pipeline": "Pipeline",
+      "marketplace": "Recherche sur la place de marché",
+      "pool": "Pool flexible",
+      "benchmark": "Benchmark",
+      "team": "Équipe & paramètres",
+      "billing": "Facturation"
+    },
+    "admin": {
+      "queues": "Files de contrôle",
+      "credentials": "Passeport de qualifications",
+      "organizations": "Organisations",
+      "moderation": "Modération",
+      "editorial": "Rédaction",
+      "audit": "Journal d'audit",
+      "kpis": "Indicateurs"
+    }
+  },
+  "actions": {
+    "save": "Enregistrer",
+    "saving": "Enregistrement …",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "remove": "Retirer",
+    "add": "Ajouter",
+    "confirm": "Confirmer",
+    "apply": "Postuler",
+    "remember": "Mettre en favori",
+    "remembered": "En favori",
+    "compare": "Comparer",
+    "undo": "Annuler l'action",
+    "showMore": "Afficher plus",
+    "loadMore": "Charger d'autres résultats",
+    "download": "Télécharger",
+    "upload": "Téléverser",
+    "send": "Envoyer",
+    "publish": "Publier",
+    "copy": "Copier",
+    "copied": "Copié"
+  },
+  "states": {
+    "met": "rempli",
+    "unmet": "non rempli",
+    "unknown": "inconnu",
+    "must": "Impératif",
+    "wish": "Souhait",
+    "verified": "vérifié",
+    "stale": "obsolète",
+    "yes": "oui",
+    "no": "non",
+    "none": "aucun",
+    "notSpecified": "non indiqué",
+    "deviation": "Écart"
+  },
+  "offline": {
+    "title": "Pas de connexion",
+    "action": "Pas de connexion – action impossible",
+    "body": "Les postes en favori, vos candidatures et vos services réservés restent consultables.",
+    "available": "Disponible localement",
+    "retry": "Réessayer"
+  },
+  "theme": {
+    "label": "Affichage",
+    "system": "Système",
+    "light": "Clair",
+    "dark": "Sombre"
+  },
+  "language": {
+    "label": "Langue",
+    "de-CH": "Deutsch",
+    "fr-CH": "Français",
+    "it-CH": "Italiano",
+    "en": "English"
+  },
+  "footer": {
+    "terms": "CG",
+    "privacy": "Protection des données",
+    "imprint": "Mentions légales",
+    "api": "API",
+    "claim": "Directement chez l'employeur, sans agence de placement. Kardia n'est jamais employeur."
+  },
+  "confirmedBy": "confirmé par l'employeur le {date}",
+  "teamValue": "Équipe {value} · {votes} réponses",
+  "teamAgrees": "Confirmé par l'équipe · {votes} réponses",
+  "employerComment": "Employeur : {comment}",
+  "aiSummary": "Résumé IA",
+  "conditions": {
+    "noNights": {
+      "wanted": "Pas de nuits",
+      "actual": "Pas de nuits"
+    },
+    "noSplitShifts": {
+      "wanted": "Pas de services coupés",
+      "actual": "Pas de services coupés"
+    },
+    "weekdaysOnly": {
+      "wanted": "Jours ouvrables uniquement",
+      "actual": "Jours ouvrables uniquement"
+    },
+    "maxWeekendsPerMonth": {
+      "wanted": "Week-ends ≤ {value}/mois",
+      "actual": "Week-ends {actual}/mois"
+    },
+    "minRosterLeadWeeks": {
+      "wanted": "Planning ≥ {value} sem.",
+      "actual": "Planning {actual} sem."
+    },
+    "minWishDays": {
+      "wanted": "Jours de congé souhaités ≥ {value}",
+      "actual": "Jours de congé souhaités {actual}"
+    },
+    "minSalary": {
+      "wanted": "Salaire ≥ {value}",
+      "actual": "Salaire ≥ {value}"
+    },
+    "thirteenthSalary": {
+      "wanted": "13e salaire",
+      "actual": "13e salaire"
+    },
+    "minNightAllowance": {
+      "wanted": "Indemnité de nuit ≥ CHF {value}/h",
+      "actual": "Indemnité de nuit CHF {actual}/h"
+    },
+    "maxPatientsDay": {
+      "wanted": "≤ {value} pat. jour",
+      "actual": "{actual} pat. jour"
+    },
+    "maxPatientsNight": {
+      "wanted": "≤ {value} pat. nuit",
+      "actual": "{actual} pat. nuit"
+    },
+    "minOnboardingWeeks": {
+      "wanted": "Mise au courant ≥ {value} sem.",
+      "actual": "Mise au courant {actual} sem."
+    },
+    "minVacationWeeks": {
+      "wanted": "Vacances ≥ {value} sem.",
+      "actual": "Vacances {actual} sem."
+    },
+    "minEducationDays": {
+      "wanted": "Formation continue ≥ {value} jours",
+      "actual": "Formation continue {actual} jours"
+    },
+    "childcare": {
+      "wanted": "Garde d'enfants",
+      "actual": "Garde d'enfants"
+    },
+    "collectiveAgreement": {
+      "wanted": "Avec CCT",
+      "actual": "Avec CCT"
+    },
+    "parking": {
+      "wanted": "Place de parc",
+      "actual": "Place de parc"
+    },
+    "reentryFriendly": {
+      "wanted": "Favorable à la réinsertion",
+      "actual": "Favorable à la réinsertion"
+    },
+    "pendingRecognition": {
+      "wanted": "Reconnaissance en cours – engagement possible",
+      "actual": "Reconnaissance en cours – engagement possible"
+    },
+    "recognizedTraining": {
+      "wanted": "Formation postgraduée reconnue",
+      "actual": "Formation postgraduée reconnue"
+    },
+    "maxCommute": {
+      "wanted": "Trajet ≤ {value} min ({transport})",
+      "actual": "Trajet {actual} min (souhait {value})"
+    },
+    "transport": {
+      "PT": "TP",
+      "CAR": "Voiture"
+    }
+  },
+  "roster": {
+    "caption": "Planning type sur 4 semaines à {pct} %",
+    "weekdays": [
+      "Lu",
+      "Ma",
+      "Me",
+      "Je",
+      "Ve",
+      "Sa",
+      "Di"
+    ],
+    "shifts": "{count} services en 4 semaines"
+  },
+  "pagination": {
+    "results": "{count, plural, =0 {Aucun résultat} one {# résultat} other {# résultats}}"
+  },
+  "install": {
+    "title": "Installer Kardia",
+    "body": "Comme application sur l'écran d'accueil : consultable hors ligne et avec notifications.",
+    "action": "Installer",
+    "dismiss": "Plus tard",
+    "iosTitle": "Ajouter à l'écran d'accueil",
+    "iosStep1": "Touchez «Partager» en bas.",
+    "iosStep2": "Choisissez «Sur l'écran d'accueil».",
+    "pushTitle": "Recevoir des notifications ?",
+    "pushBody": "Nous signalons les nouveaux résultats, les changements de statut et les services. Désactivable à tout moment.",
+    "pushAllow": "Autoriser"
+  },
+  "commandPalette": {
+    "title": "Palette de commandes",
+    "placeholder": "Rechercher un poste, une candidature, une unité ou une action …",
+    "empty": "Aucun résultat. Essayer un autre terme.",
+    "groups": {
+      "actions": "Actions",
+      "jobs": "Postes",
+      "wards": "Unités",
+      "applications": "Candidatures"
+    },
+    "hint": "Cmd/Ctrl + K"
+  },
+  "search": {
+    "profession": "Profession",
+    "workload": "Taux d'activité",
+    "any": "Tous",
+    "departments": "Domaines",
+    "conditions": "Conditions",
+    "conditionsHint": "Impératif : les résultats sans cette condition ne sont jamais affichés. Souhait : influence uniquement l'ordre.",
+    "off": "Non",
+    "commute": "Temps de trajet",
+    "place": "Domicile",
+    "placePlaceholder": "NPA ou localité, p. ex. 1004",
+    "originSet": "Domicile défini – saisir à nouveau pour modifier",
+    "setPlace": "Appliquer",
+    "placeNotFound": "Localité introuvable. Saisir un NPA ou une commune, p. ex. 1004 ou Lausanne.",
+    "minutes": "Minutes",
+    "transport": "Moyen de transport",
+    "mode": "Impératif ou souhait",
+    "filters": "Filtres",
+    "list": "Liste",
+    "map": "Carte",
+    "view": "Vue",
+    "sort": "Tri",
+    "sortMatch": "Selon mes conditions",
+    "sortNewest": "Plus récents",
+    "sortSalary": "Salaire",
+    "active": "Conditions choisies",
+    "save": "Enregistrer la recherche",
+    "saveHint": "Nous signalons les nouveaux résultats par e-mail et push.",
+    "name": "Nom",
+    "defaultName": "Ma recherche",
+    "frequency": "Notification",
+    "savedSearch": "Recherche enregistrée.",
+    "savedToast": "Poste mis en favori.",
+    "unsavedToast": "Retiré des favoris.",
+    "compareCount": "{count} postes sur 4 choisis pour la comparaison",
+    "commutePt": "TP {minutes} min",
+    "commuteCar": "Voiture {minutes} min",
+    "commutePending": "en cours de calcul",
+    "ptLabel": "Transports publics",
+    "carLabel": "Voiture",
+    "jobOverride": "différent pour ce poste",
+    "commuteUnavailable": "actuellement indisponible"
+  },
+  "apply": {
+    "message": "Message personnel (facultatif)",
+    "messageHint": "{max} caractères au maximum, encore {left}. Pas de lettre de motivation nécessaire.",
+    "share": "Partager les documents originaux pour cette candidature",
+    "shareHint": "Sans partage, l'employeur voit uniquement le statut «vérifié».",
+    "done": "Votre candidature a été reçue. Vous recevez les changements de statut par e-mail et push.",
+    "doneTitle": "Candidature envoyée",
+    "signInHint": "Connexion par passkey ou lien par e-mail, sans mot de passe.",
+    "createPass": "Créer le passeport de qualifications et postuler",
+    "passHint": "À créer une fois, puis postuler en un clic."
+  },
+  "team": {
+    "ask": "Question à l'équipe",
+    "askHint": "500 caractères au maximum. Publique après modération, sans votre nom.",
+    "askSubmit": "Envoyer la question",
+    "askSignIn": "Se connecter pour poser une question",
+    "asked": "Question envoyée. Elle apparaît après la modération.",
+    "verifyDomain": "L'e-mail de votre compte appartient à l'institution. Confirmez en un clic que vous travaillez ici.",
+    "verifyAction": "Confirmer en tant que collaborateur·trice",
+    "ambassadorTitle": "Ambassadeur·rice de l'unité",
+    "ambassador": "Je réponds aux questions des personnes intéressées (bénévolement)",
+    "employerSays": "Employeur : {value}",
+    "agree": "C'est exact",
+    "disagree": "Ce n'est pas exact",
+    "proposed": "Valeur correcte selon moi",
+    "comment": "Commentaire",
+    "commentHint": "Facultatif, 400 caractères au maximum, sans nom de personnes.",
+    "submitVote": "Enregistrer la réponse",
+    "voted": "Enregistré. Anonyme, visible seulement à partir de 5 réponses."
+  },
+  "auth": {
+    "passkey": "Se connecter avec un passkey",
+    "or": "ou",
+    "email": "Adresse e-mail",
+    "sendLink": "Envoyer le lien de connexion",
+    "linkHint": "Le lien est valable 15 minutes. Nouveau ici ? Le compte est créé lors de la première connexion.",
+    "sentTitle": "Lien envoyé",
+    "sent": "Nous avons envoyé un lien de connexion à {email}. Veuillez vérifier votre boîte de réception.",
+    "passkeyFailed": "La connexion avec passkey n'a pas fonctionné. Réessayer ou utiliser le lien par e-mail.",
+    "linkFailed": "Le lien n'a pas pu être envoyé. Vérifier l'adresse et réessayer.",
+    "adminPasskey": "La console d'administration exige une connexion par passkey (valable 12 heures au maximum)."
+  },
+  "external": "s'ouvre dans une nouvelle fenêtre"
+}

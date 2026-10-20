@@ -1,0 +1,41 @@
+{
+  "generic": "Non ha funzionato. La preghiamo di riprovare; se il problema persiste, contatti support@kardia.ch.",
+  "notFound": "Questa pagina non esiste (più). Tornare alla ricerca e ricominciare.",
+  "forbidden": "Manca l'autorizzazione per questa azione. Chieda il ruolo adeguato a una persona Owner della sua organizzazione.",
+  "unauthorized": "Effettui prima l'accesso.",
+  "rateLimited": "Troppe richieste in poco tempo. Attendere un minuto e riprovare.",
+  "validation": "Alcune indicazioni non sono valide. Correggere i campi evidenziati.",
+  "offline": "Nessuna connessione – azione non possibile.",
+  "shiftTaken": "Questo turno è già stato assegnato. Scegliere un altro turno aperto.",
+  "publishBlocked": "Il posto non può ancora essere pubblicato. Completare le indicazioni elencate.",
+  "quotaExceeded": "Il contingente del suo abbonamento è esaurito. Ampliare l'abbonamento o attendere il mese prossimo.",
+  "upload": {
+    "tooLarge": "Il file è troppo grande. Scegliere un file più piccolo (documento max. 15 MB, video 200 MB, logo 2 MB).",
+    "type": "Questo tipo di file non è accettato. Caricare i documenti in formato PDF, JPG o PNG.",
+    "failed": "Il caricamento è stato interrotto. Verificare la connessione e caricare di nuovo."
+  },
+  "fields": {
+    "salarySpread": "La fascia salariale può corrispondere al massimo al 40 % del minimo. Ridurre il massimo o aumentare il minimo.",
+    "salaryOrder": "Il salario massimo è inferiore al minimo. Invertire i valori.",
+    "workloadOrder": "Il grado d'occupazione massimo è inferiore al minimo. Verificare i valori.",
+    "skillMixSum": "Lo skill-mix supera il 100 %. Adeguare le quote.",
+    "childcareAllowance": "Per «Contributo» indicare l'importo mensile.",
+    "reentryDetails": "I reparti favorevoli al reinserimento devono indicare l'inserimento, i turni accompagnati e il corso di aggiornamento.",
+    "ratioRequired": "Per i reparti di cure acute e di lunga durata il rapporto di cura è obbligatorio.",
+    "required": "Questo campo è obbligatorio.",
+    "step10": "Indicare il grado d'occupazione in passi da 10, p. es. 60 o 70.",
+    "roster": "Il piano dei turni tipo deve contenere esattamente 28 voci.",
+    "belowSalaryBand": "Il salario è inferiore al minimo della fascia salariale del reparto. Offrire almeno il minimo.",
+    "workloadOutsideJob": "Il grado d'occupazione è al di fuori della fascia del posto.",
+    "startInPast": "L'inizio è nel passato.",
+    "invalidUid": "L'IDI non è valido. Formato CHE-123.456.789 con cifra di controllo valida."
+  },
+  "blockers": {
+    "missingField": "Campo obbligatorio mancante: {field}",
+    "missingLocation": "Manca il luogo di lavoro con indirizzo e coordinate.",
+    "orgNotVerified": "La sua organizzazione non è ancora verificata.",
+    "agencyReview": "La sua organizzazione viene verificata manualmente (corrispondenza nel registro della SECO). Pubblicazione dopo l'approvazione.",
+    "planLimit": "Il limite di posti attivi del suo abbonamento è stato raggiunto.",
+    "jobWorkloadOutsideWard": "Il grado d'occupazione del posto è al di fuori della fascia del reparto."
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "Profession": {
+    "NURSE_HF_FH": "Registered nurse (HF/FH)",
+    "FAGE": "Healthcare assistant (FaGe)",
+    "AGS": "Care and support assistant (AGS)",
+    "NURSING_AID_SRK": "Nursing aide (SRK)",
+    "PHYSICIAN": "Physician",
+    "MPA": "Medical practice assistant (MPA)",
+    "PHYSIOTHERAPIST": "Physiotherapist",
+    "OCCUPATIONAL_THERAPIST": "Occupational therapist",
+    "SPEECH_THERAPIST": "Speech therapist",
+    "MTRA": "Radiographer (MTRA)",
+    "BMA": "Biomedical scientist (BMA)",
+    "PARAMEDIC": "Paramedic",
+    "OR_TECHNICIAN": "Operating room technician (TOA)",
+    "MIDWIFE": "Midwife"
+  },
+  "Department": {
+    "ICU": "Intensive care (ICU)",
+    "EMERGENCY": "Emergency",
+    "SURGERY": "Surgery",
+    "INTERNAL_MEDICINE": "Internal medicine",
+    "GERIATRICS": "Geriatrics",
+    "PSYCHIATRY": "Psychiatry",
+    "PEDIATRICS": "Paediatrics",
+    "ONCOLOGY": "Oncology",
+    "OPERATING_ROOM": "Operating theatre",
+    "ANESTHESIA": "Anaesthesia",
+    "LONG_TERM_CARE": "Long-term care",
+    "HOME_CARE": "Home care (Spitex)",
+    "REHABILITATION": "Rehabilitation",
+    "MATERNITY": "Maternity",
+    "RADIOLOGY": "Radiology",
+    "LABORATORY": "Laboratory",
+    "PRACTICE": "Medical practice"
+  },
+  "ShiftType": {
+    "EARLY": "Early",
+    "LATE": "Late",
+    "NIGHT": "Night",
+    "DAY_12H": "Day 12 h",
+    "SPLIT": "Split shift",
+    "WEEKDAYS_ONLY": "Weekdays only"
+  },
+  "RosterCode": { "F": "Early", "S": "Late", "N": "Night", "T": "Day 12 h", "X": "off" },
+  "ChildcareType": { "NONE": "None", "INTERNAL_DAYCARE": "On-site daycare", "ALLOWANCE": "Allowance" },
+  "OrgVerification": { "PENDING": "Under review", "VERIFIED": "Verified", "REJECTED": "Rejected", "AGENCY_REVIEW": "Manual review (SECO)" },
+  "MemberRole": { "OWNER": "Owner", "RECRUITER": "Recruiter", "WARD_LEAD": "Ward manager", "VIEWER": "Read only" },
+  "JobStatus": { "DRAFT": "Draft", "PUBLISHED": "Published", "PAUSED": "Paused", "CLOSED": "Closed" },
+  "ApplicationStatus": {
+    "NEW": "New",
+    "SCREENED": "Screened",
+    "INTERVIEW": "Interview",
+    "OFFER": "Offer",
+    "HIRED": "Hired",
+    "REJECTED": "Rejected",
+    "WITHDRAWN": "Withdrawn"
+  },
+  "RejectionReason": {
+    "QUALIFICATION_MISSING": "Missing qualification",
+    "POSITION_FILLED": "Position filled",
+    "LANGUAGE": "Language skills",
+    "AVAILABILITY": "Availability",
+    "OTHER": "Other reason"
+  },
+  "CredentialType": {
+    "DIPLOMA": "Diploma/title",
+    "RECOGNITION_SRK": "SRK recognition",
+    "RECOGNITION_MEBEKO": "MEBEKO recognition",
+    "REGISTRY_ENTRY": "Registry entry",
+    "FURTHER_EDUCATION": "Further education (NDS, CAS, MAS)",
+    "LANGUAGE_CERTIFICATE": "Language certificate"
+  },
+  "CredentialStatus": { "SUBMITTED": "Submitted", "IN_REVIEW": "Under review", "VERIFIED": "Verified", "REJECTED": "Rejected", "EXPIRED": "Expired" },
+  "Registry": { "MEDREG": "MedReg", "GESREG": "GesReg", "NAREG": "NAREG" },
+  "OfferStatus": { "SENT": "Open", "INTERESTED": "Interested", "DECLINED": "Declined", "EXPIRED": "Expired", "WITHDRAWN": "Withdrawn" },
+  "ShiftStatus": { "OPEN": "Open", "BOOKED": "Booked", "CANCELLED": "Cancelled", "COMPLETED": "Completed" },
+  "PoolBookingMode": { "FIRST_CONFIRMS": "First to confirm", "EMPLOYER_SELECTS": "Employer selects" },
+  "ModerationStatus": { "PENDING": "Open", "APPROVED": "Approved", "REJECTED": "Rejected" },
+  "AlertFrequency": { "INSTANT": "Immediately", "DAILY": "Daily", "WEEKLY": "Weekly" },
+  "PlanTier": { "PRAXIS": "Practice", "INSTITUTION": "Institution", "SPITALGRUPPE": "Hospital group" },
+  "DeclineReason": { "salary": "Salary", "workload": "Workload", "location": "Location", "conditions": "Working conditions", "timing": "Timing", "other": "Other", "none": "Not specified" }
+}

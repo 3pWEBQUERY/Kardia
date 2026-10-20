@@ -1,0 +1,333 @@
+{
+  "meta": {
+    "title": "Kardia – Healthcare jobs in Switzerland",
+    "description": "Working conditions instead of ad copy: salary band, roster lead time, shift pattern and nurse-to-patient ratio per ward – directly with the employer."
+  },
+  "home": {
+    "title": "What it is like to work on a ward – before you apply.",
+    "lead": "Kardia compares working conditions per ward: salary band, roster lead time, weekends, nurse-to-patient ratio. Directly with the employer, without recruitment agencies.",
+    "q1": "Which profession?",
+    "q2": "What workload?",
+    "q3": "What is an absolute no-go?",
+    "anyProfession": "All professions",
+    "anyWorkload": "Any",
+    "dealbreakers": {
+      "nights": "Night shifts",
+      "weekends": "Weekend shifts",
+      "splitShifts": "Split shifts",
+      "shortNotice": "Short-notice roster changes"
+    },
+    "submit": "Show matching wards",
+    "noAccount": "Results right away, no account needed.",
+    "sentenceLabel": "Or describe it in one sentence",
+    "sentencePlaceholder": "ICU Zurich, no nights, from March, 80 %",
+    "sentenceSubmit": "Search",
+    "sentenceHint": "Recognised filters appear as chips that you can remove.",
+    "uspTitle": "What Kardia does differently",
+    "usp": {
+      "ward": {
+        "title": "Per ward, not per hospital",
+        "body": "Conditions differ between the ICU and the geriatrics ward of the same hospital. Every profile belongs to a ward and is confirmed by the employer."
+      },
+      "roster": {
+        "title": "Shift rhythm at a glance",
+        "body": "A sample roster over four weeks, scaled to your workload. Predictability visible in two seconds."
+      },
+      "reality": {
+        "title": "Reality check by the team",
+        "body": "Employees confirm or dispute every detail – anonymously and visible only from five responses."
+      }
+    }
+  },
+  "search": {
+    "title": "Search jobs",
+    "results": "results",
+    "aiParsed": "We have translated your sentence into filters. Remove any chips that do not fit.",
+    "empty": "No results for these conditions. Reset the filters and start again.",
+    "emptyWithSuggestion": "No results for these conditions.",
+    "relax": "{condition} would give {count} results",
+    "drop": "Without «{condition}» there would be {count} results",
+    "reset": "Reset filters",
+    "map": "Map of wards",
+    "refine": "Showing {shown} of {total} results. Add conditions to narrow down.",
+    "useHome": "Use place of residence",
+    "useHomeHint": "Calculate the commute from your place of residence (accurate to about 150 m only)."
+  },
+  "job": {
+    "start": "Start {date}",
+    "pendingRecog": "Employment while recognition is pending",
+    "stale": "Profile outdated",
+    "rhythm": "Shift rhythm",
+    "rhythmHint": "The ward's sample roster over four weeks, scaled to the workload.",
+    "training": "Postgraduate medical training",
+    "noTraining": "No accredited postgraduate training specified.",
+    "profile": "Ward profile",
+    "profileHint": "Every detail with source and date of confirmation; team values from five responses.",
+    "about": "About the ward",
+    "commute": "Commute",
+    "direct": "Applications go directly to the employer. Kardia is never the employer and does not act as a recruitment agency."
+  },
+  "ward": {
+    "verifiedEmployees": "{count} verified employees",
+    "rhythm": "Shift rhythm",
+    "profile": "Working conditions",
+    "realityHint": "Team values come from verified employees and appear from five responses.",
+    "benchmark": "Comparison with the specialty",
+    "benchmarkHint": "Median for the region and specialty, from {min} comparison wards, without names of other employers.",
+    "median": "Median {value} ({peers} wards)",
+    "videos": "Insights",
+    "questions": "Ask the team",
+    "questionsHint": "Answers from volunteer ward ambassadors, after moderation.",
+    "noQuestions": "No questions yet. Ask the first one.",
+    "unanswered": "Not answered yet.",
+    "answeredAfter": "Answered after {hours} h",
+    "openJobs": "{count, plural, =0 {No open jobs} one {# open job} other {# open jobs}}",
+    "noJobs": "No open jobs at the moment. Save the search to be notified.",
+    "workHere": "Do you work here?",
+    "workHereBody": "Confirm or correct the details – anonymously.",
+    "workHereAction": "Go to reality check"
+  },
+  "team": {
+    "title": "Reality check: {ward}",
+    "lead": "Confirm or dispute every detail. Your responses cannot be traced to any person and appear only from {min} responses per field.",
+    "verifyTitle": "Confirm as employee",
+    "verifyInvite": "Your email address does not belong to {domains}. Ask your employer for an invitation.",
+    "verifiedInvite": "Confirmed by employer invitation (marked as such).",
+    "verifiedDomain": "Confirmed via the institution's email domain."
+  },
+  "organization": {
+    "lead": "Working conditions are recorded per ward. Choose a ward.",
+    "verified": "Employer verified (UID)",
+    "jobs": "{count, plural, =0 {no open jobs} one {# open job} other {# open jobs}}"
+  },
+  "compare": {
+    "title": "Compare jobs",
+    "empty": "Select at least two jobs to compare.",
+    "toSearch": "Go to search",
+    "onlyDifferences": "Differences only",
+    "best": "best value"
+  },
+  "guide": {
+    "title": "Recognition guide",
+    "lead": "What you may practise, where and when: steps, documents and official links by country of qualification and target profession.",
+    "disclaimer": "Maintained by our editorial team and dated on review. Not legal advice – the information from the competent authorities is binding.",
+    "who": "Kardia does not actively recruit abroad and follows the WHO Global Code of Practice on the International Recruitment of Health Personnel.",
+    "empty": "No guides published yet.",
+    "route": "{origin} → {profession}",
+    "authority": "Responsible: {authority} · reviewed on {date}",
+    "steps": "Steps",
+    "progress": "{done} of {total} done",
+    "signInForProgress": "Sign in to save your own progress.",
+    "outdated": "This guide was reviewed more than twelve months ago. Verify the information with the authority."
+  },
+  "employers": {
+    "title": "Fill positions directly – without agency mark-ups",
+    "lead": "Kardia shows healthcare professionals your working conditions per ward. Applicants know what they are signing up for – and you receive verified applications with one click.",
+    "cta": "Register organisation",
+    "pricing": "View pricing",
+    "points": {
+      "direct": {
+        "title": "Direct, not through agencies",
+        "body": "Only organisations that are themselves the employer can post jobs. No success fee per hire."
+      },
+      "import": {
+        "title": "Job ad in 10 minutes",
+        "body": "Paste an existing job ad; AI pre-fills the ward profile and you confirm every field."
+      },
+      "pipeline": {
+        "title": "Pipeline with passport",
+        "body": "Applications with verified diplomas and registry entries, fully keyboard-operable."
+      },
+      "pool": {
+        "title": "Your own flex pool",
+        "body": "Individual shifts for your float pool – bookable directly instead of through temp agencies."
+      },
+      "marketplace": {
+        "title": "Reverse marketplace",
+        "body": "Professionals set their conditions anonymously; you send concrete offers."
+      },
+      "benchmark": {
+        "title": "Benchmark",
+        "body": "Your values compared with the median for your specialty and region."
+      }
+    },
+    "agencyTitle": "Agency-free",
+    "agencyBody": "Registration with UID and a check against the SECO directory of licensed placement and staff-leasing agencies. Job ads without a specific ward and address are technically impossible.",
+    "foundingTitle": "Founding partners in the canton of Zurich",
+    "foundingBody": "The first 30 institutions receive the «Institution» plan free of charge for six months – in return for complete ward profiles and one feedback call per month."
+  },
+  "pricing": {
+    "title": "Pricing",
+    "lead": "Professionals never pay. Employers pay a software subscription – no success fee and no paid ranking positions.",
+    "perMonth": "per month, excl. VAT",
+    "from": "from ",
+    "yearly": "Yearly {price} (2 months free)",
+    "single": {
+      "name": "Single job ad",
+      "meta": "per job, {days} days",
+      "includes": "1 ward, AI import, pipeline"
+    },
+    "plans": {
+      "PRAXIS": {
+        "name": "Practice",
+        "includes": "Up to 2 active jobs, 1 ward, 2 users"
+      },
+      "INSTITUTION": {
+        "name": "Institution",
+        "includes": "Up to 25 active jobs, unlimited wards, 10 users, 20 offers/month, benchmark, flex pool up to 100 members"
+      },
+      "SPITALGRUPPE": {
+        "name": "Hospital group",
+        "includes": "Unlimited jobs and users, 100 offers/month, multiple sites, SSO, API, webhooks, feed import, unlimited pools"
+      }
+    },
+    "notes": {
+      "vat": "All prices in CHF, excluding VAT.",
+      "payment": "Card and TWINT; invoice with QR-bill for Institution and Hospital group, payment term 30 days.",
+      "noFee": "No success fee per hire – Kardia is software, not an agency.",
+      "noAds": "No advertising business: sorting follows only the conditions of the person searching.",
+      "founding": "Founding partners (first 30 institutions in the canton of Zurich): 6 months of «Institution» free of charge."
+    },
+    "cta": "Register now"
+  },
+  "legal": {
+    "draft": "Draft – to be legally reviewed before launch (PRD 14.3).",
+    "terms": {
+      "title": "Terms for healthcare professionals",
+      "sections": [
+        {
+          "h": "1. Subject matter",
+          "p": [
+            "Kardia is software for finding jobs in the Swiss healthcare sector. Kardia is never the employer, does not hire anyone and does not broker employment relationships.",
+            "Use is free of charge for healthcare professionals."
+          ]
+        },
+        {
+          "h": "2. Account and qualification passport",
+          "p": [
+            "You are responsible for the accuracy of your information. Credentials are reviewed by Kardia; you will be informed of the decision and the reasons for it.",
+            "Changes to verified information reset the status to «submitted»."
+          ]
+        },
+        {
+          "h": "3. Applications and offers",
+          "p": [
+            "Applications go directly to the employer. The employer sees original documents only if you share them for the specific application.",
+            "In the marketplace, your profile remains anonymous until you express «interest» in an offer."
+          ]
+        },
+        {
+          "h": "4. Reality check and team contributions",
+          "p": [
+            "Contributions must be factual and must not identify any individual. Kardia moderates them before publication.",
+            "Votes are stored without being linked to you and are shown only from five responses."
+          ]
+        },
+        {
+          "h": "5. Termination",
+          "p": [
+            "You can delete your account yourself at any time. Data is deleted in accordance with the privacy policy."
+          ]
+        }
+      ]
+    },
+    "terms-employers": {
+      "title": "Terms for employers",
+      "sections": [
+        {
+          "h": "1. Subject matter",
+          "p": [
+            "Kardia provides software for job advertisements, application management, offers and flex pools. Employment contracts are concluded exclusively between the employer and the healthcare professional; Kardia does not store any employment contracts."
+          ]
+        },
+        {
+          "h": "2. Eligibility",
+          "p": [
+            "Only organisations that are themselves the employer for the advertised position may post jobs. Registration with UID; matches in the SECO directory of placement and staff-leasing agencies are reviewed manually."
+          ]
+        },
+        {
+          "h": "3. Ward profiles",
+          "p": [
+            "Information must be truthful and confirmed at least every 180 days; otherwise it is marked as outdated and ranked lower.",
+            "Reality check values may be commented on, but neither deleted nor hidden."
+          ]
+        },
+        {
+          "h": "4. Prices and payment",
+          "p": [
+            "The prices on the pricing page apply. Invoices are payable within 30 days. No success fee per hire."
+          ]
+        },
+        {
+          "h": "5. Data",
+          "p": [
+            "Application data may only be used to fill the position. An audit log is kept of all access to passport documents."
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "sections": [
+        {
+          "h": "Controller",
+          "p": [
+            "Kardia AG (working title), Zurich. Contact: datenschutz@kardia.ch."
+          ]
+        },
+        {
+          "h": "What data we process",
+          "p": [
+            "Account data (email, language), qualification passport (diplomas, registry entries, experience, languages), applications and messages, search filters, technically necessary logs.",
+            "We store phone numbers, registry numbers and message texts encrypted (AES-256-GCM)."
+          ]
+        },
+        {
+          "h": "Purpose and data minimisation",
+          "p": [
+            "We process data only for job searches, applications and verification. In the marketplace we show only the district; for the commute, only a starting point rounded to about 150 m.",
+            "Ranking yes, automatic rejection never (no automated individual decision-making)."
+          ]
+        },
+        {
+          "h": "Hosting and recipients",
+          "p": [
+            "Hosted by Railway in the EU West region. Service providers: Anthropic (AI structuring, task-related texts only), Amazon SES (email), Stripe (employer payments), Sentry (error monitoring without personal data). Transfers to the USA only with appropriate safeguards."
+          ]
+        },
+        {
+          "h": "Retention",
+          "p": [
+            "Applications including messages: 6 months after the position is closed. Inactive accounts: after 24 months, with 30 days' prior notice. Passport documents: immediately when the credential is deleted. Raw AI texts: 30 days. Backups: 30 days on a rolling basis."
+          ]
+        },
+        {
+          "h": "Your rights",
+          "p": [
+            "Data export as JSON with one click, self-service account deletion, information within 30 days.",
+            "We use only technically necessary cookies and no third-party tracking."
+          ]
+        }
+      ]
+    },
+    "imprint": {
+      "title": "Legal notice",
+      "sections": [
+        {
+          "h": "Provider",
+          "p": [
+            "Kardia AG (working title, in formation), Zurich, Switzerland.",
+            "Email: kontakt@kardia.ch"
+          ]
+        },
+        {
+          "h": "Liability",
+          "p": [
+            "Information in ward profiles comes from the employers; reality check values come from verified employees. Kardia checks plausibility but gives no guarantee of accuracy."
+          ]
+        }
+      ]
+    }
+  }
+}
