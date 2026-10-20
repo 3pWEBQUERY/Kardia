@@ -21,12 +21,27 @@ export default async function OnboardingPage() {
           <p className="text-body-s text-ink-700">{t('lead')}</p>
         </header>
         {memberships > 0 ? (
-          <Callout action={<Button asChild size="s"><Link href="/employer">{t('toCockpit')}</Link></Button>}>{t('already')}</Callout>
+          <Callout
+            action={
+              <Button asChild size="s">
+                <Link href="/employer">{t('toCockpit')}</Link>
+              </Button>
+            }
+          >
+            {t('already')}
+          </Callout>
         ) : null}
         <Card>
           <CardBody>
             <OnboardingForm
-              labels={{ name: t('name'), uid: t('uid'), uidHint: t('uidHint'), domains: t('domains'), domainsHint: t('domainsHint'), submit: t('submit') }}
+              labels={{
+                name: t('name'),
+                uid: t('uid'),
+                uidHint: t('uidHint'),
+                domains: t('domains'),
+                domainsHint: t('domainsHint'),
+                submit: t('submit'),
+              }}
               defaultDomain={s.user.email.split('@')[1] ?? ''}
             />
           </CardBody>

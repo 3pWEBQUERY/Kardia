@@ -2,9 +2,6 @@
 
 import { revalidatePath } from 'next/cache';
 
-import type { LocationInput, OfferInput, ShiftInput, StatusChange } from '@kardia/core';
-import type { MemberRole, PlanTier } from '@kardia/db';
-
 import { changeStatus, postMessage } from '@/server/services/applications';
 import { checkoutPlan, checkoutSingleListing } from '@/server/services/billing';
 import { importStatus, startImport } from '@/server/services/import';
@@ -23,7 +20,13 @@ import {
   switchOrganization,
   updateOrgDomains,
 } from '@/server/services/org';
-import { assignShift, cancelShiftAsEmployer, createPool, inviteToPool, publishShift } from '@/server/services/pool';
+import {
+  assignShift,
+  cancelShiftAsEmployer,
+  createPool,
+  inviteToPool,
+  publishShift,
+} from '@/server/services/pool';
 import { addWardVideo, inviteEmployee } from '@/server/services/team';
 import {
   commentRealityField,
@@ -38,13 +41,20 @@ import { requireOrg, requireUser } from '@/server/session';
 
 import { actionResult, type ActionResult } from './result';
 
+import type { LocationInput, OfferInput, ShiftInput, StatusChange } from '@kardia/core';
+import type { MemberRole, PlanTier } from '@kardia/db';
+
 /**
  * Server Actions des Arbeitgeber-Cockpits. Jede Action prüft Rolle und Mandant
  * serverseitig über `requireOrg(permission)` (PRD 14.2) und ruft dieselben
  * Service-Funktionen wie die REST-API.
  */
 
-export async function registerOrg(input: { name: string; uid: string; emailDomains: string[] }): Promise<ActionResult<{ id: string }>> {
+export async function registerOrg(input: {
+  name: string;
+  uid: string;
+  emailDomains: string[];
+}): Promise<ActionResult<{ id: string }>> {
   return actionResult(async () => {
     const s = await requireUser('/employer/onboarding');
     const org = await registerOrganization(s, input);
@@ -62,7 +72,9 @@ export async function switchOrg(organizationId: string): Promise<ActionResult> {
 
 // ───────── Standorte und Stationen ─────────
 
-export async function saveLocation(input: LocationInput & { id?: string }): Promise<ActionResult<{ id: string }>> {
+export async function saveLocation(
+  input: LocationInput & { id?: string },
+): Promise<ActionResult<{ id: string }>> {
   return actionResult(async () => {
     const ctx = await requireOrg('wards.edit');
     const { id, ...data } = input;
@@ -72,10 +84,16 @@ export async function saveLocation(input: LocationInput & { id?: string }): Prom
   });
 }
 
-export async function saveWard(input: { id?: string; locationId: string; profile: unknown }): Promise<ActionResult<{ id: string }>> {
+export async function saveWard(input: {
+  id?: string;
+  locationId: string;
+  profile: unknown;
+}): Promise<ActionResult<{ id: string }>> {
   return actionResult(async () => {
     const ctx = await requireOrg('wards.edit');
-    const ward = input.id ? await updateWard(ctx, input.id, input.profile) : await createWard(ctx, input.locationId, input.profile);
+    const ward = input.id
+      ? await updateWard(ctx, input.id, input.profile)
+      : await createWard(ctx, input.locationId, input.profile);
     revalidatePath('/employer/wards');
     revalidatePath(`/employer/wards/${ward.id}`);
     return { id: ward.id };
@@ -90,7 +108,11 @@ export async function confirmWardProfile(wardId: string): Promise<ActionResult> 
   });
 }
 
-export async function saveFieldComment(wardId: string, field: string, body: string): Promise<ActionResult> {
+export async function saveFieldComment(
+  wardId: string,
+  field: string,
+  body: string,
+): Promise<ActionResult> {
   return actionResult(async () => {
     const ctx = await requireOrg('wards.edit');
     await commentRealityField(ctx, wardId, field, body);
@@ -98,7 +120,10 @@ export async function saveFieldComment(wardId: string, field: string, body: stri
   });
 }
 
-export async function saveTranslations(wardId: string, translations: Record<string, { description: string | null }>): Promise<ActionResult> {
+export async function saveTranslations(
+  wardId: string,
+  translations: Record<string, { description: string | null }>,
+): Promise<ActionResult> {
   return actionResult(async () => {
     const ctx = await requireOrg('wards.edit');
     await updateWardTranslations(ctx, wardId, translations);
@@ -113,7 +138,10 @@ export async function inviteWardEmployee(wardId: string, email: string): Promise
   });
 }
 
-export async function attachWardVideo(wardId: string, input: { fileId: string; captionsId: string; durationSec: number }): Promise<ActionResult> {
+export async function attachWardVideo(
+  wardId: string,
+  input: { fileId: string; captionsId: string; durationSec: number },
+): Promise<ActionResult> {
   return actionResult(async () => {
     const ctx = await requireOrg('wards.edit');
     await addWardVideo(ctx, wardId, input);
@@ -123,24 +151,35 @@ export async function attachWardVideo(wardId: string, input: { fileId: string; c
 
 // ───────── Stellen und Import ─────────
 
-export async function beginImport(input: { text?: string; url?: string; fileId?: string }): Promise<ActionResult<{ id: string }>> {
+export async function beginImport(input: {
+  text?: string;
+  url?: string;
+  fileId?: string;
+}): Promise<ActionResult<{ id: string }>> {
   return actionResult(async () => {
     const ctx = await requireOrg('jobs.edit');
     return { id: await startImport(ctx, input) };
   });
 }
 
-export async function pollImport(id: string): Promise<ActionResult<{ state: string; output: unknown }>> {
+export async function pollImport(
+  id: string,
+): Promise<ActionResult<{ state: string; output: unknown }>> {
   return actionResult(async () => {
     const ctx = await requireOrg('jobs.edit');
     return importStatus(ctx, id);
   });
 }
 
-export async function saveJob(input: { id?: string; data: Record<string, unknown> }): Promise<ActionResult<{ id: string }>> {
+export async function saveJob(input: {
+  id?: string;
+  data: Record<string, unknown>;
+}): Promise<ActionResult<{ id: string }>> {
   return actionResult(async () => {
     const ctx = await requireOrg('jobs.edit');
-    const job = input.id ? await updateJob(ctx, input.id, input.data) : await createJob(ctx, input.data);
+    const job = input.id
+      ? await updateJob(ctx, input.id, input.data)
+      : await createJob(ctx, input.data);
     revalidatePath('/employer/jobs');
     return { id: job.id };
   });
@@ -155,7 +194,10 @@ export async function publish(jobId: string): Promise<ActionResult> {
   });
 }
 
-export async function changeJobStatus(jobId: string, status: 'PAUSED' | 'CLOSED' | 'DRAFT'): Promise<ActionResult> {
+export async function changeJobStatus(
+  jobId: string,
+  status: 'PAUSED' | 'CLOSED' | 'DRAFT',
+): Promise<ActionResult> {
   return actionResult(async () => {
     const ctx = await requireOrg('jobs.edit');
     await setJobStatus(ctx, jobId, status);
@@ -166,7 +208,10 @@ export async function changeJobStatus(jobId: string, status: 'PAUSED' | 'CLOSED'
 
 // ───────── Pipeline ─────────
 
-export async function setApplicationStatus(applicationId: string, change: StatusChange): Promise<ActionResult> {
+export async function setApplicationStatus(
+  applicationId: string,
+  change: StatusChange,
+): Promise<ActionResult> {
   return actionResult(async () => {
     const ctx = await requireOrg('applications.update');
     await changeStatus(ctx, applicationId, change);
@@ -174,7 +219,10 @@ export async function setApplicationStatus(applicationId: string, change: Status
   });
 }
 
-export async function sendEmployerMessage(applicationId: string, body: string): Promise<ActionResult> {
+export async function sendEmployerMessage(
+  applicationId: string,
+  body: string,
+): Promise<ActionResult> {
   return actionResult(async () => {
     const ctx = await requireOrg('applications.read');
     await postMessage({ userId: ctx.user.id, orgCtx: ctx }, applicationId, { body });
@@ -184,7 +232,9 @@ export async function sendEmployerMessage(applicationId: string, body: string): 
 
 // ───────── Marktplatz ─────────
 
-export async function marketplaceSearch(filter: Parameters<typeof searchMarketplace>[1]): Promise<ActionResult<Awaited<ReturnType<typeof searchMarketplace>>>> {
+export async function marketplaceSearch(
+  filter: Parameters<typeof searchMarketplace>[1],
+): Promise<ActionResult<Awaited<ReturnType<typeof searchMarketplace>>>> {
   return actionResult(async () => {
     const ctx = await requireOrg('marketplace.offer');
     return searchMarketplace(ctx, filter);
@@ -200,7 +250,9 @@ export async function makeOffer(input: OfferInput): Promise<ActionResult<{ id: s
   });
 }
 
-export async function orgOffers(): Promise<ActionResult<Awaited<ReturnType<typeof listOrgOffers>>>> {
+export async function orgOffers(): Promise<
+  ActionResult<Awaited<ReturnType<typeof listOrgOffers>>>
+> {
   return actionResult(async () => {
     const ctx = await requireOrg('marketplace.offer');
     return listOrgOffers(ctx);
@@ -209,7 +261,11 @@ export async function orgOffers(): Promise<ActionResult<Awaited<ReturnType<typeo
 
 // ───────── Flex-Pool ─────────
 
-export async function newPool(input: { name: string; bookingMode: 'FIRST_CONFIRMS' | 'EMPLOYER_SELECTS'; cancelDeadlineHours: number }): Promise<ActionResult> {
+export async function newPool(input: {
+  name: string;
+  bookingMode: 'FIRST_CONFIRMS' | 'EMPLOYER_SELECTS';
+  cancelDeadlineHours: number;
+}): Promise<ActionResult> {
   return actionResult(async () => {
     const ctx = await requireOrg('pool.manage');
     await createPool(ctx, input);
@@ -282,7 +338,10 @@ export async function saveDomains(domains: string[]): Promise<ActionResult> {
   });
 }
 
-export async function newApiKey(name: string, scopes: ('jobs:write' | 'applications:read')[]): Promise<ActionResult<{ key: string }>> {
+export async function newApiKey(
+  name: string,
+  scopes: ('jobs:write' | 'applications:read')[],
+): Promise<ActionResult<{ key: string }>> {
   return actionResult(async () => {
     const ctx = await requireOrg('apikeys.manage');
     const key = await createApiKey(ctx, name, scopes);
@@ -299,7 +358,10 @@ export async function dropApiKey(id: string): Promise<ActionResult> {
   });
 }
 
-export async function newWebhook(url: string, events: string[]): Promise<ActionResult<{ secret: string }>> {
+export async function newWebhook(
+  url: string,
+  events: string[],
+): Promise<ActionResult<{ secret: string }>> {
   return actionResult(async () => {
     const ctx = await requireOrg('apikeys.manage');
     const secret = await createWebhook(ctx, url, events);
@@ -316,7 +378,11 @@ export async function dropWebhook(id: string): Promise<ActionResult> {
   });
 }
 
-export async function newFeed(input: { url: string; format: 'XML' | 'JSON'; wardId: string }): Promise<ActionResult> {
+export async function newFeed(input: {
+  url: string;
+  format: 'XML' | 'JSON';
+  wardId: string;
+}): Promise<ActionResult> {
   return actionResult(async () => {
     const ctx = await requireOrg('org.manage');
     await createFeed(ctx, input);

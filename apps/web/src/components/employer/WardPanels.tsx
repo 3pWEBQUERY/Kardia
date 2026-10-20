@@ -1,13 +1,18 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { MAX_VIDEO_SECONDS } from '@kardia/core';
 import { Button, Callout, Input, Textarea, useToast } from '@kardia/ui';
 
-import { attachWardVideo, inviteWardEmployee, saveFieldComment, saveTranslations } from '@/app/actions/employer';
+import {
+  attachWardVideo,
+  inviteWardEmployee,
+  saveFieldComment,
+  saveTranslations,
+} from '@/app/actions/employer';
 import { UploadFailure, uploadFile } from '@/lib/upload';
 import { useActionMessage } from '@/lib/useActionError';
 
@@ -28,7 +33,9 @@ export function RealityPanel({ wardId, rows }: { wardId: string; rows: RealityRo
   const t = useTranslations('employer.reality');
   const toast = useToast();
   const message = useActionMessage();
-  const [comments, setComments] = useState(() => Object.fromEntries(rows.map((r) => [r.field, r.comment])));
+  const [comments, setComments] = useState(() =>
+    Object.fromEntries(rows.map((r) => [r.field, r.comment])),
+  );
   return (
     <div className="flex flex-col gap-3">
       <Callout>{t('hint')}</Callout>
@@ -39,7 +46,9 @@ export function RealityPanel({ wardId, rows }: { wardId: string; rows: RealityRo
               <span className="text-body-s font-medium">{r.label}</span>
               <span className="text-body-s tabular">{t('yours', { value: r.employerValue })}</span>
             </div>
-            <p className={r.deviates ? 'text-micro text-warn-600' : 'text-micro text-ink-500'}>{r.team ?? t('tooFew')}</p>
+            <p className={r.deviates ? 'text-micro text-warn-600' : 'text-micro text-ink-500'}>
+              {r.team ?? t('tooFew')}
+            </p>
             {r.team ? (
               <div className="flex flex-col gap-2">
                 <Textarea
@@ -54,7 +63,11 @@ export function RealityPanel({ wardId, rows }: { wardId: string; rows: RealityRo
                     size="s"
                     onClick={() =>
                       void saveFieldComment(wardId, r.field, comments[r.field] ?? '').then((res) =>
-                        toast(res.ok ? { tone: 'neutral', message: t('saved') } : { tone: 'critical', message: message(res) }),
+                        toast(
+                          res.ok
+                            ? { tone: 'neutral', message: t('saved') }
+                            : { tone: 'critical', message: message(res) },
+                        ),
                       )
                     }
                   >
@@ -92,8 +105,18 @@ export function InviteEmployeeForm({ wardId }: { wardId: string }) {
       }}
     >
       <p className="text-body-s text-ink-700">{t('inviteHint')}</p>
-      <Input label={t('inviteEmail')} type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-      <div><Button type="submit" disabled={busy}>{t('invite')}</Button></div>
+      <Input
+        label={t('inviteEmail')}
+        type="email"
+        required
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <div>
+        <Button type="submit" disabled={busy}>
+          {t('invite')}
+        </Button>
+      </div>
     </form>
   );
 }
@@ -101,24 +124,47 @@ export function InviteEmployeeForm({ wardId }: { wardId: string }) {
 const LOCALES = ['fr-CH', 'it-CH', 'en'] as const;
 
 /** KI-6: Übersetzungen der Beschreibung, jede editierbar. */
-export function TranslationsEditor({ wardId, initial }: { wardId: string; initial: Record<string, { description: string | null }> }) {
+export function TranslationsEditor({
+  wardId,
+  initial,
+}: {
+  wardId: string;
+  initial: Record<string, { description: string | null }>;
+}) {
   const t = useTranslations('employer.translations');
   const tl = useTranslations('common.language');
   const toast = useToast();
   const message = useActionMessage();
-  const [values, setValues] = useState(() => Object.fromEntries(LOCALES.map((l) => [l, initial[l]?.description ?? ''])));
+  const [values, setValues] = useState(() =>
+    Object.fromEntries(LOCALES.map((l) => [l, initial[l]?.description ?? ''])),
+  );
   return (
     <div className="flex flex-col gap-4">
       <p className="text-body-s text-ink-700">{t('hint')}</p>
       {LOCALES.map((l) => (
-        <Textarea key={l} label={tl(l)} maxLength={6000} value={values[l] ?? ''} onChange={(e) => setValues((v) => ({ ...v, [l]: e.target.value }))} />
+        <Textarea
+          key={l}
+          label={tl(l)}
+          maxLength={6000}
+          value={values[l] ?? ''}
+          onChange={(e) => setValues((v) => ({ ...v, [l]: e.target.value }))}
+        />
       ))}
       <div>
         <Button
           variant="primary"
           onClick={() =>
-            void saveTranslations(wardId, Object.fromEntries(LOCALES.map((l) => [l, { description: values[l]?.trim() || null }]))).then((r) =>
-              toast(r.ok ? { tone: 'neutral', message: t('saved') } : { tone: 'critical', message: message(r) }),
+            void saveTranslations(
+              wardId,
+              Object.fromEntries(
+                LOCALES.map((l) => [l, { description: values[l]?.trim() || null }]),
+              ),
+            ).then((r) =>
+              toast(
+                r.ok
+                  ? { tone: 'neutral', message: t('saved') }
+                  : { tone: 'critical', message: message(r) },
+              ),
             )
           }
         >
@@ -143,7 +189,15 @@ function videoDuration(file: File): Promise<number> {
 }
 
 /** Stationsvideo: MP4/MOV ≤ 60 s, Untertitel (WebVTT) Pflicht (AK-G3); Freigabe nach Moderation. */
-export function VideoUpload({ wardId, count, max }: { wardId: string; count: number; max: number }) {
+export function VideoUpload({
+  wardId,
+  count,
+  max,
+}: {
+  wardId: string;
+  count: number;
+  max: number;
+}) {
   const t = useTranslations('employer.videos');
   const tu = useTranslations('errors.upload');
   const router = useRouter();
@@ -163,14 +217,29 @@ export function VideoUpload({ wardId, count, max }: { wardId: string; count: num
     try {
       const duration = await videoDuration(video).catch(() => 0);
       if (duration > MAX_VIDEO_SECONDS) throw new Error(t('tooLong', { max: MAX_VIDEO_SECONDS }));
-      const [v, c] = await Promise.all([uploadFile(video, 'video'), uploadFile(captions, 'captions')]);
-      const r = await attachWardVideo(wardId, { fileId: v.fileId, captionsId: c.fileId, durationSec: duration || 1 });
+      const [v, c] = await Promise.all([
+        uploadFile(video, 'video'),
+        uploadFile(captions, 'captions'),
+      ]);
+      const r = await attachWardVideo(wardId, {
+        fileId: v.fileId,
+        captionsId: c.fileId,
+        durationSec: duration || 1,
+      });
       if (!r.ok) throw new Error(message(r) ?? '');
       setVideo(null);
       setCaptions(null);
       router.refresh();
     } catch (e) {
-      setError(e instanceof UploadFailure ? (e.reason === 'rejected' ? e.message : tu(e.reason === 'type' ? 'type' : e.reason === 'tooLarge' ? 'tooLarge' : 'failed')) : e instanceof Error ? e.message : tu('failed'));
+      setError(
+        e instanceof UploadFailure
+          ? e.reason === 'rejected'
+            ? e.message
+            : tu(e.reason === 'type' ? 'type' : e.reason === 'tooLarge' ? 'tooLarge' : 'failed')
+          : e instanceof Error
+            ? e.message
+            : tu('failed'),
+      );
     } finally {
       setBusy(false);
     }
@@ -180,14 +249,28 @@ export function VideoUpload({ wardId, count, max }: { wardId: string; count: num
       <p className="text-body-s text-ink-700">{t('hint', { max: MAX_VIDEO_SECONDS })}</p>
       <label className="flex flex-col gap-1.5 text-caption text-ink-700">
         {t('video')}
-        <input type="file" accept="video/mp4,video/quicktime,.mov,.mp4" onChange={(e) => setVideo(e.target.files?.[0] ?? null)} className="text-body-s" />
+        <input
+          type="file"
+          accept="video/mp4,video/quicktime,.mov,.mp4"
+          onChange={(e) => setVideo(e.target.files?.[0] ?? null)}
+          className="text-body-s"
+        />
       </label>
       <label className="flex flex-col gap-1.5 text-caption text-ink-700">
         {t('captions')}
-        <input type="file" accept=".vtt,text/vtt" onChange={(e) => setCaptions(e.target.files?.[0] ?? null)} className="text-body-s" />
+        <input
+          type="file"
+          accept=".vtt,text/vtt"
+          onChange={(e) => setCaptions(e.target.files?.[0] ?? null)}
+          className="text-body-s"
+        />
       </label>
       {error ? <Callout tone="critical">{error}</Callout> : null}
-      <div><Button variant="primary" disabled={busy} onClick={() => void submit()}>{busy ? t('uploading') : t('upload')}</Button></div>
+      <div>
+        <Button variant="primary" disabled={busy} onClick={() => void submit()}>
+          {busy ? t('uploading') : t('upload')}
+        </Button>
+      </div>
     </div>
   );
 }

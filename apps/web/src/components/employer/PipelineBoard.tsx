@@ -1,12 +1,20 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { PIPELINE_COLUMNS, STATUS_HOTKEYS, canTransition, formatDate } from '@kardia/core';
 import { RejectionReason, type ApplicationStatus } from '@kardia/db/enums';
-import { Button, Dialog, PipelineCard, PipelineColumn, RadioGroup, StatusChip, useToast } from '@kardia/ui';
+import {
+  Button,
+  Dialog,
+  PipelineCard,
+  PipelineColumn,
+  RadioGroup,
+  StatusChip,
+  useToast,
+} from '@kardia/ui';
 
 import { setApplicationStatus } from '@/app/actions/employer';
 import { useActionMessage } from '@/lib/useActionError';
@@ -41,7 +49,10 @@ export function PipelineBoard({ cards: initial }: { cards: BoardCard[] }) {
 
   useEffect(() => setCards(initial), [initial]);
 
-  const ordered = useMemo(() => PIPELINE_COLUMNS.flatMap((col) => cards.filter((c) => c.status === col)), [cards]);
+  const ordered = useMemo(
+    () => PIPELINE_COLUMNS.flatMap((col) => cards.filter((c) => c.status === col)),
+    [cards],
+  );
 
   const focusCard = useCallback((id: string | null) => {
     setFocusId(id);
@@ -53,12 +64,21 @@ export function PipelineBoard({ cards: initial }: { cards: BoardCard[] }) {
       const card = cards.find((c) => c.id === id);
       if (!card || card.status === to) return;
       if (!canTransition(card.status, to)) {
-        toast({ tone: 'critical', message: t('notAllowed', { from: te(`ApplicationStatus.${card.status}`), to: te(`ApplicationStatus.${to}`) }) });
+        toast({
+          tone: 'critical',
+          message: t('notAllowed', {
+            from: te(`ApplicationStatus.${card.status}`),
+            to: te(`ApplicationStatus.${to}`),
+          }),
+        });
         return;
       }
       const from = card.status;
       setCards((cs) => cs.map((c) => (c.id === id ? { ...c, status: to } : c)));
-      const r = await setApplicationStatus(id, { status: to as never, ...(rejectionReason ? { rejectionReason: rejectionReason as never } : {}) });
+      const r = await setApplicationStatus(id, {
+        status: to as never,
+        ...(rejectionReason ? { rejectionReason: rejectionReason as never } : {}),
+      });
       if (!r.ok) {
         setCards((cs) => cs.map((c) => (c.id === id ? { ...c, status: from } : c)));
         toast({ tone: 'critical', message: message(r) });
@@ -73,7 +93,10 @@ export function PipelineBoard({ cards: initial }: { cards: BoardCard[] }) {
                 label: t('undo'),
                 onUndo: () => {
                   setCards((cs) => cs.map((c) => (c.id === id ? { ...c, status: from } : c)));
-                  void setApplicationStatus(id, { status: from as never, ...(from === 'REJECTED' ? { rejectionReason: 'OTHER' as never } : {}) }).then((u) => {
+                  void setApplicationStatus(id, {
+                    status: from as never,
+                    ...(from === 'REJECTED' ? { rejectionReason: 'OTHER' } : {}),
+                  }).then((u) => {
                     if (!u.ok) {
                       setCards((cs) => cs.map((c) => (c.id === id ? { ...c, status: to } : c)));
                       toast({ tone: 'critical', message: message(u) });
@@ -92,7 +115,14 @@ export function PipelineBoard({ cards: initial }: { cards: BoardCard[] }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
-      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT' || target.isContentEditable)) return;
+      if (
+        target &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.tagName === 'SELECT' ||
+          target.isContentEditable)
+      )
+        return;
       if (e.metaKey || e.ctrlKey || e.altKey || reject) return;
       const idx = focusId ? ordered.findIndex((c) => c.id === focusId) : -1;
       if (e.key === 'j' || e.key === 'J') {
@@ -120,8 +150,15 @@ export function PipelineBoard({ cards: initial }: { cards: BoardCard[] }) {
         {PIPELINE_COLUMNS.map((col, i) => {
           const list = cards.filter((c) => c.status === col);
           return (
-            <PipelineColumn key={col} id={`col-${col}`} title={`${i + 1} · ${te(`ApplicationStatus.${col}`)}`} count={list.length}>
-              {list.length === 0 ? <li className="px-2 py-3 text-micro text-ink-500">{t('emptyColumn')}</li> : null}
+            <PipelineColumn
+              key={col}
+              id={`col-${col}`}
+              title={`${i + 1} · ${te(`ApplicationStatus.${col}`)}`}
+              count={list.length}
+            >
+              {list.length === 0 ? (
+                <li className="px-2 py-3 text-micro text-ink-500">{t('emptyColumn')}</li>
+              ) : null}
               {list.map((c) => (
                 <PipelineCard
                   key={c.id}
@@ -133,9 +170,21 @@ export function PipelineBoard({ cards: initial }: { cards: BoardCard[] }) {
                   meta={t('cardMeta', { match: c.match, date: formatDate(c.createdAt) })}
                   status={
                     <>
-                      {c.verifiedCount > 0 ? <StatusChip tone="ok">{t('verified', { count: c.verifiedCount })}</StatusChip> : <StatusChip>{t('noVerified')}</StatusChip>}
-                      {c.pendingCount > 0 ? <StatusChip tone="warn">{t('pending', { count: c.pendingCount })}</StatusChip> : null}
-                      {c.documentsShared ? <StatusChip tone="accent">{t('docsShared')}</StatusChip> : null}
+                      {c.verifiedCount > 0 ? (
+                        <StatusChip tone="ok">
+                          {t('verified', { count: c.verifiedCount })}
+                        </StatusChip>
+                      ) : (
+                        <StatusChip>{t('noVerified')}</StatusChip>
+                      )}
+                      {c.pendingCount > 0 ? (
+                        <StatusChip tone="warn">
+                          {t('pending', { count: c.pendingCount })}
+                        </StatusChip>
+                      ) : null}
+                      {c.documentsShared ? (
+                        <StatusChip tone="accent">{t('docsShared')}</StatusChip>
+                      ) : null}
                     </>
                   }
                 />
@@ -164,7 +213,15 @@ export function PipelineBoard({ cards: initial }: { cards: BoardCard[] }) {
           </>
         }
       >
-        <RadioGroup label={t('reason')} value={reason} onValueChange={setReason} options={Object.values(RejectionReason).map((r) => ({ value: r, label: te(`RejectionReason.${r}`) }))} />
+        <RadioGroup
+          label={t('reason')}
+          value={reason}
+          onValueChange={setReason}
+          options={Object.values(RejectionReason).map((r) => ({
+            value: r,
+            label: te(`RejectionReason.${r}`),
+          }))}
+        />
       </Dialog>
     </div>
   );

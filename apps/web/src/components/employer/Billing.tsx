@@ -11,7 +11,15 @@ import { useActionMessage } from '@/lib/useActionError';
 import type { PlanTier } from '@kardia/db/enums';
 
 /** Abo per Stripe Checkout (Karte); leitet auf die Stripe-Seite weiter. */
-export function PlanCheckoutButton({ plan, current, label }: { plan: PlanTier; current: boolean; label: string }) {
+export function PlanCheckoutButton({
+  plan,
+  current,
+  label,
+}: {
+  plan: PlanTier;
+  current: boolean;
+  label: string;
+}) {
   const t = useTranslations('employer.billing');
   const message = useActionMessage();
   const [busy, setBusy] = useState(false);

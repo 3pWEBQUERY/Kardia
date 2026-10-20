@@ -25,7 +25,17 @@ async function sha256Hex(file: File): Promise<string> {
 function mimeOf(file: File): string {
   if (file.type) return file.type;
   const ext = file.name.split('.').pop()?.toLowerCase();
-  const map: Record<string, string> = { vtt: 'text/vtt', mov: 'video/quicktime', mp4: 'video/mp4', pdf: 'application/pdf', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', svg: 'image/svg+xml', txt: 'text/plain' };
+  const map: Record<string, string> = {
+    vtt: 'text/vtt',
+    mov: 'video/quicktime',
+    mp4: 'video/mp4',
+    pdf: 'application/pdf',
+    jpg: 'image/jpeg',
+    jpeg: 'image/jpeg',
+    png: 'image/png',
+    svg: 'image/svg+xml',
+    txt: 'text/plain',
+  };
   return (ext && map[ext]) || 'application/octet-stream';
 }
 
@@ -44,7 +54,11 @@ export async function uploadFile(file: File, purpose: UploadPurpose): Promise<{ 
     if (/Dateityp/i.test(m)) throw new UploadFailure('type', m);
     throw new UploadFailure('rejected', m);
   }
-  const put = await fetch(req.data.uploadUrl, { method: 'PUT', headers: req.data.headers, body: file });
+  const put = await fetch(req.data.uploadUrl, {
+    method: 'PUT',
+    headers: req.data.headers,
+    body: file,
+  });
   if (!put.ok) throw new UploadFailure('failed');
   const done = await finishUpload(req.data.fileId);
   if (!done.ok) throw new UploadFailure('failed', done.error.message);

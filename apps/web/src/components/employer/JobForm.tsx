@@ -1,10 +1,16 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useState, type ReactNode } from 'react';
 
-import { OVERRIDABLE_FIELDS, SPECIALTY_TITLES, TRAINING_CATEGORIES, WARD_FIELDS, type OverridableField } from '@kardia/core';
+import {
+  OVERRIDABLE_FIELDS,
+  SPECIALTY_TITLES,
+  TRAINING_CATEGORIES,
+  WARD_FIELDS,
+  type OverridableField,
+} from '@kardia/core';
 import { Profession, ShiftType } from '@kardia/db/enums';
 import { Button, Callout, Checkbox, Combobox, Input, Select, useToast } from '@kardia/ui';
 
@@ -68,7 +74,11 @@ export function JobForm({
   const message = useActionMessage();
   const [d, setD] = useState<JobDraft>(initial);
   const [rawOverrides, setRawOverrides] = useState<Record<string, string>>(() =>
-    Object.fromEntries(Object.entries(initial.overrides).filter(([, v]) => typeof v === 'number').map(([k, v]) => [k, String(v)])),
+    Object.fromEntries(
+      Object.entries(initial.overrides)
+        .filter(([, v]) => typeof v === 'number')
+        .map(([k, v]) => [k, String(v)]),
+    ),
   );
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -76,10 +86,8 @@ export function JobForm({
   const set = <K extends keyof JobDraft>(k: K, v: JobDraft[K]) => setD((x) => ({ ...x, [k]: v }));
   const setOverride = (k: OverridableField, v: unknown) =>
     setD((x) => {
-      const next = { ...x.overrides };
-      if (v == null || v === '') delete next[k];
-      else next[k] = v;
-      return { ...x, overrides: next };
+      const next = Object.fromEntries(Object.entries(x.overrides).filter(([key]) => key !== k));
+      return { ...x, overrides: v == null || v === '' ? next : { ...next, [k]: v } };
     });
   const defaults = wardDefaults[d.wardId] ?? {};
   const physician = d.profession === Profession.PHYSICIAN;
@@ -145,7 +153,9 @@ export function JobForm({
       const list = (d.overrides[k] as string[] | undefined) ?? null;
       return (
         <fieldset key={k} className="flex flex-col gap-1 sm:col-span-2">
-          <legend className="mb-1 text-caption text-ink-700">{tf(k)} · {list ? t('overridden') : t('inherit', { value: defaults[k] ?? '–' })}</legend>
+          <legend className="mb-1 text-caption text-ink-700">
+            {tf(k)} · {list ? t('overridden') : t('inherit', { value: defaults[k] ?? '–' })}
+          </legend>
           <div className="grid gap-1 sm:grid-cols-3">
             {Object.values(ShiftType).map((s) => (
               <Checkbox
@@ -192,29 +202,77 @@ export function JobForm({
     >
       <section className="grid gap-4 sm:grid-cols-2">
         {!jobId ? (
-          <Select label={t('ward')} required requiredLabel={tr('required')} placeholder={tr('choose')} value={d.wardId} onChange={(e) => set('wardId', e.target.value)} options={wards.map((w) => ({ value: w.id, label: w.label }))} />
+          <Select
+            label={t('ward')}
+            required
+            requiredLabel={tr('required')}
+            placeholder={tr('choose')}
+            value={d.wardId}
+            onChange={(e) => set('wardId', e.target.value)}
+            options={wards.map((w) => ({ value: w.id, label: w.label }))}
+          />
         ) : null}
-        <Input label={tf('title')} required requiredLabel={tr('required')} value={d.title} error={fieldErrors.title} onChange={(e) => set('title', e.target.value)} maxLength={160} />
+        <Input
+          label={tf('title')}
+          required
+          requiredLabel={tr('required')}
+          value={d.title}
+          error={fieldErrors.title}
+          onChange={(e) => set('title', e.target.value)}
+          maxLength={160}
+        />
         <Select
           label={tf('profession')}
           required
           requiredLabel={tr('required')}
           value={d.profession}
           onChange={(e) => set('profession', e.target.value)}
-          options={Object.values(Profession).map((p) => ({ value: p, label: te(`Profession.${p}`) }))}
+          options={Object.values(Profession).map((p) => ({
+            value: p,
+            label: te(`Profession.${p}`),
+          }))}
         />
-        <Input label={tf('startDate')} type="date" value={d.startDate ?? ''} onChange={(e) => set('startDate', e.target.value || null)} />
-        <Select label={tf('minWorkloadPct')} required requiredLabel={tr('required')} value={String(d.workloadMinPct)} onChange={(e) => set('workloadMinPct', Number(e.target.value))} options={WORKLOADS.map((w) => ({ value: String(w), label: `${w} %` }))} />
-        <Select label={tf('maxWorkloadPct')} required requiredLabel={tr('required')} value={String(d.workloadMaxPct)} error={fieldErrors.workloadMaxPct} onChange={(e) => set('workloadMaxPct', Number(e.target.value))} options={WORKLOADS.map((w) => ({ value: String(w), label: `${w} %` }))} />
+        <Input
+          label={tf('startDate')}
+          type="date"
+          value={d.startDate ?? ''}
+          onChange={(e) => set('startDate', e.target.value || null)}
+        />
+        <Select
+          label={tf('minWorkloadPct')}
+          required
+          requiredLabel={tr('required')}
+          value={String(d.workloadMinPct)}
+          onChange={(e) => set('workloadMinPct', Number(e.target.value))}
+          options={WORKLOADS.map((w) => ({ value: String(w), label: `${w} %` }))}
+        />
+        <Select
+          label={tf('maxWorkloadPct')}
+          required
+          requiredLabel={tr('required')}
+          value={String(d.workloadMaxPct)}
+          error={fieldErrors.workloadMaxPct}
+          onChange={(e) => set('workloadMaxPct', Number(e.target.value))}
+          options={WORKLOADS.map((w) => ({ value: String(w), label: `${w} %` }))}
+        />
         <div className="sm:col-span-2">
-          <Checkbox label={tf('allowsPendingRecog')} description={t('pendingRecogHint')} checked={d.allowsPendingRecog} onCheckedChange={(on) => set('allowsPendingRecog', on)} />
+          <Checkbox
+            label={tf('allowsPendingRecog')}
+            description={t('pendingRecogHint')}
+            checked={d.allowsPendingRecog}
+            onCheckedChange={(on) => set('allowsPendingRecog', on)}
+          />
         </div>
       </section>
 
       <details className="rounded-card border border-line-300 bg-surface-0 p-4">
-        <summary className="cursor-pointer text-body-s font-medium">{t('overrides', { count: Object.keys(d.overrides).length })}</summary>
+        <summary className="cursor-pointer text-body-s font-medium">
+          {t('overrides', { count: Object.keys(d.overrides).length })}
+        </summary>
         <p className="mt-2 text-micro text-ink-500">{t('overridesHint')}</p>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2">{OVERRIDABLE_FIELDS.map(overrideInput)}</div>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          {OVERRIDABLE_FIELDS.map(overrideInput)}
+        </div>
       </details>
 
       {physician ? (
@@ -229,27 +287,71 @@ export function JobForm({
               options={SPECIALTY_TITLES.map((s) => ({ value: s.name, label: s.name }))}
               emptyLabel={t('noTitle')}
             />
-            <Select label={tf('trainingCategory')} placeholder={tr('choose')} value={d.trainingCategory ?? ''} onChange={(e) => set('trainingCategory', e.target.value || null)} options={TRAINING_CATEGORIES.map((c) => ({ value: c, label: c }))} />
-            <Input label={tf('maxCreditableYears')} inputMode="decimal" unit={tf('units.years')} value={d.maxCreditableYears?.toString() ?? ''} onChange={(e) => set('maxCreditableYears', num(e.target.value))} />
-            <Input label={tf('weeklyHours')} inputMode="numeric" unit={tf('units.hours')} value={d.weeklyHours?.toString() ?? ''} onChange={(e) => set('weeklyHours', num(e.target.value))} />
-            <Input label={tf('structuredTrainingHoursWeek')} inputMode="numeric" unit={tf('units.hours')} value={d.structuredTrainingHoursWeek?.toString() ?? ''} onChange={(e) => set('structuredTrainingHoursWeek', num(e.target.value))} />
-            <Input label={tf('assistantPositions')} inputMode="numeric" value={d.assistantPositions?.toString() ?? ''} onChange={(e) => set('assistantPositions', num(e.target.value))} />
+            <Select
+              label={tf('trainingCategory')}
+              placeholder={tr('choose')}
+              value={d.trainingCategory ?? ''}
+              onChange={(e) => set('trainingCategory', e.target.value || null)}
+              options={TRAINING_CATEGORIES.map((c) => ({ value: c, label: c }))}
+            />
+            <Input
+              label={tf('maxCreditableYears')}
+              inputMode="decimal"
+              unit={tf('units.years')}
+              value={d.maxCreditableYears?.toString() ?? ''}
+              onChange={(e) => set('maxCreditableYears', num(e.target.value))}
+            />
+            <Input
+              label={tf('weeklyHours')}
+              inputMode="numeric"
+              unit={tf('units.hours')}
+              value={d.weeklyHours?.toString() ?? ''}
+              onChange={(e) => set('weeklyHours', num(e.target.value))}
+            />
+            <Input
+              label={tf('structuredTrainingHoursWeek')}
+              inputMode="numeric"
+              unit={tf('units.hours')}
+              value={d.structuredTrainingHoursWeek?.toString() ?? ''}
+              onChange={(e) => set('structuredTrainingHoursWeek', num(e.target.value))}
+            />
+            <Input
+              label={tf('assistantPositions')}
+              inputMode="numeric"
+              value={d.assistantPositions?.toString() ?? ''}
+              onChange={(e) => set('assistantPositions', num(e.target.value))}
+            />
             <Input
               label={tf('rotations')}
               hint={t('rotationsHint')}
               className="sm:col-span-2"
               value={d.rotations.join(', ')}
-              onChange={(e) => set('rotations', e.target.value.split(',').map((x) => x.trim()).filter(Boolean))}
+              onChange={(e) =>
+                set(
+                  'rotations',
+                  e.target.value
+                    .split(',')
+                    .map((x) => x.trim())
+                    .filter(Boolean),
+                )
+              }
             />
           </div>
-          {!d.specialtyTitle || !d.trainingCategory ? <Callout tone="warn">{t('noTraining')}</Callout> : null}
+          {!d.specialtyTitle || !d.trainingCategory ? (
+            <Callout tone="warn">{t('noTraining')}</Callout>
+          ) : null}
         </section>
       ) : null}
 
       {extra}
       {error ? <Callout tone="critical">{error}</Callout> : null}
       <div>
-        <Button type="submit" variant="primary" size="l" disabled={busy || !d.wardId || d.title.trim().length < 4}>
+        <Button
+          type="submit"
+          variant="primary"
+          size="l"
+          disabled={busy || !d.wardId || d.title.trim().length < 4}
+        >
           {submitLabel}
         </Button>
       </div>

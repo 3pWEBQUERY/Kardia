@@ -16,7 +16,17 @@ import {
   type WardProfileKey,
 } from '@kardia/core';
 import { ChildcareType, Department, ShiftType } from '@kardia/db/enums';
-import { Button, Callout, Checkbox, Icon, Input, Select, StatusChip, Textarea, cx, type RosterCode } from '@kardia/ui';
+import {
+  Button,
+  Callout,
+  Checkbox,
+  Icon,
+  Input,
+  Select,
+  StatusChip,
+  Textarea,
+  cx,
+} from '@kardia/ui';
 
 import { RosterEditor } from './RosterEditor.tsx';
 
@@ -25,13 +35,32 @@ export interface Evidence {
   confidence: number;
 }
 
-export type Refresher = { provider: string; durationDays: number; costCoveredChf: number };
+export interface Refresher {
+  provider: string;
+  durationDays: number;
+  costCoveredChf: number;
+}
 
 export type WardDraft = PartialWardProfile;
 
-const GROUPS = ['pay', 'shifts', 'workload', 'care', 'development', 'family', 'contract', 'reentry'] as const;
+const GROUPS = [
+  'pay',
+  'shifts',
+  'workload',
+  'care',
+  'development',
+  'family',
+  'contract',
+  'reentry',
+] as const;
 
 const UNIT_PREFIX = new Set(['chf']);
+const DEPARTMENT_FIELD = WARD_FIELDS.find((f) => f.key === 'department');
+
+/** Anzeigewert für Text-, Zahl- und Auswahlfelder. */
+function asText(v: unknown): string {
+  return typeof v === 'string' || typeof v === 'number' ? String(v) : '';
+}
 
 /** Formularwert → Profilwert: leere Felder werden null, Zahlen werden Zahlen. */
 function toNumber(v: string): number | null {
@@ -47,8 +76,8 @@ export function useFieldErrorText() {
   return (code: string | undefined): string | undefined => {
     if (!code) return undefined;
     if (te.has(code)) return te(code);
-    if (/10er/.test(code)) return te('step10');
-    if (/28/.test(code)) return te('roster');
+    if (code.includes('10er')) return te('step10');
+    if (code.includes('28')) return te('roster');
     return tf('invalid');
   };
 }
@@ -122,25 +151,40 @@ export function WardForm({
   const errorText = useFieldErrorText();
   const [draft, setDraft] = useState<WardDraft>(initial);
   const [raw, setRaw] = useState<Record<string, string>>(() =>
-    Object.fromEntries(Object.entries(initial).filter(([, v]) => typeof v === 'number').map(([k, v]) => [k, String(v)])),
+    Object.fromEntries(
+      Object.entries(initial).flatMap(([k, v]) => (typeof v === 'number' ? [[k, String(v)]] : [])),
+    ),
   );
   const [confirmed, setConfirmed] = useState<Set<string>>(() => new Set());
   const [touched, setTouched] = useState(false);
-  const errors = useMemo(() => ({ ...validateWard(draft), ...serverErrors }), [draft, serverErrors]);
+  const errors = useMemo(
+    () => ({ ...validateWard(draft), ...serverErrors }),
+    [draft, serverErrors],
+  );
   const unconfirmed = Object.keys(evidence).filter((k) => !confirmed.has(k));
 
-  const set = <K extends WardProfileKey>(key: K, value: WardDraft[K]) => setDraft((d) => ({ ...d, [key]: value }));
+  const set = <K extends WardProfileKey>(key: K, value: WardDraft[K]) =>
+    setDraft((d) => ({ ...d, [key]: value }));
   const required = (f: WardFieldMeta) =>
-    f.required === true || (f.required === 'acuteOrLongTerm' && draft.department != null && ACUTE_OR_LONG_TERM.includes(draft.department));
+    f.required === true ||
+    (f.required === 'acuteOrLongTerm' &&
+      draft.department != null &&
+      ACUTE_OR_LONG_TERM.includes(draft.department));
   const showError = (key: string) => (touched ? errorText(errors[key]) : undefined);
 
-  const unit = (f: WardFieldMeta) => (f.unit && f.unit !== 'count' ? tf(`units.${f.unit}`) : undefined);
+  const unit = (f: WardFieldMeta) =>
+    f.unit && f.unit !== 'count' ? tf(`units.${f.unit}`) : undefined;
 
   const evidenceNote = (key: string) => {
     const ev = evidence[key];
     if (!ev) return null;
     return (
-      <div className={cx('mt-1 flex flex-col gap-1 rounded-control border px-3 py-2', confirmed.has(key) ? 'border-line-200' : 'border-accent-600 bg-accent-50')}>
+      <div
+        className={cx(
+          'mt-1 flex flex-col gap-1 rounded-control border px-3 py-2',
+          confirmed.has(key) ? 'border-line-200' : 'border-accent-600 bg-accent-50',
+        )}
+      >
         <span className="inline-flex items-center gap-1.5 text-micro text-accent-700">
           <Icon icon={FileText} size={14} />
           {t('import.fromText', { confidence: formatNumber(Math.round(ev.confidence * 100)) })}
@@ -170,7 +214,11 @@ export function WardForm({
         label={tf(f.key)}
         required={required(f)}
         requiredLabel={t('form.required')}
-        {...(f.unit && UNIT_PREFIX.has(f.unit) ? { prefix: 'CHF' } : unit(f) ? { unit: unit(f) ?? '' } : {})}
+        {...(f.unit && UNIT_PREFIX.has(f.unit)
+          ? { prefix: 'CHF' }
+          : unit(f)
+            ? { unit: unit(f) ?? '' }
+            : {})}
         value={raw[f.key] ?? ''}
         error={showError(f.key)}
         onChange={(e) => {
@@ -190,7 +238,11 @@ export function WardForm({
       case 'bool':
         return (
           <div key={f.key}>
-            <Checkbox label={tf(f.key)} checked={!!draft[f.key]} onCheckedChange={(on) => set(f.key, on as never)} />
+            <Checkbox
+              label={tf(f.key)}
+              checked={!!draft[f.key]}
+              onCheckedChange={(on) => set(f.key, on as never)}
+            />
             {evidenceNote(f.key)}
           </div>
         );
@@ -202,7 +254,7 @@ export function WardForm({
               required={required(f)}
               requiredLabel={t('form.required')}
               hint={f.key === 'collectiveAgreement' ? t('ward.gavHint') : undefined}
-              value={String(draft[f.key] ?? '')}
+              value={asText(draft[f.key])}
               error={showError(f.key)}
               onChange={(e) => set(f.key, e.target.value as never)}
             />
@@ -217,10 +269,13 @@ export function WardForm({
               required={required(f)}
               requiredLabel={t('form.required')}
               placeholder={t('form.choose')}
-              value={String(draft[f.key] ?? '')}
+              value={asText(draft[f.key])}
               error={showError(f.key)}
               onChange={(e) => set(f.key, (e.target.value || null) as never)}
-              options={(f.key === 'department' ? Object.values(Department) : Object.values(ChildcareType)).map((v) => ({
+              options={(f.key === 'department'
+                ? Object.values(Department)
+                : Object.values(ChildcareType)
+              ).map((v) => ({
                 value: v,
                 label: te(`${f.key === 'department' ? 'Department' : 'ChildcareType'}.${v}`),
               }))}
@@ -249,14 +304,20 @@ export function WardForm({
                 />
               ))}
             </div>
-            {showError(f.key) ? <p className="text-micro text-critical-600">{showError(f.key)}</p> : null}
+            {showError(f.key) ? (
+              <p className="text-micro text-critical-600">{showError(f.key)}</p>
+            ) : null}
             {evidenceNote(f.key)}
           </fieldset>
         );
       case 'roster':
         return (
           <div key={f.key} className="sm:col-span-2">
-            <RosterEditor value={(draft.rosterPattern ?? []) as RosterCode[]} onChange={(next) => set('rosterPattern', next)} error={showError('rosterPattern')} />
+            <RosterEditor
+              value={draft.rosterPattern ?? []}
+              onChange={(next) => set('rosterPattern', next)}
+              error={showError('rosterPattern')}
+            />
           </div>
         );
     }
@@ -292,7 +353,7 @@ export function WardForm({
           />
           {evidenceNote('name')}
         </div>
-        {field(WARD_FIELDS.find((f) => f.key === 'department') as WardFieldMeta)}
+        {DEPARTMENT_FIELD ? field(DEPARTMENT_FIELD) : null}
       </section>
       {GROUPS.map((g) => {
         const list = WARD_FIELDS.filter((f) => f.group === g && f.key !== 'department');
@@ -310,19 +371,76 @@ export function WardForm({
                 <div className="grid gap-4 sm:grid-cols-2">
                   {list.filter((f) => f.key !== 'reentryFriendly').map((f) => numberField(f))}
                   <fieldset className="flex flex-col gap-2 sm:col-span-2">
-                    <legend className="mb-1 text-caption text-ink-700">{tf('reentryRefresher')}</legend>
+                    <legend className="mb-1 text-caption text-ink-700">
+                      {tf('reentryRefresher')}
+                    </legend>
                     {refreshers.map((r, i) => (
                       <div key={i} className="grid items-end gap-2 sm:grid-cols-[2fr_1fr_1fr_auto]">
-                        <Input label={t('ward.refresherProvider')} value={r.provider} onChange={(e) => setRefreshers(refreshers.map((x, j) => (j === i ? { ...x, provider: e.target.value } : x)))} />
-                        <Input label={t('ward.refresherDays')} unit={tf('units.days')} inputMode="numeric" value={String(r.durationDays || '')} onChange={(e) => setRefreshers(refreshers.map((x, j) => (j === i ? { ...x, durationDays: toNumber(e.target.value) ?? 0 } : x)))} />
-                        <Input label={t('ward.refresherCost')} prefix="CHF" inputMode="numeric" value={String(r.costCoveredChf || '')} onChange={(e) => setRefreshers(refreshers.map((x, j) => (j === i ? { ...x, costCoveredChf: toNumber(e.target.value) ?? 0 } : x)))} />
-                        <Button variant="ghost" onClick={() => setRefreshers(refreshers.filter((_, j) => j !== i))}>{t('form.remove')}</Button>
+                        <Input
+                          label={t('ward.refresherProvider')}
+                          value={r.provider}
+                          onChange={(e) =>
+                            setRefreshers(
+                              refreshers.map((x, j) =>
+                                j === i ? { ...x, provider: e.target.value } : x,
+                              ),
+                            )
+                          }
+                        />
+                        <Input
+                          label={t('ward.refresherDays')}
+                          unit={tf('units.days')}
+                          inputMode="numeric"
+                          value={String(r.durationDays || '')}
+                          onChange={(e) =>
+                            setRefreshers(
+                              refreshers.map((x, j) =>
+                                j === i ? { ...x, durationDays: toNumber(e.target.value) ?? 0 } : x,
+                              ),
+                            )
+                          }
+                        />
+                        <Input
+                          label={t('ward.refresherCost')}
+                          prefix="CHF"
+                          inputMode="numeric"
+                          value={String(r.costCoveredChf || '')}
+                          onChange={(e) =>
+                            setRefreshers(
+                              refreshers.map((x, j) =>
+                                j === i
+                                  ? { ...x, costCoveredChf: toNumber(e.target.value) ?? 0 }
+                                  : x,
+                              ),
+                            )
+                          }
+                        />
+                        <Button
+                          variant="ghost"
+                          onClick={() => setRefreshers(refreshers.filter((_, j) => j !== i))}
+                        >
+                          {t('form.remove')}
+                        </Button>
                       </div>
                     ))}
                     <div>
-                      <Button size="s" onClick={() => setRefreshers([...refreshers, { provider: '', durationDays: 0, costCoveredChf: 0 }])}>{t('ward.addRefresher')}</Button>
+                      <Button
+                        size="s"
+                        onClick={() =>
+                          setRefreshers([
+                            ...refreshers,
+                            { provider: '', durationDays: 0, costCoveredChf: 0 },
+                          ])
+                        }
+                      >
+                        {t('ward.addRefresher')}
+                      </Button>
                     </div>
-                    {showError('reentryRefresher') ? <p className="text-micro text-critical-600">{showError('reentryRefresher')}</p> : null}
+                    {showError('reentryRefresher') ? (
+                      <p className="text-micro text-critical-600">
+                        {showError('reentryRefresher')}
+                      </p>
+                    ) : null}
                   </fieldset>
                 </div>
               ) : null}
@@ -332,9 +450,7 @@ export function WardForm({
         return (
           <section key={g} className="flex flex-col gap-4 border-t border-line-200 pt-6">
             <h2 className="text-h3">{tf(`groups.${g}`)}</h2>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {list.map(field)}
-            </div>
+            <div className="grid gap-4 sm:grid-cols-2">{list.map(field)}</div>
           </section>
         );
       })}
@@ -356,7 +472,9 @@ export function WardForm({
                 {k === 'name' ? tf('name') : tf.has(k) ? tf(k) : k}: {errorText(errors[k])}
               </li>
             ))}
-            {unconfirmed.length ? <li>{t('import.unconfirmed', { count: unconfirmed.length })}</li> : null}
+            {unconfirmed.length ? (
+              <li>{t('import.unconfirmed', { count: unconfirmed.length })}</li>
+            ) : null}
           </ul>
         </Callout>
       ) : null}
@@ -365,7 +483,12 @@ export function WardForm({
           {submitLabel}
         </Button>
         {Object.keys(evidence).length ? (
-          <StatusChip tone={unconfirmed.length ? 'warn' : 'ok'}>{t('import.confirmedCount', { done: Object.keys(evidence).length - unconfirmed.length, total: Object.keys(evidence).length })}</StatusChip>
+          <StatusChip tone={unconfirmed.length ? 'warn' : 'ok'}>
+            {t('import.confirmedCount', {
+              done: Object.keys(evidence).length - unconfirmed.length,
+              total: Object.keys(evidence).length,
+            })}
+          </StatusChip>
         ) : null}
       </div>
     </form>

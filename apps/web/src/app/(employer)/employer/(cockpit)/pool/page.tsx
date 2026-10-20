@@ -18,16 +18,42 @@ export default async function PoolPage() {
     return (
       <div className="flex flex-col gap-6">
         <h1 className="text-h1">{t('title')}</h1>
-        <EmptyState action={<Button asChild variant="primary"><Link href="/employer/billing">{t('upgrade')}</Link></Button>}>{t('notInPlan')}</EmptyState>
+        <EmptyState
+          action={
+            <Button asChild variant="primary">
+              <Link href="/employer/billing">{t('upgrade')}</Link>
+            </Button>
+          }
+        >
+          {t('notInPlan')}
+        </EmptyState>
       </div>
     );
   }
   const [pools, wards] = await Promise.all([
     listPools(ctx),
-    db.ward.findMany({ where: { location: { organizationId: ctx.org.id } }, select: { id: true, name: true }, orderBy: { name: 'asc' } }),
+    db.ward.findMany({
+      where: { location: { organizationId: ctx.org.id } },
+      select: { id: true, name: true },
+      orderBy: { name: 'asc' },
+    }),
   ]);
-  const candidateIds = [...new Set(pools.flatMap((p) => p.shifts.flatMap((s) => [s.bookedByCandidateId, ...s.interests.map((i) => i.candidateId)])).filter((x): x is string => !!x))];
-  const people = await db.candidateProfile.findMany({ where: { id: { in: candidateIds } }, select: { id: true, firstName: true, lastName: true } });
+  const candidateIds = [
+    ...new Set(
+      pools
+        .flatMap((p) =>
+          p.shifts.flatMap((s) => [
+            s.bookedByCandidateId,
+            ...s.interests.map((i) => i.candidateId),
+          ]),
+        )
+        .filter((x): x is string => !!x),
+    ),
+  ];
+  const people = await db.candidateProfile.findMany({
+    where: { id: { in: candidateIds } },
+    select: { id: true, firstName: true, lastName: true },
+  });
   const nameOf = (id: string | null) => {
     const p = people.find((x) => x.id === id);
     return p ? `${p.firstName} ${p.lastName}` : null;
@@ -41,7 +67,9 @@ export default async function PoolPage() {
       <Callout>{t('legal')}</Callout>
       <Card>
         <CardHeader title={t('newPool')} />
-        <CardBody><PoolCreateForm /></CardBody>
+        <CardBody>
+          <PoolCreateForm />
+        </CardBody>
       </Card>
       {pools.length === 0 ? <p className="text-body-s text-ink-700">{t('noPools')}</p> : null}
       {pools.map((p) => (
@@ -49,17 +77,27 @@ export default async function PoolPage() {
           <CardHeader
             title={p.name}
             meta={`${te(`PoolBookingMode.${p.bookingMode}`)} · ${t('deadline', { hours: p.cancelDeadlineHours })} · ${t('members', { count: p._count.members })}${limits.poolMembers != null ? ` / ${limits.poolMembers}` : ''}`}
-            actions={<Button asChild size="s"><a href={`/employer/pool/${p.id}/export`}>{t('export')}</a></Button>}
+            actions={
+              <Button asChild size="s">
+                <a href={`/employer/pool/${p.id}/export`}>{t('export')}</a>
+              </Button>
+            }
           />
           <CardBody className="flex flex-col gap-6">
             <PoolInviteForm poolId={p.id} />
             <details className="rounded-card border border-line-300 p-4">
               <summary className="cursor-pointer text-body-s font-medium">{t('newShift')}</summary>
-              <div className="mt-4"><ShiftForm poolId={p.id} wards={wards} /></div>
+              <div className="mt-4">
+                <ShiftForm poolId={p.id} wards={wards} />
+              </div>
             </details>
             <div className="flex items-center gap-2">
-              <StatusChip tone="accent">{t('open', { count: p.shifts.filter((s) => s.status === 'OPEN').length })}</StatusChip>
-              <StatusChip tone="ok">{t('booked', { count: p.shifts.filter((s) => s.status === 'BOOKED').length })}</StatusChip>
+              <StatusChip tone="accent">
+                {t('open', { count: p.shifts.filter((s) => s.status === 'OPEN').length })}
+              </StatusChip>
+              <StatusChip tone="ok">
+                {t('booked', { count: p.shifts.filter((s) => s.status === 'BOOKED').length })}
+              </StatusChip>
             </div>
             <ShiftTable
               selectMode={p.bookingMode === 'EMPLOYER_SELECTS'}
@@ -72,7 +110,10 @@ export default async function PoolPage() {
                 rate: s.hourlyRateChf,
                 status: s.status,
                 bookedBy: nameOf(s.bookedByCandidateId),
-                interests: s.interests.map((i) => ({ candidateId: i.candidateId, name: nameOf(i.candidateId) ?? '–' })),
+                interests: s.interests.map((i) => ({
+                  candidateId: i.candidateId,
+                  name: nameOf(i.candidateId) ?? '–',
+                })),
               }))}
             />
           </CardBody>

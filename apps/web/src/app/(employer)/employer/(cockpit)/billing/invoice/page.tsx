@@ -12,16 +12,30 @@ import { requireOrg } from '@/server/session';
 const chf = (v: number) => `CHF ${formatNumber(v, 2)}`;
 
 /** Druckbare Rechnung mit QR-Einzahlungsschein (Institution/Spitalgruppe, 30 Tage Zahlungsfrist). */
-export default async function InvoicePage({ searchParams }: { searchParams: Promise<{ plan?: string; yearly?: string }> }) {
+export default async function InvoicePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ plan?: string; yearly?: string }>;
+}) {
   const ctx = await requireOrg();
   const sp = await searchParams;
-  const [t, te] = await Promise.all([getTranslations('employer.billing'), getTranslations('enums')]);
-  const plan = sp.plan === PlanTier.INSTITUTION || sp.plan === PlanTier.SPITALGRUPPE ? sp.plan : null;
-  const back = <Button asChild variant="ghost" className="print:hidden"><Link href="/employer/billing">{t('back')}</Link></Button>;
+  const [t, te] = await Promise.all([
+    getTranslations('employer.billing'),
+    getTranslations('enums'),
+  ]);
+  const plan =
+    sp.plan === PlanTier.INSTITUTION || sp.plan === PlanTier.SPITALGRUPPE ? sp.plan : null;
+  const back = (
+    <Button asChild variant="ghost" className="print:hidden">
+      <Link href="/employer/billing">{t('back')}</Link>
+    </Button>
+  );
   if (!plan || !can(ctx.role, 'billing.manage')) {
     return (
       <div className="flex flex-col gap-4">
-        <Callout tone={plan ? 'warn' : 'critical'}>{plan ? t('noPermission') : t('invoicePlanInvalid')}</Callout>
+        <Callout tone={plan ? 'warn' : 'critical'}>
+          {plan ? t('noPermission') : t('invoicePlanInvalid')}
+        </Callout>
         <div>{back}</div>
       </div>
     );
@@ -41,8 +55,10 @@ export default async function InvoicePage({ searchParams }: { searchParams: Prom
             <p className="text-body-s text-ink-700">{t('invoiceNumber', { number: inv.number })}</p>
           </div>
           <dl className="grid grid-cols-[auto_auto] gap-x-3 text-body-s">
-            <dt className="text-ink-700">{t('invoiceDate')}</dt><dd className="tabular-nums">{formatDate(inv.date)}</dd>
-            <dt className="text-ink-700">{t('dueDate')}</dt><dd className="tabular-nums">{formatDate(inv.dueDate)}</dd>
+            <dt className="text-ink-700">{t('invoiceDate')}</dt>
+            <dd className="tabular-nums">{formatDate(inv.date)}</dd>
+            <dt className="text-ink-700">{t('dueDate')}</dt>
+            <dd className="tabular-nums">{formatDate(inv.dueDate)}</dd>
           </dl>
         </header>
         <p className="text-body-s">{inv.orgName}</p>
@@ -50,13 +66,22 @@ export default async function InvoicePage({ searchParams }: { searchParams: Prom
           <caption className="sr-only">{t('invoice')}</caption>
           <thead>
             <tr className="border-b border-line-300 text-left text-caption text-ink-700">
-              <th scope="col" className="h-row">{t('position')}</th>
-              <th scope="col" className="text-right">{t('amount')}</th>
+              <th scope="col" className="h-row">
+                {t('position')}
+              </th>
+              <th scope="col" className="text-right">
+                {t('amount')}
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr className="border-b border-line-200">
-              <td className="h-row">{t('positionText', { plan: te(`PlanTier.${plan}`), period: yearly ? t('period12') : t('period1') })}</td>
+              <td className="h-row">
+                {t('positionText', {
+                  plan: te(`PlanTier.${plan}`),
+                  period: yearly ? t('period12') : t('period1'),
+                })}
+              </td>
               <td className="text-right tabular-nums">{chf(inv.amountChf)}</td>
             </tr>
             <tr className="border-b border-line-200">
@@ -64,14 +89,19 @@ export default async function InvoicePage({ searchParams }: { searchParams: Prom
               <td className="text-right tabular-nums">{chf(inv.vatChf)}</td>
             </tr>
             <tr>
-              <th scope="row" className="h-row text-left">{t('total')}</th>
+              <th scope="row" className="h-row text-left">
+                {t('total')}
+              </th>
               <td className="text-right font-medium tabular-nums">{chf(inv.totalChf)}</td>
             </tr>
           </tbody>
         </table>
         <p className="text-micro text-ink-500">{t('terms')}</p>
         {/* SVG aus swissqrbill (serverseitig erzeugt, keine Nutzereingaben ausser geprüften Stammdaten). */}
-        <div className="w-full [&_svg]:h-auto [&_svg]:w-full" dangerouslySetInnerHTML={{ __html: inv.svg }} />
+        <div
+          className="w-full [&_svg]:h-auto [&_svg]:w-full"
+          dangerouslySetInnerHTML={{ __html: inv.svg }}
+        />
       </article>
     </div>
   );

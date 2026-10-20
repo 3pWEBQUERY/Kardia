@@ -9,8 +9,12 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   try {
     const ctx = await requireOrg('pool.manage');
     const csv = await poolCsv(ctx, id);
-    return new Response(`﻿${csv}`, {
-      headers: { 'Content-Type': 'text/csv; charset=utf-8', 'Content-Disposition': `attachment; filename="flex-pool-${id}.csv"`, 'Cache-Control': 'no-store' },
+    return new Response(`\uFEFF${csv}`, {
+      headers: {
+        'Content-Type': 'text/csv; charset=utf-8',
+        'Content-Disposition': `attachment; filename="flex-pool-${id}.csv"`,
+        'Cache-Control': 'no-store',
+      },
     });
   } catch (error) {
     if (error instanceof ProblemError) return new Response(error.message, { status: error.status });

@@ -1,20 +1,33 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 
-import { missingRequiredFields, type PartialWardProfile } from '@kardia/core';
-import { Button, Callout, Card, CardBody, CardHeader, Input, RadioGroup, Select, SkeletonText, Tabs, Textarea } from '@kardia/ui';
+import { missingRequiredFields } from '@kardia/core';
+import {
+  Button,
+  Callout,
+  Card,
+  CardBody,
+  CardHeader,
+  Input,
+  RadioGroup,
+  Select,
+  SkeletonText,
+  Tabs,
+  Textarea,
+} from '@kardia/ui';
 
 import { beginImport, pollImport } from '@/app/actions/employer';
 import { UploadFailure, uploadFile } from '@/lib/upload';
 import { useActionMessage } from '@/lib/useActionError';
 
 import { JobForm, type JobDraft } from './JobForm.tsx';
-import { WardEditor } from './WardEditor.tsx';
-import type { Evidence, WardDraft } from './WardForm.tsx';
 import { emptyWardServer } from './wardDefaults.ts';
+import { WardEditor } from './WardEditor.tsx';
+
+import type { Evidence, WardDraft } from './WardForm.tsx';
 
 interface ImportedField {
   value: unknown;
@@ -29,7 +42,15 @@ interface ImportOutput {
 
 const POLL_MS = 1500;
 const GIVE_UP_MS = 90_000;
-const JOB_KEYS = new Set(['title', 'profession', 'hasParking', 'street', 'postalCode', 'city', 'wardName']);
+const JOB_KEYS = new Set([
+  'title',
+  'profession',
+  'hasParking',
+  'street',
+  'postalCode',
+  'city',
+  'wardName',
+]);
 
 type Step = 'input' | 'waiting' | 'ward' | 'job';
 
@@ -60,9 +81,10 @@ export function ImportFlow({
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [fields, setFields] = useState<Record<string, ImportedField>>({});
-  const [wardChoice, setWardChoice] = useState<'new' | 'existing'>(wards.length ? 'existing' : 'new');
+  const [wardChoice, setWardChoice] = useState<'new' | 'existing'>(
+    wards.length ? 'existing' : 'new',
+  );
   const [wardId, setWardId] = useState(presetWardId ?? wards[0]?.id ?? '');
-  const startedAt = useRef(0);
 
   const start = async () => {
     setError(null);
@@ -72,18 +94,27 @@ export function ImportFlow({
       try {
         fileId = (await uploadFile(file, 'import')).fileId;
       } catch (e) {
-        return setError(e instanceof UploadFailure && e.reason !== 'rejected' ? tu(e.reason === 'tooLarge' ? 'tooLarge' : e.reason === 'type' ? 'type' : 'failed') : e instanceof Error ? e.message : tu('failed'));
+        return setError(
+          e instanceof UploadFailure && e.reason !== 'rejected'
+            ? tu(e.reason === 'tooLarge' ? 'tooLarge' : e.reason === 'type' ? 'type' : 'failed')
+            : e instanceof Error
+              ? e.message
+              : tu('failed'),
+        );
       }
     }
-    const r = await beginImport(mode === 'text' ? { text } : mode === 'url' ? { url } : { fileId: fileId ?? '' });
+    const r = await beginImport(
+      mode === 'text' ? { text } : mode === 'url' ? { url } : { fileId: fileId ?? '' },
+    );
     if (!r.ok) return setError(message(r));
-    startedAt.current = Date.now();
     setStep('waiting');
     poll(r.data.id);
   };
 
   const poll = (id: string) => {
+    let tries = 0;
     const tick = async () => {
+      tries += 1;
       const r = await pollImport(id);
       if (!r.ok) {
         setError(message(r));
@@ -98,7 +129,7 @@ export function ImportFlow({
         setStep('ward');
         return;
       }
-      if (state === 'failed' || state === 'cancelled' || Date.now() - startedAt.current > GIVE_UP_MS) {
+      if (state === 'failed' || state === 'cancelled' || tries * POLL_MS > GIVE_UP_MS) {
         setError(t('failed'));
         setStep('input');
         return;
@@ -120,14 +151,17 @@ export function ImportFlow({
     wardInitial.name = String(fields.wardName.value);
     evidence.name = { evidence: fields.wardName.evidence, confidence: fields.wardName.confidence };
   }
-  const missing = missingRequiredFields(wardInitial as PartialWardProfile);
+  const missing = missingRequiredFields(wardInitial);
 
   const jobInitial: JobDraft = {
     wardId,
     title: typeof fields.title?.value === 'string' ? fields.title.value : '',
-    profession: typeof fields.profession?.value === 'string' ? fields.profession.value : 'NURSE_HF_FH',
-    workloadMinPct: typeof fields.minWorkloadPct?.value === 'number' ? fields.minWorkloadPct.value : 80,
-    workloadMaxPct: typeof fields.maxWorkloadPct?.value === 'number' ? fields.maxWorkloadPct.value : 100,
+    profession:
+      typeof fields.profession?.value === 'string' ? fields.profession.value : 'NURSE_HF_FH',
+    workloadMinPct:
+      typeof fields.minWorkloadPct?.value === 'number' ? fields.minWorkloadPct.value : 80,
+    workloadMaxPct:
+      typeof fields.maxWorkloadPct?.value === 'number' ? fields.maxWorkloadPct.value : 100,
     startDate: null,
     allowsPendingRecog: false,
     overrides: {},
@@ -152,15 +186,45 @@ export function ImportFlow({
           value={mode}
           onValueChange={setMode}
           tabs={[
-            { value: 'text', label: t('text'), content: <Textarea label={t('textLabel')} hint={t('textHint')} maxLength={20000} value={text} onChange={(e) => setText(e.target.value)} className="[&_textarea]:min-h-64" /> },
-            { value: 'url', label: t('url'), content: <Input label={t('urlLabel')} hint={t('urlHint')} type="url" value={url} onChange={(e) => setUrl(e.target.value)} /> },
+            {
+              value: 'text',
+              label: t('text'),
+              content: (
+                <Textarea
+                  label={t('textLabel')}
+                  hint={t('textHint')}
+                  maxLength={20000}
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  className="[&_textarea]:min-h-64"
+                />
+              ),
+            },
+            {
+              value: 'url',
+              label: t('url'),
+              content: (
+                <Input
+                  label={t('urlLabel')}
+                  hint={t('urlHint')}
+                  type="url"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                />
+              ),
+            },
             {
               value: 'pdf',
               label: t('pdf'),
               content: (
                 <label className="flex flex-col gap-1.5 text-caption text-ink-700">
                   {t('pdfLabel')}
-                  <input type="file" accept="application/pdf" onChange={(e) => setFile(e.target.files?.[0] ?? null)} className="text-body-s" />
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+                    className="text-body-s"
+                  />
                   <span className="text-micro text-ink-500">{t('pdfHint')}</span>
                 </label>
               ),
@@ -169,10 +233,17 @@ export function ImportFlow({
         />
         {error ? <Callout tone="critical">{error}</Callout> : null}
         <div className="flex flex-wrap gap-2">
-          <Button variant="primary" size="l" onClick={() => void start()} disabled={(mode === 'text' && text.trim().length < 50) || (mode === 'url' && !url)}>
+          <Button
+            variant="primary"
+            size="l"
+            onClick={() => void start()}
+            disabled={(mode === 'text' && text.trim().length < 50) || (mode === 'url' && !url)}
+          >
             {t('start')}
           </Button>
-          <Button size="l" onClick={() => setStep('ward')}>{t('manual')}</Button>
+          <Button size="l" onClick={() => setStep('ward')}>
+            {t('manual')}
+          </Button>
         </div>
         <p className="text-micro text-ink-500">{t('aiNote')}</p>
       </div>
@@ -194,9 +265,13 @@ export function ImportFlow({
     return (
       <div className="flex flex-col gap-6">
         {Object.keys(fields).length ? (
-          <Callout title={t('reviewTitle', { count: Object.keys(fields).length })}>{t('reviewHint')}</Callout>
+          <Callout title={t('reviewTitle', { count: Object.keys(fields).length })}>
+            {t('reviewHint')}
+          </Callout>
         ) : null}
-        {missing.length && Object.keys(fields).length ? <Callout tone="warn">{t('missing', { count: missing.length })}</Callout> : null}
+        {missing.length && Object.keys(fields).length ? (
+          <Callout tone="warn">{t('missing', { count: missing.length })}</Callout>
+        ) : null}
         {wards.length ? (
           <RadioGroup
             label={t('wardChoice')}
@@ -211,8 +286,17 @@ export function ImportFlow({
         ) : null}
         {wardChoice === 'existing' ? (
           <div className="flex flex-col gap-3">
-            <Select label={t('ward')} value={wardId} onChange={(e) => setWardId(e.target.value)} options={wards.map((w) => ({ value: w.id, label: w.label }))} />
-            <div><Button variant="primary" onClick={() => setStep('job')} disabled={!wardId}>{t('continue')}</Button></div>
+            <Select
+              label={t('ward')}
+              value={wardId}
+              onChange={(e) => setWardId(e.target.value)}
+              options={wards.map((w) => ({ value: w.id, label: w.label }))}
+            />
+            <div>
+              <Button variant="primary" onClick={() => setStep('job')} disabled={!wardId}>
+                {t('continue')}
+              </Button>
+            </div>
           </div>
         ) : (
           <WardEditor
@@ -237,7 +321,11 @@ export function ImportFlow({
       <JobForm
         key={wardId}
         initial={{ ...jobInitial, wardId }}
-        wards={wards.some((w) => w.id === wardId) ? wards : [...wards, { id: wardId, label: t('newWardLabel') }]}
+        wards={
+          wards.some((w) => w.id === wardId)
+            ? wards
+            : [...wards, { id: wardId, label: t('newWardLabel') }]
+        }
         wardDefaults={wardDefaults}
         submitLabel={t('createJob')}
         onCreated={(id) => router.push(`/employer/jobs/${id}?created=1`)}

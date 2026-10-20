@@ -29,8 +29,19 @@ export function emptyWardServer(): PartialWardProfile {
 /** Datenbankzeile → Formularwerte (nur Profilfelder). */
 export function wardToDraft(w: Record<string, unknown>): PartialWardProfile {
   const keys = Object.keys(emptyWardServer()).concat([
-    'department', 'salaryMinChf', 'salaryMaxChf', 'nightAllowanceChfHour', 'sundayAllowancePct', 'rosterLeadWeeks',
-    'weekendsPerMonth', 'guaranteedWishDays', 'minWorkloadPct', 'maxWorkloadPct', 'onboardingWeeks', 'vacationWeeks', 'collectiveAgreement',
+    'department',
+    'salaryMinChf',
+    'salaryMaxChf',
+    'nightAllowanceChfHour',
+    'sundayAllowancePct',
+    'rosterLeadWeeks',
+    'weekendsPerMonth',
+    'guaranteedWishDays',
+    'minWorkloadPct',
+    'maxWorkloadPct',
+    'onboardingWeeks',
+    'vacationWeeks',
+    'collectiveAgreement',
   ]);
-  return Object.fromEntries(keys.map((k) => [k, w[k] ?? null])) as PartialWardProfile;
+  return Object.fromEntries(keys.map((k) => [k, w[k] ?? null]));
 }

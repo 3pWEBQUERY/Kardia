@@ -1,10 +1,9 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-import type { LocationInput } from '@kardia/core';
 import { Button, Callout, Select, Sheet, useToast } from '@kardia/ui';
 
 import { saveWard } from '@/app/actions/employer';
@@ -12,6 +11,8 @@ import { useActionMessage } from '@/lib/useActionError';
 
 import { LocationForm } from './LocationForm.tsx';
 import { WardForm, type Evidence, type WardDraft } from './WardForm.tsx';
+
+import type { LocationInput } from '@kardia/core';
 
 /** Station anlegen oder bearbeiten, mit Standortwahl. Speichern gilt als Bestätigung (AK-A2). */
 export function WardEditor({
@@ -48,7 +49,11 @@ export function WardEditor({
     }
     setBusy(true);
     setError(null);
-    const r = await saveWard({ ...(wardId ? { id: wardId } : {}), locationId: loc, profile: draft });
+    const r = await saveWard({
+      ...(wardId ? { id: wardId } : {}),
+      locationId: loc,
+      profile: draft,
+    });
     setBusy(false);
     if (!r.ok) {
       setServerErrors(r.error.fields ?? {});
@@ -92,16 +97,34 @@ export function WardEditor({
         </div>
       ) : null}
       {error ? <Callout tone="critical">{error}</Callout> : null}
-      <WardForm initial={initial} evidence={evidence ?? {}} serverErrors={serverErrors} busy={busy} submitLabel={submitLabel ?? t('save')} onSubmit={(d) => void submit(d)} />
+      <WardForm
+        initial={initial}
+        evidence={evidence ?? {}}
+        serverErrors={serverErrors}
+        busy={busy}
+        submitLabel={submitLabel ?? t('save')}
+        onSubmit={(d) => void submit(d)}
+      />
     </div>
   );
 }
 
-export function LocationSheet({ label, initial }: { label: string; initial?: LocationInput & { id: string } }) {
+export function LocationSheet({
+  label,
+  initial,
+}: {
+  label: string;
+  initial?: LocationInput & { id: string };
+}) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   return (
-    <Sheet open={open} onOpenChange={setOpen} title={label} trigger={<Button size="s">{label}</Button>}>
+    <Sheet
+      open={open}
+      onOpenChange={setOpen}
+      title={label}
+      trigger={<Button size="s">{label}</Button>}
+    >
       <LocationForm
         initial={initial}
         onSaved={() => {

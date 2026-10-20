@@ -1,7 +1,7 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { Button, Callout } from '@kardia/ui';
@@ -10,7 +10,17 @@ import { changeJobStatus, publish, startListingCheckout } from '@/app/actions/em
 import { useActionMessage } from '@/lib/useActionError';
 
 /** Veröffentlichen (AK-A1/AK-C1 serverseitig geprüft), pausieren, abschliessen, Einzelinserat bezahlen. */
-export function JobActions({ jobId, status, canPublish, needsPayment }: { jobId: string; status: string; canPublish: boolean; needsPayment: boolean }) {
+export function JobActions({
+  jobId,
+  status,
+  canPublish,
+  needsPayment,
+}: {
+  jobId: string;
+  status: string;
+  canPublish: boolean;
+  needsPayment: boolean;
+}) {
   const t = useTranslations('employer.job');
   const router = useRouter();
   const message = useActionMessage();
@@ -28,12 +38,32 @@ export function JobActions({ jobId, status, canPublish, needsPayment }: { jobId:
     <div className="flex flex-col gap-2">
       <div className="flex flex-wrap gap-2">
         {status !== 'PUBLISHED' ? (
-          <Button variant="primary" disabled={busy || !canPublish} onClick={() => void run(() => publish(jobId))}>{t('publish')}</Button>
+          <Button
+            variant="primary"
+            disabled={busy || !canPublish}
+            onClick={() => void run(() => publish(jobId))}
+          >
+            {t('publish')}
+          </Button>
         ) : (
-          <Button disabled={busy} onClick={() => void run(() => changeJobStatus(jobId, 'PAUSED'))}>{t('pause')}</Button>
+          <Button disabled={busy} onClick={() => void run(() => changeJobStatus(jobId, 'PAUSED'))}>
+            {t('pause')}
+          </Button>
         )}
-        {status !== 'CLOSED' ? <Button variant="danger" disabled={busy} onClick={() => void run(() => changeJobStatus(jobId, 'CLOSED'))}>{t('close')}</Button> : null}
-        {status === 'CLOSED' || status === 'PAUSED' ? <Button disabled={busy} onClick={() => void run(() => changeJobStatus(jobId, 'DRAFT'))}>{t('toDraft')}</Button> : null}
+        {status !== 'CLOSED' ? (
+          <Button
+            variant="danger"
+            disabled={busy}
+            onClick={() => void run(() => changeJobStatus(jobId, 'CLOSED'))}
+          >
+            {t('close')}
+          </Button>
+        ) : null}
+        {status === 'CLOSED' || status === 'PAUSED' ? (
+          <Button disabled={busy} onClick={() => void run(() => changeJobStatus(jobId, 'DRAFT'))}>
+            {t('toDraft')}
+          </Button>
+        ) : null}
         {needsPayment ? (
           <Button
             disabled={busy}

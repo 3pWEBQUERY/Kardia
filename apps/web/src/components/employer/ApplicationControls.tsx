@@ -1,7 +1,7 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { PIPELINE_COLUMNS, canTransition } from '@kardia/core';
@@ -12,7 +12,13 @@ import { sendEmployerMessage, setApplicationStatus } from '@/app/actions/employe
 import { useActionMessage } from '@/lib/useActionError';
 
 /** Status setzen; Absage nur mit Grund aus der festen Liste. Fachperson erhält den Status sofort. */
-export function StatusControl({ applicationId, status }: { applicationId: string; status: ApplicationStatus }) {
+export function StatusControl({
+  applicationId,
+  status,
+}: {
+  applicationId: string;
+  status: ApplicationStatus;
+}) {
   const t = useTranslations('employer.pipeline');
   const te = useTranslations('enums');
   const router = useRouter();
@@ -24,9 +30,22 @@ export function StatusControl({ applicationId, status }: { applicationId: string
   const options = PIPELINE_COLUMNS.filter((s) => s === status || canTransition(status, s));
   return (
     <div className="flex flex-col gap-3">
-      <Select label={t('status')} value={to} onChange={(e) => setTo(e.target.value)} options={options.map((s) => ({ value: s, label: te(`ApplicationStatus.${s}`) }))} />
+      <Select
+        label={t('status')}
+        value={to}
+        onChange={(e) => setTo(e.target.value)}
+        options={options.map((s) => ({ value: s, label: te(`ApplicationStatus.${s}`) }))}
+      />
       {to === 'REJECTED' ? (
-        <Select label={t('reason')} value={reason} onChange={(e) => setReason(e.target.value)} options={Object.values(RejectionReason).map((r) => ({ value: r, label: te(`RejectionReason.${r}`) }))} />
+        <Select
+          label={t('reason')}
+          value={reason}
+          onChange={(e) => setReason(e.target.value)}
+          options={Object.values(RejectionReason).map((r) => ({
+            value: r,
+            label: te(`RejectionReason.${r}`),
+          }))}
+        />
       ) : null}
       <div>
         <Button
@@ -34,7 +53,10 @@ export function StatusControl({ applicationId, status }: { applicationId: string
           disabled={busy || to === status}
           onClick={() => {
             setBusy(true);
-            void setApplicationStatus(applicationId, { status: to as never, ...(to === 'REJECTED' ? { rejectionReason: reason as never } : {}) }).then((r) => {
+            void setApplicationStatus(applicationId, {
+              status: to as never,
+              ...(to === 'REJECTED' ? { rejectionReason: reason as never } : {}),
+            }).then((r) => {
               setBusy(false);
               if (!r.ok) return toast({ tone: 'critical', message: message(r) });
               toast({ tone: 'neutral', message: t('statusSaved') });
@@ -72,9 +94,18 @@ export function MessageComposer({ applicationId }: { applicationId: string }) {
         });
       }}
     >
-      <Textarea label={t('message')} maxLength={4000} value={body} onChange={(e) => setBody(e.target.value)} />
+      <Textarea
+        label={t('message')}
+        maxLength={4000}
+        value={body}
+        onChange={(e) => setBody(e.target.value)}
+      />
       {error ? <Callout tone="critical">{error}</Callout> : null}
-      <div><Button type="submit" disabled={busy || !body.trim()}>{t('send')}</Button></div>
+      <div>
+        <Button type="submit" disabled={busy || !body.trim()}>
+          {t('send')}
+        </Button>
+      </div>
     </form>
   );
 }
