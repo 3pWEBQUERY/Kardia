@@ -6,7 +6,7 @@ export function Icon({
   label,
   size = 20,
   ...rest
-}: { icon: LucideIcon; label?: string; size?: number } & Omit<LucideProps, 'ref'>) {
+}: { icon: LucideIcon; label?: string | undefined; size?: number | undefined } & Omit<LucideProps, 'ref'>) {
   return (
     <Glyph
       size={size}

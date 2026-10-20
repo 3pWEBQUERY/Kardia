@@ -10,6 +10,7 @@ import { Icon, Skeleton } from '@kardia/ui';
 export function CommuteInfo({ origin, wardId }: { origin: string; wardId: string }) {
   const t = useTranslations('common.search');
   const [m, setM] = useState<{ PT?: number; CAR?: number } | null>(null);
+  const [gaveUp, setGaveUp] = useState(false);
   useEffect(() => {
     let tries = 0;
     let stop = false;
@@ -20,6 +21,7 @@ export function CommuteInfo({ origin, wardId }: { origin: string; wardId: string
       const json = (await res.json()) as { minutes: Record<string, { PT?: number; CAR?: number }>; pending: string[] };
       setM(json.minutes[wardId] ?? {});
       if (json.pending.length && tries < 6) setTimeout(() => void load(), 2000 * tries);
+      else if (json.pending.length) setGaveUp(true);
     };
     void load();
     return () => {
@@ -31,11 +33,11 @@ export function CommuteInfo({ origin, wardId }: { origin: string; wardId: string
     <p className="flex flex-wrap gap-4 text-body-s text-ink-900 tabular">
       <span className="inline-flex items-center gap-1.5">
         <Icon icon={Bus} size={16} label={t('ptLabel')} />
-        {m.PT != null ? t('commutePt', { minutes: m.PT }) : t('commutePending')}
+        {m.PT != null ? t('commutePt', { minutes: m.PT }) : gaveUp ? t('commuteUnavailable') : t('commutePending')}
       </span>
       <span className="inline-flex items-center gap-1.5">
         <Icon icon={Car} size={16} label={t('carLabel')} />
-        {m.CAR != null ? t('commuteCar', { minutes: m.CAR }) : t('commutePending')}
+        {m.CAR != null ? t('commuteCar', { minutes: m.CAR }) : gaveUp ? t('commuteUnavailable') : t('commutePending')}
       </span>
     </p>
   );

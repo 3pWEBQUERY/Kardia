@@ -288,7 +288,8 @@
     "commutePending": "wird berechnet",
     "ptLabel": "Öffentlicher Verkehr",
     "carLabel": "Auto",
-    "jobOverride": "für diese Stelle abweichend"
+    "jobOverride": "für diese Stelle abweichend",
+    "commuteUnavailable": "zurzeit nicht verfügbar"
   },
   "apply": {
     "message": "Persönliche Nachricht (optional)",

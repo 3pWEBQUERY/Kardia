@@ -21,7 +21,7 @@ const DAY = 24 * 3600;
  *  - Ohne Netz und ohne Cache: Offline-Seite
  */
 const serwist = new Serwist({
-  precacheEntries: self.__SW_MANIFEST,
+  precacheEntries: self.__SW_MANIFEST ?? [],
   skipWaiting: true,
   clientsClaim: true,
   navigationPreload: true,
@@ -53,7 +53,7 @@ self.addEventListener('push', (event) => {
       body: data.body ?? '',
       icon: '/icons/icon-192.png',
       badge: '/icons/badge-72.png',
-      tag: data.tag,
+      ...(data.tag ? { tag: data.tag } : {}),
       data: { url: data.url ?? '/me' },
     }),
   );
