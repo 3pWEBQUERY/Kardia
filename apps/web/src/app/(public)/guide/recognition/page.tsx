@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
@@ -6,6 +5,8 @@ import { formatPlainDate } from '@kardia/core';
 import { Card, CardBody, EmptyState } from '@kardia/ui';
 
 import { db } from '@/server/db';
+
+import type { Metadata } from 'next';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('public.guide');

@@ -1,7 +1,7 @@
 'use client';
 
-import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
 import { useTransition } from 'react';
 
 import { setLocale, setTheme } from '@/app/actions/preferences';

@@ -1,8 +1,9 @@
-import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
 import { Callout } from '@kardia/ui';
+
+import type { Metadata } from 'next';
 
 const DOCS = ['terms', 'terms-employers', 'privacy', 'imprint'] as const;
 type Doc = (typeof DOCS)[number];

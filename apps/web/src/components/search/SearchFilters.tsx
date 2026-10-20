@@ -1,8 +1,8 @@
 'use client';
 
 import { SlidersHorizontal } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useState, useTransition, type ReactNode } from 'react';
 
 import {
@@ -101,14 +101,14 @@ export function SearchFilters({ filter, total }: { filter: SearchFilter; total: 
         label={t('search.profession')}
         placeholder={t('search.any')}
         value={filter.profession ?? ''}
-        onChange={(ev) => go({ ...filter, ...(ev.target.value ? { profession: ev.target.value as Profession } : { profession: undefined }) } as SearchFilter)}
+        onChange={(ev) => go({ ...filter, ...(ev.target.value ? { profession: ev.target.value as Profession } : { profession: undefined }) })}
         options={Object.values(Profession).map((p) => ({ value: p, label: e(`Profession.${p}`) }))}
       />
       <Select
         label={t('search.workload')}
         placeholder={t('search.any')}
         value={filter.workloadPct ? String(filter.workloadPct) : ''}
-        onChange={(ev) => go({ ...filter, workloadPct: ev.target.value ? Number(ev.target.value) : undefined } as SearchFilter)}
+        onChange={(ev) => go({ ...filter, workloadPct: ev.target.value ? Number(ev.target.value) : undefined })}
         options={[100, 90, 80, 70, 60, 50, 40, 30, 20, 10].map((v) => ({ value: String(v), label: `${v} %` }))}
       />
       <Section title={t('search.departments')}>

@@ -1,11 +1,13 @@
 import { cookies } from 'next/headers';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
-import type { ReactNode } from 'react';
+
 
 import { AppShell, type NavItem } from '@/components/shell/AppShell';
 import { db } from '@/server/db';
 import { requireUser } from '@/server/session';
+
+import type { ReactNode } from 'react';
 
 /** Bereich der Fachperson (PRD 7.2). */
 export default async function CandidateLayout({ children }: { children: ReactNode }) {
@@ -29,7 +31,7 @@ export default async function CandidateLayout({ children }: { children: ReactNod
     ...(ambassador + verified > 0 ? [{ href: '/me/team', label: t('me.team'), icon: 'team' as const }] : []),
     { href: '/me/settings', label: t('me.settings'), icon: 'settings' },
   ];
-  const all = await getMessages();
+  const all = (await getMessages()) as Record<string, Record<string, unknown>>;
   const collapsed = (await cookies()).get('kardia_nav')?.value === '1';
   return (
     <NextIntlClientProvider messages={{ common: all.common, enums: all.enums, fields: all.fields, errors: all.errors, candidate: all.candidate }}>

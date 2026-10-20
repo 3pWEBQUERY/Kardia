@@ -4,13 +4,14 @@ import { BellPlus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-import type { SearchFilter } from '@kardia/core';
 import { Button, Dialog, Icon, Input, RadioGroup, useToast } from '@kardia/ui';
 
 import { saveSearch } from '@/app/actions/candidate';
 import { IosInstallHint } from '@/components/shell/IosInstallHint';
 import { requestPush } from '@/lib/push';
 import { useActionMessage } from '@/lib/useActionError';
+
+import type { SearchFilter } from '@kardia/core';
 
 /** Gespeicherte Suche mit Benachrichtigung per E-Mail oder Web Push (sofort, täglich, wöchentlich). */
 export function SaveSearch({ filter, signedIn }: { filter: SearchFilter; signedIn: boolean }) {

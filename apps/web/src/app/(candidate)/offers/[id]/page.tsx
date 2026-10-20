@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
-import { ProblemError, formatChf, formatDate, formatPlainDate, type PartialWardProfile } from '@kardia/core';
-import { Card, CardBody, CardHeader, StatusChip, type RosterCode } from '@kardia/ui';
+import { ProblemError, formatChf, formatDate, formatPlainDate } from '@kardia/core';
+import { Card, CardBody, CardHeader, StatusChip } from '@kardia/ui';
 
 import { OfferResponse } from '@/components/candidate/OfferResponse';
 import { Roster } from '@/components/domain/Roster';
@@ -23,7 +23,7 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
   if (!data) notFound();
   const { offer, profile } = data;
   const [t, e] = await Promise.all([getTranslations('candidate.offer'), getTranslations('enums')]);
-  const reality = await realityAggregates(offer.job.wardId, offer.job.ward as unknown as Record<string, unknown>);
+  const reality = await realityAggregates(offer.job.wardId, offer.job.ward);
   const open = offer.status === 'SENT' && offer.expiresAt > new Date();
   return (
     <div className="flex flex-col gap-6">
@@ -48,12 +48,12 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
           </Card>
           <Card>
             <CardHeader title={t('rhythm')} />
-            <CardBody><Roster pattern={offer.job.ward.rosterPattern as RosterCode[]} workloadPct={offer.workloadPct} /></CardBody>
+            <CardBody><Roster pattern={offer.job.ward.rosterPattern} workloadPct={offer.workloadPct} /></CardBody>
           </Card>
           <Card>
             <CardHeader title={t('profile')} actions={<Link href={`/jobs/${offer.jobId}`} className="text-body-s text-accent-600">{t('toJob')}</Link>} />
             <CardBody>
-              <WardProfileView profile={profile as PartialWardProfile} confirmedAt={offer.job.ward.confirmedAt} reality={reality} comments={[]} location={offer.job.ward.location} />
+              <WardProfileView profile={profile} confirmedAt={offer.job.ward.confirmedAt} reality={reality} comments={[]} location={offer.job.ward.location} />
             </CardBody>
           </Card>
         </div>

@@ -10,7 +10,7 @@ export function isLocale(value: string | undefined | null): value is AppLocale {
   return !!value && (LOCALES as readonly string[]).includes(value);
 }
 
-/** Datenbank-Enum `Locale` ↔ BCP-47. */
+/** Datenbank-Enum `Locale` zu BCP-47. */
 export const DB_LOCALE: Record<AppLocale, 'DE_CH' | 'FR_CH' | 'IT_CH' | 'EN'> = {
   'de-CH': 'DE_CH',
   'fr-CH': 'FR_CH',

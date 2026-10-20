@@ -2,7 +2,7 @@
 
 import { KeyRound, Mail } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState, type FormEvent } from 'react';
+import { useState, type SyntheticEvent } from 'react';
 
 import { Button, Callout, Icon, Input } from '@kardia/ui';
 
@@ -22,10 +22,10 @@ export function SignInForm({ next, adminOnly }: { next: string; adminOnly: boole
     const res = await authClient.signIn.passkey();
     setBusy(false);
     if (res?.error) setError(t('passkeyFailed'));
-    else window.location.href = next;
+    else window.location.assign(new URL(next, window.location.origin).href);
   };
 
-  const magic = async (e: FormEvent) => {
+  const magic = async (e: SyntheticEvent) => {
     e.preventDefault();
     setError(null);
     setBusy(true);

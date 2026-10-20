@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
@@ -7,6 +6,8 @@ import { Button, CompareTable, EmptyState, type CompareRow } from '@kardia/ui';
 
 import { formatFieldValue } from '@/lib/fieldValue';
 import { getJobsForCompare } from '@/server/services/jobs';
+
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = { robots: { index: false } };
 

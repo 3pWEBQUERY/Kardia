@@ -20,14 +20,16 @@ import {
   type PartialWardProfile,
 } from '@kardia/core';
 import { marketplaceRef, resolveMarketplaceRef } from '@kardia/core/crypto';
-import type { Department, Prisma, Profession } from '@kardia/db';
+
 
 import { track } from '../audit.ts';
 import { db } from '../db.ts';
 import { enqueue } from '../queue.ts';
-import type { OrgContext } from '../session.ts';
 
 import { notifyOrg, notifyUser } from './notifications.ts';
+
+import type { OrgContext } from '../session.ts';
+import type { Department, Profession } from '@kardia/db';
 
 /**
  * Umgekehrter Marktplatz (Modul E). AK-E1: Kein Endpunkt liefert identifizierende
@@ -44,7 +46,7 @@ export async function updateMarketplaceProfile(userId: string, input: unknown) {
       desiredWorkloadPct: data.desiredWorkloadPct,
       earliestStart: data.earliestStart ? new Date(data.earliestStart) : null,
       homeDistrict: data.homeDistrict,
-      mustConditions: data.mustConditions as Prisma.InputJsonValue,
+      mustConditions: data.mustConditions,
     },
   });
 }

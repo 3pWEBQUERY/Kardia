@@ -1,8 +1,9 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
 import { Button } from '@kardia/ui';
+
+import type { Metadata } from 'next';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('public.employers');

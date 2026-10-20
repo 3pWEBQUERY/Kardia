@@ -1,9 +1,10 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
 import { PLAN_LIMITS, SINGLE_LISTING, formatChf, yearlyPriceChf } from '@kardia/core';
 import { Button, Card, CardBody, CardHeader } from '@kardia/ui';
+
+import type { Metadata } from 'next';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('public.pricing');

@@ -31,10 +31,9 @@ export function clientIp(req: Request): string {
 }
 
 export function problemResponse(problem: Problem, headers?: HeadersInit): NextResponse {
-  return NextResponse.json(problem, {
-    status: problem.status,
-    headers: { 'Content-Type': 'application/problem+json', ...headers },
-  });
+  const h = new Headers(headers);
+  h.set('Content-Type', 'application/problem+json');
+  return NextResponse.json(problem, { status: problem.status, headers: h });
 }
 
 async function principal(req: Request): Promise<ApiPrincipal> {
@@ -46,7 +45,7 @@ async function principal(req: Request): Promise<ApiPrincipal> {
     const key = await db.apiKey.findUnique({ where: { keyHash: hash } });
     if (!key || key.revokedAt || !safeEqualHex(key.keyHash, hash)) throw new ProblemError('unauthorized', 'API-Schlüssel ungültig oder widerrufen.');
     void db.apiKey.update({ where: { id: key.id }, data: { lastUsedAt: new Date() } }).catch(() => undefined);
-    return { kind: 'apiKey', userId: null, organizationId: key.organizationId, scopes: key.scopes as ApiScope[], ip };
+    return { kind: 'apiKey', userId: null, organizationId: key.organizationId, scopes: key.scopes.filter((x): x is ApiScope => x === 'jobs:write' || x === 'applications:read'), ip };
   }
   const session = await auth().api.getSession({ headers: req.headers });
   if (session) return { kind: 'user', userId: session.user.id, organizationId: null, scopes: [], ip };
@@ -57,7 +56,7 @@ type Handler<P> = (ctx: {
   req: NextRequest;
   params: P;
   who: ApiPrincipal;
-}) => Promise<Response | unknown>;
+}) => Promise<unknown>;
 
 /** Einheitlicher Wrapper: Rate Limit, Principal, Problem-Antworten, JSON-Serialisierung. */
 export function api<P = Record<string, string>>(handler: Handler<P>) {
@@ -71,7 +70,14 @@ export function api<P = Record<string, string>>(handler: Handler<P>) {
         return problemResponse(new ProblemError('rateLimited').toProblem(req.nextUrl.pathname), { 'Retry-After': '60' });
       }
       const result = await handler({ req, params: await ctx.params, who });
-      if (result instanceof Response) return result;
+      if (result instanceof Response) {
+        try {
+          result.headers.set('X-RateLimit-Remaining', String(rl.remaining));
+        } catch {
+          // Unveränderliche Header (z. B. Response.redirect) – Header entfällt.
+        }
+        return result;
+      }
       return NextResponse.json(result, { headers: { 'X-RateLimit-Remaining': String(rl.remaining) } });
     } catch (error) {
       if (error instanceof ProblemError) return problemResponse(error.toProblem(req.nextUrl.pathname));

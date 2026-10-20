@@ -18,9 +18,11 @@ import { decryptField, encryptField } from '@kardia/core/crypto';
 import { track } from '../audit.ts';
 import { db } from '../db.ts';
 import { enqueue } from '../queue.ts';
-import type { OrgContext } from '../session.ts';
 
 import { notifyOrg, notifyUser } from './notifications.ts';
+
+import type { OrgContext } from '../session.ts';
+
 
 /**
  * Ein-Klick-Bewerbung (Modul D): Pass (verifizierte Felder) + optional 500 Zeichen.
@@ -31,7 +33,7 @@ export async function apply(userId: string, input: ApplicationInput) {
   const candidate = await db.candidateProfile.findUnique({ where: { userId } });
   if (!candidate) throw new ProblemError('conflict', 'Bitte zuerst den Qualifikations-Pass anlegen.');
   const job = await db.job.findUnique({ where: { id: data.jobId }, include: { ward: { include: { location: true } } } });
-  if (!job || job.status !== 'PUBLISHED') throw new ProblemError('notFound', 'Diese Stelle ist nicht mehr ausgeschrieben.');
+  if (job?.status !== 'PUBLISHED') throw new ProblemError('notFound', 'Diese Stelle ist nicht mehr ausgeschrieben.');
   const existing = await db.application.findUnique({ where: { jobId_candidateId: { jobId: job.id, candidateId: candidate.id } } });
   if (existing) throw new ProblemError('conflict', 'Sie haben sich auf diese Stelle bereits beworben.');
   const app = await db.application.create({

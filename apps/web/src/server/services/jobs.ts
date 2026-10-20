@@ -17,15 +17,17 @@ import { Prisma } from '@kardia/db';
 
 import { track } from '../audit.ts';
 import { db } from '../db.ts';
-import type { OrgContext } from '../session.ts';
 
 import { getWardPublic } from './wards.ts';
+
+import type { OrgContext } from '../session.ts';
+
 
 /** Stellen: erben das Stationsprofil, dürfen einzelne Felder überschreiben (Modul A). */
 
 export async function getJobPublic(jobId: string) {
   const job = await db.job.findUnique({ where: { id: jobId } });
-  if (!job || job.status !== 'PUBLISHED') return null;
+  if (job?.status !== 'PUBLISHED') return null;
   const wardView = await getWardPublic(job.wardId);
   if (!wardView) return null;
   const profile = resolveJobProfile(wardView.ward as unknown as PartialWardProfile, job.overrides);
@@ -69,7 +71,7 @@ export async function createJob(ctx: OrgContext, input: unknown) {
     data: {
       ...rest,
       startDate: startDate ? new Date(startDate) : null,
-      ...(overrides ? { overrides: overrides as Prisma.InputJsonValue } : {}),
+      ...(overrides ? { overrides: overrides } : {}),
       status: 'DRAFT',
     },
   });
@@ -96,7 +98,7 @@ function buildPatch(
 ): Prisma.JobUpdateInput {
   return {
     ...Object.fromEntries(Object.entries(rest).filter(([, v]) => v !== undefined)),
-    ...(overrides !== undefined ? { overrides: overrides === null ? Prisma.DbNull : (overrides as Prisma.InputJsonValue) } : {}),
+    ...(overrides !== undefined ? { overrides: overrides === null ? Prisma.DbNull : (overrides) } : {}),
     ...(startDate !== undefined ? { startDate: startDate ? new Date(startDate) : null } : {}),
   };
 }

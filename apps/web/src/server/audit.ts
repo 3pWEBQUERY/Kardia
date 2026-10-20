@@ -1,9 +1,10 @@
 import 'server-only';
 
+import { db } from './db.ts';
+
 import type { EventName } from '@kardia/core';
 import type { Prisma } from '@kardia/db';
 
-import { db } from './db.ts';
 
 /** Audit-Log (PRD 6, 14.2): jede Admin-Aktion und jeder Zugriff auf Pass-Dokumente. */
 export async function audit(entry: {

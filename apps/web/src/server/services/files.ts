@@ -62,7 +62,7 @@ export async function authorizeDownload(fileId: string, viewer: { userId: string
       orgLogo: { select: { verification: true } },
     },
   });
-  if (!file || file.status !== 'READY') throw new ProblemError('notFound');
+  if (file?.status !== 'READY') throw new ProblemError('notFound');
   const isPass = file.bucketKey.startsWith('pass/');
   const publicVideo = [file.videoFile, file.videoCaptions, file.videoPoster].some((v) => v?.moderation === 'APPROVED');
   if (publicVideo || file.orgLogo?.verification === 'VERIFIED') return signedDownloadUrl(file.bucketKey);

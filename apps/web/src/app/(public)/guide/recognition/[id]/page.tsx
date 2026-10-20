@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
+import { z } from 'zod';
 
 import { formatPlainDate, guideNeedsReview, recognitionStepSchema } from '@kardia/core';
 import { Callout, Card, CardBody, CardHeader } from '@kardia/ui';
-import { z } from 'zod';
 
 import { RecognitionChecklist } from '@/components/domain/RecognitionChecklist';
 import { db } from '@/server/db';

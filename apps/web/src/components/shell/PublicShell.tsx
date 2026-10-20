@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { cookies } from 'next/headers';
+import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import type { ReactNode } from 'react';
+
 
 import { Button } from '@kardia/ui';
 
@@ -9,6 +9,8 @@ import { parseTheme, THEME_COOKIE } from '@/lib/theme';
 import { getSession } from '@/server/session';
 
 import { Preferences } from './Preferences.tsx';
+
+import type { ReactNode } from 'react';
 
 /** Öffentliche Seiten mit oberer Leiste (PRD 7.2). */
 export async function PublicShell({ children }: { children: ReactNode }) {

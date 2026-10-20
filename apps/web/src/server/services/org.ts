@@ -12,14 +12,16 @@ import {
   parseOrThrow,
 } from '@kardia/core';
 import { encryptField, generateApiKey, randomToken, sha256Hex } from '@kardia/core/crypto';
-import type { MemberRole } from '@kardia/db';
+
 
 import { db } from '../db.ts';
 import { env } from '../env.ts';
 import { enqueue } from '../queue.ts';
-import type { CurrentSession, OrgContext } from '../session.ts';
 
 import { notifyEmail } from './notifications.ts';
+
+import type { CurrentSession, OrgContext } from '../session.ts';
+import type { MemberRole } from '@kardia/db';
 
 /**
  * Agenturfrei (Modul C): Registrierung mit UID, Abgleich gegen UID-Register und
@@ -156,7 +158,7 @@ export async function revokeApiKey(ctx: OrgContext, id: string) {
 
 export async function createWebhook(ctx: OrgContext, url: string, events: string[]) {
   assertPlanFeature(ctx, 'webhooks');
-  if (!/^https:\/\//.test(url)) throw new ProblemError('validation', 'Webhook-URLs müssen https verwenden.');
+  if (!url.startsWith("https://")) throw new ProblemError('validation', 'Webhook-URLs müssen https verwenden.');
   const secret = randomToken(24);
   await db.webhookEndpoint.create({
     data: {
@@ -177,7 +179,7 @@ export async function createFeed(ctx: OrgContext, input: { url: string; format: 
   assertPlanFeature(ctx, 'feedImport');
   const ward = await db.ward.findFirst({ where: { id: input.wardId, location: { organizationId: ctx.org.id } } });
   if (!ward) throw new ProblemError('notFound');
-  if (!/^https:\/\//.test(input.url)) throw new ProblemError('validation', 'Feed-URLs müssen https verwenden.');
+  if (!input.url.startsWith("https://")) throw new ProblemError('validation', 'Feed-URLs müssen https verwenden.');
   const feed = await db.jobFeed.create({ data: { organizationId: ctx.org.id, wardId: ward.id, url: input.url, format: input.format } });
   await enqueue(QUEUES.feedImport, { feedId: feed.id });
   return feed;

@@ -2,9 +2,10 @@ import 'server-only';
 
 import { PgBoss } from 'pg-boss';
 
+import { env } from './env.ts';
+
 import type { QueueName } from '@kardia/core';
 
-import { env } from './env.ts';
 
 /**
  * Web legt nur Jobs an; der Worker verarbeitet sie (PRD 10.1: pg-boss, kein Redis).
@@ -22,9 +23,9 @@ async function boss(): Promise<PgBoss> {
   return globalForBoss.kardiaBoss;
 }
 
-export async function enqueue<T extends object>(
+export async function enqueue(
   queue: QueueName,
-  data: T,
+  data: object,
   options: { singletonKey?: string; startAfter?: Date | number; retryLimit?: number } = {},
 ): Promise<string | null> {
   if (process.env.KARDIA_QUEUE_DISABLED === '1') return null;
@@ -41,6 +42,6 @@ export async function enqueue<T extends object>(
 /** Zustand und Ergebnis eines Jobs (z. B. KI-Import), für Polling aus der UI. */
 export async function jobState(queue: QueueName, id: string): Promise<{ state: string; output: unknown } | null> {
   const b = await boss();
-  const job = await b.getJobById(queue, id);
+  const [job] = await b.findJobs(queue, { id, limit: 1 });
   return job ? { state: job.state, output: job.output ?? null } : null;
 }

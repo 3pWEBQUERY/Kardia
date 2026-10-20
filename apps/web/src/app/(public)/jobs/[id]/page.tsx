@@ -1,11 +1,10 @@
-import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { headers } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 
 import { EVENTS, encodeGeohash, formatPlainDate, isStale, jobPostingJsonLd, overriddenFields } from '@kardia/core';
-import { Callout, Card, CardBody, CardHeader, StatusChip, type RosterCode } from '@kardia/ui';
+import { Callout, Card, CardBody, CardHeader, StatusChip } from '@kardia/ui';
 
 import { ApplyPanel } from '@/components/domain/ApplyPanel';
 import { CommuteInfo } from '@/components/domain/CommuteInfo';
@@ -16,6 +15,8 @@ import { track } from '@/server/audit';
 import { db } from '@/server/db';
 import { getJobPublic } from '@/server/services/jobs';
 import { getSession } from '@/server/session';
+
+import type { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
@@ -86,7 +87,7 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
         <Card>
           <CardHeader title={t('rhythm')} meta={t('rhythmHint')} />
           <CardBody>
-            <Roster pattern={ward.rosterPattern as RosterCode[]} workloadPct={job.workloadMaxPct} />
+            <Roster pattern={ward.rosterPattern} workloadPct={job.workloadMaxPct} />
           </CardBody>
         </Card>
 

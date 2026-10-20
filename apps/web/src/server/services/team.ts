@@ -17,10 +17,12 @@ import { randomToken, sha256Hex, voterHash } from '@kardia/core/crypto';
 import { db } from '../db.ts';
 import { env } from '../env.ts';
 import { enqueue } from '../queue.ts';
-import type { OrgContext } from '../session.ts';
+
 
 import { notifyEmail } from './notifications.ts';
 import { assertWardInOrg } from './wards.ts';
+
+import type { OrgContext } from '../session.ts';
 
 /**
  * Team-Einblicke & Realitäts-Check (Modul G). Verifizierte Mitarbeitende bestätigen

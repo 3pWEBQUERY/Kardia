@@ -4,10 +4,11 @@ import { ExternalLink } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-import type { RecognitionStep } from '@kardia/core';
 import { Checkbox, Icon } from '@kardia/ui';
 
 import { toggleRecognitionStep } from '@/app/actions/candidate';
+
+import type { RecognitionStep } from '@kardia/core';
 
 /** Checkliste mit eigenem Fortschritt (umkehrbar → optimistisch). */
 export function RecognitionChecklist({ guideId, steps, done, canTrack }: { guideId: string; steps: RecognitionStep[]; done: string[]; canTrack: boolean }) {

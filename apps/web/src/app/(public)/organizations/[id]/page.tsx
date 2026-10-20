@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
@@ -7,6 +6,8 @@ import { formatChfRange } from '@kardia/core';
 import { Card, CardBody, CardHeader, StatusChip } from '@kardia/ui';
 
 import { db } from '@/server/db';
+
+import type { Metadata } from 'next';
 
 async function load(id: string) {
   return db.organization.findFirst({

@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@kardia/ui';
 

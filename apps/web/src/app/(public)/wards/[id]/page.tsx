@@ -1,10 +1,9 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
 import { BENCHMARK_MIN_PEERS, formatDate, isStale, type PartialWardProfile } from '@kardia/core';
-import { Button, Card, CardBody, CardHeader, EmptyState, StatusChip, type RosterCode } from '@kardia/ui';
+import { Button, Card, CardBody, CardHeader, EmptyState, StatusChip } from '@kardia/ui';
 
 import { AskTeam } from '@/components/domain/AskTeam';
 import { Roster } from '@/components/domain/Roster';
@@ -12,6 +11,8 @@ import { WardProfileView } from '@/components/domain/WardProfileView';
 import { formatFieldValue } from '@/lib/fieldValue';
 import { getWardPublic } from '@/server/services/wards';
 import { getSession } from '@/server/session';
+
+import type { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
@@ -51,7 +52,7 @@ export default async function WardPage({ params }: { params: Promise<{ id: strin
           <Card>
             <CardHeader title={t('rhythm')} />
             <CardBody>
-              <Roster pattern={ward.rosterPattern as RosterCode[]} />
+              <Roster pattern={ward.rosterPattern} />
             </CardBody>
           </Card>
           <Card>

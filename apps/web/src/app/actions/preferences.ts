@@ -2,10 +2,10 @@
 
 import { cookies } from 'next/headers';
 
-import { db } from '@/server/db';
-import { getSession } from '@/server/session';
 import { DB_LOCALE, LOCALE_COOKIE, isLocale } from '@/i18n/config';
 import { THEME_COOKIE, parseTheme } from '@/lib/theme';
+import { db } from '@/server/db';
+import { getSession } from '@/server/session';
 
 const YEAR = 365 * 24 * 3600;
 

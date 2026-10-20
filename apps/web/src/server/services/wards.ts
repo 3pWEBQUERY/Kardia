@@ -20,6 +20,7 @@ import { Prisma } from '@kardia/db';
 import { track } from '../audit.ts';
 import { db } from '../db.ts';
 import { enqueue } from '../queue.ts';
+
 import type { OrgContext } from '../session.ts';
 
 /** Station (Modul A) samt Standort, Realitäts-Check (G), Videos, Fragen und Benchmark. */
@@ -82,7 +83,7 @@ export async function confirmWard(ctx: OrgContext, wardId: string) {
 
 export async function updateWardTranslations(ctx: OrgContext, wardId: string, translations: Record<string, { description: string | null }>) {
   await assertWardInOrg(wardId, ctx.org.id);
-  await db.ward.update({ where: { id: wardId }, data: { translations: translations as Prisma.InputJsonValue } });
+  await db.ward.update({ where: { id: wardId }, data: { translations: translations } });
 }
 
 /** Gegendarstellung zu einem Realitäts-Check-Feld (AK-G2: kommentieren, nie löschen). */
@@ -132,8 +133,8 @@ export async function getWardPublic(wardId: string) {
       _count: { select: { verifiedEmployees: true, ambassadors: true } },
     },
   });
-  if (!ward || ward.location.organization.verification !== 'VERIFIED') return null;
-  const reality = await realityAggregates(ward.id, ward as unknown as Record<string, unknown>);
+  if (ward?.location.organization.verification !== 'VERIFIED') return null;
+  const reality = await realityAggregates(ward.id, ward);
   return { ward, reality, stale: isStale(ward.confirmedAt) };
 }
 
@@ -151,5 +152,5 @@ export async function getWardForOrg(orgId: string, wardId: string) {
     include: { location: true, fieldComments: true, jobs: { orderBy: { createdAt: 'desc' } }, videos: true, questions: { orderBy: { createdAt: 'desc' } }, benchmarks: true },
   });
   if (!ward) throw new ProblemError('notFound');
-  return { ward, reality: await realityAggregates(ward.id, ward as unknown as Record<string, unknown>) };
+  return { ward, reality: await realityAggregates(ward.id, ward) };
 }

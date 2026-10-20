@@ -20,9 +20,11 @@ import { track } from '../audit.ts';
 import { db } from '../db.ts';
 import { env } from '../env.ts';
 import { enqueue } from '../queue.ts';
-import type { OrgContext } from '../session.ts';
 
 import { notifyEmail, notifyOrg, notifyUser } from './notifications.ts';
+
+import type { OrgContext } from '../session.ts';
+
 
 /**
  * Flex-Pool (Modul C, R2): Einzelschichten für den eigenen Springerpool. Mitglieder

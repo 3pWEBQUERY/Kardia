@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 
-import AxeBuilder from '@axe-core/playwright';
+import { AxeBuilder } from '@axe-core/playwright';
 import { expect, type BrowserContext, type Page } from '@playwright/test';
 
 import { MAGIC_LINK_FILE } from '../playwright.config.ts';

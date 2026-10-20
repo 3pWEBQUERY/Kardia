@@ -66,7 +66,7 @@ export const baseConfig = tseslint.config(
       ],
       '@typescript-eslint/no-confusing-void-expression': 'off',
       '@typescript-eslint/no-non-null-assertion': 'error',
-      '@typescript-eslint/switch-exhaustiveness-check': 'error',
+      '@typescript-eslint/switch-exhaustiveness-check': ['error', { considerDefaultExhaustiveForUnions: true }],
       '@typescript-eslint/prefer-nullish-coalescing': 'off',
       '@typescript-eslint/no-unnecessary-condition': 'off',
       '@typescript-eslint/no-deprecated': 'warn',

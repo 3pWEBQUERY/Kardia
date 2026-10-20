@@ -1,6 +1,7 @@
+import { colors } from '@kardia/ui/tokens';
+
 import type { MetadataRoute } from 'next';
 
-import { colors } from '@kardia/ui/tokens';
 
 /** PWA-Manifest (PRD 13.1). Icons flach, ohne Verlauf. */
 export default function manifest(): MetadataRoute.Manifest {

@@ -1,15 +1,17 @@
 import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
-import type { Metadata, Viewport } from 'next';
 import { cookies } from 'next/headers';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages, getTranslations } from 'next-intl/server';
-import type { ReactNode } from 'react';
+
 
 import { colors } from '@kardia/ui/tokens';
 
 import { ClientProviders } from '@/components/ClientProviders';
 import { parseTheme, THEME_COOKIE } from '@/lib/theme';
+
+import type { Metadata, Viewport } from 'next';
+import type { ReactNode } from 'react';
 
 import './globals.css';
 
@@ -43,7 +45,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const theme = parseTheme((await cookies()).get(THEME_COOKIE)?.value);
   const t = await getTranslations('common');
   // Nur die Namensräume, die Client-Komponenten brauchen (JS-Budget, PRD 10.4).
-  const all = await getMessages();
+  const all = (await getMessages()) as Record<string, Record<string, unknown>>;
   const clientMessages = { common: all.common, enums: all.enums, fields: all.fields, errors: all.errors };
   return (
     <html

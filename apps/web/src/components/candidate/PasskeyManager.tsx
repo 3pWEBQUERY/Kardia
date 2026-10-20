@@ -42,7 +42,7 @@ export function PasskeyManager() {
         <Button
           variant="primary"
           onClick={() =>
-            void authClient.passkey.addPasskey({ name: navigator.platform || 'Passkey' }).then((r) => {
+            void authClient.passkey.addPasskey({ name: `Passkey ${new Date().toLocaleDateString('de-CH')}` }).then((r) => {
               if (r?.error) setError(t('passkeyFailed'));
               else void load();
             })

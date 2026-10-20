@@ -1,8 +1,7 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
-import { EVENTS, decodeFilter, encodeFilter, encodeGeohash, withCondition, withoutCondition, type Condition } from '@kardia/core';
+import { EVENTS, decodeFilter, encodeFilter, encodeGeohash, withCondition, withoutCondition } from '@kardia/core';
 import { Button, Callout, EmptyState } from '@kardia/ui';
 
 import { ActiveFilters } from '@/components/search/ActiveFilters';
@@ -15,6 +14,8 @@ import { track } from '@/server/audit';
 import { db } from '@/server/db';
 import { searchJobs } from '@/server/services/search';
 import { getSession } from '@/server/session';
+
+import type { Metadata } from 'next';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('public.search');
@@ -66,7 +67,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
     if (!s) return null;
     const cond = filter.conditions.find((x) => x.key === s.removeKey);
     if (!cond) return null;
-    const next = s.relaxedValue != null && 'value' in cond ? withCondition(filter, { ...cond, value: s.relaxedValue } as Condition) : withoutCondition(filter, s.removeKey);
+    const next = s.relaxedValue != null && 'value' in cond ? withCondition(filter, { ...cond, value: s.relaxedValue }) : withoutCondition(filter, s.removeKey);
     return { href: `/search?f=${encodeFilter(next)}`, label: s.relaxedValue != null ? t('relax', { condition: c(`conditions.${s.removeKey}.wanted`, { value: s.relaxedValue, transport: '' }), count: s.count }) : t('drop', { condition: c(`conditions.${s.removeKey}.wanted`, { value: 'value' in cond ? cond.value : '', transport: '' }), count: s.count }) };
   })();
 

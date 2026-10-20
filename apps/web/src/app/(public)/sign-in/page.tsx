@@ -1,7 +1,8 @@
-import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
 import { SignInForm } from '@/components/auth/SignInForm';
+
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = { robots: { index: false } };
 

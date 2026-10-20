@@ -1,8 +1,9 @@
-import { ProblemError } from '@kardia/core';
 import { unstable_rethrow } from 'next/navigation';
 
+import { ProblemError } from '@kardia/core';
+
 /** Ergebnis einer Server Action: Daten oder eine Fehlermeldung mit Ursache und Lösung (PRD 7.4). */
-export type ActionResult<T = undefined> =
+export type ActionResult<T = void> =
   | { ok: true; data: T }
   | { ok: false; error: { kind: string; message: string; fields?: Record<string, string> } };
 

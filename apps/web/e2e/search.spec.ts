@@ -41,7 +41,7 @@ test.describe('Fachperson – erster Besuch bis Treffer', () => {
     await expect(page.getByRole('heading', { name: 'Dienstrhythmus' })).toBeVisible();
     await expect(page.getByText(/bestätigt von Arbeitgeber am \d{2}\.\d{2}\.\d{4}/).first()).toBeVisible();
     const ld = await page.locator('script[type="application/ld+json"]').textContent();
-    expect(JSON.parse(ld ?? '{}')['@type']).toBe('JobPosting');
+    expect((JSON.parse(ld ?? '{}') as Record<string, unknown>)['@type']).toBe('JobPosting');
     await expectAccessible(page);
   });
 });

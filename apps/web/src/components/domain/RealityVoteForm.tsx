@@ -3,11 +3,12 @@
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-import type { WardProfileKey } from '@kardia/core';
 import { Button, Card, CardBody, CardHeader, Switch, useToast } from '@kardia/ui';
 
 import { toggleAmbassador, vote } from '@/app/actions/candidate';
 import { useActionMessage } from '@/lib/useActionError';
+
+import type { WardProfileKey } from '@kardia/core';
 
 interface FieldRow {
   field: WardProfileKey;
