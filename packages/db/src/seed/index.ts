@@ -417,6 +417,9 @@ const ORGS: OrgSeed[] = [
   },
 ];
 
+/** Muss TERMS_VERSION in packages/core/src/privacy.ts entsprechen (kein Import: core hängt von db ab). */
+const SEED_TERMS = { termsAcceptedAt: new Date(), termsVersion: '2026-10' };
+
 async function reset(): Promise<void> {
   // Reihenfolge egal dank Cascade; TRUNCATE ist schneller und setzt alles zurück.
   const tables = await db.$queryRaw<{ tablename: string }[]>`
@@ -457,6 +460,7 @@ async function main(): Promise<void> {
         email: `leitung@${o.domain}`,
         name: i === 0 ? 'Ursula Brunner' : `Leitung ${o.name}`,
         emailVerified: true,
+        ...SEED_TERMS,
       },
     });
     const org = await db.organization.create({
@@ -468,13 +472,14 @@ async function main(): Promise<void> {
         plan: o.plan,
         planValidUntil: daysFromNow(365),
         foundingPartner: o.plan === 'INSTITUTION',
+        employerTermsAcceptedAt: new Date(),
         offerQuotaPerMonth: o.plan === 'SPITALGRUPPE' ? 100 : o.plan === 'INSTITUTION' ? 20 : 0,
         members: { create: [{ userId: owner.id, role: 'OWNER' }] },
       },
     });
     if (i === 0) {
       const recruiter = await db.user.create({
-        data: { email: `recruiting@${o.domain}`, name: 'Reto Ammann', emailVerified: true },
+        data: { email: `recruiting@${o.domain}`, name: 'Reto Ammann', emailVerified: true, ...SEED_TERMS },
       });
       await db.orgMember.create({
         data: { organizationId: org.id, userId: recruiter.id, role: 'RECRUITER' },
@@ -741,7 +746,7 @@ async function main(): Promise<void> {
   const candidates: { id: string; profession: Profession }[] = [];
   for (const p of personas) {
     const user = await db.user.create({
-      data: { email: p.email, name: `${p.first} ${p.last}`, emailVerified: true },
+      data: { email: p.email, name: `${p.first} ${p.last}`, emailVerified: true, ...SEED_TERMS },
     });
     const c = await db.candidateProfile.create({
       data: {

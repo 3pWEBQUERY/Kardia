@@ -18,8 +18,11 @@ export async function demoSignIn(formData: FormData): Promise<void> {
   const url = await withCapturedLink(persona.email, () =>
     auth().api.signInMagicLink({ body: { email: persona.email, callbackURL: persona.next }, headers: h }),
   );
-  if (!url) redirect('/sign-in?demo=failed');
-  // Nur den Pfad übernehmen: der Verify-Endpunkt liegt immer auf der eigenen Origin.
-  const target = new URL(url);
-  redirect(`${target.pathname}${target.search}`);
+  const token = url ? new URL(url).searchParams.get('token') : null;
+  if (!token) redirect('/sign-in?demo=failed');
+  // Token direkt hier einlösen: ohne callbackURL setzt Better Auth das Sitzungs-Cookie und
+  // antwortet mit JSON; nextCookies() überträgt das Cookie in die Antwort der Server Action.
+  // (Ein redirect() auf den Verify-Endpunkt würde Next serverseitig auflösen – ohne Cookie.)
+  await auth().api.magicLinkVerify({ query: { token }, headers: h });
+  redirect(persona.next);
 }

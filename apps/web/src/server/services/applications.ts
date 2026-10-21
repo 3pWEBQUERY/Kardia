@@ -223,3 +223,15 @@ export async function getMyApplication(userId: string, applicationId: string) {
   if (!app) throw new ProblemError('notFound');
   return { ...app, messages: app.messages.map((m) => ({ ...m, body: decryptField(m.body), mine: m.senderUserId === userId })) };
 }
+
+/**
+ * Arbeitgeberseite: nur Nachrichten der Fachperson als gelesen markieren. Nachrichten
+ * von Kolleginnen derselben Organisation bleiben ungelesen, bis die Fachperson sie sieht.
+ */
+export async function markCandidateMessagesRead(applicationId: string, candidateUserId: string): Promise<number> {
+  const res = await db.message.updateMany({
+    where: { applicationId, readAt: null, senderUserId: candidateUserId },
+    data: { readAt: new Date() },
+  });
+  return res.count;
+}

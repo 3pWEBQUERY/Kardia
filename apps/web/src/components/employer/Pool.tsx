@@ -37,7 +37,11 @@ function zurichIso(date: string, time: string): string {
   return utc.toISOString();
 }
 
-type PoolSettings = { name: string; bookingMode: 'FIRST_CONFIRMS' | 'EMPLOYER_SELECTS'; cancelDeadlineHours: number };
+interface PoolSettings {
+  name: string;
+  bookingMode: 'FIRST_CONFIRMS' | 'EMPLOYER_SELECTS';
+  cancelDeadlineHours: number;
+}
 
 export function PoolCreateForm() {
   return <PoolSettingsForm />;

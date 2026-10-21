@@ -300,7 +300,8 @@
     "noMessages": "Ancora nessun messaggio.",
     "statusTitle": "Stato",
     "contact": "Contatto",
-    "noAutoDecision": "Kardia non prende decisioni automatiche. La corrispondenza con il passaporto è un aiuto per l'ordinamento, non una valutazione."
+    "noAutoDecision": "Kardia non prende decisioni automatiche. La corrispondenza con il passaporto è un aiuto per l'ordinamento, non una valutazione.",
+    "read": "letto"
   },
   "marketplace": {
     "title": "Ricerca nel mercato",

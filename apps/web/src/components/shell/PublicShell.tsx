@@ -65,7 +65,7 @@ export async function PublicShell({ children }: { children: ReactNode }) {
             <Link href="/employers">{t('nav.employers')}</Link>
             <Link href="/pricing">{t('nav.pricing')}</Link>
             <Link href="/legal/terms">{t('footer.terms')}</Link>
-            <Link href="/legal/terms-employers">{tl('terms-employers')}</Link>
+            <Link href="/legal/terms-employers">{tl('terms-employers.title')}</Link>
             <Link href="/legal/privacy">{t('footer.privacy')}</Link>
             <Link href="/legal/imprint">{t('footer.imprint')}</Link>
             <a href="/api/v1/openapi.json">{t('footer.api')}</a>

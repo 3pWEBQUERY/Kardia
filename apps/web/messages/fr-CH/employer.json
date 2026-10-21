@@ -300,7 +300,8 @@
     "noMessages": "Pas encore de messages.",
     "statusTitle": "Statut",
     "contact": "Contact",
-    "noAutoDecision": "Kardia ne prend aucune décision automatique. La correspondance passeport est une aide au tri, pas une évaluation."
+    "noAutoDecision": "Kardia ne prend aucune décision automatique. La correspondance passeport est une aide au tri, pas une évaluation.",
+    "read": "lu"
   },
   "marketplace": {
     "title": "Recherche sur la place de marché",

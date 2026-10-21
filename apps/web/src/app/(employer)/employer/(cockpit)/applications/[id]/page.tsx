@@ -6,7 +6,7 @@ import { Callout, Card, CardBody, CardHeader, StatusChip, type Tone } from '@kar
 
 import { MessageComposer, StatusControl } from '@/components/employer/ApplicationControls';
 import { orNotFound } from '@/lib/orNotFound';
-import { getApplicationForOrg } from '@/server/services/applications';
+import { getApplicationForOrg, markCandidateMessagesRead } from '@/server/services/applications';
 import { requireOrgPage } from '@/server/session';
 
 const CRED_TONE: Record<string, Tone> = {
@@ -25,6 +25,8 @@ export default async function ApplicationPage({ params }: { params: Promise<{ id
   const { id } = await params;
   const ctx = await requireOrgPage('applications.read');
   const app = await orNotFound(getApplicationForOrg(ctx, id));
+  // Gelesen-Markierung (PRD 13.2): Öffnen der Bewerbung liest die Nachrichten der Fachperson.
+  await markCandidateMessagesRead(app.id, app.candidate.userId);
   const [t, te] = await Promise.all([
     getTranslations('employer.application'),
     getTranslations('enums'),
@@ -143,7 +145,10 @@ export default async function ApplicationPage({ params }: { params: Promise<{ id
                     }
                   >
                     <p className="text-body-s whitespace-pre-line">{m.body}</p>
-                    <p className="text-micro text-ink-500">{formatDateTime(m.createdAt)}</p>
+                    <p className="text-micro text-ink-500">
+                      {formatDateTime(m.createdAt)}
+                      {m.senderUserId !== app.candidate.userId && m.readAt ? ` · ${t('read')}` : ''}
+                    </p>
                   </li>
                 ))}
               </ol>

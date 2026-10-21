@@ -34,6 +34,7 @@ export default defineConfig({
       E2E_MAGIC_LINK_FILE: MAGIC_LINK_FILE,
       KARDIA_QUEUE_DISABLED: '1',
       RATE_LIMIT_DISABLED: 'true',
+      DEMO_LOGIN: 'true',
     },
   },
 });

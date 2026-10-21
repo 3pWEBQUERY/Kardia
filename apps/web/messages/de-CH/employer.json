@@ -300,7 +300,8 @@
     "noMessages": "Noch keine Nachrichten.",
     "statusTitle": "Status",
     "contact": "Kontakt",
-    "noAutoDecision": "Kardia trifft keine automatischen Entscheide. Pass-Match ist eine Sortierhilfe, keine Bewertung."
+    "noAutoDecision": "Kardia trifft keine automatischen Entscheide. Pass-Match ist eine Sortierhilfe, keine Bewertung.",
+    "read": "gelesen"
   },
   "marketplace": {
     "title": "Marktplatz-Suche",

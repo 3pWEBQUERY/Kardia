@@ -199,7 +199,7 @@ export function limitsFor(plan: PlanTierT | null): PlanLimits | null {
  * Wirksames Abo: `planValidUntil` begrenzt Abos aus QR-Rechnung, Gründungspartnerschaft
  * und gekündigten Stripe-Abos. Abgelaufen → kein Abo (Funktionen wie ohne Abo).
  */
-export function effectivePlan<P extends PlanTierT | string>(
+export function effectivePlan<P extends string>(
   org: { plan: P | null; planValidUntil?: Date | null },
   now: Date = new Date(),
 ): P | null {

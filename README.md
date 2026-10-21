@@ -86,9 +86,12 @@ gebaut, aber erst mit echten Zugangsdaten verifizierbar:
 - E-Mail (SES), Web Push (VAPID), Bucket (S3) mit ClamAV, OSRM-Pendelzeiten, OJP (ÖV),
   UID-Register und SECO-Liste. Für die SECO-Liste nimmt der Worker einen JSON-Spiegel an.
 - Stripe (Abo, Einzelinserat) und Sentry.
-- Docker-Images (`apps/*/Dockerfile`, `infra/osrm`) sind geschrieben, aber nicht gebaut.
+- Docker-Images: `web` und `worker` laufen auf Railway; Mails werden dort bis zur Einrichtung von SES/SMTP nur protokolliert.
 
 ## Betrieb
+
+**Live-Demo auf Railway:** https://web-production-2dbcb.up.railway.app – nur fiktive Daten;
+unter `/sign-in` per Klick als Fachperson, Arbeitgeber oder Praxis anmelden (`DEMO_LOGIN`).
 
 Railway-Projekt in EU West mit den Diensten `web`, `worker`, `postgres`, `bucket` und
 `osrm` – siehe [`docs/railway.md`](docs/railway.md). Kein Redis, keine separate

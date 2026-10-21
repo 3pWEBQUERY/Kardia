@@ -6,7 +6,7 @@ import { changeStatus, postMessage } from '@/server/services/applications';
 import { billingPortalUrl, checkoutPlan, checkoutSingleListing } from '@/server/services/billing';
 import { importStatus, startImport } from '@/server/services/import';
 import { createJob, publishJob, setJobStatus, updateJob } from '@/server/services/jobs';
-import { listOrgOffers, searchMarketplace, sendOffer, withdrawOffer } from '@/server/services/marketplace';
+import { searchMarketplace, sendOffer, withdrawOffer } from '@/server/services/marketplace';
 import {
   changeMemberRole,
   createApiKey,
@@ -262,15 +262,6 @@ export async function retractOffer(offerId: string): Promise<ActionResult> {
     const ctx = await requireOrg('marketplace.offer');
     await withdrawOffer(ctx, offerId);
     revalidatePath('/employer/marketplace');
-  });
-}
-
-export async function orgOffers(): Promise<
-  ActionResult<Awaited<ReturnType<typeof listOrgOffers>>>
-> {
-  return actionResult(async () => {
-    const ctx = await requireOrg('marketplace.offer');
-    return listOrgOffers(ctx);
   });
 }
 

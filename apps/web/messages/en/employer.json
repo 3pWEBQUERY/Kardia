@@ -300,7 +300,8 @@
     "noMessages": "No messages yet.",
     "statusTitle": "Status",
     "contact": "Contact",
-    "noAutoDecision": "Kardia makes no automated decisions. Passport match is a sorting aid, not an assessment."
+    "noAutoDecision": "Kardia makes no automated decisions. Passport match is a sorting aid, not an assessment.",
+    "read": "read"
   },
   "marketplace": {
     "title": "Marketplace search",
