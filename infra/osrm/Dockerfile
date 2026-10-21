@@ -3,7 +3,11 @@
 # Nur im privaten Railway-Netz erreichbar (osrm.railway.internal:5000, IPv6).
 
 FROM curlimages/curl:8.11.1 AS download
-RUN curl -4 -fsSL --retry 5 --retry-delay 10 --retry-all-errors -o /tmp/switzerland-latest.osm.pbf https://download.geofabrik.de/europe/switzerland-latest.osm.pbf
+# Geofabrik lehnt manche Cloud-Build-Netze ab; dann der openstreetmap.fr-Spiegel.
+RUN for url in https://download.geofabrik.de/europe/switzerland-latest.osm.pbf \
+               https://download.openstreetmap.fr/extracts/europe/switzerland-latest.osm.pbf; do \
+      curl -fsSL --retry 3 --retry-delay 5 --retry-all-errors -o /tmp/switzerland-latest.osm.pbf "$url" && break; \
+    done && test -s /tmp/switzerland-latest.osm.pbf
 
 FROM ghcr.io/project-osrm/osrm-backend:v5.27.1 AS prepare
 WORKDIR /data
