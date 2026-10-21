@@ -60,3 +60,12 @@ PR-Umgebung erhält eine eigene Postgres-Instanz; Seed-Daten einspielen mit
    entschlüsseln (`BACKUP_ENCRYPTION_KEY`) und mit `pg_restore` einspielen.
 2. Bucket aus dem Replika-Bucket zurückkopieren.
 3. `web` und `worker` neu deployen; Migrationen laufen im Pre-Deploy.
+
+## Fehlerbilder
+
+- **Deploy bricht nach weniger als einer Sekunde ab, ohne Build-Log und ohne Snapshot:** Railway
+  erreicht das GitHub-Repository nicht. In GitHub unter *Installed GitHub Apps → Railway →
+  Configure* das Repository `Kardia` freigeben (bzw. in Railway unter *Account Settings →
+  Integrations* GitHub neu verbinden); danach genügt ein Push auf den Branch.
+- **Domain antwortet nicht, Health-Check grün:** Railway setzt `PORT` selbst; die Domain zeigt auf
+  Port 3000, deshalb ist `PORT=3000` auf `web` gesetzt.
