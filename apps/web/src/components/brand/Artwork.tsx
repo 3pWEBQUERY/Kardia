@@ -45,6 +45,44 @@ export function AlpinePulse({ className, animate = true, dots = true }: { classN
   );
 }
 
+/**
+ * Nur Bergketten und Puls als Band am unteren Rand eines Heros: Der Inhalt darüber bleibt
+ * frei, egal wie hoch der Hero wird. Höhe über die Klasse steuern (z. B. h-[clamp(…)]).
+ */
+export function AlpineBand({ className, animate = true }: { className?: string; animate?: boolean }) {
+  return (
+    <svg viewBox="0 330 1600 570" preserveAspectRatio="xMidYMax slice" aria-hidden focusable="false" className={cx('pointer-events-none select-none', className)}>
+      <path d={RIDGE_FAR} className="fill-brand-800" />
+      <path d={RIDGE_MID} className="fill-brand-900" />
+      <path
+        d={PULSE}
+        className={cx('fill-none stroke-pulse-500', animate && 'k-pulse-draw')}
+        strokeWidth="3"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+        pathLength={1}
+      />
+      <circle cx={SUMMIT.x} cy={SUMMIT.y} r="7" className="fill-pulse-500" />
+      <circle cx={SUMMIT.x} cy={SUMMIT.y} r="15" className={cx('fill-none stroke-pulse-500', animate && 'k-ping')} strokeWidth="1.5" />
+      <path d={RIDGE_FRONT} className="fill-brand-950 stroke-brand-700" strokeWidth="2" />
+    </svg>
+  );
+}
+
+/** Punktraster als ruhige Textur (dekorativ). */
+export function DotField({ className }: { className?: string }) {
+  return (
+    <svg aria-hidden focusable="false" className={cx('pointer-events-none select-none', className)}>
+      <defs>
+        <pattern id="k-dotfield" width="22" height="22" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="1.4" className="fill-brand-800" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#k-dotfield)" />
+    </svg>
+  );
+}
+
 /** Nur Höhenlinien – ruhiger Hintergrund für Footer, CTA-Bänder und Login. */
 export function ContourField({ className, tone = 'brand' }: { className?: string; tone?: 'brand' | 'sand' | 'accent' }) {
   const stroke = tone === 'brand' ? 'stroke-brand-800' : tone === 'sand' ? 'stroke-sand-200' : 'stroke-accent-50';

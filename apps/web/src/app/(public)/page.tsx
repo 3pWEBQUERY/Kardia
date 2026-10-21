@@ -7,7 +7,7 @@ import { Profession } from '@kardia/db/enums';
 import { Button, Checkbox, ConditionChip, Icon, Select, type RosterCode } from '@kardia/ui';
 
 import { searchSentence, startSearch } from '@/app/actions/search';
-import { AlpinePulse, ContourField, PulseLine } from '@/components/brand/Artwork';
+import { AlpineBand, ContourField, DotField, PulseLine } from '@/components/brand/Artwork';
 import { DEPARTMENT_ICONS } from '@/components/brand/departmentIcons';
 import { JobTeaser } from '@/components/domain/JobTeaser';
 import { Roster } from '@/components/domain/Roster';
@@ -35,16 +35,18 @@ export default async function HomePage() {
     <>
       {/* Hero: Markengrafik als Hintergrundbild, Suche im Vordergrund */}
       <section className="relative isolate overflow-hidden bg-brand-950">
-        <AlpinePulse className="absolute inset-0 -z-10 size-full" />
-        <div className="mx-auto grid max-w-content gap-10 px-4 pt-14 pb-44 md:px-8 md:pt-20 md:pb-64 lg:grid-cols-[1.35fr_1fr] lg:items-start lg:gap-14">
-          <div className="flex flex-col gap-6">
+        <DotField className="absolute inset-y-0 left-0 -z-10 h-full w-1/2" />
+        <ContourField className="absolute inset-y-0 right-0 -z-10 h-full w-full lg:w-2/3" />
+        <AlpineBand className="absolute inset-x-0 bottom-0 -z-10 h-[clamp(220px,30vw,440px)] w-full" />
+        <div className="mx-auto grid max-w-content gap-10 px-4 pt-14 pb-[clamp(150px,19vw,280px)] md:px-8 md:pt-20 lg:grid-cols-[1.35fr_1fr] lg:items-start lg:gap-14">
+          <div className="flex min-w-0 flex-col gap-6">
             <span className="inline-flex w-fit items-center gap-2 rounded-chip border border-brand-700 bg-brand-900 px-3 py-1 text-caption text-brand-100">
               <span className="size-2 rounded-full bg-pulse-500" aria-hidden />
               {t('eyebrow')}
             </span>
             <h1 className="text-hero text-brand-100">{t('heroTitle')}</h1>
             <p className="max-w-xl text-body text-brand-300 md:text-h3 md:font-normal">{t('lead')}</p>
-            <dl className="mt-2 grid max-w-lg grid-cols-3 gap-4 border-t border-brand-800 pt-6">
+            <dl className="mt-2 grid max-w-lg grid-cols-3 gap-3 border-t border-brand-800 pt-6 sm:gap-4">
               {(
                 [
                   ['jobs', stats.jobs],
@@ -53,14 +55,14 @@ export default async function HomePage() {
                 ] as const
               ).map(([k, v]) => (
                 <div key={k} className="flex flex-col gap-1">
-                  <dt className="order-2 text-micro text-brand-300">{t(`stats.${k}`)}</dt>
+                  <dt className="order-2 text-micro break-words text-brand-300">{t(`stats.${k}`)}</dt>
                   <dd className="order-1 text-display-l text-brand-100 tabular">{formatNumber(v)}</dd>
                 </div>
               ))}
             </dl>
           </div>
 
-          <div className="flex flex-col gap-4 rounded-card border border-brand-700 bg-surface-0 p-5 md:p-7">
+          <div className="flex min-w-0 flex-col gap-4 rounded-card border border-brand-700 bg-surface-0 p-5 md:p-7">
             <h2 className="text-h3 text-ink-900">{t('searchCardTitle')}</h2>
             <form action={startSearch} className="flex flex-col gap-5">
               <div className="grid gap-4 sm:grid-cols-2">
