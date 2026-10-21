@@ -14,7 +14,7 @@ function s3(): S3Client {
   const e = env();
   client ??= new S3Client({
     region: e.S3_REGION,
-    ...(e.S3_ENDPOINT ? { endpoint: e.S3_ENDPOINT, forcePathStyle: true } : {}),
+    ...(e.S3_ENDPOINT ? { endpoint: e.S3_ENDPOINT, forcePathStyle: e.S3_FORCE_PATH_STYLE } : {}),
     ...(e.S3_ACCESS_KEY_ID && e.S3_SECRET_ACCESS_KEY
       ? { credentials: { accessKeyId: e.S3_ACCESS_KEY_ID, secretAccessKey: e.S3_SECRET_ACCESS_KEY } }
       : {}),

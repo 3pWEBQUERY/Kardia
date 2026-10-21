@@ -5,8 +5,8 @@ Ein Railway-Projekt in **EU West** (`europe-west4`) mit fünf Diensten (PRD 10.2
 | Dienst | Quelle | Konfiguration |
 | --- | --- | --- |
 | `web` | `apps/web/Dockerfile` | `apps/web/railway.json` – 2 Replikas, Health-Check `/api/health`, Migrationen als Pre-Deploy |
-| `worker` | `apps/worker/Dockerfile` | `apps/worker/railway.json` – 1 Replika, `node dist/worker.js`, ffmpeg + ClamAV + pg_dump |
-| `postgres` | Railway PostgreSQL 16 | tägliche Railway-Backups; zusätzlich nächtlicher verschlüsselter `pg_dump` in `backup/` |
+| `worker` | `apps/worker/Dockerfile` | `apps/worker/railway.json` – 1 Replika, Entrypoint startet ClamAV und dann `node dist/worker.js`; ffmpeg + pg_dump 18 |
+| `postgres` | Railway PostgreSQL 18 (Template) | tägliche Railway-Backups; zusätzlich nächtlicher verschlüsselter `pg_dump` in `backup/` |
 | `bucket` | Railway Bucket | privat; Präfixe `pass/`, `video/`, `logo/`, `import/`, `backup/` |
 | `osrm` | `infra/osrm/Dockerfile` | `infra/osrm/railway.json` – Schweiz-Extrakt, nur intern erreichbar |
 

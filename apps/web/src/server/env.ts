@@ -14,6 +14,8 @@ const schema = z.object({
   S3_ENDPOINT: z.string().optional(),
   S3_REGION: z.string().default('auto'),
   S3_BUCKET: z.string().default('kardia'),
+  /** MinIO lokal: Pfad-Stil; Railway Buckets: virtual-host (false). */
+  S3_FORCE_PATH_STYLE: z.stringbool().default(true),
   S3_ACCESS_KEY_ID: z.string().optional(),
   S3_SECRET_ACCESS_KEY: z.string().optional(),
   ANTHROPIC_API_KEY: z.string().optional(),

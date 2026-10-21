@@ -21,6 +21,8 @@ export const config = {
     endpoint: str('S3_ENDPOINT'),
     region: str('S3_REGION', 'auto') ?? 'auto',
     bucket: str('S3_BUCKET', 'kardia') ?? 'kardia',
+    /** MinIO lokal: Pfad-Stil; Railway Buckets: virtual-host (S3_FORCE_PATH_STYLE=false). */
+    forcePathStyle: str('S3_FORCE_PATH_STYLE', 'true') !== 'false',
     replicaBucket: str('S3_REPLICA_BUCKET'),
     replicaEndpoint: str('S3_REPLICA_ENDPOINT'),
     accessKeyId: str('S3_ACCESS_KEY_ID'),

@@ -3,12 +3,17 @@
   "build": {
     "builder": "DOCKERFILE",
     "dockerfilePath": "infra/osrm/Dockerfile",
-    "watchPatterns": ["infra/osrm/**"]
+    "watchPatterns": [
+      "infra/osrm/**"
+    ]
   },
   "deploy": {
     "startCommand": "osrm-routed --algorithm mld /data/switzerland-latest.osrm",
-    "numReplicas": 1,
     "restartPolicyType": "ON_FAILURE",
-    "region": "europe-west4"
+    "multiRegionConfig": {
+      "europe-west4-drams3a": {
+        "numReplicas": 1
+      }
+    }
   }
 }

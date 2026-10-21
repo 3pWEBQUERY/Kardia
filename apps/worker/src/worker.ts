@@ -18,6 +18,7 @@ import { handleOrgCheck } from './handlers/org.ts';
 import { handleAiRawCleanup, handleRetention } from './handlers/retention.ts';
 import { handleVideoTranscode } from './handlers/video.ts';
 import { handleWebhook } from './handlers/webhooks.ts';
+import { ensureBucketCors } from './lib/s3.ts';
 
 import type * as SentryNs from '@sentry/node';
 
@@ -127,6 +128,7 @@ async function main(): Promise<void> {
     });
     if (reg.cron) await boss.schedule(name, reg.cron, null, { tz: 'Europe/Zurich' });
   }
+  await ensureBucketCors().catch((error: unknown) => log.warn('Bucket-CORS nicht gesetzt', { error: String(error) }));
   log.info('Worker gestartet', { queues: Object.keys(REGISTRY).length, concurrency: config.concurrency, env: config.nodeEnv });
 
   let stopping = false;

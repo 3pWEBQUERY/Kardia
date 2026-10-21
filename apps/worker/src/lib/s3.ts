@@ -6,6 +6,7 @@ import {
   GetObjectCommand,
   HeadObjectCommand,
   ListObjectsV2Command,
+  PutBucketCorsCommand,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
@@ -19,7 +20,7 @@ let replica: S3Client | undefined;
 function makeClient(endpoint: string | undefined, accessKeyId: string | undefined, secretAccessKey: string | undefined): S3Client {
   return new S3Client({
     region: config.s3.region,
-    ...(endpoint ? { endpoint, forcePathStyle: true } : {}),
+    ...(endpoint ? { endpoint, forcePathStyle: config.s3.forcePathStyle } : {}),
     ...(accessKeyId && secretAccessKey ? { credentials: { accessKeyId, secretAccessKey } } : {}),
   });
 }
@@ -27,6 +28,30 @@ function makeClient(endpoint: string | undefined, accessKeyId: string | undefine
 export function s3(): S3Client {
   primary ??= makeClient(config.s3.endpoint, config.s3.accessKeyId, config.s3.secretAccessKey);
   return primary;
+}
+
+/**
+ * Browser laden direkt per signierter PUT-URL hoch (PRD 10.3); dafür braucht der Bucket
+ * eine CORS-Regel für die App-Origin. Idempotent beim Start, Fehler nicht fatal.
+ */
+export async function ensureBucketCors(): Promise<void> {
+  if (!config.s3.endpoint) return;
+  await s3().send(
+    new PutBucketCorsCommand({
+      Bucket: config.s3.bucket,
+      CORSConfiguration: {
+        CORSRules: [
+          {
+            AllowedOrigins: [config.appOrigin],
+            AllowedMethods: ['GET', 'PUT', 'HEAD'],
+            AllowedHeaders: ['*'],
+            ExposeHeaders: ['ETag'],
+            MaxAgeSeconds: 3600,
+          },
+        ],
+      },
+    }),
+  );
 }
 
 export function s3Replica(): S3Client {
