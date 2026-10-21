@@ -18,9 +18,11 @@ export function CommuteInfo({ origin, wardId }: { origin: string; wardId: string
       tries += 1;
       const res = await fetch(`/api/commute?origin=${origin}&wards=${wardId}`);
       if (!res.ok || stop) return;
-      const json = (await res.json()) as { minutes: Record<string, { PT?: number; CAR?: number }>; pending: string[] };
+      const json = (await res.json()) as { minutes: Record<string, { PT?: number; CAR?: number }>; pending: string[]; unavailable?: string[] };
       setM(json.minutes[wardId] ?? {});
-      if (json.pending.length && tries < 6) setTimeout(() => void load(), 2000 * tries);
+      // Zu weit entfernt oder nach sechs Versuchen ohne Ergebnis: klarer Zustand statt Endlos-Nachladen.
+      if (json.unavailable?.includes(wardId)) setGaveUp(true);
+      else if (json.pending.length && tries < 6) setTimeout(() => void load(), 2000 * tries);
       else if (json.pending.length) setGaveUp(true);
     };
     void load();

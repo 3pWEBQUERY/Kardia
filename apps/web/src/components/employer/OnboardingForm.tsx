@@ -1,11 +1,12 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { normalizeUid } from '@kardia/core';
-import { Button, Callout, Input } from '@kardia/ui';
+import { Button, Callout, Checkbox, Input } from '@kardia/ui';
 
 import { registerOrg } from '@/app/actions/employer';
 import { useActionMessage } from '@/lib/useActionError';
@@ -20,6 +21,8 @@ export function OnboardingForm({
     uidHint: string;
     domains: string;
     domainsHint: string;
+    terms: string;
+    termsLink: string;
     submit: string;
   };
   defaultDomain: string;
@@ -29,6 +32,7 @@ export function OnboardingForm({
   const [name, setName] = useState('');
   const [uid, setUid] = useState('');
   const [domains, setDomains] = useState(defaultDomain);
+  const [terms, setTerms] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const [busy, setBusy] = useState(false);
@@ -44,6 +48,7 @@ export function OnboardingForm({
         .split(',')
         .map((d) => d.trim())
         .filter(Boolean),
+      acceptTerms: terms,
     });
     setBusy(false);
     if (!r.ok) setError(r.error.fields?.uid ? te('invalidUid') : message(r));
@@ -85,9 +90,21 @@ export function OnboardingForm({
         value={domains}
         onChange={(e) => setDomains(e.target.value)}
       />
+      <Checkbox
+        checked={terms}
+        onCheckedChange={setTerms}
+        label={
+          <span>
+            {labels.terms}{' '}
+            <Link href="/legal/terms-employers" target="_blank" className="text-accent-700 underline">
+              {labels.termsLink}
+            </Link>
+          </span>
+        }
+      />
       {error ? <Callout tone="critical">{error}</Callout> : null}
       <div>
-        <Button type="submit" variant="primary" disabled={busy || uidInvalid}>
+        <Button type="submit" variant="primary" disabled={busy || uidInvalid || !terms}>
           {labels.submit}
         </Button>
       </div>

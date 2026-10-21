@@ -6,7 +6,6 @@ import {
   ProblemError,
   parseOrThrow,
   pushSubscriptionSchema,
-  savedSearchInputSchema,
   type CredentialInput,
   type PassInput,
   type RealityVote,
@@ -19,6 +18,7 @@ import { completeUpload, createUpload } from '@/server/services/files';
 import { respondOffer, setBlocks, updateMarketplaceProfile } from '@/server/services/marketplace';
 import { addCredential, deleteCredential, saveTrainingProgress, updateCredential, upsertPass } from '@/server/services/pass';
 import { bookShift, cancelShiftAsCandidate } from '@/server/services/pool';
+import { createSavedSearch, deleteSavedSearch as removeSavedSearch } from '@/server/services/savedSearches';
 import { askTeam, answerQuestion, castRealityVote, reportContent, setAmbassador, verifyByEmailDomain } from '@/server/services/team';
 import { getSession, requireUser } from '@/server/session';
 
@@ -43,10 +43,7 @@ export async function toggleSavedJob(jobId: string): Promise<ActionResult<{ save
 export async function saveSearch(input: unknown): Promise<ActionResult<{ id: string }>> {
   return actionResult(async () => {
     const s = await requireUser('/search');
-    const data = parseOrThrow(savedSearchInputSchema, input);
-    const c = await db.candidateProfile.findUnique({ where: { userId: s.user.id } });
-    if (!c) throw new ProblemError('conflict', 'Bitte zuerst den Qualifikations-Pass anlegen.');
-    const saved = await db.savedSearch.create({ data: { candidateId: c.id, name: data.name, filters: data.filters, frequency: data.frequency } });
+    const saved = await createSavedSearch(s.user.id, input);
     revalidatePath('/me/saved');
     return { id: saved.id };
   });
@@ -55,7 +52,7 @@ export async function saveSearch(input: unknown): Promise<ActionResult<{ id: str
 export async function deleteSavedSearch(id: string): Promise<ActionResult> {
   return actionResult(async () => {
     const s = await requireUser();
-    await db.savedSearch.deleteMany({ where: { id, candidate: { userId: s.user.id } } });
+    await removeSavedSearch(s.user.id, id);
     revalidatePath('/me/saved');
   });
 }

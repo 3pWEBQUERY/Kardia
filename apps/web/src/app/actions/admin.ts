@@ -12,6 +12,7 @@ import {
   saveGuide,
 } from '@/server/services/admin';
 import { setOrganizationPlan } from '@/server/services/adminOrgs';
+import { deleteDataSubject, exportDataSubject, findDataSubject, type DataSubject } from '@/server/services/adminPrivacy';
 import { requireAdmin } from '@/server/session';
 
 import { actionResult, type ActionResult } from './result';
@@ -78,5 +79,28 @@ export async function saveRecognitionGuide(input: unknown, id?: string): Promise
     const saved = await saveGuide(s, input, id);
     revalidatePath('/admin/editorial');
     return { id: saved.id };
+  });
+}
+
+/** Betroffenenanfrage: Person per E-Mail suchen (revDSG Auskunft). */
+export async function lookupDataSubject(email: string): Promise<ActionResult<DataSubject | null>> {
+  return actionResult(async () => {
+    const s = await requireAdmin();
+    return findDataSubject(s, email);
+  });
+}
+
+export async function exportDataSubjectJson(userId: string): Promise<ActionResult<string>> {
+  return actionResult(async () => {
+    const s = await requireAdmin();
+    return JSON.stringify(await exportDataSubject(s, userId), null, 2);
+  });
+}
+
+export async function deleteDataSubjectAccount(userId: string, confirmEmail: string): Promise<ActionResult> {
+  return actionResult(async () => {
+    const s = await requireAdmin();
+    await deleteDataSubject(s, userId, confirmEmail);
+    revalidatePath('/admin/privacy');
   });
 }

@@ -40,6 +40,8 @@ export default async function OnboardingPage() {
                 uidHint: t('uidHint'),
                 domains: t('domains'),
                 domainsHint: t('domainsHint'),
+                terms: t('terms'),
+                termsLink: t('termsLink'),
                 submit: t('submit'),
               }}
               defaultDomain={s.user.email.split('@')[1] ?? ''}

@@ -12,6 +12,8 @@ import {
   type Registry as RegistryT,
 } from '@kardia/db/enums';
 
+import { decodeGeohash, encodeGeohash } from './geo.ts';
+
 /** Qualifikations-Pass (Modul D). */
 
 export const LANGUAGE_LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
@@ -35,6 +37,22 @@ export const credentialInputSchema = z
 
 export type CredentialInput = z.infer<typeof credentialInputSchema>;
 
+/**
+ * Wohnort für die Pendelzeit (Modul B): nur Koordinaten in der Schweiz (inkl. Grenzraum).
+ * Die Adresse selbst wird nie gespeichert.
+ */
+export const homeLocationSchema = z.object({
+  lat: z.number().min(45.7).max(47.9),
+  lng: z.number().min(5.8).max(10.6),
+});
+
+export type HomeLocation = z.infer<typeof homeLocationSchema>;
+
+/** Gespeichert wird nur die Mitte der Geohash-Zelle (~150 m), genug für die Pendelzeit. */
+export function coarseHome(home: HomeLocation): HomeLocation {
+  return decodeGeohash(encodeGeohash(home.lat, home.lng));
+}
+
 export const passInputSchema = z.object({
   firstName: z.string().trim().min(1).max(80),
   lastName: z.string().trim().min(1).max(80),
@@ -48,6 +66,10 @@ export const passInputSchema = z.object({
   languages: z
     .array(z.object({ language: z.string().length(2), level: z.enum(LANGUAGE_LEVELS) }))
     .max(10),
+  /** Fehlt = unverändert, null = entfernen. */
+  home: homeLocationSchema.nullable().optional(),
+  /** Zustimmung zu AGB und Datenschutz; Pflicht, solange keine Zustimmung gespeichert ist. */
+  acceptTerms: z.boolean().optional(),
 });
 
 export type PassInput = z.infer<typeof passInputSchema>;

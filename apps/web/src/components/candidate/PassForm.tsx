@@ -1,20 +1,23 @@
 'use client';
 
 import { Plus, Trash2 } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { LANGUAGE_LEVELS, type PassInput } from '@kardia/core';
 import { Department, Profession } from '@kardia/db/enums';
-import { Button, Callout, Icon, Input, RadioGroup, Select, useToast } from '@kardia/ui';
+import { Button, Callout, Checkbox, Icon, Input, RadioGroup, Select, useToast } from '@kardia/ui';
 
 import { savePass } from '@/app/actions/candidate';
 import { useActionMessage } from '@/lib/useActionError';
 
+import { HomeLocationField } from './HomeLocationField.tsx';
+
 const LANGS = ['de', 'fr', 'it', 'en', 'rm', 'es', 'pt', 'sq', 'sr', 'hr', 'tr', 'pl'];
 
-export function PassForm({ initial, defaultName, next }: { initial: PassInput | null; defaultName: string; next: string | null }) {
+export function PassForm({ initial, defaultName, next, needsTerms }: { initial: PassInput | null; defaultName: string; next: string | null; needsTerms: boolean }) {
   const t = useTranslations('candidate.pass');
   const c = useTranslations('common');
   const e = useTranslations('enums');
@@ -27,12 +30,17 @@ export function PassForm({ initial, defaultName, next }: { initial: PassInput | 
   );
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [terms, setTerms] = useState(false);
   const set = <K extends keyof PassInput>(k: K, value: PassInput[K]) => setV((p) => ({ ...p, [k]: value }));
 
   const submit = async () => {
     setBusy(true);
     setError(null);
-    const r = await savePass(v);
+    if (needsTerms && !terms) {
+      setBusy(false);
+      return setError(t('termsRequired'));
+    }
+    const r = await savePass({ ...v, ...(needsTerms ? { acceptTerms: terms } : {}) });
     setBusy(false);
     if (!r.ok) return setError(message(r));
     toast({ tone: 'neutral', message: t('saved') });
@@ -78,6 +86,17 @@ export function PassForm({ initial, defaultName, next }: { initial: PassInput | 
         ))}
         <div><Button size="s" onClick={() => set('languages', [...v.languages, { language: 'en', level: 'B1' }])}><Icon icon={Plus} size={16} />{t('addLanguage')}</Button></div>
       </fieldset>
+      <HomeLocationField value={v.home} onChange={(home) => set('home', home)} />
+      {needsTerms ? (
+        <Checkbox
+          checked={terms}
+          onCheckedChange={setTerms}
+          label={t.rich('terms', {
+            terms: (chunks) => <Link href="/legal/terms" target="_blank" className="text-accent-700 underline">{chunks}</Link>,
+            privacy: (chunks) => <Link href="/legal/privacy" target="_blank" className="text-accent-700 underline">{chunks}</Link>,
+          })}
+        />
+      ) : null}
       {error ? <Callout tone="critical">{error}</Callout> : null}
       <div><Button type="submit" variant="primary" disabled={busy}>{busy ? c('actions.saving') : c('actions.save')}</Button></div>
     </form>

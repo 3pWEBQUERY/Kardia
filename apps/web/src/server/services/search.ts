@@ -46,6 +46,14 @@ function conditionSql(c: Condition): { okOrUnknown: Sql; met: Sql } {
       return both(sql`NOT ('SPLIT' = ANY(${SHIFTS}))`);
     case 'weekdaysOnly':
       return both(sql`('WEEKDAYS_ONLY' = ANY(${SHIFTS}))`);
+    case 'noEarlyShifts':
+      return both(sql`NOT ('EARLY' = ANY(${SHIFTS}))`);
+    case 'noLateShifts':
+      return both(sql`NOT ('LATE' = ANY(${SHIFTS}))`);
+    case 'no12hShifts':
+      return both(sql`NOT ('DAY_12H' = ANY(${SHIFTS}))`);
+    case 'maxRequiredShiftsPerWeek':
+      return both(sql`${eff('minShiftsPerWeek', 'int')} <= ${c.value}`, eff('minShiftsPerWeek', 'int'));
     case 'maxWeekendsPerMonth':
       return both(sql`${eff('weekendsPerMonth', 'float8')} <= ${c.value}`);
     case 'minRosterLeadWeeks':
@@ -58,6 +66,12 @@ function conditionSql(c: Condition): { okOrUnknown: Sql; met: Sql } {
       return both(sql`${eff('thirteenthSalary', 'boolean')}`);
     case 'minNightAllowance':
       return both(sql`${eff('nightAllowanceChfHour', 'int')} >= ${c.value}`);
+    case 'minSundayAllowancePct':
+      return both(sql`${eff('sundayAllowancePct', 'int')} >= ${c.value}`, eff('sundayAllowancePct', 'int'));
+    case 'minOnCallChfDay':
+      return both(sql`${eff('onCallChfDay', 'int')} >= ${c.value}`, eff('onCallChfDay', 'int'));
+    case 'minSkillMixHfFhPct':
+      return both(sql`w."skillMixHfFhPct" >= ${c.value}`, sql`w."skillMixHfFhPct"`);
     case 'maxPatientsDay':
       return both(sql`w."patientsPerNurseDay" <= ${c.value}`, sql`w."patientsPerNurseDay"`);
     case 'maxPatientsNight':
@@ -68,6 +82,8 @@ function conditionSql(c: Condition): { okOrUnknown: Sql; met: Sql } {
       return both(sql`${eff('vacationWeeks', 'int')} >= ${c.value}`);
     case 'minEducationDays':
       return both(sql`${eff('educationDays', 'int')} >= ${c.value}`, eff('educationDays', 'int'));
+    case 'minEducationBudget':
+      return both(sql`${eff('educationBudgetChf', 'int')} >= ${c.value}`, eff('educationBudgetChf', 'int'));
     case 'childcare':
       return both(sql`w."childcare" <> 'NONE'`);
     case 'collectiveAgreement':
@@ -119,7 +135,8 @@ function whereClause(filter: SearchFilter): Sql {
   const parts: Sql[] = [
     sql`j."status" = 'PUBLISHED'`,
     sql`o."verification" = 'VERIFIED'`,
-    sql`(j."paidUntil" IS NULL OR j."paidUntil" > now() OR o."plan" IS NOT NULL)`,
+    // Sichtbar mit bezahltem Einzelinserat oder wirksamem Abo (planValidUntil, PRD 15).
+    sql`(j."paidUntil" > now() OR (o."plan" IS NOT NULL AND (o."planValidUntil" IS NULL OR o."planValidUntil" > now())))`,
   ];
   if (filter.profession) parts.push(sql`j."profession" = ${filter.profession}::"Profession"`);
   if (filter.departments?.length) {
@@ -292,19 +309,4 @@ async function suggestRelaxation(filter: SearchFilter): Promise<SearchResult['su
     if (count > 0 && (!best || count > best.count)) best = { removeKey: c.key, relaxedValue, count };
   }
   return best;
-}
-
-/** Für die Karte: alle Stationen mit Treffern (gleicher Filterzustand, AK-B2). */
-export async function searchMapPoints(filter: SearchFilter): Promise<
-  { wardId: string; jobId: string; title: string; orgName: string; lat: number; lng: number }[]
-> {
-  const result = await searchJobs(filter, { limit: 500 });
-  return result.hits.map((h) => ({
-    wardId: h.ward.id,
-    jobId: h.jobId,
-    title: h.title,
-    orgName: h.org.name,
-    lat: h.location.lat,
-    lng: h.location.lng,
-  }));
 }

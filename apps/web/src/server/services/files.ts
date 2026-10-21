@@ -59,7 +59,7 @@ export async function authorizeDownload(fileId: string, viewer: { userId: string
       videoFile: { select: { moderation: true } },
       videoCaptions: { select: { moderation: true } },
       videoPoster: { select: { moderation: true } },
-      orgLogo: { select: { verification: true } },
+      orgLogo: { select: { id: true, verification: true } },
     },
   });
   if (file?.status !== 'READY') throw new ProblemError('notFound');
@@ -69,6 +69,10 @@ export async function authorizeDownload(fileId: string, viewer: { userId: string
   if (!viewer.userId) throw new ProblemError('unauthorized');
 
   if (file.ownerId === viewer.userId) return signedDownloadUrl(file.bucketKey);
+  // Logo vor der Verifizierung: für Mitglieder der eigenen Organisation sichtbar.
+  if (file.orgLogo && (await db.orgMember.findFirst({ where: { organizationId: file.orgLogo.id, userId: viewer.userId }, select: { id: true } }))) {
+    return signedDownloadUrl(file.bucketKey);
+  }
   if (viewer.isAdmin) {
     if (isPass) await audit({ actorId: viewer.userId, action: 'file.download', entity: 'File', entityId: file.id });
     return signedDownloadUrl(file.bucketKey);

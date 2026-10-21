@@ -24,6 +24,7 @@ import {
   invitePoolMember,
   newPool,
   newShift,
+  savePoolSettings,
 } from '@/app/actions/employer';
 import { useActionMessage } from '@/lib/useActionError';
 
@@ -36,23 +37,33 @@ function zurichIso(date: string, time: string): string {
   return utc.toISOString();
 }
 
+type PoolSettings = { name: string; bookingMode: 'FIRST_CONFIRMS' | 'EMPLOYER_SELECTS'; cancelDeadlineHours: number };
+
 export function PoolCreateForm() {
+  return <PoolSettingsForm />;
+}
+
+/** Pool anlegen oder Einstellungen (Name, Buchungsmodus, Absagefrist) ändern. */
+export function PoolSettingsForm({ poolId, initial }: { poolId?: string; initial?: PoolSettings }) {
   const t = useTranslations('employer.pool');
   const te = useTranslations('enums');
   const router = useRouter();
+  const toast = useToast();
   const message = useActionMessage();
-  const [name, setName] = useState('');
-  const [mode, setMode] = useState<'FIRST_CONFIRMS' | 'EMPLOYER_SELECTS'>('FIRST_CONFIRMS');
-  const [hours, setHours] = useState('48');
+  const [name, setName] = useState(initial?.name ?? '');
+  const [mode, setMode] = useState<PoolSettings['bookingMode']>(initial?.bookingMode ?? 'FIRST_CONFIRMS');
+  const [hours, setHours] = useState(String(initial?.cancelDeadlineHours ?? 48));
   const [error, setError] = useState<string | null>(null);
   return (
     <form
       className="grid gap-3 sm:grid-cols-[2fr_1.5fr_1fr_auto] sm:items-end"
       onSubmit={(e) => {
         e.preventDefault();
-        void newPool({ name, bookingMode: mode, cancelDeadlineHours: Number(hours) }).then((r) => {
+        const input = { name, bookingMode: mode, cancelDeadlineHours: Number(hours) };
+        void (poolId ? savePoolSettings(poolId, input) : newPool(input)).then((r) => {
           if (!r.ok) return setError(message(r));
-          setName('');
+          if (!poolId) setName('');
+          else toast({ tone: 'neutral', message: t('settingsSaved') });
           setError(null);
           router.refresh();
         });
@@ -81,7 +92,7 @@ export function PoolCreateForm() {
         onChange={(e) => setHours(e.target.value)}
       />
       <Button type="submit" variant="primary" disabled={name.trim().length < 2}>
-        {t('create')}
+        {poolId ? t('saveSettings') : t('create')}
       </Button>
       {error ? (
         <div className="sm:col-span-4">

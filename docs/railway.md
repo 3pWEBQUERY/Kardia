@@ -38,6 +38,16 @@ nach), `VOTER_HASH_SECRET`, `S3_*`, `ANTHROPIC_API_KEY`, `SENTRY_DSN` (EU-Region
 `OSRM_URL=http://osrm.railway.internal:5000`, `OJP_URL`, `OJP_API_KEY`, `UID_REGISTER_URL`,
 `SECO_REGISTRY_URL`, `BACKUP_ENCRYPTION_KEY`, `S3_REPLICA_*`, `OPS_EMAIL`, `WORKER_CONCURRENCY`.
 
+**Release-Schalter (web):** `FEATURE_MARKETPLACE` und `FEATURE_FLEXPOOL` (Standard `true`).
+Für den R1-Start ohne Marktplatz und Flex-Pool auf `false` setzen: Navigation, Seiten,
+Server Actions und API-Endpunkte der Funktion antworten dann mit 404. Abo-Grenzen
+(`PLAN_LIMITS`) gelten zusätzlich.
+
+**Stripe-Webhook:** Endpunkt `https://<Domain>/api/stripe/webhook` mit den Ereignissen
+`checkout.session.completed`, `customer.subscription.updated`,
+`customer.subscription.deleted` und `invoice.payment_failed`. Das Kundenportal
+(Zahlungsmittel, Planwechsel, Kündigung) im Stripe-Dashboard aktivieren.
+
 ## Umgebungen
 
 `production`, `staging` und PR-Umgebungen (in den Projekteinstellungen aktivieren). Jede

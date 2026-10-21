@@ -36,6 +36,18 @@ export function profileView(p: PartialWardProfile | Record<string, unknown>) {
   return rest;
 }
 
+/** KI-6-Übersetzungen der Freitexte je Sprache (fr-CH, it-CH, en); Quelle bleibt Deutsch. */
+export function translationsView(raw: unknown): Record<string, { description: string | null }> {
+  if (!raw || typeof raw !== 'object') return {};
+  const out: Record<string, { description: string | null }> = {};
+  for (const locale of ['fr-CH', 'it-CH', 'en']) {
+    const entry = (raw as Record<string, unknown>)[locale];
+    const description = entry && typeof entry === 'object' ? (entry as { description?: unknown }).description : null;
+    if (typeof description === 'string' && description.trim()) out[locale] = { description };
+  }
+  return out;
+}
+
 type WardPublic = NonNullable<Awaited<ReturnType<typeof getWardPublic>>>;
 
 export function wardView(v: WardPublic) {
@@ -58,6 +70,7 @@ export function wardView(v: WardPublic) {
       hasParking: ward.location.hasParking,
     },
     profile: profileView(ward),
+    translations: translationsView(ward.translations),
     rosterPattern: ward.rosterPattern,
     reality,
     employerComments: ward.fieldComments.map((c) => ({ field: c.field, body: c.body })),

@@ -1,14 +1,20 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 
-import { BENCHMARK_MIN_PEERS, formatDate, isStale, type PartialWardProfile } from '@kardia/core';
+import { BENCHMARK_MIN_PEERS, encodeGeohash, formatDate, isStale, type PartialWardProfile } from '@kardia/core';
 import { Button, Card, CardBody, CardHeader, EmptyState, StatusChip } from '@kardia/ui';
 
 import { AskTeam } from '@/components/domain/AskTeam';
+import { CommuteInfo } from '@/components/domain/CommuteInfo';
+import { OrgLogo } from '@/components/domain/OrgLogo';
+import { ReportButton } from '@/components/domain/ReportButton';
 import { Roster } from '@/components/domain/Roster';
 import { WardProfileView } from '@/components/domain/WardProfileView';
 import { formatFieldValue } from '@/lib/fieldValue';
+import { localizedWardText } from '@/lib/wardText';
+import { db } from '@/server/db';
+import { latestTeamSummaries } from '@/server/services/teamSummary';
 import { getWardPublic } from '@/server/services/wards';
 import { getSession } from '@/server/session';
 
@@ -29,11 +35,18 @@ export default async function WardPage({ params }: { params: Promise<{ id: strin
   const { ward, reality } = view;
   const [t, tf, te, tc] = await Promise.all([getTranslations('public.ward'), getTranslations('fields'), getTranslations('enums'), getTranslations('common')]);
   const session = await getSession();
+  const [locale, summaries, candidate] = await Promise.all([
+    getLocale(),
+    latestTeamSummaries(ward.id),
+    session ? db.candidateProfile.findUnique({ where: { userId: session.user.id }, select: { homeLat: true, homeLng: true } }) : null,
+  ]);
+  const about = localizedWardText(ward.description, ward.translations, locale);
   const fmt = (k: string, v: unknown) => formatFieldValue(k, v, { fields: tf, enums: te, common: tc });
 
   return (
     <div className="mx-auto flex max-w-content flex-col gap-8 px-4 py-8 md:px-8">
       <header className="flex flex-col gap-2">
+        <OrgLogo fileId={ward.location.organization.logoFileId} />
         <p className="text-caption text-ink-700">
           <Link href={`/organizations/${ward.location.organization.id}`} className="hover:text-accent-700">{ward.location.organization.name}</Link> · {ward.location.name} · {ward.location.city}
         </p>
@@ -61,6 +74,32 @@ export default async function WardPage({ params }: { params: Promise<{ id: strin
               <WardProfileView profile={ward as unknown as PartialWardProfile} confirmedAt={ward.confirmedAt} reality={reality} comments={ward.fieldComments} location={ward.location} />
             </CardBody>
           </Card>
+          {about.text ? (
+            <section className="prose-k" lang={about.translated ? locale : 'de-CH'}>
+              <h2 className="text-h2">{t('about')}</h2>
+              <p className="whitespace-pre-line">{about.text}</p>
+              {about.translated ? <p className="text-micro text-ink-500">{t('autoTranslated')}</p> : null}
+            </section>
+          ) : null}
+          {summaries.length ? (
+            <Card>
+              <CardHeader title={t('teamVoices')} meta={t('teamVoicesHint')} />
+              <CardBody className="flex flex-col gap-3">
+                {summaries.map((sm) => (
+                  <div key={sm.field} className="flex flex-col gap-1 border-b border-line-200 pb-3 last:border-b-0 last:pb-0">
+                    <p className="text-caption text-ink-700">
+                      {tf(sm.field)} · <span className="text-accent-700">{tc('aiSummary')}</span>
+                    </p>
+                    <p className="text-body-s text-ink-900">{sm.summary}</p>
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-micro text-ink-500">{t('basedOn', { count: sm.basedOn })}</span>
+                      <ReportButton entity="RealityCheck" entityId={`${ward.id}:${sm.field}`} signedIn={!!session} />
+                    </div>
+                  </div>
+                ))}
+              </CardBody>
+            </Card>
+          ) : null}
           {ward.benchmarks.length ? (
             <Card>
               <CardHeader title={t('benchmark')} meta={t('benchmarkHint', { min: BENCHMARK_MIN_PEERS })} />
@@ -81,10 +120,13 @@ export default async function WardPage({ params }: { params: Promise<{ id: strin
               <CardHeader title={t('videos')} />
               <CardBody className="grid gap-4 sm:grid-cols-2">
                 {ward.videos.map((v) => (
-                  <video key={v.id} controls preload="none" className="w-full rounded-control border border-line-300" poster={v.posterId ? `/api/files/${v.posterId}` : undefined}>
-                    <source src={`/api/files/${v.fileId}`} type="video/mp4" />
-                    <track kind="captions" src={`/api/files/${v.captionsId}`} srcLang="de" label="Deutsch" default />
-                  </video>
+                  <div key={v.id} className="flex flex-col items-start gap-1">
+                    <video controls preload="none" className="w-full rounded-control border border-line-300" poster={v.posterId ? `/api/files/${v.posterId}` : undefined}>
+                      <source src={`/api/files/${v.fileId}`} type="video/mp4" />
+                      <track kind="captions" src={`/api/files/${v.captionsId}`} srcLang="de" label="Deutsch" default />
+                    </video>
+                    <ReportButton entity="WardVideo" entityId={v.id} signedIn={!!session} />
+                  </div>
                 ))}
               </CardBody>
             </Card>
@@ -97,9 +139,14 @@ export default async function WardPage({ params }: { params: Promise<{ id: strin
                 <div key={q.id} className="flex flex-col gap-1 border-b border-line-200 pb-3">
                   <p className="text-body-s font-medium">{q.body}</p>
                   {q.answer ? <p className="text-body-s text-ink-700">{q.answer}</p> : <p className="text-micro text-ink-500">{t('unanswered')}</p>}
-                  {q.answeredAt ? (
-                    <p className="text-micro text-ink-500">{t('answeredAfter', { hours: Math.max(1, Math.round((q.answeredAt.getTime() - q.createdAt.getTime()) / 3600_000)) })}</p>
-                  ) : null}
+                  <div className="flex items-center justify-between gap-3">
+                    {q.answeredAt ? (
+                      <p className="text-micro text-ink-500">{t('answeredAfter', { hours: Math.max(1, Math.round((q.answeredAt.getTime() - q.createdAt.getTime()) / 3600_000)) })}</p>
+                    ) : (
+                      <span />
+                    )}
+                    <ReportButton entity="TeamQuestion" entityId={q.id} signedIn={!!session} />
+                  </div>
                 </div>
               ))}
               <AskTeam wardId={ward.id} signedIn={!!session} />
@@ -119,6 +166,18 @@ export default async function WardPage({ params }: { params: Promise<{ id: strin
               ))}
             </CardBody>
           </Card>
+          {candidate?.homeLat != null && candidate.homeLng != null ? (
+            <Card>
+              <CardHeader title={t('commute')} />
+              <CardBody>
+                <CommuteInfo origin={encodeGeohash(candidate.homeLat, candidate.homeLng)} wardId={ward.id} />
+              </CardBody>
+            </Card>
+          ) : candidate ? (
+            <p className="text-micro text-ink-500">
+              <Link href="/me/pass" className="text-accent-700 underline">{t('commuteSetHome')}</Link>
+            </p>
+          ) : null}
           <Card>
             <CardHeader title={t('workHere')} />
             <CardBody className="flex flex-col gap-2">

@@ -6,6 +6,7 @@ import {
   hasRecognizedTraining,
   jobInputSchema,
   jobPatchSchema,
+  effectivePlan,
   limitsFor,
   parseOrThrow,
   publishBlockers,
@@ -109,7 +110,7 @@ export async function blockersFor(ctx: Pick<OrgContext, 'org'>, jobId: string): 
   const activeJobs = await db.job.count({
     where: { status: 'PUBLISHED', id: { not: jobId }, ward: { location: { organizationId: ctx.org.id } } },
   });
-  const limits = limitsFor(org.plan);
+  const limits = limitsFor(effectivePlan(org));
   return publishBlockers({
     ward: job.ward as unknown as PartialWardProfile,
     overrides: job.overrides,

@@ -91,8 +91,11 @@ export async function handleSearchAlerts(now = new Date()): Promise<{ sent: numb
           salaryMinChf: j.ward.salaryMinChf,
         })),
       };
-      await enqueue(QUEUES.emailSend, { template: 'search.alert', userId: s.candidate.userId, data });
-      await enqueue(QUEUES.pushSend, { kind: 'search.alert', userId: s.candidate.userId, data: { searchName: s.name, searchUrl } });
+      // Ein Kanal pro Treffermeldung (PRD 13.3 "per E-Mail oder Web Push"): Web Push, wenn
+      // die Person ein Gerät abonniert hat, sonst E-Mail. Das Suchabo kennt keine Kanalwahl.
+      const pushDevices = await db().pushSubscription.count({ where: { userId: s.candidate.userId } });
+      if (pushDevices > 0) await enqueue(QUEUES.pushSend, { kind: 'search.alert', userId: s.candidate.userId, data: { searchName: s.name, searchUrl } });
+      else await enqueue(QUEUES.emailSend, { template: 'search.alert', userId: s.candidate.userId, data });
       sent++;
     }
     await db().savedSearch.update({ where: { id: s.id }, data: { lastSentAt: now } });

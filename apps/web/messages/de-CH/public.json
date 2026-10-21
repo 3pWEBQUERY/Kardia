@@ -65,7 +65,9 @@
     "profileHint": "Jede Angabe mit Quelle und Datum der Bestätigung; Team-Werte ab fünf Antworten.",
     "about": "Über die Station",
     "commute": "Pendelzeit",
-    "direct": "Bewerbung direkt an den Arbeitgeber. Kardia ist nie Arbeitgeber und vermittelt nicht."
+    "direct": "Bewerbung direkt an den Arbeitgeber. Kardia ist nie Arbeitgeber und vermittelt nicht.",
+    "autoTranslated": "Automatisch übersetzt aus dem Deutschen.",
+    "commuteSetHome": "Wohnort im Pass hinterlegen, um die Pendelzeit zu sehen"
   },
   "ward": {
     "verifiedEmployees": "{count} verifizierte Mitarbeitende",
@@ -85,7 +87,14 @@
     "noJobs": "Zurzeit keine offenen Stellen. Suche speichern, um informiert zu werden.",
     "workHere": "Sie arbeiten hier?",
     "workHereBody": "Bestätigen oder korrigieren Sie die Angaben – anonym.",
-    "workHereAction": "Zum Realitäts-Check"
+    "workHereAction": "Zum Realitäts-Check",
+    "about": "Über die Station",
+    "autoTranslated": "Automatisch übersetzt aus dem Deutschen.",
+    "teamVoices": "Stimmen aus dem Team",
+    "teamVoicesHint": "Zusammenfassung der Kommentare verifizierter Mitarbeitender, ab fünf Kommentaren.",
+    "basedOn": "{count, plural, one {Aus # Kommentar} other {Aus # Kommentaren}}",
+    "commute": "Pendelzeit",
+    "commuteSetHome": "Wohnort im Pass hinterlegen, um Pendelzeiten zu sehen"
   },
   "team": {
     "title": "Realitäts-Check: {ward}",
@@ -329,5 +338,19 @@
         }
       ]
     }
+  },
+  "report": {
+    "action": "Melden",
+    "title": "Inhalt melden",
+    "description": "Die Meldung geht an die Moderation von Kardia. Ihr Name wird der Station nicht angezeigt.",
+    "reason": "Grund",
+    "reasonHint": "Was ist falsch oder unangemessen? Höchstens 400 Zeichen.",
+    "send": "Meldung senden",
+    "sent": "Danke – die Moderation prüft den Inhalt."
+  },
+  "results": {
+    "loadMore": "Weitere Treffer laden",
+    "loading": "Wird geladen …",
+    "shown": "{shown} von {total} Treffern angezeigt"
   }
 }

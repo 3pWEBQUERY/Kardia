@@ -8,12 +8,14 @@ import { Card, CardBody, CardHeader, StatusChip } from '@kardia/ui';
 import { OfferResponse } from '@/components/candidate/OfferResponse';
 import { Roster } from '@/components/domain/Roster';
 import { WardProfileView } from '@/components/domain/WardProfileView';
+import { requireFeature } from '@/server/features';
 import { getMyOffer } from '@/server/services/marketplace';
 import { realityAggregates } from '@/server/services/wards';
 import { requireUser } from '@/server/session';
 
 /** Angebot eines Arbeitgebers: konkreter Jahreslohn, referenzierte Stelle mit Stationsprofil. */
 export default async function OfferPage({ params }: { params: Promise<{ id: string }> }) {
+  requireFeature('marketplace');
   const { id } = await params;
   const s = await requireUser(`/offers/${id}`);
   const data = await getMyOffer(s.user.id, id).catch((e: unknown) => {

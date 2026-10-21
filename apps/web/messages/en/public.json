@@ -65,7 +65,9 @@
     "profileHint": "Every detail with source and date of confirmation; team values from five responses.",
     "about": "About the ward",
     "commute": "Commute",
-    "direct": "Applications go directly to the employer. Kardia is never the employer and does not act as a recruitment agency."
+    "direct": "Applications go directly to the employer. Kardia is never the employer and does not act as a recruitment agency.",
+    "autoTranslated": "Automatically translated from German.",
+    "commuteSetHome": "Add your home location to the passport to see the commute time"
   },
   "ward": {
     "verifiedEmployees": "{count} verified employees",
@@ -85,7 +87,14 @@
     "noJobs": "No open jobs at the moment. Save the search to be notified.",
     "workHere": "Do you work here?",
     "workHereBody": "Confirm or correct the details – anonymously.",
-    "workHereAction": "Go to reality check"
+    "workHereAction": "Go to reality check",
+    "about": "About the unit",
+    "autoTranslated": "Automatically translated from German.",
+    "teamVoices": "Voices from the team",
+    "teamVoicesHint": "Summary of comments by verified employees, from five comments upwards.",
+    "basedOn": "{count, plural, one {From # comment} other {From # comments}}",
+    "commute": "Commute",
+    "commuteSetHome": "Add your home location to the passport to see commute times"
   },
   "team": {
     "title": "Reality check: {ward}",
@@ -329,5 +338,19 @@
         }
       ]
     }
+  },
+  "report": {
+    "action": "Report",
+    "title": "Report content",
+    "description": "The report goes to the Kardia moderation team. Your name is not shown to the unit.",
+    "reason": "Reason",
+    "reasonHint": "What is wrong or inappropriate? 400 characters at most.",
+    "send": "Send report",
+    "sent": "Thank you – the moderation team will review the content."
+  },
+  "results": {
+    "loadMore": "Load more results",
+    "loading": "Loading …",
+    "shown": "Showing {shown} of {total} results"
   }
 }

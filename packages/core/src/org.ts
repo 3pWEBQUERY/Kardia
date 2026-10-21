@@ -194,3 +194,35 @@ export const FOUNDING_PARTNER = {
 export function limitsFor(plan: PlanTierT | null): PlanLimits | null {
   return plan ? PLAN_LIMITS[plan] : null;
 }
+
+/**
+ * Wirksames Abo: `planValidUntil` begrenzt Abos aus QR-Rechnung, Gründungspartnerschaft
+ * und gekündigten Stripe-Abos. Abgelaufen → kein Abo (Funktionen wie ohne Abo).
+ */
+export function effectivePlan<P extends PlanTierT | string>(
+  org: { plan: P | null; planValidUntil?: Date | null },
+  now: Date = new Date(),
+): P | null {
+  if (!org.plan) return null;
+  if (org.planValidUntil && org.planValidUntil.getTime() <= now.getTime()) return null;
+  return org.plan;
+}
+
+/** Tage bis zum Ablauf eines befristeten Abos (aufgerundet); null ohne Frist oder Abo. */
+export function daysUntilPlanExpiry(org: { plan: string | null; planValidUntil?: Date | null }, now: Date = new Date()): number | null {
+  if (!org.plan || !org.planValidUntil) return null;
+  return Math.ceil((org.planValidUntil.getTime() - now.getTime()) / 86_400_000);
+}
+
+/**
+ * Kontingente für Stationen und Standorte (PRD 15). Ohne Abo (Einzelinserate) gilt
+ * keine Obergrenze beim Anlegen – bezahlt wird je veröffentlichter Stelle.
+ */
+export function wardQuotaExceeded(plan: PlanTierT | null, existingWards: number): boolean {
+  const limit = plan ? PLAN_LIMITS[plan].wards : null;
+  return limit !== null && existingWards >= limit;
+}
+
+export function locationQuotaExceeded(plan: PlanTierT | null, existingLocations: number): boolean {
+  return plan !== null && !PLAN_LIMITS[plan].multipleLocations && existingLocations >= 1;
+}

@@ -21,17 +21,25 @@ export const conditionSchema = z.discriminatedUnion('key', [
   z.object({ key: z.literal('noNights'), mode: conditionMode }),
   z.object({ key: z.literal('noSplitShifts'), mode: conditionMode }),
   z.object({ key: z.literal('weekdaysOnly'), mode: conditionMode }),
+  z.object({ key: z.literal('noEarlyShifts'), mode: conditionMode }),
+  z.object({ key: z.literal('noLateShifts'), mode: conditionMode }),
+  z.object({ key: z.literal('no12hShifts'), mode: conditionMode }),
+  z.object({ key: z.literal('maxRequiredShiftsPerWeek'), mode: conditionMode, value: num(1, 7) }),
   z.object({ key: z.literal('maxWeekendsPerMonth'), mode: conditionMode, value: num(0, 5) }),
   z.object({ key: z.literal('minRosterLeadWeeks'), mode: conditionMode, value: num(1, 26) }),
   z.object({ key: z.literal('minWishDays'), mode: conditionMode, value: num(1, 10) }),
   z.object({ key: z.literal('minSalary'), mode: conditionMode, value: num(30_000, 400_000) }),
   z.object({ key: z.literal('thirteenthSalary'), mode: conditionMode }),
   z.object({ key: z.literal('minNightAllowance'), mode: conditionMode, value: num(1, 100) }),
+  z.object({ key: z.literal('minSundayAllowancePct'), mode: conditionMode, value: num(1, 200) }),
+  z.object({ key: z.literal('minOnCallChfDay'), mode: conditionMode, value: num(1, 500) }),
   z.object({ key: z.literal('maxPatientsDay'), mode: conditionMode, value: num(1, 40) }),
   z.object({ key: z.literal('maxPatientsNight'), mode: conditionMode, value: num(1, 60) }),
+  z.object({ key: z.literal('minSkillMixHfFhPct'), mode: conditionMode, value: num(10, 100) }),
   z.object({ key: z.literal('minOnboardingWeeks'), mode: conditionMode, value: num(1, 26) }),
   z.object({ key: z.literal('minVacationWeeks'), mode: conditionMode, value: num(4, 10) }),
   z.object({ key: z.literal('minEducationDays'), mode: conditionMode, value: num(1, 30) }),
+  z.object({ key: z.literal('minEducationBudget'), mode: conditionMode, value: num(100, 20_000) }),
   z.object({ key: z.literal('childcare'), mode: conditionMode }),
   z.object({ key: z.literal('collectiveAgreement'), mode: conditionMode }),
   z.object({ key: z.literal('parking'), mode: conditionMode }),
@@ -165,6 +173,15 @@ function flag(actual: boolean | null | undefined): ConditionState {
   return actual ? 'met' : 'unmet';
 }
 
+/** Dienstart ausgeschlossen: erfüllt, wenn die Station sie nicht im Dienstmodell hat. */
+function excludeShift(condition: Condition, shifts: readonly ShiftType[] | null, type: ShiftType): ConditionResult {
+  return {
+    condition,
+    state: shifts == null ? 'unknown' : shifts.includes(type) ? 'unmet' : 'met',
+    actual: shifts == null ? null : !shifts.includes(type),
+  };
+}
+
 export function evaluateCondition(condition: Condition, s: MatchSubject): ConditionResult {
   const p = s.profile;
   const shifts = p.shiftTypes ?? null;
@@ -187,6 +204,18 @@ export function evaluateCondition(condition: Condition, s: MatchSubject): Condit
         state:
           shifts == null ? 'unknown' : shifts.includes(ShiftType.WEEKDAYS_ONLY) ? 'met' : 'unmet',
         actual: shifts?.includes(ShiftType.WEEKDAYS_ONLY) ?? null,
+      };
+    case 'noEarlyShifts':
+      return excludeShift(condition, shifts, ShiftType.EARLY);
+    case 'noLateShifts':
+      return excludeShift(condition, shifts, ShiftType.LATE);
+    case 'no12hShifts':
+      return excludeShift(condition, shifts, ShiftType.DAY_12H);
+    case 'maxRequiredShiftsPerWeek':
+      return {
+        condition,
+        state: cmp(p.minShiftsPerWeek, (v) => v <= condition.value),
+        actual: p.minShiftsPerWeek ?? null,
       };
     case 'maxWeekendsPerMonth':
       return {
@@ -220,6 +249,30 @@ export function evaluateCondition(condition: Condition, s: MatchSubject): Condit
         condition,
         state: cmp(p.nightAllowanceChfHour, (v) => v >= condition.value),
         actual: p.nightAllowanceChfHour ?? null,
+      };
+    case 'minSundayAllowancePct':
+      return {
+        condition,
+        state: cmp(p.sundayAllowancePct, (v) => v >= condition.value),
+        actual: p.sundayAllowancePct ?? null,
+      };
+    case 'minOnCallChfDay':
+      return {
+        condition,
+        state: cmp(p.onCallChfDay, (v) => v >= condition.value),
+        actual: p.onCallChfDay ?? null,
+      };
+    case 'minSkillMixHfFhPct':
+      return {
+        condition,
+        state: cmp(p.skillMixHfFhPct, (v) => v >= condition.value),
+        actual: p.skillMixHfFhPct ?? null,
+      };
+    case 'minEducationBudget':
+      return {
+        condition,
+        state: cmp(p.educationBudgetChf, (v) => v >= condition.value),
+        actual: p.educationBudgetChf ?? null,
       };
     case 'maxPatientsDay':
       return {

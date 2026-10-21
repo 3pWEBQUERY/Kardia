@@ -6,20 +6,41 @@ import { config } from '../env.ts';
 
 /** Zeitgesteuerte Aufgaben mit kleinem Umfang. */
 
-/** Angebote sind 14 Tage gültig (Modul E). */
-export async function handleOfferExpiry(): Promise<{ expired: number }> {
-  const res = await db().offer.updateMany({ where: { status: 'SENT', expiresAt: { lt: new Date() } }, data: { status: 'EXPIRED' } });
-  return { expired: res.count };
+/** Angebote sind 14 Tage gültig (Modul E); beide Seiten erfahren vom Ablauf. */
+export async function handleOfferExpiry(now = new Date()): Promise<{ expired: number }> {
+  const due = await db().offer.findMany({
+    where: { status: 'SENT', expiresAt: { lt: now } },
+    select: { id: true, organizationId: true, organization: { select: { name: true } }, job: { select: { title: true } }, candidate: { select: { userId: true } } },
+  });
+  if (due.length === 0) return { expired: 0 };
+  // Nur Angebote, die in diesem Lauf noch offen waren (gleichzeitige Antwort gewinnt).
+  await db().offer.updateMany({ where: { id: { in: due.map((o) => o.id) }, status: 'SENT' }, data: { status: 'EXPIRED' } });
+  const expired = await db().offer.findMany({ where: { id: { in: due.map((o) => o.id) }, status: 'EXPIRED' }, select: { id: true } });
+  const ids = new Set(expired.map((o) => o.id));
+  for (const o of due.filter((x) => ids.has(x.id))) {
+    const data = { offerId: o.id, orgName: o.organization.name, jobTitle: o.job.title };
+    await enqueue(QUEUES.emailSend, { template: 'offer.expired', userId: o.candidate.userId, data });
+    await enqueue(QUEUES.pushSend, { kind: 'offer.expired', userId: o.candidate.userId, data });
+    await enqueue(QUEUES.emailSend, { template: 'offer.expired', orgId: o.organizationId, data });
+  }
+  return { expired: ids.size };
 }
 
-/** Nachweise mit abgelaufenem Gültigkeitsdatum → "abgelaufen" (Modul D). */
-export async function handleCredentialExpiry(): Promise<{ expired: number }> {
-  const today = new Date(new Date().toISOString().slice(0, 10));
-  const res = await db().credential.updateMany({
+/** Nachweise mit abgelaufenem Gültigkeitsdatum → "abgelaufen" (Modul D), mit Hinweis an die Person. */
+export async function handleCredentialExpiry(now = new Date()): Promise<{ expired: number }> {
+  const today = new Date(now.toISOString().slice(0, 10));
+  const due = await db().credential.findMany({
     where: { status: { in: ['VERIFIED', 'SUBMITTED', 'IN_REVIEW'] }, validUntil: { lt: today } },
-    data: { status: 'EXPIRED' },
+    select: { id: true, title: true, validUntil: true, candidate: { select: { userId: true } } },
   });
-  return { expired: res.count };
+  if (due.length === 0) return { expired: 0 };
+  await db().credential.updateMany({ where: { id: { in: due.map((c) => c.id) } }, data: { status: 'EXPIRED' } });
+  for (const c of due) {
+    const data = { credentialId: c.id, title: c.title, validUntil: c.validUntil };
+    await enqueue(QUEUES.emailSend, { template: 'credential.expired', userId: c.candidate.userId, data });
+    await enqueue(QUEUES.pushSend, { kind: 'credential.expired', userId: c.candidate.userId, data });
+  }
+  return { expired: due.length };
 }
 
 /** Schicht-Erinnerung 12 h vorher (PRD 13.3); vergangene Schichten → COMPLETED. */

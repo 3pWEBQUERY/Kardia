@@ -16,7 +16,6 @@ export const EVENTS = {
   shiftBooked: 'shift.booked',
   shiftCancelled: 'shift.cancelled',
   credentialReviewed: 'credential.reviewed',
-  userActive: 'user.active',
 } as const;
 
 export type EventName = (typeof EVENTS)[keyof typeof EVENTS];
@@ -68,6 +67,7 @@ export const QUEUES = {
   aiCostAlarm: 'cron.ai-cost-alarm',
   feedSchedule: 'cron.feed-schedule',
   keyRotation: 'cron.key-rotation',
+  planExpiry: 'cron.plan-expiry',
 } as const;
 
 export type QueueName = (typeof QUEUES)[keyof typeof QUEUES];

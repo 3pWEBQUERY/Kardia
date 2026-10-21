@@ -58,7 +58,9 @@
     "agencyBody": "We check your UID against the public UID register and the SECO directory of licensed placement and staff-leasing agencies. Matches in the SECO directory are reviewed manually; until then, publishing is not possible.",
     "invited": "Have you been invited? Open the invitation link in the email – no registration is needed then.",
     "already": "You are already a member of an organisation.",
-    "toCockpit": "Go to cockpit"
+    "toCockpit": "Go to cockpit",
+    "terms": "I accept the",
+    "termsLink": "terms for employers"
   },
   "form": {
     "required": "Required",
@@ -90,7 +92,11 @@
     "emptyWards": "There is no ward at this site yet.",
     "confirmed": "confirmed on {date}",
     "stale": "outdated",
-    "current": "up to date"
+    "current": "up to date",
+    "quotaTitle": "Plan limit reached",
+    "quotaAction": "Compare plans",
+    "wardQuota": "Your plan includes one ward. For more wards, choose the «Institution» or «Hospital group» plan.",
+    "locationQuota": "Your plan includes one site. For several sites, choose the «Hospital group» plan."
   },
   "ward": {
     "newTitle": "Create ward",
@@ -375,7 +381,10 @@
     "cancel": "Cancel",
     "shifts": "Shifts",
     "columns": "Columns",
-    "noShifts": "No shifts in this pool yet."
+    "noShifts": "No shifts in this pool yet.",
+    "settings": "Settings",
+    "saveSettings": "Save settings",
+    "settingsSaved": "Settings saved."
   },
   "benchmark": {
     "title": "Benchmark",
@@ -412,7 +421,7 @@
     "domainsSaved": "Domains saved.",
     "save": "Save",
     "sso": "Single sign-on",
-    "ssoAvailable": "SAML/OIDC is included in your plan. Write to support@kardia.ch and we will set up the connection with your IT team.",
+    "ssoAvailable": "Company sign-in (OIDC) is included in your plan. The owner sets it up here.",
     "ssoNotInPlan": "Single sign-on is included in the Hospital group plan.",
     "apiKeys": "API keys",
     "apiHint": "For the REST API v1. The key is shown only once; store it in a safe place straight away.",
@@ -440,7 +449,35 @@
     "feedCreated": "Feed added. The first fetch will happen within an hour.",
     "feedLastRun": "Last fetched on {date}",
     "feedPending": "Not fetched yet",
-    "feedHint": "Imported jobs are saved as drafts; you publish them yourself after review."
+    "feedHint": "Imported jobs are saved as drafts; you publish them yourself after review.",
+    "ssoActive": "Company sign-in active for @{domain}.",
+    "ssoNeedsDomain": "For company sign-in, first enter your organisation's e-mail domain above.",
+    "ssoLead": "Staff with your e-mail domain sign in through your identity provider (OpenID Connect, e.g. Microsoft Entra ID). New people get the Viewer role; change the role afterwards under Members.",
+    "ssoCallback": "Redirect URI for your IT",
+    "ssoDomain": "E-mail domain",
+    "ssoIssuer": "Issuer URL",
+    "ssoIssuerHint": "e.g. https://login.microsoftonline.com/<tenant ID>/v2.0",
+    "ssoClientId": "Client ID",
+    "ssoClientSecret": "Client secret",
+    "ssoDiscovery": "Discovery URL (optional)",
+    "ssoDiscoveryHint": "Leave empty for <issuer>/.well-known/openid-configuration.",
+    "ssoSave": "Save company sign-in",
+    "ssoSaved": "Company sign-in saved.",
+    "ssoReplace": "Set up again",
+    "ssoRemove": "Remove company sign-in",
+    "ssoRemoved": "Company sign-in removed.",
+    "ssoCancel": "Cancel",
+    "logoTitle": "Logo",
+    "logoAlt": "Your organisation's logo",
+    "logoNone": "No logo yet.",
+    "logoSet": "Logo set.",
+    "logoScanning": "The logo is being checked and will appear shortly.",
+    "logoRejected": "The logo was rejected during the check. Please choose another file.",
+    "logoUpload": "Upload logo",
+    "logoHint": "PNG, JPG or SVG, max. 2 MB. Publicly visible once your organisation is verified.",
+    "logoSaved": "Logo saved.",
+    "logoRemove": "Remove logo",
+    "logoRemoved": "Logo removed."
   },
   "billing": {
     "title": "Plan and invoices",
@@ -488,6 +525,19 @@
     "period12": "12 months",
     "vat": "VAT 8.1 %",
     "total": "Total",
-    "terms": "Payable within 30 days using the QR payment slip. The plan is activated once payment is received."
+    "terms": "Payable within 30 days using the QR payment slip. The plan is activated once payment is received.",
+    "portalTitle": "Manage subscription",
+    "portalHint": "Change payment method, switch or cancel your plan – in the secure Stripe customer portal.",
+    "portal": "Manage subscription",
+    "stripeMissing": "Card payment is not set up in this environment. Institution and Hospital group plans are available by invoice with QR payment slip.",
+    "expiredTitle": "Subscription expired",
+    "expired": "The «{plan}» plan expired on {date}. Your jobs are no longer visible in search until you renew."
+  },
+  "sso": {
+    "signInToggle": "Sign in with company login (SSO)",
+    "signInEmail": "Work e-mail",
+    "signInSubmit": "Continue to company login",
+    "signInHint": "For organisations with single sign-on set up.",
+    "signInFailed": "No company login is set up for this e-mail domain. Please sign in with a passkey or e-mail link."
   }
 }

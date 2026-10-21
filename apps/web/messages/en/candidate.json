@@ -31,7 +31,8 @@
     "shareDocsHint": "Without sharing, the employer only sees the status «verified». You can revoke this at any time.",
     "withdraw": "Withdraw application",
     "withdrawTitle": "Withdraw application?",
-    "withdrawBody": "The employer will be informed. You will not be able to apply for this job again afterwards."
+    "withdrawBody": "The employer will be informed. You will not be able to apply for this job again afterwards.",
+    "read": "read"
   },
   "pass": {
     "title": "Qualification passport",
@@ -94,7 +95,22 @@
     },
     "aiSuggestion": "AI suggestion from the document",
     "aiApply": "Apply suggestion",
-    "aiSuggestionAvailable": "AI suggestion available – open «Edit» to review it"
+    "aiSuggestionAvailable": "AI suggestion available – open «Edit» to review it",
+    "terms": "I accept the <terms>terms and conditions</terms> and have read the <privacy>privacy policy</privacy>.",
+    "termsRequired": "Please accept the terms and the privacy policy to save the passport.",
+    "home": {
+      "legend": "Home location for commute times",
+      "hint": "Optional. The address is not stored – only a point accurate to about 150 m, so Kardia can calculate commute times by public transport and car.",
+      "street": "Street and no. (optional)",
+      "postalCode": "Postcode",
+      "city": "Town",
+      "use": "Use as home location",
+      "replace": "Replace home location",
+      "saved": "Home location set. Changes apply once you save.",
+      "remove": "Remove",
+      "needPlace": "Please enter a postcode or town.",
+      "notFound": "This address was not found. Check the postcode and town."
+    }
   },
   "saved": {
     "title": "Saved & compare",

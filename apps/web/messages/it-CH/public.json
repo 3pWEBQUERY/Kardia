@@ -65,7 +65,9 @@
     "profileHint": "Ogni indicazione con fonte e data della conferma; valori del team a partire da cinque risposte.",
     "about": "Il reparto",
     "commute": "Tragitto",
-    "direct": "Candidatura direttamente al datore di lavoro. Kardia non è mai datore di lavoro e non fa collocamento."
+    "direct": "Candidatura direttamente al datore di lavoro. Kardia non è mai datore di lavoro e non fa collocamento.",
+    "autoTranslated": "Tradotto automaticamente dal tedesco.",
+    "commuteSetHome": "Indicare il domicilio nel passaporto per vedere il tempo di percorrenza"
   },
   "ward": {
     "verifiedEmployees": "{count} collaboratori/trici verificati/e",
@@ -85,7 +87,14 @@
     "noJobs": "Al momento nessun posto aperto. Salvare la ricerca per essere informati.",
     "workHere": "Lavora qui?",
     "workHereBody": "Confermi o corregga le indicazioni – in forma anonima.",
-    "workHereAction": "Alla verifica della realtà"
+    "workHereAction": "Alla verifica della realtà",
+    "about": "Sul reparto",
+    "autoTranslated": "Tradotto automaticamente dal tedesco.",
+    "teamVoices": "Voci dal team",
+    "teamVoicesHint": "Sintesi dei commenti di collaboratori verificati, a partire da cinque commenti.",
+    "basedOn": "{count, plural, one {Da # commento} other {Da # commenti}}",
+    "commute": "Tempo di percorrenza",
+    "commuteSetHome": "Indicare il domicilio nel passaporto per vedere i tempi di percorrenza"
   },
   "team": {
     "title": "Verifica della realtà: {ward}",
@@ -329,5 +338,19 @@
         }
       ]
     }
+  },
+  "report": {
+    "action": "Segnalare",
+    "title": "Segnalare un contenuto",
+    "description": "La segnalazione viene inoltrata alla moderazione di Kardia. Il suo nome non viene mostrato al reparto.",
+    "reason": "Motivo",
+    "reasonHint": "Che cosa è errato o inappropriato? Al massimo 400 caratteri.",
+    "send": "Inviare la segnalazione",
+    "sent": "Grazie – la moderazione esamina il contenuto."
+  },
+  "results": {
+    "loadMore": "Caricare altri risultati",
+    "loading": "Caricamento …",
+    "shown": "{shown} risultati visualizzati su {total}"
   }
 }

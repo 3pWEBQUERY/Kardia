@@ -5,6 +5,7 @@ import { getMessages, getTranslations } from 'next-intl/server';
 
 import { AppShell, type NavItem } from '@/components/shell/AppShell';
 import { db } from '@/server/db';
+import { featureEnabled } from '@/server/features';
 import { requireUser } from '@/server/session';
 
 import type { ReactNode } from 'react';
@@ -15,7 +16,7 @@ export default async function CandidateLayout({ children }: { children: ReactNod
   const t = await getTranslations('common.nav');
   const candidate = await db.candidateProfile.findUnique({ where: { userId: s.user.id }, select: { id: true, profession: true } });
   const [openOffers, ambassador, verified] = await Promise.all([
-    candidate ? db.offer.count({ where: { candidateId: candidate.id, status: 'SENT', expiresAt: { gt: new Date() } } }) : 0,
+    candidate && featureEnabled('marketplace') ? db.offer.count({ where: { candidateId: candidate.id, status: 'SENT', expiresAt: { gt: new Date() } } }) : 0,
     db.wardAmbassador.count({ where: { userId: s.user.id } }),
     db.verifiedEmployee.count({ where: { userId: s.user.id } }),
   ]);
@@ -23,9 +24,9 @@ export default async function CandidateLayout({ children }: { children: ReactNod
     { href: '/search', label: t('me.search'), icon: 'search' },
     { href: '/me/applications', label: t('me.applications'), icon: 'applications' },
     { href: '/me/pass', label: t('me.pass'), icon: 'pass' },
-    { href: '/me/shifts', label: t('me.shifts'), icon: 'shifts' },
+    ...(featureEnabled('flexPool') ? [{ href: '/me/shifts', label: t('me.shifts'), icon: 'shifts' as const }] : []),
     { href: '/me/saved', label: t('me.saved'), icon: 'saved' },
-    { href: '/me/marketplace', label: t('me.marketplace'), icon: 'marketplace', badge: openOffers || undefined },
+    ...(featureEnabled('marketplace') ? [{ href: '/me/marketplace', label: t('me.marketplace'), icon: 'marketplace' as const, badge: openOffers || undefined }] : []),
     ...(candidate?.profession === 'PHYSICIAN' ? [{ href: '/me/training', label: t('me.training'), icon: 'training' as const }] : []),
     { href: '/me/recognition', label: t('me.recognition'), icon: 'recognition' },
     ...(ambassador + verified > 0 ? [{ href: '/me/team', label: t('me.team'), icon: 'team' as const }] : []),

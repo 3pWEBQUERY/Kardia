@@ -5,6 +5,7 @@ import { formatDateTime } from '@kardia/core';
 import { Button, Card, CardBody, CardHeader, EmptyState, Stat, StatusChip } from '@kardia/ui';
 
 import { db } from '@/server/db';
+import { featureEnabled } from '@/server/features';
 import { listMyApplications } from '@/server/services/applications';
 import { myShifts } from '@/server/services/pool';
 import { requireUser } from '@/server/session';
@@ -23,10 +24,11 @@ export default async function MeOverview() {
       </div>
     );
   }
+  const marketplace = featureEnabled('marketplace');
   const [apps, offers, shifts] = await Promise.all([
     listMyApplications(s.user.id),
-    db.offer.count({ where: { candidateId: candidate.id, status: 'SENT', expiresAt: { gt: new Date() } } }),
-    myShifts(s.user.id),
+    marketplace ? db.offer.count({ where: { candidateId: candidate.id, status: 'SENT', expiresAt: { gt: new Date() } } }) : 0,
+    featureEnabled('flexPool') ? myShifts(s.user.id) : { booked: [] },
   ]);
   const active = apps.filter((a) => !['REJECTED', 'WITHDRAWN', 'HIRED'].includes(a.status));
   const verified = candidate.credentials.filter((c) => c.status === 'VERIFIED').length;
@@ -36,7 +38,7 @@ export default async function MeOverview() {
       <h1 className="text-h1">{t('hello', { name: candidate.firstName })}</h1>
       <div className="grid gap-3 sm:grid-cols-3">
         <Stat label={t('activeApplications')} value={active.length} />
-        <Stat label={t('openOffers')} value={offers} />
+        {marketplace ? <Stat label={t('openOffers')} value={offers} /> : null}
         <Stat label={t('verifiedCredentials')} value={`${verified}/${candidate.credentials.length}`} />
       </div>
       <Card>

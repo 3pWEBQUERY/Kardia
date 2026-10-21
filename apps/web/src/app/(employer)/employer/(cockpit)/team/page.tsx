@@ -8,11 +8,14 @@ import {
   DomainsForm,
   Feeds,
   InviteMemberForm,
+  LogoForm,
   MemberRow,
+  SsoSettings,
   Webhooks,
 } from '@/components/employer/TeamSettings';
 import { db } from '@/server/db';
-import { listMembers, orgSettings } from '@/server/services/org';
+import { env } from '@/server/env';
+import { getSsoProvider, listMembers, orgSettings } from '@/server/services/org';
 import { requireOrgPage } from '@/server/session';
 
 /** Team & Einstellungen: Mitglieder und Rollen, E-Mail-Domains, API, Webhooks, Feed-Import, SSO. */
@@ -22,13 +25,14 @@ export default async function TeamPage() {
   const limits = limitsFor(ctx.org.plan as Parameters<typeof limitsFor>[0]);
   const manage = can(ctx.role, 'team.manage');
   const apiManage = can(ctx.role, 'apikeys.manage');
-  const [{ members, invites }, settings, wards] = await Promise.all([
+  const [{ members, invites }, settings, wards, ssoProvider] = await Promise.all([
     listMembers(ctx),
     orgSettings(ctx),
     db.ward.findMany({
       where: { location: { organizationId: ctx.org.id } },
       select: { id: true, name: true },
     }),
+    getSsoProvider(ctx.org.id),
   ]);
   return (
     <div className="flex flex-col gap-6">
@@ -87,6 +91,16 @@ export default async function TeamPage() {
         </CardBody>
       </Card>
       <Card>
+        <CardHeader title={t('logoTitle')} />
+        <CardBody>
+          {can(ctx.role, 'org.manage') ? (
+            <LogoForm logoFileId={settings.logoFileId} status={settings.logo?.status ?? null} />
+          ) : (
+            <p className="text-body-s text-ink-700">{settings.logoFileId ? t('logoSet') : t('logoNone')}</p>
+          )}
+        </CardBody>
+      </Card>
+      <Card>
         <CardHeader title={t('domainsTitle')} />
         <CardBody>
           {can(ctx.role, 'org.manage') ? (
@@ -99,7 +113,16 @@ export default async function TeamPage() {
       <Card>
         <CardHeader title={t('sso')} />
         <CardBody>
-          <Callout>{limits?.sso ? t('ssoAvailable') : t('ssoNotInPlan')}</Callout>
+          {can(ctx.role, 'org.manage') ? (
+            <SsoSettings
+              enabled={!!limits?.sso}
+              domains={settings.emailDomains}
+              callbackUrl={`${env().APP_ORIGIN}/api/auth/sso/callback/kardia-${ctx.org.id}`}
+              current={ssoProvider}
+            />
+          ) : (
+            <Callout>{ssoProvider ? t('ssoActive', { domain: ssoProvider.domain }) : limits?.sso ? t('ssoAvailable') : t('ssoNotInPlan')}</Callout>
+          )}
         </CardBody>
       </Card>
       {apiManage ? (

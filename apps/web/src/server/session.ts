@@ -4,7 +4,7 @@ import { headers } from 'next/headers';
 import { forbidden, redirect } from 'next/navigation';
 import { cache } from 'react';
 
-import { ADMIN_SESSION_MAX_AGE_SEC, ProblemError, can, type Permission } from '@kardia/core';
+import { ADMIN_SESSION_MAX_AGE_SEC, ProblemError, can, effectivePlan, type Permission } from '@kardia/core';
 
 
 import { auth } from './auth.ts';
@@ -91,7 +91,8 @@ export async function requireOrg(permission?: Permission, next = '/employer'): P
     org: {
       id: m.organization.id,
       name: m.organization.name,
-      plan: m.organization.plan,
+      // Abgelaufene Abos (planValidUntil) zählen wie kein Abo.
+      plan: effectivePlan(m.organization),
       verification: m.organization.verification,
       secoRegistryMatch: m.organization.secoRegistryMatch,
     },

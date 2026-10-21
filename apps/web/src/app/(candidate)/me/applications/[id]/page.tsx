@@ -7,7 +7,7 @@ import { Card, CardBody, CardHeader, StatusChip } from '@kardia/ui';
 
 import { ApplicationActions } from '@/components/candidate/ApplicationActions';
 import { MessageThread } from '@/components/candidate/MessageThread';
-import { getMyApplication } from '@/server/services/applications';
+import { getMyApplication, markMessagesRead } from '@/server/services/applications';
 import { requireUser } from '@/server/session';
 
 export default async function ApplicationPage({ params }: { params: Promise<{ id: string }> }) {
@@ -18,6 +18,8 @@ export default async function ApplicationPage({ params }: { params: Promise<{ id
     throw e;
   });
   if (!app) notFound();
+  // Thread geöffnet: Nachrichten des Arbeitgebers gelten als gelesen (PRD 13.2).
+  await markMessagesRead(app.id, s.user.id);
   const [t, e] = await Promise.all([getTranslations('candidate.applications'), getTranslations('enums')]);
   return (
     <div className="flex flex-col gap-6">
@@ -36,7 +38,7 @@ export default async function ApplicationPage({ params }: { params: Promise<{ id
           <CardBody>
             <MessageThread
               applicationId={app.id}
-              messages={app.messages.map((m) => ({ id: m.id, body: m.body, mine: m.mine, at: formatDateTime(m.createdAt) }))}
+              messages={app.messages.map((m) => ({ id: m.id, body: m.body, mine: m.mine, at: formatDateTime(m.createdAt), read: m.readAt != null }))}
               disabled={app.status === 'WITHDRAWN'}
             />
           </CardBody>

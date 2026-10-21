@@ -5,15 +5,20 @@ import { createDocument } from 'zod-openapi';
 
 import {
   applicationInputSchema,
+  chatMessageSchema,
   conditionSchema,
+  credentialInputSchema,
   jobInputSchema,
   jobPatchSchema,
+  marketplaceProfileSchema,
   offerResponseSchema,
   passInputSchema,
+  pushSubscriptionSchema,
+  savedSearchInputSchema,
   searchFilterSchema,
   uploadRequestSchema,
 } from '@kardia/core';
-import { ApplicationStatus, CredentialStatus, Department, OfferStatus, Profession, RosterCode, ShiftStatus } from '@kardia/db/enums';
+import { AlertFrequency, ApplicationStatus, CredentialStatus, Department, JobStatus, OfferStatus, Profession, RosterCode, ShiftStatus } from '@kardia/db/enums';
 
 /**
  * OpenAPI 3.1 aus denselben Zod-Schemas wie Web und Server (PRD 12.1, 13.4). Dient der
@@ -84,6 +89,9 @@ const ward = z
     organization: z.object({ id, name: z.string() }),
     location: z.object({ name: z.string(), street: z.string(), postalCode: z.string(), city: z.string(), canton: z.string(), lat: z.number(), lng: z.number(), hasParking: z.boolean() }),
     profile,
+    translations: z
+      .record(z.string(), z.object({ description: z.string().nullable() }))
+      .meta({ description: 'KI-6-Übersetzungen der Beschreibung je Sprache (fr-CH, it-CH, en); fehlt eine Sprache, gilt der deutsche Text' }),
     rosterPattern: z.array(z.enum(RosterCode)).meta({ description: 'Muster-Dienstplan, 28 Tage, ab Montag' }),
     reality: z.record(z.string(), realityAggregate).meta({ description: 'Nur Felder mit mindestens 5 Stimmen (AK-G1)' }),
     employerComments: z.array(z.object({ field: z.string(), body: z.string() })),
@@ -145,6 +153,41 @@ const pass = z
     ),
   })
   .meta({ id: 'Pass' });
+
+const credential = z
+  .object({
+    id,
+    type: z.string(),
+    title: z.string(),
+    issuer: z.string().nullable(),
+    issuedAt: z.string().nullable(),
+    validUntil: z.string().nullable(),
+    registry: z.string().nullable(),
+    registryNumber: z.string().nullable(),
+    status: z.enum(CredentialStatus),
+    rejectReason: z.string().nullable(),
+    fileId: z.string().nullable(),
+  })
+  .meta({ id: 'Credential' });
+
+const message = z.object({ id, body: z.string(), mine: z.boolean(), createdAt: z.string(), readAt: z.string().nullable() }).meta({ id: 'Message' });
+
+const savedSearch = z
+  .object({ id, name: z.string(), filters: searchFilterSchema, frequency: z.enum(AlertFrequency), lastSentAt: z.string().nullable() })
+  .meta({ id: 'SavedSearch' });
+
+const savedJob = z
+  .object({
+    savedAt: z.string(),
+    job: z.object({ id, title: z.string(), status: z.enum(JobStatus), ward: z.object({ id, name: z.string() }), organization: z.object({ id, name: z.string() }), city: z.string() }),
+  })
+  .meta({ id: 'SavedJob' });
+
+const marketplaceProfile = marketplaceProfileSchema
+  .extend({ blockedOrganizationIds: z.array(z.string()) })
+  .meta({ id: 'MarketplaceProfile', description: 'Anonymes Profil im umgekehrten Marktplatz (Modul E) und Sperrliste' });
+
+const noContent = { description: 'Ohne Inhalt' };
 
 const shift = z
   .object({
@@ -295,6 +338,111 @@ export function openApiDocument(origin: string) {
             requestParams: { path: z.object({ id }) },
             requestBody: { content: { 'application/json': { schema: offerResponseSchema } } },
             responses: { '200': json(z.object({ status: z.enum(['INTERESTED', 'DECLINED']), applicationId: z.string().nullable() })), '409': problemResponse('Angebot nicht mehr offen'), '422': errors['422'] },
+          },
+        },
+        '/me/pass/credentials': {
+          post: {
+            summary: 'Nachweis anlegen (Dokument vorher über /files/upload-url mit purpose "pass")',
+            security: session,
+            requestBody: { content: { 'application/json': { schema: credentialInputSchema } } },
+            responses: { '201': json(credential, 'Erstellt'), '401': errors['401'], '409': problemResponse('Pass fehlt'), '422': errors['422'] },
+          },
+        },
+        '/me/pass/credentials/{id}': {
+          put: {
+            summary: 'Nachweis ändern (Änderungen an verifizierten Angaben setzen den Status zurück, AK-D2)',
+            security: session,
+            requestParams: { path: z.object({ id }) },
+            requestBody: { content: { 'application/json': { schema: credentialInputSchema } } },
+            responses: { '200': json(credential), '404': errors['404'], '422': errors['422'] },
+          },
+          delete: { summary: 'Nachweis samt Dokument löschen', security: session, requestParams: { path: z.object({ id }) }, responses: { '204': noContent, '404': errors['404'] } },
+        },
+        '/me/applications/{id}/messages': {
+          get: {
+            summary: 'Chat-Verlauf einer Bewerbung (markiert Nachrichten des Arbeitgebers als gelesen)',
+            security: session,
+            requestParams: { path: z.object({ id }) },
+            responses: { '200': json(z.object({ data: z.array(message) })), '404': errors['404'] },
+          },
+          post: {
+            summary: 'Nachricht senden',
+            security: session,
+            requestParams: { path: z.object({ id }) },
+            requestBody: { content: { 'application/json': { schema: chatMessageSchema } } },
+            responses: { '201': json(message, 'Erstellt'), '404': errors['404'], '422': errors['422'] },
+          },
+        },
+        '/me/applications/{id}/withdraw': {
+          post: {
+            summary: 'Bewerbung zurückziehen',
+            security: session,
+            requestParams: { path: z.object({ id }) },
+            responses: { '200': json(z.object({ id, status: z.enum(ApplicationStatus), statusChangedAt: z.string() })), '404': errors['404'], '409': problemResponse('Bereits zurückgezogen oder angestellt') },
+          },
+        },
+        '/me/saved': {
+          get: { summary: 'Gemerkte Stellen', security: session, responses: { '200': json(z.object({ data: z.array(savedJob) })), '401': errors['401'] } },
+        },
+        '/me/saved/{jobId}': {
+          put: { summary: 'Stelle merken (idempotent, Hintergrund-Sync)', security: session, requestParams: { path: z.object({ jobId: id }) }, responses: { '200': json(z.object({ saved: z.literal(true) })), '409': problemResponse('Pass fehlt') } },
+          delete: { summary: 'Gemerkte Stelle entfernen (idempotent)', security: session, requestParams: { path: z.object({ jobId: id }) }, responses: { '200': json(z.object({ saved: z.literal(false) })), '409': problemResponse('Pass fehlt') } },
+        },
+        '/me/saved-searches': {
+          get: { summary: 'Suchabos', security: session, responses: { '200': json(z.object({ data: z.array(savedSearch) })), '401': errors['401'] } },
+          post: {
+            summary: 'Suchabo anlegen (Benachrichtigung per Web Push, sonst E-Mail)',
+            security: session,
+            requestBody: { content: { 'application/json': { schema: savedSearchInputSchema } } },
+            responses: { '201': json(savedSearch, 'Erstellt'), '409': problemResponse('Pass fehlt'), '422': errors['422'] },
+          },
+        },
+        '/me/saved-searches/{id}': {
+          delete: { summary: 'Suchabo löschen', security: session, requestParams: { path: z.object({ id }) }, responses: { '204': noContent, '404': errors['404'] } },
+        },
+        '/me/shifts/{id}/cancel': {
+          post: {
+            summary: 'Gebuchte Schicht absagen (bis zur Absagefrist des Pools)',
+            security: session,
+            requestParams: { path: z.object({ id }) },
+            responses: { '200': json(z.object({ id, status: z.literal('OPEN') })), '404': errors['404'], '409': problemResponse('Absagefrist überschritten') },
+          },
+        },
+        '/me/push-subscriptions': {
+          post: { summary: 'Web-Push-Abo speichern', security: session, requestBody: { content: { 'application/json': { schema: pushSubscriptionSchema } } }, responses: { '204': noContent, '422': errors['422'] } },
+          delete: {
+            summary: 'Web-Push-Abo entfernen',
+            security: session,
+            requestBody: { content: { 'application/json': { schema: z.object({ endpoint: z.url() }) } } },
+            responses: { '204': noContent, '422': errors['422'] },
+          },
+        },
+        '/me/export': {
+          get: { summary: 'Alle eigenen Daten als JSON (revDSG)', security: session, responses: { '200': json(z.record(z.string(), z.unknown())), '401': errors['401'] } },
+        },
+        '/me/account': {
+          delete: {
+            summary: 'Konto löschen (Bestätigung mit eigener E-Mail-Adresse)',
+            security: session,
+            requestBody: { content: { 'application/json': { schema: z.object({ confirmEmail: z.string() }) } } },
+            responses: { '204': noContent, '401': errors['401'], '422': errors['422'] },
+          },
+        },
+        '/me/marketplace': {
+          get: { summary: 'Eigenes Marktplatz-Profil', security: session, responses: { '200': json(marketplaceProfile), '404': errors['404'] } },
+          put: {
+            summary: 'Marktplatz-Profil setzen',
+            security: session,
+            requestBody: { content: { 'application/json': { schema: marketplaceProfileSchema } } },
+            responses: { '200': json(marketplaceProfile), '422': errors['422'] },
+          },
+        },
+        '/me/marketplace/blocks': {
+          put: {
+            summary: 'Sperrliste ersetzen (gesperrte Institutionen sehen das Profil nicht)',
+            security: session,
+            requestBody: { content: { 'application/json': { schema: z.object({ organizationIds: z.array(z.string()).max(200) }) } } },
+            responses: { '200': json(z.object({ blockedOrganizationIds: z.array(z.string()) })), '422': errors['422'] },
           },
         },
         '/me/shifts': {

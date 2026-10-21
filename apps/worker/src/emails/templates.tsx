@@ -32,6 +32,11 @@ export const TEMPLATES = [
   'account.inactive-notice',
   'ward.stale',
   'ops.cost-alarm',
+  'plan.expiring',
+  'plan.payment-failed',
+  'offer.withdrawn',
+  'offer.expired',
+  'credential.expired',
 ] as const;
 
 export type TemplateName = (typeof TEMPLATES)[number];
@@ -315,6 +320,70 @@ export function buildEmail(template: TemplateName, data: Record<string, unknown>
           <Layout preview="Stationsprofil bestätigen" title="Ihr Stationsprofil braucht eine Bestätigung" action={{ label: 'Profil prüfen und bestätigen', href: url(`/employer/wards/${s(data.wardId)}`) }}>
             <P>
               Das Profil «{s(data.wardName)}» wird in {s(data.daysLeft)} Tagen als veraltet markiert und im Ranking zurückgestuft, wenn es nicht bestätigt wird.
+            </P>
+          </Layout>
+        ),
+      };
+    case 'plan.expiring':
+      return {
+        subject: `Ihr Kardia-Abo endet am ${data.validUntil ? formatDate(s(data.validUntil)) : ''}`,
+        element: (
+          <Layout preview="Abo verlängern, damit Ihre Stellen sichtbar bleiben" title="Ihr Abo läuft bald ab" action={{ label: 'Abo verlängern', href: url('/employer/billing') }}>
+            <P>
+              Das Abo «{s(data.planLabel)}» von {s(data.orgName)} endet in {s(data.daysLeft)} Tagen. Danach sind Ihre veröffentlichten Stellen nicht mehr in der Suche sichtbar und
+              Abo-Funktionen wie Marktplatz und Flex-Pool sind gesperrt.
+            </P>
+          </Layout>
+        ),
+      };
+    case 'plan.payment-failed':
+      return {
+        subject: 'Zahlung für Ihr Kardia-Abo fehlgeschlagen',
+        element: (
+          <Layout preview="Zahlungsmittel prüfen" title="Die Zahlung ist fehlgeschlagen" action={{ label: 'Zahlungsmittel prüfen', href: url('/employer/billing') }}>
+            <P>
+              Stripe konnte die Rechnung für {s(data.orgName)} nicht belasten. Bitte das Zahlungsmittel im Kundenportal aktualisieren; Stripe versucht es automatisch erneut.
+            </P>
+          </Layout>
+        ),
+      };
+    case 'offer.withdrawn':
+      return {
+        subject: `Angebot zurückgezogen: ${s(data.orgName)}`,
+        element: (
+          <Layout preview="Das Angebot ist nicht mehr gültig" title="Ein Angebot wurde zurückgezogen" action={{ label: 'Zum Marktplatz', href: url('/me/marketplace') }}>
+            <P>
+              {s(data.orgName)} hat das Angebot «{s(data.jobTitle)}» zurückgezogen. Ihr anonymes Profil bleibt unverändert sichtbar.
+            </P>
+          </Layout>
+        ),
+      };
+    case 'offer.expired':
+      return audience === 'employer'
+        ? {
+            subject: `Angebot ohne Antwort abgelaufen: ${s(data.jobTitle)}`,
+            element: (
+              <Layout preview="Die Fachperson hat innert 14 Tagen nicht geantwortet" title="Ein Angebot ist abgelaufen" action={{ label: 'Zur Marktplatz-Suche', href: url('/employer/marketplace') }}>
+                <P>Ihr Angebot für «{s(data.jobTitle)}» wurde innert 14 Tagen nicht beantwortet und ist abgelaufen. Das Kontingent wird nicht zurückerstattet.</P>
+              </Layout>
+            ),
+          }
+        : {
+            subject: `Angebot abgelaufen: ${s(data.orgName)}`,
+            element: (
+              <Layout preview="Das Angebot ist nicht mehr gültig" title="Ein Angebot ist abgelaufen" action={{ label: 'Zum Marktplatz', href: url('/me/marketplace') }}>
+                <P>Das Angebot von {s(data.orgName)} für «{s(data.jobTitle)}» war 14 Tage gültig und ist jetzt abgelaufen. Ihr anonymes Profil bleibt sichtbar.</P>
+              </Layout>
+            ),
+          };
+    case 'credential.expired':
+      return {
+        subject: `Nachweis abgelaufen: ${s(data.title)}`,
+        element: (
+          <Layout preview="Bitte einen aktuellen Nachweis hochladen" title="Ein Nachweis ist abgelaufen" action={{ label: 'Qualifikations-Pass öffnen', href: url('/me/pass') }}>
+            <P>
+              «{s(data.title)}» war gültig bis {data.validUntil ? formatDate(s(data.validUntil)) : ''}. Bei Bewerbungen erscheint er jetzt als abgelaufen. Laden Sie einen aktuellen
+              Nachweis hoch, damit er erneut geprüft wird.
             </P>
           </Layout>
         ),

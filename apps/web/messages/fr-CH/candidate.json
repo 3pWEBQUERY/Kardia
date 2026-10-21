@@ -31,7 +31,8 @@
     "shareDocsHint": "Sans partage, l'employeur ne voit que le statut «vérifié». Révocable à tout moment.",
     "withdraw": "Retirer la candidature",
     "withdrawTitle": "Retirer la candidature ?",
-    "withdrawBody": "L'employeur en est informé. Il n'est ensuite plus possible de postuler à nouveau à ce poste."
+    "withdrawBody": "L'employeur en est informé. Il n'est ensuite plus possible de postuler à nouveau à ce poste.",
+    "read": "lu"
   },
   "pass": {
     "title": "Passeport de qualifications",
@@ -94,7 +95,22 @@
     },
     "aiSuggestion": "Suggestion de l'IA tirée du document",
     "aiApply": "Reprendre la suggestion",
-    "aiSuggestionAvailable": "Suggestion de l'IA disponible – ouvrir «Modifier» pour la vérifier"
+    "aiSuggestionAvailable": "Suggestion de l'IA disponible – ouvrir «Modifier» pour la vérifier",
+    "terms": "J'accepte les <terms>CG</terms> et j'ai lu la <privacy>déclaration de protection des données</privacy>.",
+    "termsRequired": "Veuillez accepter les CG et la déclaration de protection des données pour enregistrer le passeport.",
+    "home": {
+      "legend": "Domicile pour les temps de trajet",
+      "hint": "Facultatif. L'adresse n'est pas enregistrée – seulement un point précis à environ 150 m, pour que Kardia calcule les temps de trajet en transports publics et en voiture.",
+      "street": "Rue et n° (facultatif)",
+      "postalCode": "NPA",
+      "city": "Localité",
+      "use": "Reprendre le domicile",
+      "replace": "Remplacer le domicile",
+      "saved": "Domicile défini. Les modifications s'appliquent après l'enregistrement.",
+      "remove": "Supprimer",
+      "needPlace": "Veuillez indiquer le NPA ou la localité.",
+      "notFound": "Cette adresse est introuvable. Vérifiez le NPA et la localité."
+    }
   },
   "saved": {
     "title": "Favoris et comparaison",

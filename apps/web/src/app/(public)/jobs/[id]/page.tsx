@@ -1,16 +1,18 @@
 import { headers } from 'next/headers';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 import { EVENTS, encodeGeohash, formatPlainDate, isStale, jobPostingJsonLd, overriddenFields } from '@kardia/core';
 import { Callout, Card, CardBody, CardHeader, StatusChip } from '@kardia/ui';
 
 import { ApplyPanel } from '@/components/domain/ApplyPanel';
 import { CommuteInfo } from '@/components/domain/CommuteInfo';
+import { OrgLogo } from '@/components/domain/OrgLogo';
 import { Roster } from '@/components/domain/Roster';
 import { SaveButton } from '@/components/domain/SaveButton';
 import { WardProfileView } from '@/components/domain/WardProfileView';
+import { localizedWardText } from '@/lib/wardText';
 import { track } from '@/server/audit';
 import { db } from '@/server/db';
 import { getJobPublic } from '@/server/services/jobs';
@@ -40,6 +42,7 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
   const f = await getTranslations('fields');
   const session = await getSession();
   const candidate = session ? await db.candidateProfile.findUnique({ where: { userId: session.user.id }, include: { savedJobs: { where: { jobId: id } }, applications: { where: { jobId: id } } } }) : null;
+  const about = localizedWardText(ward.description, ward.translations, await getLocale());
   const applyState = !session ? 'anonymous' : !candidate ? 'noPass' : candidate.applications.length ? 'applied' : 'ready';
   await track(EVENTS.jobViewed, { userId: session?.user.id ?? null, orgId: ward.location.organizationId, entityId: id });
 
@@ -67,6 +70,7 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
       <script type="application/ld+json" nonce={nonce} dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <article className="flex min-w-0 flex-col gap-6">
         <header className="flex flex-col gap-2">
+          <OrgLogo fileId={ward.location.organization.logoFileId} />
           <p className="text-caption text-ink-700">
             <Link href={`/organizations/${ward.location.organization.id}`} className="hover:text-accent-700">
               {ward.location.organization.name}
@@ -123,10 +127,11 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
             />
           </CardBody>
         </Card>
-        {ward.description ? (
-          <section className="prose-k">
+        {about.text ? (
+          <section className="prose-k" lang={about.translated ? undefined : 'de-CH'}>
             <h2 className="text-h2">{t('about')}</h2>
-            <p>{ward.description}</p>
+            <p className="whitespace-pre-line">{about.text}</p>
+            {about.translated ? <p className="text-micro text-ink-500">{t('autoTranslated')}</p> : null}
           </section>
         ) : null}
       </article>
@@ -145,6 +150,10 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
               <CommuteInfo origin={encodeGeohash(candidate.homeLat, candidate.homeLng)} wardId={ward.id} />
             </CardBody>
           </Card>
+        ) : candidate ? (
+          <p className="text-micro text-ink-500">
+            <Link href="/me/pass" className="text-accent-700 underline">{t('commuteSetHome')}</Link>
+          </p>
         ) : null}
         <p className="text-micro text-ink-500">{t('direct')}</p>
       </aside>

@@ -3,6 +3,7 @@ import { Readable } from 'node:stream';
 
 import { describe, expect, it } from 'vitest';
 
+import { renderEmail } from '../src/emails/templates.tsx';
 import { isDueNow, zurichClock } from '../src/handlers/alerts.ts';
 import { pushMessageFor } from '../src/handlers/notify.ts';
 import { normalizeCompanyName, parseUidSoapResponse, uidDigits } from '../src/handlers/org.ts';
@@ -161,5 +162,17 @@ describe('Verschiedenes', () => {
   it('Push-Texte je Ereignis', () => {
     expect(pushMessageFor('offer.new', { offerId: 'o1', orgName: 'Spital', jobTitle: 'IPS' })).toEqual({ title: 'Angebot von Spital', body: 'IPS', url: '/offers/o1' });
     expect(pushMessageFor('unbekannt', {})).toBeNull();
+    expect(pushMessageFor('credential.expired', { title: 'BLS-AED' })).toEqual({ title: 'Nachweis abgelaufen', body: 'BLS-AED', url: '/me/pass' });
+  });
+
+  it('Ablauf-Mails: Fachperson und Arbeitgeber erhalten je eigene Texte', async () => {
+    const data = { orgName: 'Spital Demo', jobTitle: 'IPS 80 %' };
+    const candidate = await renderEmail('offer.expired', data, 'candidate');
+    const employer = await renderEmail('offer.expired', data, 'employer');
+    expect(candidate.subject).toContain('Spital Demo');
+    expect(employer.subject).toContain('IPS 80 %');
+    expect(employer.text).toContain('nicht beantwortet');
+    const cred = await renderEmail('credential.expired', { title: 'BLS-AED', validUntil: '2026-09-30' });
+    expect(cred.text).toContain('30.09.2026');
   });
 });

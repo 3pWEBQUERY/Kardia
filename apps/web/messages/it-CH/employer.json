@@ -58,7 +58,9 @@
     "agencyBody": "Confrontiamo il suo IDI con il registro IDI pubblico e con il registro della SECO delle agenzie di collocamento e di prestito di personale autorizzate. Le corrispondenze nel registro della SECO vengono verificate manualmente; fino ad allora non è possibile pubblicare.",
     "invited": "È stato/a invitato/a? Apra il link d'invito ricevuto per e-mail – in questo caso non è necessaria alcuna registrazione.",
     "already": "È già membro di un'organizzazione.",
-    "toCockpit": "Al cockpit"
+    "toCockpit": "Al cockpit",
+    "terms": "Accetto le",
+    "termsLink": "CG per datori di lavoro"
   },
   "form": {
     "required": "Obbligatorio",
@@ -90,7 +92,11 @@
     "emptyWards": "In questa sede non c'è ancora nessun reparto.",
     "confirmed": "confermato il {date}",
     "stale": "non aggiornato",
-    "current": "aggiornato"
+    "current": "aggiornato",
+    "quotaTitle": "Contingente del suo abbonamento raggiunto",
+    "quotaAction": "Confrontare gli abbonamenti",
+    "wardQuota": "Il suo abbonamento comprende un reparto. Per altri reparti scegliere l'abbonamento «Istituzione» o «Gruppo ospedaliero».",
+    "locationQuota": "Il suo abbonamento comprende una sede. Per più sedi scegliere l'abbonamento «Gruppo ospedaliero»."
   },
   "ward": {
     "newTitle": "Creare un reparto",
@@ -375,7 +381,10 @@
     "cancel": "Annullare",
     "shifts": "Turni",
     "columns": "Colonne",
-    "noShifts": "Ancora nessun turno in questo pool."
+    "noShifts": "Ancora nessun turno in questo pool.",
+    "settings": "Impostazioni",
+    "saveSettings": "Salvare le impostazioni",
+    "settingsSaved": "Impostazioni salvate."
   },
   "benchmark": {
     "title": "Benchmark",
@@ -412,7 +421,7 @@
     "domainsSaved": "Domini salvati.",
     "save": "Salvare",
     "sso": "Single sign-on",
-    "ssoAvailable": "SAML/OIDC è incluso nel suo abbonamento. Scriva a support@kardia.ch, configuriamo il collegamento con il suo servizio informatico.",
+    "ssoAvailable": "L'accesso aziendale (OIDC) è incluso nel suo abbonamento. La persona owner lo configura qui.",
     "ssoNotInPlan": "Il single sign-on è incluso nell'abbonamento Gruppo ospedaliero.",
     "apiKeys": "Chiavi API",
     "apiHint": "Per la REST API v1. La chiave viene mostrata una sola volta; la salvi subito in un luogo sicuro.",
@@ -440,7 +449,35 @@
     "feedCreated": "Feed aggiunto. Il primo recupero avviene entro un'ora.",
     "feedLastRun": "Ultimo recupero il {date}",
     "feedPending": "Non ancora recuperato",
-    "feedHint": "I posti importati vengono salvati come bozza; li pubblica lei stesso/a dopo la verifica."
+    "feedHint": "I posti importati vengono salvati come bozza; li pubblica lei stesso/a dopo la verifica.",
+    "ssoActive": "Accesso aziendale attivo per @{domain}.",
+    "ssoNeedsDomain": "Per l'accesso aziendale inserire prima qui sopra il dominio e-mail della sua organizzazione.",
+    "ssoLead": "I collaboratori con il suo dominio e-mail accedono tramite il suo identity provider (OpenID Connect, p. es. Microsoft Entra ID). Le nuove persone ricevono il ruolo Sola lettura; il ruolo si modifica poi in Membri.",
+    "ssoCallback": "URI di reindirizzamento per il suo reparto IT",
+    "ssoDomain": "Dominio e-mail",
+    "ssoIssuer": "URL issuer",
+    "ssoIssuerHint": "p. es. https://login.microsoftonline.com/<ID tenant>/v2.0",
+    "ssoClientId": "ID client",
+    "ssoClientSecret": "Secret client",
+    "ssoDiscovery": "URL di discovery (facoltativo)",
+    "ssoDiscoveryHint": "Lasciare vuoto per <issuer>/.well-known/openid-configuration.",
+    "ssoSave": "Salvare l'accesso aziendale",
+    "ssoSaved": "Accesso aziendale salvato.",
+    "ssoReplace": "Configurare di nuovo",
+    "ssoRemove": "Rimuovere l'accesso aziendale",
+    "ssoRemoved": "Accesso aziendale rimosso.",
+    "ssoCancel": "Annullare",
+    "logoTitle": "Logo",
+    "logoAlt": "Logo della sua organizzazione",
+    "logoNone": "Nessun logo caricato.",
+    "logoSet": "Logo caricato.",
+    "logoScanning": "Il logo è in verifica e apparirà a breve.",
+    "logoRejected": "Il logo è stato respinto durante la verifica. Scegliere un altro file.",
+    "logoUpload": "Caricare il logo",
+    "logoHint": "PNG, JPG o SVG, al massimo 2 MB. Visibile pubblicamente non appena l'organizzazione è verificata.",
+    "logoSaved": "Logo salvato.",
+    "logoRemove": "Rimuovere il logo",
+    "logoRemoved": "Logo rimosso."
   },
   "billing": {
     "title": "Abbonamento e fatture",
@@ -488,6 +525,19 @@
     "period12": "12 mesi",
     "vat": "IVA 8,1 %",
     "total": "Totale",
-    "terms": "Pagabile entro 30 giorni con la polizza di versamento QR. L'abbonamento viene attivato alla ricezione del pagamento."
+    "terms": "Pagabile entro 30 giorni con la polizza di versamento QR. L'abbonamento viene attivato alla ricezione del pagamento.",
+    "portalTitle": "Gestire l'abbonamento",
+    "portalHint": "Modificare il mezzo di pagamento, cambiare o disdire l'abbonamento – nel portale clienti sicuro di Stripe.",
+    "portal": "Gestire l'abbonamento",
+    "stripeMissing": "Il pagamento con carta non è configurato in questo ambiente. Gli abbonamenti Istituzione e Gruppo ospedaliero sono possibili con fattura e polizza di versamento QR.",
+    "expiredTitle": "Abbonamento scaduto",
+    "expired": "L'abbonamento «{plan}» è scaduto il {date}. I suoi posti non sono più visibili nella ricerca finché non lo rinnova."
+  },
+  "sso": {
+    "signInToggle": "Accedere con il login aziendale (SSO)",
+    "signInEmail": "E-mail di lavoro",
+    "signInSubmit": "Continuare al login aziendale",
+    "signInHint": "Per organizzazioni con single sign-on configurato.",
+    "signInFailed": "Per questo dominio e-mail non è configurato alcun login aziendale. Accedere con passkey o link via e-mail."
   }
 }

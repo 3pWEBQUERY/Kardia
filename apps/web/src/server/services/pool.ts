@@ -19,6 +19,7 @@ import { randomToken, sha256Hex } from '@kardia/core/crypto';
 import { track } from '../audit.ts';
 import { db } from '../db.ts';
 import { env } from '../env.ts';
+import { assertFeature } from '../features.ts';
 import { enqueue } from '../queue.ts';
 
 import { notifyEmail, notifyOrg, notifyUser } from './notifications.ts';
@@ -38,12 +39,23 @@ function assertFlexPlan(ctx: OrgContext) {
 }
 
 export async function createPool(ctx: OrgContext, input: unknown) {
+  assertFeature('flexPool');
   assertFlexPlan(ctx);
   const data = parseOrThrow(poolInputSchema, input);
   return db.flexPool.create({ data: { ...data, organizationId: ctx.org.id } });
 }
 
+/** Einstellungen nachträglich ändern; gilt für neue Buchungen und Absagen. */
+export async function updatePool(ctx: OrgContext, poolId: string, input: unknown) {
+  assertFeature('flexPool');
+  assertFlexPlan(ctx);
+  const data = parseOrThrow(poolInputSchema, input);
+  await poolOf(ctx, poolId);
+  return db.flexPool.update({ where: { id: poolId }, data });
+}
+
 export async function listPools(ctx: OrgContext) {
+  assertFeature('flexPool');
   return db.flexPool.findMany({
     where: { organizationId: ctx.org.id },
     include: {
@@ -65,6 +77,7 @@ async function poolOf(ctx: OrgContext, poolId: string) {
 
 /** Einladung per E-Mail; bestehende Fachpersonen treten über den Link bei. */
 export async function inviteToPool(ctx: OrgContext, poolId: string, email: string) {
+  assertFeature('flexPool');
   const limits = assertFlexPlan(ctx);
   await poolOf(ctx, poolId);
   if (limits.poolMembers != null) {
@@ -87,6 +100,7 @@ export async function inviteToPool(ctx: OrgContext, poolId: string, email: strin
 }
 
 export async function publishShift(ctx: OrgContext, input: ShiftInput) {
+  assertFeature('flexPool');
   assertFlexPlan(ctx);
   const data = parseOrThrow(shiftInputSchema, input);
   await poolOf(ctx, data.poolId);
@@ -111,6 +125,7 @@ export async function publishShift(ctx: OrgContext, input: ShiftInput) {
 
 /** Offene Schichten der Pools, in denen die Fachperson Mitglied ist. */
 export async function myShifts(userId: string) {
+  assertFeature('flexPool');
   const candidate = await db.candidateProfile.findUnique({ where: { userId } });
   if (!candidate) return { open: [], booked: [] };
   const pools = await db.poolMember.findMany({ where: { candidateId: candidate.id }, select: { poolId: true } });
@@ -129,6 +144,7 @@ export async function myShifts(userId: string) {
  * nie beide gewinnen, weil Postgres die Zeile für das UPDATE sperrt.
  */
 export async function bookShift(userId: string, shiftId: string): Promise<{ status: 'BOOKED' | 'INTEREST' }> {
+  assertFeature('flexPool');
   const candidate = await db.candidateProfile.findUnique({ where: { userId } });
   if (!candidate) throw new ProblemError('forbidden');
   const shift = await db.shift.findUnique({ where: { id: shiftId }, include: { pool: true, ward: true } });
@@ -168,6 +184,7 @@ async function afterBooking(orgId: string, shiftId: string, userId: string, ward
 
 /** Modus "Arbeitgeber wählt aus": Zuteilung aus den Interessensbekundungen, gleiches bedingtes UPDATE. */
 export async function assignShift(ctx: OrgContext, shiftId: string, candidateId: string) {
+  assertFeature('flexPool');
   const shift = await db.shift.findFirst({ where: { id: shiftId, pool: { organizationId: ctx.org.id } }, include: { ward: true } });
   if (!shift) throw new ProblemError('notFound');
   const interest = await db.shiftInterest.findUnique({ where: { shiftId_candidateId: { shiftId, candidateId } }, include: { shift: true } });
@@ -182,6 +199,7 @@ export async function assignShift(ctx: OrgContext, shiftId: string, candidateId:
 
 /** Absage bis X Stunden vorher (pro Pool); danach nur über den Arbeitgeber. */
 export async function cancelShiftAsCandidate(userId: string, shiftId: string) {
+  assertFeature('flexPool');
   const candidate = await db.candidateProfile.findUniqueOrThrow({ where: { userId } });
   const shift = await db.shift.findFirst({ where: { id: shiftId, bookedByCandidateId: candidate.id, status: 'BOOKED' }, include: { pool: true } });
   if (!shift) throw new ProblemError('notFound');
@@ -195,6 +213,7 @@ export async function cancelShiftAsCandidate(userId: string, shiftId: string) {
 }
 
 export async function cancelShiftAsEmployer(ctx: OrgContext, shiftId: string) {
+  assertFeature('flexPool');
   const shift = await db.shift.findFirst({ where: { id: shiftId, pool: { organizationId: ctx.org.id } } });
   if (!shift) throw new ProblemError('notFound');
   await db.shift.update({ where: { id: shiftId }, data: { status: 'CANCELLED' } });
@@ -207,6 +226,7 @@ export async function cancelShiftAsEmployer(ctx: OrgContext, shiftId: string) {
 }
 
 export async function poolCsv(ctx: OrgContext, poolId: string): Promise<string> {
+  assertFeature('flexPool');
   await poolOf(ctx, poolId);
   const shifts = await db.shift.findMany({ where: { poolId }, include: { ward: true }, orderBy: { startsAt: 'asc' } });
   const candidates = await db.candidateProfile.findMany({
@@ -230,6 +250,7 @@ export async function poolCsv(ctx: OrgContext, poolId: string): Promise<string> 
 }
 
 export async function myShiftsIcs(userId: string): Promise<string> {
+  assertFeature('flexPool');
   const { booked } = await myShifts(userId);
   return shiftsToIcs(
     booked

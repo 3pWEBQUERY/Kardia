@@ -4,6 +4,7 @@ import { Button, Callout } from '@kardia/ui';
 
 import { demoSignIn } from '@/app/actions/demo';
 import { SignInForm } from '@/components/auth/SignInForm';
+import { SsoSignIn } from '@/components/auth/SsoSignIn';
 import { DEMO_PERSONAS } from '@/server/demoLogin';
 import { env } from '@/server/env';
 
@@ -18,6 +19,7 @@ function safeNext(next: string | undefined): string {
 export default async function SignInPage({ searchParams }: { searchParams: Promise<{ next?: string; admin?: string; demo?: string }> }) {
   const sp = await searchParams;
   const t = await getTranslations('auth');
+  const ts = await getTranslations('employer.sso');
   return (
     <div className="mx-auto flex max-w-md flex-col gap-6 px-4 py-12">
       <header className="flex flex-col gap-2">
@@ -45,6 +47,12 @@ export default async function SignInPage({ searchParams }: { searchParams: Promi
         </section>
       ) : null}
       <SignInForm next={safeNext(sp.next)} adminOnly={sp.admin === '1'} />
+      {sp.admin !== '1' ? (
+        <SsoSignIn
+          next={safeNext(sp.next)}
+          labels={{ toggle: ts('signInToggle'), email: ts('signInEmail'), submit: ts('signInSubmit'), hint: ts('signInHint'), failed: ts('signInFailed') }}
+        />
+      ) : null}
       <p className="text-micro text-ink-500">{t('privacy')}</p>
     </div>
   );

@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 import {
   ProblemError,
@@ -14,6 +14,8 @@ import {
 import { encryptField, generateApiKey, randomToken, sha256Hex } from '@kardia/core/crypto';
 
 
+import { audit } from '../audit.ts';
+import { auth } from '../auth.ts';
 import { db } from '../db.ts';
 import { env } from '../env.ts';
 import { enqueue } from '../queue.ts';
@@ -28,7 +30,11 @@ import type { MemberRole } from '@kardia/db';
  * SECO-Verzeichnis (Worker `org.check`). Treffer im SECO-Verzeichnis → manuelle
  * Prüfung, vorher keine Veröffentlichung (AK-C1).
  */
-export async function registerOrganization(s: CurrentSession, input: unknown) {
+/** Registrierung mit UID; die AGB für Arbeitgeber (PRD 14.3) sind Pflicht und werden mit Datum gespeichert. */
+export async function registerOrganization(s: CurrentSession, input: unknown, consent: { acceptTerms: boolean }) {
+  if (!consent.acceptTerms) {
+    throw new ProblemError('validation', 'Bitte die AGB für Arbeitgeber akzeptieren.', [{ path: 'acceptTerms', code: 'required', message: 'required' }]);
+  }
   const data = parseOrThrow(organizationInputSchema, input);
   const exists = await db.organization.findUnique({ where: { uid: data.uid } });
   if (exists) throw new ProblemError('conflict', 'Diese UID ist bereits registriert. Bitten Sie eine bestehende Person der Organisation um eine Einladung.');
@@ -38,6 +44,7 @@ export async function registerOrganization(s: CurrentSession, input: unknown) {
       uid: data.uid,
       emailDomains: data.emailDomains,
       verification: 'PENDING',
+      employerTermsAcceptedAt: new Date(),
       members: { create: { userId: s.user.id, role: 'OWNER' } },
     },
   });
@@ -193,6 +200,7 @@ export async function orgSettings(ctx: OrgContext) {
       webhooks: { orderBy: { createdAt: 'desc' }, select: { id: true, url: true, events: true, active: true, createdAt: true } },
       feeds: { orderBy: { createdAt: 'desc' } },
       locations: true,
+      logo: { select: { status: true } },
     },
   });
 }
@@ -200,4 +208,110 @@ export async function orgSettings(ctx: OrgContext) {
 export async function updateOrgDomains(ctx: OrgContext, domains: string[]) {
   const parsed = organizationInputSchema.shape.emailDomains.parse(domains);
   return db.organization.update({ where: { id: ctx.org.id }, data: { emailDomains: parsed } });
+}
+
+// ───────── SSO (Spitalgruppe) ─────────
+
+export interface SsoProviderInput {
+  domain: string;
+  issuer: string;
+  clientId: string;
+  clientSecret: string;
+  discoveryEndpoint?: string | undefined;
+}
+
+export interface SsoProviderView {
+  providerId: string;
+  domain: string;
+  issuer: string;
+  clientIdLastFour: string | null;
+}
+
+const ssoProviderId = (orgId: string) => `kardia-${orgId}`;
+
+/** Firmen-Login der Organisation (OIDC); höchstens einer je Organisation. */
+export async function getSsoProvider(orgId: string): Promise<SsoProviderView | null> {
+  const p = await db.ssoProvider.findFirst({ where: { organizationId: orgId } });
+  if (!p) return null;
+  let clientId: string | null = null;
+  try {
+    const cfg = JSON.parse(p.oidcConfig ?? '{}') as { clientId?: unknown };
+    clientId = typeof cfg.clientId === 'string' ? cfg.clientId : null;
+  } catch {
+    clientId = null;
+  }
+  return { providerId: p.providerId, domain: p.domain, issuer: p.issuer, clientIdLastFour: clientId ? clientId.slice(-4) : null };
+}
+
+/**
+ * Registriert (oder ersetzt) den OIDC-Anbieter über das Better-Auth-SSO-Plugin. Nur für
+ * verifizierte Organisationen mit Abo "Spitalgruppe" und nur für eigene E-Mail-Domains,
+ * damit niemand Anmeldungen fremder Domains übernehmen kann.
+ */
+export async function saveSsoProvider(ctx: OrgContext, input: SsoProviderInput): Promise<SsoProviderView> {
+  assertPlanFeature(ctx, 'sso');
+  if (ctx.org.verification !== 'VERIFIED') throw new ProblemError('forbidden', 'SSO ist erst nach der Verifizierung der Organisation möglich.');
+  const domain = input.domain.trim().toLowerCase().replace(/^@/, '');
+  const org = await db.organization.findUniqueOrThrow({ where: { id: ctx.org.id }, select: { emailDomains: true } });
+  if (!org.emailDomains.map((d) => d.toLowerCase()).includes(domain)) {
+    throw new ProblemError('validation', 'Die Domain muss zu den E-Mail-Domains Ihrer Organisation gehören. Zuerst unter "E-Mail-Domains" eintragen.', [{ path: 'domain', code: 'domain', message: 'domain' }]);
+  }
+  const taken = await db.ssoProvider.findFirst({ where: { domain, NOT: { organizationId: ctx.org.id } } });
+  if (taken) throw new ProblemError('conflict', 'Für diese Domain ist bereits ein Firmen-Login eingerichtet.');
+  let issuer: URL;
+  try {
+    issuer = new URL(input.issuer.trim());
+  } catch {
+    throw new ProblemError('validation', 'Bitte die Issuer-URL des Identity Providers angeben (https://…).', [{ path: 'issuer', code: 'url', message: 'url' }]);
+  }
+  if (issuer.protocol !== 'https:') throw new ProblemError('validation', 'Der Identity Provider muss https verwenden.', [{ path: 'issuer', code: 'url', message: 'url' }]);
+  if (!input.clientId.trim() || !input.clientSecret.trim()) throw new ProblemError('validation', 'Client-ID und Client-Secret sind Pflicht.');
+
+  const providerId = ssoProviderId(ctx.org.id);
+  // Ersetzen statt teilweise ändern: das Plugin erlaubt Änderungen nur der registrierenden Person.
+  await db.ssoProvider.deleteMany({ where: { providerId } });
+  try {
+    await auth().api.registerSSOProvider({
+      headers: await headers(),
+      body: {
+        providerId,
+        issuer: issuer.toString().replace(/\/$/, ''),
+        domain,
+        oidcConfig: {
+          clientId: input.clientId.trim(),
+          clientSecret: input.clientSecret.trim(),
+          pkce: true,
+          scopes: ['openid', 'email', 'profile'],
+          ...(input.discoveryEndpoint?.trim() ? { discoveryEndpoint: input.discoveryEndpoint.trim() } : {}),
+        },
+      },
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new ProblemError('upstream', `Der Identity Provider konnte nicht eingerichtet werden: ${message}`);
+  }
+  await db.ssoProvider.update({ where: { providerId }, data: { organizationId: ctx.org.id } });
+  await audit({ actorId: ctx.user.id, action: 'org.sso_saved', entity: 'Organization', entityId: ctx.org.id, after: { domain, issuer: issuer.origin } });
+  const view = await getSsoProvider(ctx.org.id);
+  if (!view) throw new ProblemError('internal');
+  return view;
+}
+
+export async function deleteSsoProvider(ctx: OrgContext): Promise<void> {
+  await db.ssoProvider.deleteMany({ where: { organizationId: ctx.org.id } });
+  await audit({ actorId: ctx.user.id, action: 'org.sso_deleted', entity: 'Organization', entityId: ctx.org.id });
+}
+
+// ───────── Logo ─────────
+
+/** Logo setzen (Upload-Zweck "logo"); sichtbar, sobald der Worker die Datei geprüft hat. */
+export async function setOrgLogo(ctx: OrgContext, fileId: string | null): Promise<void> {
+  if (fileId) {
+    const file = await db.file.findFirst({ where: { id: fileId, ownerId: ctx.user.id } });
+    if (!file?.bucketKey.startsWith('logo/')) throw new ProblemError('notFound', 'Logo-Datei nicht gefunden.');
+    if (file.status === 'REJECTED') throw new ProblemError('validation', 'Die Datei wurde bei der Prüfung abgelehnt. Bitte eine andere Datei wählen.');
+  }
+  const before = await db.organization.findUniqueOrThrow({ where: { id: ctx.org.id }, select: { logoFileId: true } });
+  await db.organization.update({ where: { id: ctx.org.id }, data: { logoFileId: fileId } });
+  await audit({ actorId: ctx.user.id, action: 'org.logo', entity: 'Organization', entityId: ctx.org.id, before: { logoFileId: before.logoFileId }, after: { logoFileId: fileId } });
 }

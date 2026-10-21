@@ -199,7 +199,14 @@ export async function kpis() {
     db.shift.count({ where: { status: { in: ['BOOKED', 'COMPLETED'] }, startsAt: { lt: now } } }),
   ]);
   const paying = await db.organization.count({ where: { plan: { not: null }, OR: [{ planValidUntil: null }, { planValidUntil: { gt: now } }], foundingPartner: false } });
-  const wauRows = await db.event.findMany({ where: { createdAt: { gte: weekAgo }, userId: { not: null } }, distinct: ['userId'], select: { userId: true } });
+  // WAU nur Fachpersonen (PRD 3): Konto mit Qualifikations-Pass, in den letzten 7 Tagen aktiv.
+  const weeklyActiveUsers = await db.user.count({ where: { deletedAt: null, candidate: { isNot: null }, lastActiveAt: { gte: weekAgo } } });
+  // Ein-Klick-Quote: Anteil der Bewerbungen der letzten 30 Tage, die mit dem Pass abgeschickt wurden.
+  const monthAgo = new Date(now.getTime() - 30 * 86400_000);
+  const [appsInPeriod, oneClickInPeriod] = await Promise.all([
+    db.application.count({ where: { createdAt: { gte: monthAgo } } }),
+    db.application.count({ where: { createdAt: { gte: monthAgo }, viaPass: true } }),
+  ]);
 
   const reviewed = await db.credential.findMany({ where: { reviewedAt: { not: null } }, select: { createdAt: true, reviewedAt: true }, take: 1000, orderBy: { reviewedAt: 'desc' } });
   const withinSla = reviewed.filter((r) => r.reviewedAt && businessDaysBetween(r.createdAt, r.reviewedAt) <= REVIEW_SLA_BUSINESS_DAYS).length;
@@ -209,12 +216,12 @@ export async function kpis() {
     profileCompleteness: ratio(complete, published.length),
     qualifiedApplicationsPerJob: published.length ? qualified / published.length : null,
     timeToHireDays: tth.length ? tth.reduce((s, x) => s + x, 0) / tth.length : null,
-    oneClickShare: ratio(apps.length, apps.length),
+    oneClickShare: ratio(oneClickInPeriod, appsInPeriod),
     employerResponseRate: ratio(answeredInTime, dueApps),
     offerAcceptance: ratio(offersAccepted, offersSent),
     flexFilled: ratio(shiftsFilled, shiftsTotal),
     payingEmployers: paying,
-    weeklyActiveUsers: wauRows.length,
+    weeklyActiveUsers,
     reviewSla: ratio(withinSla, reviewed.length),
     openReviews: await db.credential.count({ where: { status: { in: ['SUBMITTED', 'IN_REVIEW'] } } }),
     trainingDeviations: await db.event.count({ where: { name: 'training.deviation', createdAt: { gte: new Date(now.getTime() - 30 * 86400_000) } } }),

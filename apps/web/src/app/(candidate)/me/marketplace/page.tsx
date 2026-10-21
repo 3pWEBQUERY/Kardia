@@ -8,11 +8,13 @@ import { Button, Card, CardBody, CardHeader, EmptyState, StatusChip } from '@kar
 import { BlockList } from '@/components/candidate/BlockList';
 import { MarketplaceForm } from '@/components/candidate/MarketplaceForm';
 import { db } from '@/server/db';
+import { requireFeature } from '@/server/features';
 import { listMyOffers } from '@/server/services/marketplace';
 import { requireCandidate } from '@/server/session';
 
 /** Marktplatz-Profil & Angebote (Modul E): anonym bis zur Zustimmung. */
 export default async function MarketplacePage() {
+  requireFeature('marketplace');
   const { user, candidate } = await requireCandidate('/me/marketplace');
   const [t, e] = await Promise.all([getTranslations('candidate.marketplace'), getTranslations('enums')]);
   const [offers, blocks, orgs] = await Promise.all([

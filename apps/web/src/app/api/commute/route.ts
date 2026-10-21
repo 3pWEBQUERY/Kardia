@@ -9,6 +9,6 @@ import { commuteFor } from '@/server/services/commute';
 export const GET = api(async ({ req }) => {
   const origin = req.nextUrl.searchParams.get('origin') ?? '';
   const wards = (req.nextUrl.searchParams.get('wards') ?? '').split(',').filter(Boolean).slice(0, 100);
-  if (!isGeohash(origin)) return NextResponse.json({ minutes: {}, pending: [] });
+  if (!isGeohash(origin)) return NextResponse.json({ minutes: {}, pending: [], unavailable: [] });
   return commuteFor(origin, wards);
 });

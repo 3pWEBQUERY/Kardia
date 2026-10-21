@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { ProblemError, can, type Permission } from '@kardia/core';
+import { ProblemError, can, effectivePlan, type Permission } from '@kardia/core';
 
 import { type ApiPrincipal, type ApiScope } from './api.ts';
 import { db } from './db.ts';
@@ -26,7 +26,7 @@ export async function orgContextForApi(
       user: { id: `apikey:${org.id}`, email: '', name: 'API', isAdmin: false, locale: 'DE_CH' },
       session: { id: 'apikey', createdAt: new Date(), authMethod: 'apikey' },
       role: 'RECRUITER',
-      org: { id: org.id, name: org.name, plan: org.plan, verification: org.verification, secoRegistryMatch: org.secoRegistryMatch },
+      org: { id: org.id, name: org.name, plan: effectivePlan(org), verification: org.verification, secoRegistryMatch: org.secoRegistryMatch },
     };
   }
   if (who.kind !== 'user' || !who.userId) throw new ProblemError('unauthorized');
@@ -46,7 +46,7 @@ export async function orgContextForApi(
     org: {
       id: m.organization.id,
       name: m.organization.name,
-      plan: m.organization.plan,
+      plan: effectivePlan(m.organization),
       verification: m.organization.verification,
       secoRegistryMatch: m.organization.secoRegistryMatch,
     },

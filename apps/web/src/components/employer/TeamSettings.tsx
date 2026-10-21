@@ -16,9 +16,13 @@ import {
   newApiKey,
   newFeed,
   newWebhook,
+  removeSso,
   saveDomains,
+  saveOrgLogo,
+  saveSso,
   setMemberRole,
 } from '@/app/actions/employer';
+import { UploadFailure, uploadFile } from '@/lib/upload';
 import { useActionMessage } from '@/lib/useActionError';
 
 function useRun() {
@@ -148,6 +152,157 @@ export function DomainsForm({ initial }: { initial: string[] }) {
       </div>
       <Button type="submit">{t('save')}</Button>
     </form>
+  );
+}
+
+/** Logo der Organisation (PNG, JPG oder SVG, max. 2 MB); öffentlich erst nach Verifizierung. */
+export function LogoForm({ logoFileId, status }: { logoFileId: string | null; status: string | null }) {
+  const t = useTranslations('employer.team');
+  const tu = useTranslations('errors.upload');
+  const run = useRun();
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const onFile = async (file: File | undefined) => {
+    if (!file) return;
+    setError(null);
+    setBusy(true);
+    try {
+      const { fileId } = await uploadFile(file, 'logo');
+      await run(saveOrgLogo(fileId), t('logoSaved'));
+    } catch (e) {
+      setError(
+        e instanceof UploadFailure && e.reason !== 'rejected'
+          ? tu(e.reason === 'tooLarge' ? 'tooLarge' : e.reason === 'type' ? 'type' : 'failed')
+          : e instanceof Error
+            ? e.message
+            : tu('failed'),
+      );
+    }
+    setBusy(false);
+  };
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="flex flex-wrap items-center gap-4">
+        {logoFileId && status === 'READY' ? (
+          // eslint-disable-next-line @next/next/no-img-element -- signierte Kurzzeit-URL aus dem privaten Bucket
+          <img src={`/api/files/${logoFileId}`} alt={t('logoAlt')} width={64} height={64} className="size-16 rounded-control border border-line-200 bg-surface-0 object-contain" />
+        ) : logoFileId ? (
+          <p className="text-body-s text-ink-700">{status === 'REJECTED' ? t('logoRejected') : t('logoScanning')}</p>
+        ) : (
+          <p className="text-body-s text-ink-700">{t('logoNone')}</p>
+        )}
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="org-logo" className="text-caption text-ink-700">
+            {t('logoUpload')}
+          </label>
+          <input
+            id="org-logo"
+            type="file"
+            accept="image/png,image/jpeg,image/svg+xml"
+            disabled={busy}
+            onChange={(e) => void onFile(e.target.files?.[0])}
+            className="text-body-s file:mr-3 file:h-control-s file:rounded-control file:border file:border-line-300 file:bg-surface-0 file:px-3 file:text-body-s"
+          />
+          <p className="text-micro text-ink-500">{t('logoHint')}</p>
+        </div>
+        {logoFileId ? (
+          <Button variant="ghost" size="s" disabled={busy} onClick={() => void run(saveOrgLogo(null), t('logoRemoved'))}>
+            {t('logoRemove')}
+          </Button>
+        ) : null}
+      </div>
+      {error ? <Callout tone="critical">{error}</Callout> : null}
+    </div>
+  );
+}
+
+/**
+ * Firmen-Login (OIDC) für die eigene E-Mail-Domain. Das Client-Secret wird nie wieder
+ * angezeigt; zum Ändern alle Angaben neu eintragen.
+ */
+export function SsoSettings({
+  enabled,
+  domains,
+  callbackUrl,
+  current,
+}: {
+  enabled: boolean;
+  domains: string[];
+  callbackUrl: string;
+  current: { domain: string; issuer: string; clientIdLastFour: string | null } | null;
+}) {
+  const t = useTranslations('employer.team');
+  const run = useRun();
+  const [editing, setEditing] = useState(current === null);
+  const [busy, setBusy] = useState(false);
+  const [v, setV] = useState({ domain: current?.domain ?? domains[0] ?? '', issuer: current?.issuer ?? '', clientId: '', clientSecret: '', discoveryEndpoint: '' });
+  if (!enabled) return <Callout>{t('ssoNotInPlan')}</Callout>;
+  if (domains.length === 0) return <Callout tone="warn">{t('ssoNeedsDomain')}</Callout>;
+  return (
+    <div className="flex flex-col gap-4">
+      <p className="text-body-s text-ink-700">{t('ssoLead')}</p>
+      <dl className="grid gap-1 text-body-s sm:grid-cols-[auto_1fr] sm:gap-x-4">
+        <dt className="text-ink-700">{t('ssoCallback')}</dt>
+        <dd className="font-mono text-micro break-all">{callbackUrl}</dd>
+        {current ? (
+          <>
+            <dt className="text-ink-700">{t('ssoDomain')}</dt>
+            <dd>{current.domain}</dd>
+            <dt className="text-ink-700">{t('ssoIssuer')}</dt>
+            <dd className="break-all">{current.issuer}</dd>
+            {current.clientIdLastFour ? (
+              <>
+                <dt className="text-ink-700">{t('ssoClientId')}</dt>
+                <dd className="font-mono text-micro">…{current.clientIdLastFour}</dd>
+              </>
+            ) : null}
+          </>
+        ) : null}
+      </dl>
+      {current && !editing ? (
+        <div className="flex flex-wrap gap-2">
+          <Button onClick={() => setEditing(true)}>{t('ssoReplace')}</Button>
+          <Button variant="ghost" onClick={() => void run(removeSso(), t('ssoRemoved'))}>
+            {t('ssoRemove')}
+          </Button>
+        </div>
+      ) : (
+        <form
+          className="grid gap-3 sm:grid-cols-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setBusy(true);
+            void run(saveSso(v), t('ssoSaved')).then((r) => {
+              setBusy(false);
+              if (r !== null) setEditing(false);
+            });
+          }}
+        >
+          <Select
+            label={t('ssoDomain')}
+            value={v.domain}
+            onChange={(e) => setV({ ...v, domain: e.target.value })}
+            options={domains.map((d) => ({ value: d, label: d }))}
+          />
+          <Input label={t('ssoIssuer')} hint={t('ssoIssuerHint')} required type="url" value={v.issuer} onChange={(e) => setV({ ...v, issuer: e.target.value })} />
+          <Input label={t('ssoClientId')} required autoComplete="off" value={v.clientId} onChange={(e) => setV({ ...v, clientId: e.target.value })} />
+          <Input label={t('ssoClientSecret')} required type="password" autoComplete="new-password" value={v.clientSecret} onChange={(e) => setV({ ...v, clientSecret: e.target.value })} />
+          <div className="sm:col-span-2">
+            <Input label={t('ssoDiscovery')} hint={t('ssoDiscoveryHint')} type="url" value={v.discoveryEndpoint} onChange={(e) => setV({ ...v, discoveryEndpoint: e.target.value })} />
+          </div>
+          <div className="flex gap-2 sm:col-span-2">
+            <Button type="submit" variant="primary" disabled={busy}>
+              {t('ssoSave')}
+            </Button>
+            {current ? (
+              <Button type="button" variant="ghost" onClick={() => setEditing(false)}>
+                {t('ssoCancel')}
+              </Button>
+            ) : null}
+          </div>
+        </form>
+      )}
+    </div>
   );
 }
 

@@ -47,6 +47,22 @@ describe('Lebensmodell-Suche', () => {
     expect(ok.mustMet).toBe(1);
   });
 
+  it('Dienstarten und weitere Felder aus Modul A sind als Bedingungen suchbar', () => {
+    const ward = completeWard({ shiftTypes: ['EARLY', 'LATE', 'NIGHT'], sundayAllowancePct: 50, skillMixHfFhPct: 80, educationBudgetChf: 3000, minShiftsPerWeek: 3 });
+    const state = (c: Condition, profile = ward) => evaluateMatch([c], subject(profile)).results[0]?.state;
+    expect(state({ key: 'noEarlyShifts', mode: 'must' })).toBe('unmet');
+    expect(state({ key: 'no12hShifts', mode: 'must' })).toBe('met');
+    expect(state({ key: 'noLateShifts', mode: 'must' }, completeWard({ shiftTypes: ['EARLY'] }))).toBe('met');
+    expect(state({ key: 'minSundayAllowancePct', mode: 'must', value: 60 })).toBe('unmet');
+    expect(state({ key: 'minSkillMixHfFhPct', mode: 'must', value: 70 })).toBe('met');
+    expect(state({ key: 'minEducationBudget', mode: 'must', value: 2500 })).toBe('met');
+    expect(state({ key: 'maxRequiredShiftsPerWeek', mode: 'must', value: 2 })).toBe('unmet');
+    // Fehlender Wert ist "unbekannt" und schliesst nie aus (AK-B1).
+    const onCall: Condition = { key: 'minOnCallChfDay', mode: 'must', value: 40 };
+    expect(state(onCall, completeWard({ onCallChfDay: null }))).toBe('unknown');
+    expect(evaluateMatch([onCall], subject(completeWard({ onCallChfDay: null }))).excluded).toBe(false);
+  });
+
   it('unbekannte Pendelzeit ist "unbekannt", nicht verletzt', () => {
     const c: Condition = { key: 'maxCommute', mode: 'must', value: 30, transport: 'PT' };
     expect(evaluateMatch([c], subject()).results[0]?.state).toBe('unknown');

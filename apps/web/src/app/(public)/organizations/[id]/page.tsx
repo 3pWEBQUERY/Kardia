@@ -5,6 +5,7 @@ import { getTranslations } from 'next-intl/server';
 import { formatChfRange } from '@kardia/core';
 import { Card, CardBody, CardHeader, StatusChip } from '@kardia/ui';
 
+import { OrgLogo } from '@/components/domain/OrgLogo';
 import { db } from '@/server/db';
 
 import type { Metadata } from 'next';
@@ -30,7 +31,10 @@ export default async function OrganizationPage({ params }: { params: Promise<{ i
   return (
     <div className="mx-auto flex max-w-content flex-col gap-6 px-4 py-8 md:px-8">
       <header className="flex flex-col gap-2">
-        <h1 className="text-h1">{org.name}</h1>
+        <div className="flex items-center gap-3">
+          <OrgLogo fileId={org.logoFileId} size={64} />
+          <h1 className="text-h1">{org.name}</h1>
+        </div>
         <p className="text-body-s text-ink-700">{t('lead')}</p>
         <div><StatusChip tone="ok">{t('verified')}</StatusChip></div>
       </header>

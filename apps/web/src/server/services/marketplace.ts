@@ -5,6 +5,7 @@ import {
   ProblemError,
   QUEUES,
   aggregateDeclineReasons,
+  effectivePlan,
   limitsFor,
   marketplaceProfileSchema,
   offerExpiry,
@@ -24,6 +25,7 @@ import { marketplaceRef, resolveMarketplaceRef } from '@kardia/core/crypto';
 
 import { track } from '../audit.ts';
 import { db } from '../db.ts';
+import { assertFeature } from '../features.ts';
 import { enqueue } from '../queue.ts';
 
 import { notifyOrg, notifyUser } from './notifications.ts';
@@ -38,6 +40,7 @@ import type { Department, Profession } from '@kardia/db';
  */
 
 export async function updateMarketplaceProfile(userId: string, input: unknown) {
+  assertFeature('marketplace');
   const data = parseOrThrow(marketplaceProfileSchema, input);
   return db.candidateProfile.update({
     where: { userId },
@@ -51,8 +54,27 @@ export async function updateMarketplaceProfile(userId: string, input: unknown) {
   });
 }
 
+/** Eigenes Marktplatz-Profil (Einstellungen) und Sperrliste für Web-App und REST-API. */
+export async function getMarketplaceProfile(userId: string) {
+  assertFeature('marketplace');
+  const c = await db.candidateProfile.findUnique({
+    where: { userId },
+    select: { marketplaceActive: true, desiredWorkloadPct: true, earliestStart: true, homeDistrict: true, mustConditions: true, blocks: { select: { organizationId: true } } },
+  });
+  if (!c) throw new ProblemError('notFound', 'Noch kein Qualifikations-Pass angelegt.');
+  return {
+    marketplaceActive: c.marketplaceActive,
+    desiredWorkloadPct: c.desiredWorkloadPct,
+    earliestStart: c.earliestStart ? c.earliestStart.toISOString().slice(0, 10) : null,
+    homeDistrict: c.homeDistrict,
+    mustConditions: c.mustConditions,
+    blockedOrganizationIds: c.blocks.map((b) => b.organizationId),
+  };
+}
+
 /** Sperrliste: gesperrte Institutionen sehen das Profil nicht. */
 export async function setBlocks(userId: string, organizationIds: string[]) {
+  assertFeature('marketplace');
   const c = await db.candidateProfile.findUniqueOrThrow({ where: { userId } });
   await db.$transaction([
     db.candidateBlock.deleteMany({ where: { candidateId: c.id } }),
@@ -64,6 +86,7 @@ export async function searchMarketplace(
   ctx: OrgContext,
   filter: { profession?: Profession; department?: Department; minYears?: number; district?: string },
 ): Promise<AnonymousProfile[]> {
+  assertFeature('marketplace');
   const limits = limitsFor(ctx.org.plan as Parameters<typeof limitsFor>[0]);
   if (!limits || limits.offersPerMonth === 0) throw new ProblemError('quotaExceeded', 'Der Marktplatz ist ab dem Abo "Institution" enthalten.');
   const rows = await db.candidateProfile.findMany({
@@ -100,6 +123,7 @@ function startOfMonth(now = new Date()): Date {
 }
 
 export async function sendOffer(ctx: OrgContext, input: OfferInput) {
+  assertFeature('marketplace');
   const data = parseOrThrow(offerInputSchema, input);
   const candidateId = resolveMarketplaceRef(ctx.org.id, data.candidateRef);
   if (!candidateId) throw new ProblemError('notFound', 'Profil nicht gefunden.');
@@ -125,7 +149,7 @@ export async function sendOffer(ctx: OrgContext, input: OfferInput) {
   }
 
   const org = await db.organization.findUniqueOrThrow({ where: { id: ctx.org.id } });
-  const quota = Math.max(org.offerQuotaPerMonth, limitsFor(org.plan)?.offersPerMonth ?? 0);
+  const quota = Math.max(org.offerQuotaPerMonth, limitsFor(effectivePlan(org))?.offersPerMonth ?? 0);
   const used = await db.offer.count({ where: { organizationId: ctx.org.id, createdAt: { gte: startOfMonth() } } });
   if (used >= quota) throw new ProblemError('quotaExceeded', `Kontingent von ${quota} Angeboten pro Monat ist ausgeschöpft.`);
   const open = await db.offer.findFirst({
@@ -151,6 +175,7 @@ export async function sendOffer(ctx: OrgContext, input: OfferInput) {
 }
 
 export async function listMyOffers(userId: string) {
+  assertFeature('marketplace');
   return db.offer.findMany({
     where: { candidate: { userId } },
     include: {
@@ -162,6 +187,7 @@ export async function listMyOffers(userId: string) {
 }
 
 export async function getMyOffer(userId: string, offerId: string) {
+  assertFeature('marketplace');
   const offer = await db.offer.findFirst({
     where: { id: offerId, candidate: { userId } },
     include: { organization: { select: { id: true, name: true } }, job: { include: { ward: { include: { location: true } } } } },
@@ -176,6 +202,7 @@ export async function getMyOffer(userId: string, offerId: string) {
  * Tipp, Grund optional und nur aggregiert sichtbar (AK-E3). Nie optimistisch (PRD 7.4).
  */
 export async function respondOffer(userId: string, offerId: string, input: OfferResponse) {
+  assertFeature('marketplace');
   const response = parseOrThrow(offerResponseSchema, input);
   const offer = await db.offer.findFirst({ where: { id: offerId, candidate: { userId } }, include: { job: true } });
   if (!offer) throw new ProblemError('notFound');
@@ -207,6 +234,7 @@ export async function respondOffer(userId: string, offerId: string, input: Offer
 
 /** Arbeitgebersicht: eigene Angebote; Identität erst nach "Interesse" (über die Bewerbung). */
 export async function listOrgOffers(ctx: OrgContext) {
+  assertFeature('marketplace');
   const offers = await db.offer.findMany({
     where: { organizationId: ctx.org.id },
     include: { job: { select: { id: true, title: true } } },

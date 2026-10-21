@@ -14,6 +14,12 @@ export const RETENTION = {
   backupDays: 30,
 } as const;
 
+/**
+ * Version von AGB und Datenschutzerklärung (PRD 14.3). Bei einer neuen Version
+ * erneut zustimmen lassen; gespeichert in User.termsVersion.
+ */
+export const TERMS_VERSION = '2026-10';
+
 /** Sitzungsdauer (PRD 14.2): 30 Tage, Admin 12 h. */
 export const SESSION_MAX_AGE_SEC = 30 * 24 * 3600;
 export const ADMIN_SESSION_MAX_AGE_SEC = 12 * 3600;

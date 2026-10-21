@@ -31,7 +31,8 @@
     "shareDocsHint": "Ohne Freigabe sieht der Arbeitgeber nur den Status «verifiziert». Widerruf jederzeit möglich.",
     "withdraw": "Bewerbung zurückziehen",
     "withdrawTitle": "Bewerbung zurückziehen?",
-    "withdrawBody": "Der Arbeitgeber wird informiert. Eine erneute Bewerbung auf diese Stelle ist danach nicht möglich."
+    "withdrawBody": "Der Arbeitgeber wird informiert. Eine erneute Bewerbung auf diese Stelle ist danach nicht möglich.",
+    "read": "gelesen"
   },
   "pass": {
     "title": "Qualifikations-Pass",
@@ -94,7 +95,22 @@
     },
     "aiSuggestion": "KI-Vorschlag aus dem Dokument",
     "aiApply": "Vorschlag übernehmen",
-    "aiSuggestionAvailable": "KI-Vorschlag verfügbar – zum Prüfen «Bearbeiten» öffnen"
+    "aiSuggestionAvailable": "KI-Vorschlag verfügbar – zum Prüfen «Bearbeiten» öffnen",
+    "terms": "Ich akzeptiere die <terms>AGB</terms> und habe die <privacy>Datenschutzerklärung</privacy> gelesen.",
+    "termsRequired": "Bitte AGB und Datenschutzerklärung akzeptieren, um den Pass zu speichern.",
+    "home": {
+      "legend": "Wohnort für Pendelzeiten",
+      "hint": "Optional. Die Adresse wird nicht gespeichert – nur ein Punkt auf etwa 150 m genau, damit Kardia Pendelzeiten mit ÖV und Auto berechnen kann.",
+      "street": "Strasse und Nr. (optional)",
+      "postalCode": "PLZ",
+      "city": "Ort",
+      "use": "Wohnort übernehmen",
+      "replace": "Wohnort ersetzen",
+      "saved": "Wohnort hinterlegt. Änderungen gelten nach dem Speichern.",
+      "remove": "Entfernen",
+      "needPlace": "Bitte PLZ oder Ort angeben.",
+      "notFound": "Diese Adresse wurde nicht gefunden. PLZ und Ort prüfen."
+    }
   },
   "saved": {
     "title": "Merkliste & Vergleich",

@@ -3,6 +3,8 @@ import 'server-only';
 import {
   ProblemError,
   QUEUES,
+  TERMS_VERSION,
+  coarseHome,
   credentialEditResetsStatus,
   credentialInputSchema,
   parseOrThrow,
@@ -61,6 +63,16 @@ function suggestionFrom(props: unknown): CredentialSuggestion | null {
 
 export async function upsertPass(userId: string, input: PassInput) {
   const data = parseOrThrow(passInputSchema, input);
+  // AGB + Datenschutz (PRD 14.3): Zustimmung einmal je Version, spätestens beim Anlegen des Passes.
+  const user = await db.user.findUnique({ where: { id: userId }, select: { termsAcceptedAt: true, termsVersion: true } });
+  const termsMissing = !user?.termsAcceptedAt || user.termsVersion !== TERMS_VERSION;
+  if (termsMissing && !data.acceptTerms) {
+    throw new ProblemError('validation', 'Bitte AGB und Datenschutzerklärung akzeptieren.', [
+      { path: 'acceptTerms', code: 'required', message: 'Bitte AGB und Datenschutzerklärung akzeptieren.' },
+    ]);
+  }
+  // Wohnort nur als Zellmitte (~150 m); fehlt das Feld, bleibt der gespeicherte Wert.
+  const home = data.home === undefined ? {} : data.home === null ? { homeLat: null, homeLng: null } : (({ lat, lng }) => ({ homeLat: lat, homeLng: lng }))(coarseHome(data.home));
   const base = {
     firstName: data.firstName,
     lastName: data.lastName,
@@ -68,8 +80,10 @@ export async function upsertPass(userId: string, input: PassInput) {
     profession: data.profession,
     yearsExperience: data.yearsExperience,
     workAuthorizedCh: data.workAuthorizedCh,
+    ...home,
   };
   return db.$transaction(async (tx) => {
+    if (termsMissing) await tx.user.update({ where: { id: userId }, data: { termsAcceptedAt: new Date(), termsVersion: TERMS_VERSION } });
     const candidate = await tx.candidateProfile.upsert({ where: { userId }, create: { userId, ...base }, update: base });
     await tx.experience.deleteMany({ where: { candidateId: candidate.id } });
     await tx.languageSkill.deleteMany({ where: { candidateId: candidate.id } });

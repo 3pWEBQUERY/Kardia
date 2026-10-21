@@ -65,7 +65,9 @@
     "profileHint": "Chaque indication avec source et date de confirmation ; valeurs de l'équipe à partir de cinq réponses.",
     "about": "À propos de l'unité",
     "commute": "Temps de trajet",
-    "direct": "Candidature directement auprès de l'employeur. Kardia n'est jamais employeur et ne fait pas de placement."
+    "direct": "Candidature directement auprès de l'employeur. Kardia n'est jamais employeur et ne fait pas de placement.",
+    "autoTranslated": "Traduit automatiquement de l'allemand.",
+    "commuteSetHome": "Indiquer le domicile dans le passeport pour voir le temps de trajet"
   },
   "ward": {
     "verifiedEmployees": "{count} collaborateur·rice·s vérifié·e·s",
@@ -85,7 +87,14 @@
     "noJobs": "Aucun poste ouvert actuellement. Enregistrer la recherche pour être informé·e.",
     "workHere": "Vous travaillez ici ?",
     "workHereBody": "Confirmez ou corrigez les indications – de manière anonyme.",
-    "workHereAction": "Vers le contrôle de réalité"
+    "workHereAction": "Vers le contrôle de réalité",
+    "about": "À propos de l'unité",
+    "autoTranslated": "Traduit automatiquement de l'allemand.",
+    "teamVoices": "Voix de l'équipe",
+    "teamVoicesHint": "Résumé des commentaires de collaborateur·rice·s vérifié·e·s, à partir de cinq commentaires.",
+    "basedOn": "{count, plural, one {Basé sur # commentaire} other {Basé sur # commentaires}}",
+    "commute": "Temps de trajet",
+    "commuteSetHome": "Indiquer le domicile dans le passeport pour voir les temps de trajet"
   },
   "team": {
     "title": "Contrôle de réalité : {ward}",
@@ -329,5 +338,19 @@
         }
       ]
     }
+  },
+  "report": {
+    "action": "Signaler",
+    "title": "Signaler un contenu",
+    "description": "Le signalement est transmis à la modération de Kardia. Votre nom n'est pas communiqué à l'unité.",
+    "reason": "Motif",
+    "reasonHint": "Qu'est-ce qui est faux ou inapproprié ? 400 caractères au maximum.",
+    "send": "Envoyer le signalement",
+    "sent": "Merci – la modération examine le contenu."
+  },
+  "results": {
+    "loadMore": "Charger plus d'offres",
+    "loading": "Chargement …",
+    "shown": "{shown} offres affichées sur {total}"
   }
 }

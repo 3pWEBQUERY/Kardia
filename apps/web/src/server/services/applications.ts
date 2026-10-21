@@ -37,7 +37,7 @@ export async function apply(userId: string, input: ApplicationInput) {
   const existing = await db.application.findUnique({ where: { jobId_candidateId: { jobId: job.id, candidateId: candidate.id } } });
   if (existing) throw new ProblemError('conflict', 'Sie haben sich auf diese Stelle bereits beworben.');
   const app = await db.application.create({
-    data: { jobId: job.id, candidateId: candidate.id, message: data.message ?? null, documentsShared: data.shareDocuments },
+    data: { jobId: job.id, candidateId: candidate.id, message: data.message ?? null, documentsShared: data.shareDocuments, viaPass: true },
   });
   await track(EVENTS.applicationCreated, {
     userId,
@@ -197,6 +197,19 @@ export async function postMessage(
   if (isEmployer) await notifyUser(app.candidate.userId, 'application.message', { applicationId, jobTitle: app.job.title });
   else await notifyOrg(app.job.ward.location.organizationId, 'application.message', { applicationId, jobTitle: app.job.title });
   return { ...msg, body };
+}
+
+/**
+ * Gelesen-Markierung (PRD 13.2): markiert alle Nachrichten der Gegenseite im Thread als
+ * gelesen. Aufruf beim Öffnen des Threads – durch die Fachperson oder den Arbeitgeber.
+ * Zugriffsprüfung liegt beim Aufrufer (getMyApplication / getApplicationForOrg).
+ */
+export async function markMessagesRead(applicationId: string, readerUserId: string): Promise<number> {
+  const res = await db.message.updateMany({
+    where: { applicationId, readAt: null, senderUserId: { not: readerUserId } },
+    data: { readAt: new Date() },
+  });
+  return res.count;
 }
 
 export async function getMyApplication(userId: string, applicationId: string) {

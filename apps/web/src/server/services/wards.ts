@@ -9,8 +9,10 @@ import {
   aggregateRealityChecks,
   isStale,
   locationInputSchema,
+  locationQuotaExceeded,
   parseOrThrow,
   wardProfileSchema,
+  wardQuotaExceeded,
   type LocationInput,
   type RealityAggregate,
   type WardProfile,
@@ -37,6 +39,10 @@ export async function listLocations(orgId: string) {
 
 export async function createLocation(ctx: OrgContext, input: LocationInput) {
   const data = parseOrThrow(locationInputSchema, input);
+  const existing = await db.location.count({ where: { organizationId: ctx.org.id } });
+  if (locationQuotaExceeded(ctx.org.plan as Parameters<typeof locationQuotaExceeded>[0], existing)) {
+    throw new ProblemError('quotaExceeded', 'Ihr Abo umfasst einen Standort. Für weitere Standorte das Abo «Spitalgruppe» wählen oder den bestehenden Standort bearbeiten.');
+  }
   return db.location.create({ data: { ...data, organizationId: ctx.org.id } });
 }
 
@@ -58,6 +64,10 @@ export async function createWard(ctx: OrgContext, locationId: string, input: unk
   const loc = await db.location.findFirst({ where: { id: locationId, organizationId: ctx.org.id } });
   if (!loc) throw new ProblemError('notFound', 'Standort nicht gefunden.');
   const profile = parseOrThrow(wardProfileSchema, input);
+  const existing = await db.ward.count({ where: { location: { organizationId: ctx.org.id } } });
+  if (wardQuotaExceeded(ctx.org.plan as Parameters<typeof wardQuotaExceeded>[0], existing)) {
+    throw new ProblemError('quotaExceeded', 'Ihr Abo «Praxis» umfasst eine Station. Für weitere Stationen das Abo «Institution» wählen oder die bestehende Station bearbeiten.');
+  }
   const ward = await db.ward.create({ data: { ...wardData(profile), locationId, confirmedAt: new Date() } });
   await track(EVENTS.wardConfirmed, { userId: ctx.user.id, orgId: ctx.org.id, entityId: ward.id });
   if (ward.description) await enqueue(QUEUES.aiTranslation, { wardId: ward.id });

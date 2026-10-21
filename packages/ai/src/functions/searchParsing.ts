@@ -64,9 +64,13 @@ Gib nur Filter aus, die im Satz eindeutig genannt sind; alles andere bleibt leer
 
 Bedingungen (key):
 - noNights: "keine Nächte", "ohne Nachtdienst". noSplitShifts: keine geteilten Dienste. weekdaysOnly: nur werktags.
+- noEarlyShifts (keine Frühdienste), noLateShifts (keine Spätdienste), no12hShifts (keine 12-Stunden-Dienste).
 - maxWeekendsPerMonth (value = Anzahl), minRosterLeadWeeks (value = Wochen Dienstplan-Vorlauf), minWishDays.
+- maxRequiredShiftsPerWeek (value = höchstens so viele Pflicht-Dienste pro Woche).
 - minSalary (value = CHF pro Jahr bei 100 %; "95k" = 95000), thirteenthSalary, minNightAllowance (CHF/h).
-- maxPatientsDay/maxPatientsNight (Patienten pro Fachperson), minOnboardingWeeks, minVacationWeeks, minEducationDays.
+- minSundayAllowancePct (Sonntagszulage in %), minOnCallChfDay (Pikett CHF/Tag).
+- maxPatientsDay/maxPatientsNight (Patienten pro Fachperson), minSkillMixHfFhPct (Anteil dipl. HF/FH in %).
+- minOnboardingWeeks, minVacationWeeks, minEducationDays, minEducationBudget (CHF pro Jahr).
 - childcare (Kita), collectiveAgreement (GAV), parking, reentryFriendly (Wiedereinstieg), pendingRecognition (Anerkennung läuft), recognizedTraining (anerkannte ärztliche Weiterbildung).
 - maxCommute (value = Minuten, transport = PT für ÖV oder CAR für Auto).
 mode: "must", wenn ausgeschlossen oder zwingend formuliert ("keine", "nur", "mindestens"); sonst "wish".

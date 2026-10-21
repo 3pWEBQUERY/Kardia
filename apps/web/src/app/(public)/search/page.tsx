@@ -6,11 +6,12 @@ import { Button, Callout, EmptyState } from '@kardia/ui';
 
 import { ActiveFilters } from '@/components/search/ActiveFilters';
 import { MapLoader } from '@/components/search/MapLoader';
-import { ResultList, type ClientHit } from '@/components/search/ResultList';
+import { ResultList } from '@/components/search/ResultList';
 import { SaveSearch } from '@/components/search/SaveSearch';
 import { SearchFilters } from '@/components/search/SearchFilters';
 import { SortSelect, ViewSwitch } from '@/components/search/ViewSwitch';
 import { track } from '@/server/audit';
+import { toClientHits } from '@/server/clientHits';
 import { db } from '@/server/db';
 import { searchJobs } from '@/server/services/search';
 import { getSession } from '@/server/session';
@@ -26,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
  * Suche (Liste/Karte). Ergebnisse sofort, ohne Konto (PRD 7.3). Der Filterzustand
  * steht vollständig in `?f=` (AK-B2).
  */
-export default async function SearchPage({ searchParams }: { searchParams: Promise<{ f?: string; ai?: string; compare?: string }> }) {
+export default async function SearchPage({ searchParams }: { searchParams: Promise<{ f?: string; ai?: string; compare?: string; cursor?: string }> }) {
   const sp = await searchParams;
   const filter = decodeFilter(sp.f);
   const t = await getTranslations('public.search');
@@ -37,30 +38,14 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   // Wohnort des Profils als Startpunkt vorschlagen (nur Geohash-Zelle, nie die Adresse).
   const suggestedOrigin = !filter.origin && candidate?.homeLat != null && candidate.homeLng != null ? encodeGeohash(candidate.homeLat, candidate.homeLng) : null;
 
-  const result = await searchJobs(filter, { cursor: null, limit: filter.view === 'map' ? 500 : 30 });
-  await track(EVENTS.searchPerformed, { userId: session?.user.id ?? null, props: { results: result.total, conditions: filter.conditions.length } });
+  // `cursor` nur als Rückfall ohne JavaScript ("Weitere Treffer laden" als Link).
+  const cursor = filter.view === 'list' && sp.cursor && /^[\w-]{1,24}$/.test(sp.cursor) ? sp.cursor : null;
+  const result = await searchJobs(filter, { cursor, limit: filter.view === 'map' ? 500 : 30 });
+  // Eine Suche zählt einmal (erste Seite), nicht jede weitere Seite.
+  if (!cursor) await track(EVENTS.searchPerformed, { userId: session?.user.id ?? null, props: { results: result.total, conditions: filter.conditions.length, viaAi: sp.ai === '1' } });
 
   const savedIds = new Set(candidate?.savedJobs.map((s) => s.jobId) ?? []);
-  const hits: ClientHit[] = result.hits.map((h) => ({
-    jobId: h.jobId,
-    title: h.title,
-    orgName: h.org.name,
-    city: h.location.city,
-    wardId: h.ward.id,
-    wardName: h.ward.name,
-    department: h.ward.department,
-    workloadMinPct: h.workloadMinPct,
-    workloadMaxPct: h.workloadMaxPct,
-    rosterPattern: h.ward.rosterPattern,
-    profile: h.profile,
-    hasParking: h.location.hasParking,
-    allowsPendingRecog: h.allowsPendingRecog,
-    trainingCategory: h.trainingCategory,
-    commute: h.commute,
-    match: h.match,
-    stale: h.stale,
-    saved: savedIds.has(h.jobId),
-  }));
+  const hits = toClientHits(result.hits, savedIds);
 
   const suggestionHref = (() => {
     const s = result.suggestion;
@@ -124,7 +109,12 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
             />
           ) : (
             <ResultList
+              key={`${sp.f ?? ''}:${cursor ?? ''}`}
               hits={hits}
+              total={result.total}
+              filterParam={encodeFilter(filter)}
+              nextCursor={result.nextCursor}
+              showCount={!cursor}
               conditions={filter.conditions}
               origin={filter.origin ?? null}
               workloadPct={filter.workloadPct ?? null}
@@ -132,7 +122,6 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
               compareIds={(sp.compare ?? '').split(',').filter(Boolean)}
             />
           )}
-          {result.nextCursor && filter.view === 'list' ? <p className="text-micro text-ink-500">{t('refine', { shown: hits.length, total: result.total })}</p> : null}
         </section>
       </div>
     </div>

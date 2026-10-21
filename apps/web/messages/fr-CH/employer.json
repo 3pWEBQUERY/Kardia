@@ -58,7 +58,9 @@
     "agencyBody": "Nous comparons votre IDE avec le registre IDE public et le répertoire du SECO des entreprises de placement et de location de services autorisées. Les correspondances dans le répertoire du SECO sont vérifiées manuellement ; d'ici là, aucune publication n'est possible.",
     "invited": "Vous avez été invité·e ? Ouvrez le lien d'invitation reçu par e-mail – aucun enregistrement n'est alors nécessaire.",
     "already": "Vous êtes déjà membre d'une organisation.",
-    "toCockpit": "Vers le cockpit"
+    "toCockpit": "Vers le cockpit",
+    "terms": "J'accepte les",
+    "termsLink": "CG pour les employeurs"
   },
   "form": {
     "required": "Obligatoire",
@@ -90,7 +92,11 @@
     "emptyWards": "Ce site n'a pas encore d'unité.",
     "confirmed": "confirmé le {date}",
     "stale": "obsolète",
-    "current": "à jour"
+    "current": "à jour",
+    "quotaTitle": "Contingent de votre abonnement atteint",
+    "quotaAction": "Comparer les abonnements",
+    "wardQuota": "Votre abonnement comprend une unité. Pour d'autres unités, choisir l'abonnement « Institution » ou « Groupe hospitalier ».",
+    "locationQuota": "Votre abonnement comprend un site. Pour plusieurs sites, choisir l'abonnement « Groupe hospitalier »."
   },
   "ward": {
     "newTitle": "Créer une unité",
@@ -375,7 +381,10 @@
     "cancel": "Annuler",
     "shifts": "Services",
     "columns": "Colonnes",
-    "noShifts": "Pas encore de services dans ce pool."
+    "noShifts": "Pas encore de services dans ce pool.",
+    "settings": "Paramètres",
+    "saveSettings": "Enregistrer les paramètres",
+    "settingsSaved": "Paramètres enregistrés."
   },
   "benchmark": {
     "title": "Benchmark",
@@ -412,7 +421,7 @@
     "domainsSaved": "Domaines enregistrés.",
     "save": "Enregistrer",
     "sso": "Single Sign-on",
-    "ssoAvailable": "SAML/OIDC est inclus dans votre abonnement. Écrivez à support@kardia.ch, nous configurons la connexion avec votre service informatique.",
+    "ssoAvailable": "La connexion d'entreprise (OIDC) est incluse dans votre abonnement. La personne owner la configure ici.",
     "ssoNotInPlan": "Le Single Sign-on est inclus dans l'abonnement Groupe hospitalier.",
     "apiKeys": "Clés API",
     "apiHint": "Pour l'API REST v1. La clé n'est affichée qu'une seule fois ; enregistrez-la immédiatement en lieu sûr.",
@@ -440,7 +449,35 @@
     "feedCreated": "Flux ajouté. La première récupération a lieu dans l'heure.",
     "feedLastRun": "Dernière récupération le {date}",
     "feedPending": "Pas encore récupéré",
-    "feedHint": "Les postes importés sont enregistrés comme brouillons ; vous les publiez vous-même après vérification."
+    "feedHint": "Les postes importés sont enregistrés comme brouillons ; vous les publiez vous-même après vérification.",
+    "ssoActive": "Connexion d'entreprise active pour @{domain}.",
+    "ssoNeedsDomain": "Pour la connexion d'entreprise, saisir d'abord ci-dessus le domaine e-mail de votre organisation.",
+    "ssoLead": "Les collaborateurs et collaboratrices avec votre domaine e-mail se connectent via votre fournisseur d'identité (OpenID Connect, p. ex. Microsoft Entra ID). Les nouvelles personnes reçoivent le rôle Lecture seule ; vous modifiez ensuite le rôle sous Membres.",
+    "ssoCallback": "URI de redirection pour votre service informatique",
+    "ssoDomain": "Domaine e-mail",
+    "ssoIssuer": "URL de l'émetteur (issuer)",
+    "ssoIssuerHint": "p. ex. https://login.microsoftonline.com/<ID du tenant>/v2.0",
+    "ssoClientId": "ID client",
+    "ssoClientSecret": "Secret client",
+    "ssoDiscovery": "URL de découverte (facultatif)",
+    "ssoDiscoveryHint": "Laisser vide pour <issuer>/.well-known/openid-configuration.",
+    "ssoSave": "Enregistrer la connexion d'entreprise",
+    "ssoSaved": "Connexion d'entreprise enregistrée.",
+    "ssoReplace": "Reconfigurer",
+    "ssoRemove": "Supprimer la connexion d'entreprise",
+    "ssoRemoved": "Connexion d'entreprise supprimée.",
+    "ssoCancel": "Annuler",
+    "logoTitle": "Logo",
+    "logoAlt": "Logo de votre organisation",
+    "logoNone": "Aucun logo enregistré.",
+    "logoSet": "Logo enregistré.",
+    "logoScanning": "Le logo est en cours de vérification et apparaîtra sous peu.",
+    "logoRejected": "Le logo a été refusé lors de la vérification. Veuillez choisir un autre fichier.",
+    "logoUpload": "Téléverser le logo",
+    "logoHint": "PNG, JPG ou SVG, 2 Mo au maximum. Visible publiquement dès que votre organisation est vérifiée.",
+    "logoSaved": "Logo enregistré.",
+    "logoRemove": "Supprimer le logo",
+    "logoRemoved": "Logo supprimé."
   },
   "billing": {
     "title": "Abonnement et factures",
@@ -488,6 +525,19 @@
     "period12": "12 mois",
     "vat": "TVA 8,1 %",
     "total": "Total",
-    "terms": "Payable dans les 30 jours avec la facture QR. L'abonnement est activé dès réception du paiement."
+    "terms": "Payable dans les 30 jours avec la facture QR. L'abonnement est activé dès réception du paiement.",
+    "portalTitle": "Gérer l'abonnement",
+    "portalHint": "Modifier le moyen de paiement, changer ou résilier l'abonnement – dans le portail client sécurisé de Stripe.",
+    "portal": "Gérer l'abonnement",
+    "stripeMissing": "Le paiement par carte n'est pas configuré dans cet environnement. Les abonnements Institution et Groupe hospitalier sont possibles sur facture avec bulletin de versement QR.",
+    "expiredTitle": "Abonnement expiré",
+    "expired": "L'abonnement « {plan} » a expiré le {date}. Vos postes ne sont plus visibles dans la recherche tant que vous ne le prolongez pas."
+  },
+  "sso": {
+    "signInToggle": "Se connecter avec la connexion d'entreprise (SSO)",
+    "signInEmail": "E-mail professionnel",
+    "signInSubmit": "Continuer vers la connexion d'entreprise",
+    "signInHint": "Pour les organisations ayant configuré le single sign-on.",
+    "signInFailed": "Aucune connexion d'entreprise n'est configurée pour ce domaine e-mail. Veuillez vous connecter avec une passkey ou un lien par e-mail."
   }
 }

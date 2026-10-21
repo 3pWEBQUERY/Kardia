@@ -3,12 +3,14 @@ import 'server-only';
 import { Stripe } from 'stripe';
 import { SwissQRBill } from 'swissqrbill/svg';
 
-import { PLAN_LIMITS, ProblemError, SINGLE_LISTING, yearlyPriceChf } from '@kardia/core';
-
+import { PLAN_LIMITS, ProblemError, QUEUES, SINGLE_LISTING, yearlyPriceChf } from '@kardia/core';
 
 import { audit } from '../audit.ts';
 import { db } from '../db.ts';
 import { env } from '../env.ts';
+import { enqueue } from '../queue.ts';
+
+import { mapStripeEvent, type BillingAction, type OrgRef } from './billingEvents.ts';
 
 import type { OrgContext } from '../session.ts';
 import type { PlanTier } from '@kardia/db';
@@ -74,35 +76,94 @@ export async function checkoutSingleListing(ctx: OrgContext, jobId: string): Pro
   return session.url;
 }
 
+function priceToPlan(): Record<string, PlanTier> {
+  const e = env();
+  const map: Record<string, PlanTier> = {};
+  for (const [plan, key] of Object.entries(PRICE_ENV) as [PlanTier, (typeof PRICE_ENV)[PlanTier]][]) {
+    const price = e[key];
+    if (price) map[price] = plan;
+  }
+  return map;
+}
+
+async function findOrg(ref: OrgRef): Promise<{ id: string; name: string } | null> {
+  const select = { id: true, name: true } as const;
+  if (ref.orgId) return db.organization.findUnique({ where: { id: ref.orgId }, select });
+  if (ref.subscriptionId) {
+    const bySub = await db.organization.findUnique({ where: { stripeSubscriptionId: ref.subscriptionId }, select });
+    if (bySub) return bySub;
+  }
+  if (ref.customerId) return db.organization.findUnique({ where: { stripeCustomerId: ref.customerId }, select });
+  return null;
+}
+
+/** Stripe-Webhook: Einzelinserat, Abo-Start, Planwechsel/Kündigung, Abo-Ende, Zahlungsausfall. */
 export async function handleStripeWebhook(rawBody: string, signature: string): Promise<void> {
   const secret = env().STRIPE_WEBHOOK_SECRET;
   if (!secret) throw new ProblemError('upstream');
   const event = stripe().webhooks.constructEvent(rawBody, signature, secret);
-  switch (event.type) {
-    case 'checkout.session.completed': {
-      const s = event.data.object;
-      const orgId = s.metadata?.organizationId;
-      if (!orgId) return;
-      if (s.metadata?.kind === 'single_listing' && s.metadata.jobId) {
-        await db.job.update({ where: { id: s.metadata.jobId }, data: { paidUntil: new Date(Date.now() + SINGLE_LISTING.days * 86400_000) } });
-      } else if (s.metadata?.plan) {
-        const plan = s.metadata.plan as PlanTier;
-        await db.organization.update({
-          where: { id: orgId },
-          data: { plan, offerQuotaPerMonth: PLAN_LIMITS[plan].offersPerMonth, planValidUntil: null },
-        });
-      }
+  await applyBillingAction(mapStripeEvent(event, priceToPlan()));
+}
+
+/** Systemaktionen von Stripe: im Ereignislog (AuditLog verlangt eine handelnde Person). */
+async function billingEvent(name: string, orgId: string, props?: Record<string, unknown>): Promise<void> {
+  await db.event.create({ data: { name, orgId, ...(props ? { props: JSON.parse(JSON.stringify(props)) as object } : {}) } });
+}
+
+export async function applyBillingAction(action: BillingAction): Promise<void> {
+  switch (action.kind) {
+    case 'ignore':
+      return;
+    case 'listingPaid':
+      await db.job.update({ where: { id: action.jobId }, data: { paidUntil: new Date(Date.now() + SINGLE_LISTING.days * 86400_000) } });
+      return;
+    case 'planActivated':
+      await db.organization.update({
+        where: { id: action.orgId },
+        data: { plan: action.plan, offerQuotaPerMonth: PLAN_LIMITS[action.plan].offersPerMonth, planValidUntil: null, stripeSubscriptionId: action.subscriptionId },
+      });
+      await billingEvent('billing.plan_activated', action.orgId, { plan: action.plan });
+      return;
+    case 'planUpdated': {
+      const org = await findOrg(action.ref);
+      if (!org) return;
+      await db.organization.update({
+        where: { id: org.id },
+        data: action.plan
+          ? { plan: action.plan, offerQuotaPerMonth: PLAN_LIMITS[action.plan].offersPerMonth, planValidUntil: action.validUntil, stripeSubscriptionId: action.subscriptionId }
+          : { plan: null, offerQuotaPerMonth: 0, planValidUntil: null },
+      });
+      await billingEvent('billing.plan_updated', org.id, { plan: action.plan, validUntil: action.validUntil });
       return;
     }
-    case 'customer.subscription.deleted': {
-      const sub = event.data.object;
-      const orgId = sub.metadata.organizationId;
-      if (orgId) await db.organization.update({ where: { id: orgId }, data: { plan: null, offerQuotaPerMonth: 0 } });
+    case 'planEnded': {
+      const org = await findOrg(action.ref);
+      if (!org) return;
+      await db.organization.update({ where: { id: org.id }, data: { plan: null, offerQuotaPerMonth: 0, planValidUntil: null, stripeSubscriptionId: null } });
+      await billingEvent('billing.plan_ended', org.id);
       return;
     }
-    default:
+    case 'paymentFailed': {
+      const org = await findOrg(action.ref);
+      if (!org) return;
+      const owners = await db.orgMember.findMany({ where: { organizationId: org.id, role: 'OWNER', user: { deletedAt: null } }, select: { user: { select: { email: true } } } });
+      for (const o of owners) await enqueue(QUEUES.emailSend, { template: 'plan.payment-failed', to: o.user.email, data: { orgName: org.name } });
+      await billingEvent('billing.payment_failed', org.id);
       return;
+    }
   }
+}
+
+/** Stripe-Kundenportal: Zahlungsmittel, Planwechsel, Kündigung (nur Owner mit Stripe-Kunde). */
+export async function billingPortalUrl(ctx: OrgContext): Promise<string> {
+  const org = await db.organization.findUniqueOrThrow({ where: { id: ctx.org.id }, select: { stripeCustomerId: true } });
+  if (!org.stripeCustomerId) throw new ProblemError('conflict', 'Es gibt noch kein Stripe-Abo für diese Organisation.');
+  const session = await stripe().billingPortal.sessions.create({ customer: org.stripeCustomerId, return_url: `${env().APP_ORIGIN}/employer/billing` });
+  return session.url;
+}
+
+export function stripeConfigured(): boolean {
+  return Boolean(env().STRIPE_SECRET_KEY);
 }
 
 /** QR-Referenz (27 Stellen, Modulo 10 rekursiv) aus einer Rechnungsnummer. */

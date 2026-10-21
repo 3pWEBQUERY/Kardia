@@ -15,6 +15,7 @@ import { handleFileScan } from './handlers/files.ts';
 import { handleKeyRotation } from './handlers/keys.ts';
 import { handleEmail, handlePush } from './handlers/notify.ts';
 import { handleOrgCheck } from './handlers/org.ts';
+import { handlePlanExpiry } from './handlers/plans.ts';
 import { handleAiRawCleanup, handleRetention } from './handlers/retention.ts';
 import { handleVideoTranscode } from './handlers/video.ts';
 import { handleWebhook } from './handlers/webhooks.ts';
@@ -58,6 +59,7 @@ const REGISTRY: Record<QueueName, Registration> = {
   [QUEUES.aiRawCleanup]: { handler: (() => handleAiRawCleanup()), concurrency: 1, cron: '11 2 * * *' },
   [QUEUES.offerExpiry]: { handler: (() => handleOfferExpiry()), concurrency: 1, cron: '*/15 * * * *' },
   [QUEUES.credentialExpiry]: { handler: (() => handleCredentialExpiry()), concurrency: 1, cron: '5 1 * * *' },
+  [QUEUES.planExpiry]: { handler: (() => handlePlanExpiry()), concurrency: 1, cron: '20 7 * * *' },
   [QUEUES.shiftReminders]: { handler: (() => handleShiftReminders()), concurrency: 1, cron: '*/15 * * * *' },
   [QUEUES.backup]: { handler: (() => handleBackup()), concurrency: 1, cron: '17 1 * * *' },
   [QUEUES.bucketReplication]: { handler: (() => handleBucketReplication()), concurrency: 1, cron: '47 1 * * *' },

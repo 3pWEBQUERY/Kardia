@@ -58,7 +58,9 @@
     "agencyBody": "Wir gleichen Ihre UID mit dem öffentlichen UID-Register und dem SECO-Verzeichnis der bewilligten Vermittlungs- und Verleihbetriebe ab. Treffer im SECO-Verzeichnis werden manuell geprüft; bis dahin ist keine Veröffentlichung möglich.",
     "invited": "Sie wurden eingeladen? Öffnen Sie den Einladungslink aus der E-Mail – dann ist keine Registrierung nötig.",
     "already": "Sie sind bereits Mitglied einer Organisation.",
-    "toCockpit": "Zum Cockpit"
+    "toCockpit": "Zum Cockpit",
+    "terms": "Ich akzeptiere die",
+    "termsLink": "AGB für Arbeitgeber"
   },
   "form": {
     "required": "Pflicht",
@@ -90,7 +92,11 @@
     "emptyWards": "An diesem Standort gibt es noch keine Station.",
     "confirmed": "bestätigt am {date}",
     "stale": "veraltet",
-    "current": "aktuell"
+    "current": "aktuell",
+    "quotaTitle": "Kontingent Ihres Abos erreicht",
+    "quotaAction": "Abos vergleichen",
+    "wardQuota": "Ihr Abo umfasst eine Station. Für weitere Stationen das Abo «Institution» oder «Spitalgruppe» wählen.",
+    "locationQuota": "Ihr Abo umfasst einen Standort. Für mehrere Standorte das Abo «Spitalgruppe» wählen."
   },
   "ward": {
     "newTitle": "Station anlegen",
@@ -375,7 +381,10 @@
     "cancel": "Absagen",
     "shifts": "Schichten",
     "columns": "Spalten",
-    "noShifts": "Noch keine Schichten in diesem Pool."
+    "noShifts": "Noch keine Schichten in diesem Pool.",
+    "settings": "Einstellungen",
+    "saveSettings": "Einstellungen speichern",
+    "settingsSaved": "Einstellungen gespeichert."
   },
   "benchmark": {
     "title": "Benchmark",
@@ -412,7 +421,7 @@
     "domainsSaved": "Domains gespeichert.",
     "save": "Speichern",
     "sso": "Single Sign-on",
-    "ssoAvailable": "SAML/OIDC ist in Ihrem Abo enthalten. Schreiben Sie an support@kardia.ch, wir richten die Verbindung mit Ihrer IT ein.",
+    "ssoAvailable": "Firmen-Login (OIDC) ist in Ihrem Abo enthalten. Die Owner-Person richtet ihn hier ein.",
     "ssoNotInPlan": "Single Sign-on ist im Abo Spitalgruppe enthalten.",
     "apiKeys": "API-Schlüssel",
     "apiHint": "Für die REST-API v1. Der Schlüssel wird nur einmal angezeigt; speichern Sie ihn sofort an einem sicheren Ort.",
@@ -440,7 +449,35 @@
     "feedCreated": "Feed hinzugefügt. Der erste Abruf folgt innert einer Stunde.",
     "feedLastRun": "Zuletzt abgerufen am {date}",
     "feedPending": "Noch nicht abgerufen",
-    "feedHint": "Importierte Stellen landen als Entwurf; Sie veröffentlichen sie nach Prüfung selbst."
+    "feedHint": "Importierte Stellen landen als Entwurf; Sie veröffentlichen sie nach Prüfung selbst.",
+    "ssoActive": "Firmen-Login aktiv für @{domain}.",
+    "ssoNeedsDomain": "Für den Firmen-Login zuerst oben die E-Mail-Domain Ihrer Organisation eintragen.",
+    "ssoLead": "Mitarbeitende mit Ihrer E-Mail-Domain melden sich über Ihren Identity Provider an (OpenID Connect, z. B. Microsoft Entra ID). Neue Personen erhalten die Rolle Viewer; die Rolle ändern Sie danach unter Mitglieder.",
+    "ssoCallback": "Redirect-URI für Ihre IT",
+    "ssoDomain": "E-Mail-Domain",
+    "ssoIssuer": "Issuer-URL",
+    "ssoIssuerHint": "z. B. https://login.microsoftonline.com/<Tenant-ID>/v2.0",
+    "ssoClientId": "Client-ID",
+    "ssoClientSecret": "Client-Secret",
+    "ssoDiscovery": "Discovery-URL (optional)",
+    "ssoDiscoveryHint": "Leer lassen für <Issuer>/.well-known/openid-configuration.",
+    "ssoSave": "Firmen-Login speichern",
+    "ssoSaved": "Firmen-Login gespeichert.",
+    "ssoReplace": "Neu einrichten",
+    "ssoRemove": "Firmen-Login entfernen",
+    "ssoRemoved": "Firmen-Login entfernt.",
+    "ssoCancel": "Abbrechen",
+    "logoTitle": "Logo",
+    "logoAlt": "Logo Ihrer Organisation",
+    "logoNone": "Noch kein Logo hinterlegt.",
+    "logoSet": "Logo hinterlegt.",
+    "logoScanning": "Das Logo wird geprüft und erscheint in Kürze.",
+    "logoRejected": "Das Logo wurde bei der Prüfung abgelehnt. Bitte eine andere Datei wählen.",
+    "logoUpload": "Logo hochladen",
+    "logoHint": "PNG, JPG oder SVG, höchstens 2 MB. Öffentlich sichtbar, sobald Ihre Organisation verifiziert ist.",
+    "logoSaved": "Logo gespeichert.",
+    "logoRemove": "Logo entfernen",
+    "logoRemoved": "Logo entfernt."
   },
   "billing": {
     "title": "Abo und Rechnungen",
@@ -488,6 +525,19 @@
     "period12": "12 Monate",
     "vat": "MWST 8.1 %",
     "total": "Total",
-    "terms": "Zahlbar innert 30 Tagen mit dem QR-Einzahlungsschein. Das Abo wird nach Zahlungseingang freigeschaltet."
+    "terms": "Zahlbar innert 30 Tagen mit dem QR-Einzahlungsschein. Das Abo wird nach Zahlungseingang freigeschaltet.",
+    "portalTitle": "Abo verwalten",
+    "portalHint": "Zahlungsmittel ändern, Abo wechseln oder kündigen – im sicheren Stripe-Kundenportal.",
+    "portal": "Abo verwalten",
+    "stripeMissing": "Die Kartenzahlung ist in dieser Umgebung nicht eingerichtet. Abos für Institution und Spitalgruppe sind per Rechnung mit QR-Einzahlungsschein möglich.",
+    "expiredTitle": "Abo abgelaufen",
+    "expired": "Das Abo «{plan}» ist am {date} abgelaufen. Ihre Stellen sind nicht mehr in der Suche sichtbar, bis Sie das Abo verlängern."
+  },
+  "sso": {
+    "signInToggle": "Mit Firmen-Login (SSO) anmelden",
+    "signInEmail": "Arbeits-E-Mail",
+    "signInSubmit": "Weiter zum Firmen-Login",
+    "signInHint": "Für Organisationen mit eingerichtetem Single Sign-on.",
+    "signInFailed": "Für diese E-Mail-Domain ist kein Firmen-Login eingerichtet. Bitte mit Passkey oder E-Mail-Link anmelden."
   }
 }

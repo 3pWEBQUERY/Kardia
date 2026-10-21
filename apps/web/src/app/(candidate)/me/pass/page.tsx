@@ -1,10 +1,11 @@
 import { getTranslations } from 'next-intl/server';
 
-import { REGISTRY_BY_PROFESSION } from '@kardia/core';
+import { REGISTRY_BY_PROFESSION, TERMS_VERSION } from '@kardia/core';
 import { Callout, Card, CardBody, CardHeader } from '@kardia/ui';
 
 import { CredentialList } from '@/components/candidate/CredentialList';
 import { PassForm } from '@/components/candidate/PassForm';
+import { db } from '@/server/db';
 import { getPass } from '@/server/services/pass';
 import { requireUser } from '@/server/session';
 
@@ -13,7 +14,11 @@ export default async function PassPage({ searchParams }: { searchParams: Promise
   const sp = await searchParams;
   const s = await requireUser('/me/pass');
   const t = await getTranslations('candidate.pass');
-  const pass = await getPass(s.user.id);
+  const [pass, user] = await Promise.all([
+    getPass(s.user.id),
+    db.user.findUnique({ where: { id: s.user.id }, select: { termsAcceptedAt: true, termsVersion: true } }),
+  ]);
+  const needsTerms = !user?.termsAcceptedAt || user.termsVersion !== TERMS_VERSION;
   const next = sp.next && sp.next.startsWith('/') && !sp.next.startsWith('//') ? sp.next : null;
   return (
     <div className="flex flex-col gap-6">
@@ -27,6 +32,7 @@ export default async function PassPage({ searchParams }: { searchParams: Promise
         <CardBody>
           <PassForm
             next={next}
+            needsTerms={needsTerms}
             initial={
               pass
                 ? {
@@ -38,6 +44,7 @@ export default async function PassPage({ searchParams }: { searchParams: Promise
                     workAuthorizedCh: pass.workAuthorizedCh,
                     experiences: pass.experiences.map((x) => ({ department: x.department, years: x.years })),
                     languages: pass.languages.map((l) => ({ language: l.language, level: l.level as 'A1' })),
+                    home: pass.homeLat != null && pass.homeLng != null ? { lat: pass.homeLat, lng: pass.homeLng } : null,
                   }
                 : null
             }

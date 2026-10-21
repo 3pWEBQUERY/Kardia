@@ -8,6 +8,7 @@ import { CockpitPalette, type PaletteEntry } from '@/components/employer/Cockpit
 import { OrgSwitcher } from '@/components/employer/OrgSwitcher';
 import { AppShell, type NavItem } from '@/components/shell/AppShell';
 import { db } from '@/server/db';
+import { featureEnabled } from '@/server/features';
 import { listMemberships } from '@/server/services/org';
 import { requireOrgPage } from '@/server/session';
 
@@ -48,8 +49,12 @@ export default async function CockpitLayout({ children }: { children: ReactNode 
     { href: '/employer/team', label: t('nav.employer.team'), icon: 'users' },
     { href: '/employer/billing', label: t('nav.employer.billing'), icon: 'billing' },
   ];
+  const hidden = new Set([
+    ...(featureEnabled('marketplace') ? [] : ['/employer/marketplace']),
+    ...(featureEnabled('flexPool') ? [] : ['/employer/pool']),
+  ]);
   const items: NavItem[] = nav
-    .filter((i) => allowed(i.perm))
+    .filter((i) => allowed(i.perm) && !hidden.has(i.href))
     .map(({ href, label, icon, badge }) => ({ href, label, icon, badge }));
 
   // Befehlspalette: Stellen, Stationen, offene Bewerbungen und Aktionen.
@@ -99,7 +104,7 @@ export default async function CockpitLayout({ children }: { children: ReactNode 
       label: te('openPipeline'),
       href: '/employer/pipeline',
     },
-    ...(allowed('pool.manage')
+    ...(allowed('pool.manage') && featureEnabled('flexPool')
       ? [{ id: 'a-pool', group: te('actions'), label: te('newShift'), href: '/employer/pool' }]
       : []),
     ...items.map((i) => ({

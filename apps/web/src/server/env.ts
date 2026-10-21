@@ -33,6 +33,9 @@ const schema = z.object({
   RATE_LIMIT_DISABLED: z.stringbool().default(false),
   /** Demo-Umgebung: Ein-Klick-Anmeldung als fiktive Seed-Persona. Nie in echter Produktion. */
   DEMO_LOGIN: z.stringbool().default(false),
+  /** Release-Schalter (R1 ohne Marktplatz und Flex-Pool): false blendet die Funktion aus. */
+  FEATURE_MARKETPLACE: z.stringbool().default(true),
+  FEATURE_FLEXPOOL: z.stringbool().default(true),
 });
 
 type Env = z.infer<typeof schema>;

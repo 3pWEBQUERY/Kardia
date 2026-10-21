@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 
 import { changeStatus, postMessage } from '@/server/services/applications';
-import { checkoutPlan, checkoutSingleListing } from '@/server/services/billing';
+import { billingPortalUrl, checkoutPlan, checkoutSingleListing } from '@/server/services/billing';
 import { importStatus, startImport } from '@/server/services/import';
 import { createJob, publishJob, setJobStatus, updateJob } from '@/server/services/jobs';
 import { listOrgOffers, searchMarketplace, sendOffer } from '@/server/services/marketplace';
@@ -12,11 +12,14 @@ import {
   createApiKey,
   createFeed,
   createWebhook,
+  deleteSsoProvider,
   deleteWebhook,
   inviteMember,
   registerOrganization,
   removeMember,
   revokeApiKey,
+  saveSsoProvider,
+  setOrgLogo,
   switchOrganization,
   updateOrgDomains,
 } from '@/server/services/org';
@@ -26,6 +29,7 @@ import {
   createPool,
   inviteToPool,
   publishShift,
+  updatePool,
 } from '@/server/services/pool';
 import { addWardVideo, inviteEmployee } from '@/server/services/team';
 import {
@@ -41,6 +45,7 @@ import { requireOrg, requireUser } from '@/server/session';
 
 import { actionResult, type ActionResult } from './result';
 
+import type { SsoProviderInput } from '@/server/services/org';
 import type { LocationInput, OfferInput, ShiftInput, StatusChange } from '@kardia/core';
 import type { MemberRole, PlanTier } from '@kardia/db';
 
@@ -54,10 +59,12 @@ export async function registerOrg(input: {
   name: string;
   uid: string;
   emailDomains: string[];
+  acceptTerms: boolean;
 }): Promise<ActionResult<{ id: string }>> {
   return actionResult(async () => {
     const s = await requireUser('/employer/onboarding');
-    const org = await registerOrganization(s, input);
+    const { acceptTerms, ...data } = input;
+    const org = await registerOrganization(s, data, { acceptTerms });
     return { id: org.id };
   });
 }
@@ -273,6 +280,17 @@ export async function newPool(input: {
   });
 }
 
+export async function savePoolSettings(
+  poolId: string,
+  input: { name: string; bookingMode: 'FIRST_CONFIRMS' | 'EMPLOYER_SELECTS'; cancelDeadlineHours: number },
+): Promise<ActionResult> {
+  return actionResult(async () => {
+    const ctx = await requireOrg('pool.manage');
+    await updatePool(ctx, poolId, input);
+    revalidatePath('/employer/pool');
+  });
+}
+
 export async function invitePoolMember(poolId: string, email: string): Promise<ActionResult> {
   return actionResult(async () => {
     const ctx = await requireOrg('pool.manage');
@@ -338,6 +356,30 @@ export async function saveDomains(domains: string[]): Promise<ActionResult> {
   });
 }
 
+export async function saveSso(input: SsoProviderInput): Promise<ActionResult> {
+  return actionResult(async () => {
+    const ctx = await requireOrg('org.manage');
+    await saveSsoProvider(ctx, input);
+    revalidatePath('/employer/team');
+  });
+}
+
+export async function saveOrgLogo(fileId: string | null): Promise<ActionResult> {
+  return actionResult(async () => {
+    const ctx = await requireOrg('org.manage');
+    await setOrgLogo(ctx, fileId);
+    revalidatePath('/employer/team');
+  });
+}
+
+export async function removeSso(): Promise<ActionResult> {
+  return actionResult(async () => {
+    const ctx = await requireOrg('org.manage');
+    await deleteSsoProvider(ctx);
+    revalidatePath('/employer/team');
+  });
+}
+
 export async function newApiKey(
   name: string,
   scopes: ('jobs:write' | 'applications:read')[],
@@ -396,6 +438,13 @@ export async function startPlanCheckout(plan: PlanTier): Promise<ActionResult<{ 
   return actionResult(async () => {
     const ctx = await requireOrg('billing.manage');
     return { url: await checkoutPlan(ctx, plan) };
+  });
+}
+
+export async function openBillingPortal(): Promise<ActionResult<{ url: string }>> {
+  return actionResult(async () => {
+    const ctx = await requireOrg('billing.manage');
+    return { url: await billingPortalUrl(ctx) };
   });
 }
 

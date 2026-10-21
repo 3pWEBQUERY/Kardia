@@ -4,11 +4,13 @@ import { canCandidateCancel, formatDateTime, formatTime } from '@kardia/core';
 import { Button, Card, CardBody, CardHeader, EmptyState } from '@kardia/ui';
 
 import { ShiftActions } from '@/components/candidate/ShiftActions';
+import { requireFeature } from '@/server/features';
 import { myShifts } from '@/server/services/pool';
 import { requireUser } from '@/server/session';
 
 /** Flex-Pool: offene Schichten buchen, gebuchte offline lesbar inkl. Adresse und Zeit (PRD 13.2). */
 export default async function ShiftsPage() {
+  requireFeature('flexPool');
   const s = await requireUser('/me/shifts');
   const [t, e] = await Promise.all([getTranslations('candidate.shifts'), getTranslations('enums')]);
   const { open, booked } = await myShifts(s.user.id);

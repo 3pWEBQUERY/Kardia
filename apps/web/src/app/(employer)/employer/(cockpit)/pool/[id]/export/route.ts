@@ -1,10 +1,12 @@
 import { ProblemError } from '@kardia/core';
 
+import { requireFeature } from '@/server/features';
 import { poolCsv } from '@/server/services/pool';
 import { requireOrg } from '@/server/session';
 
 /** CSV-Export der Schichten eines Pools (Flex-Pool-Verwaltung). */
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
+  requireFeature('flexPool');
   const { id } = await params;
   try {
     const ctx = await requireOrg('pool.manage');

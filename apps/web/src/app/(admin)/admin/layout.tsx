@@ -26,6 +26,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     { href: '/admin/organizations', label: t('admin.organizations'), icon: 'organizations' },
     { href: '/admin/moderation', label: t('admin.moderation'), icon: 'moderation' },
     { href: '/admin/editorial', label: t('admin.editorial'), icon: 'editorial' },
+    { href: '/admin/privacy', label: t('admin.privacy'), icon: 'privacy' },
     { href: '/admin/audit', label: t('admin.audit'), icon: 'audit' },
   ];
   return (

@@ -8,6 +8,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { evaluateMatch, formatChfRange, type Condition, type MatchResult, type PartialWardProfile } from '@kardia/core';
 import { Button, Icon, StatusChip, useToast, type RosterCode } from '@kardia/ui';
 
+import { loadMoreResults } from '@/app/actions/search';
 import { ConditionChips } from '@/components/domain/ConditionChips';
 import { Roster } from '@/components/domain/Roster';
 import { saveJob } from '@/lib/saveJob';
@@ -42,7 +43,11 @@ const MAX_POLLS = 6;
  * Muss-Bedingung verletzen, ausgeblendet (AK-B1).
  */
 export function ResultList({
-  hits,
+  hits: firstPage,
+  total,
+  filterParam,
+  nextCursor: firstCursor,
+  showCount = true,
   conditions,
   origin,
   workloadPct,
@@ -50,18 +55,40 @@ export function ResultList({
   compareIds,
 }: {
   hits: ClientHit[];
+  total: number;
+  /** Kodierter Filter (`?f=`), damit Nachladen denselben Zustand nutzt (AK-B2). */
+  filterParam: string;
+  nextCursor: string | null;
+  showCount?: boolean;
   conditions: Condition[];
   origin: string | null;
   workloadPct: number | null;
   signedIn: boolean;
   compareIds: string[];
 }) {
+  const r = useTranslations('public.results');
+  const [hits, setHits] = useState(firstPage);
+  const [cursor, setCursor] = useState(firstCursor);
+  const [loading, setLoading] = useState(false);
   const t = useTranslations('common');
   const e = useTranslations('enums');
   const toast = useToast();
   const message = useActionMessage();
   const [commute, setCommute] = useState<Record<string, { PT?: number; CAR?: number }>>({});
-  const [saved, setSaved] = useState(() => new Set(hits.filter((h) => h.saved).map((h) => h.jobId)));
+  const [saved, setSaved] = useState(() => new Set(firstPage.filter((h) => h.saved).map((h) => h.jobId)));
+
+  const loadMore = async () => {
+    if (!cursor || loading) return;
+    setLoading(true);
+    const res = await loadMoreResults(filterParam, cursor);
+    setLoading(false);
+    if (!res.ok) return toast({ tone: 'critical', message: message(res) });
+    const known = new Set(hits.map((h) => h.jobId));
+    const fresh = res.data.hits.filter((h) => !known.has(h.jobId));
+    setHits((prev) => [...prev, ...fresh]);
+    setSaved((prev) => new Set([...prev, ...fresh.filter((h) => h.saved).map((h) => h.jobId)]));
+    setCursor(res.data.nextCursor);
+  };
   const [compare, setCompare] = useState(() => new Set(compareIds));
   const wantsCommute = !!origin && conditions.some((c) => c.key === 'maxCommute');
 
@@ -198,6 +225,26 @@ export function ResultList({
           </li>
         ))}
       </ol>
+      {cursor || (showCount && hits.length < total) ? (
+        <div className="flex flex-col items-center gap-2 py-2">
+          {showCount ? <p className="text-micro text-ink-500 tabular">{r('shown', { shown: hits.length, total })}</p> : null}
+          {cursor ? (
+            <Button asChild aria-busy={loading}>
+              {/* Ohne JavaScript ein normaler Link auf die nächste Seite; mit JavaScript wird angehängt. */}
+              <a
+                href={`/search?f=${filterParam}&cursor=${cursor}`}
+                rel="next"
+                onClick={(ev) => {
+                  ev.preventDefault();
+                  void loadMore();
+                }}
+              >
+                {loading ? r('loading') : r('loadMore')}
+              </a>
+            </Button>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 }

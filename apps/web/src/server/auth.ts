@@ -36,6 +36,8 @@ function createAuth() {
       additionalFields: {
         locale: { type: 'string', required: false, input: false, defaultValue: 'DE_CH' },
         isAdmin: { type: 'boolean', required: false, input: false, defaultValue: false },
+        // In der Sitzung lesbar, damit getSession das Aktivitätsdatum nur einmal pro Tag schreibt.
+        lastActiveAt: { type: 'date', required: false, input: false },
       },
     },
     advanced: {
@@ -86,7 +88,22 @@ function createAuth() {
       }),
       passkey({ rpID: e.PASSKEY_RP_ID, rpName: 'Kardia', origin: e.APP_ORIGIN }),
       // SAML/OIDC nur ab Abo "Spitalgruppe"; Anbieter legt der Owner im Cockpit an.
-      sso(),
+      sso({
+        // Anbieter werden nur über das Cockpit registriert (services/org.ts), einer je Organisation.
+        providersLimit: 1,
+        provisionUserOnEveryLogin: true,
+        // Wer sich per Firmen-Login anmeldet, wird Mitglied mit den geringsten Rechten;
+        // die Owner-Person vergibt danach die passende Rolle.
+        provisionUser: async ({ user, provider }) => {
+          const orgId = (provider as { organizationId?: string | null }).organizationId;
+          if (!orgId) return;
+          await db.orgMember.upsert({
+            where: { organizationId_userId: { organizationId: orgId, userId: user.id } },
+            create: { organizationId: orgId, userId: user.id, role: 'VIEWER' },
+            update: {},
+          });
+        },
+      }),
       bearer(),
       nextCookies(),
     ],

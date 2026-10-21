@@ -43,7 +43,8 @@
       "moderation": "Moderation",
       "editorial": "Editorial",
       "audit": "Audit log",
-      "kpis": "Key figures"
+      "kpis": "Key figures",
+      "privacy": "Data subject requests"
     }
   },
   "actions": {
@@ -206,6 +207,38 @@
     "transport": {
       "PT": "Public transport",
       "CAR": "Car"
+    },
+    "noEarlyShifts": {
+      "wanted": "No early shifts",
+      "actual": "No early shifts"
+    },
+    "noLateShifts": {
+      "wanted": "No late shifts",
+      "actual": "No late shifts"
+    },
+    "no12hShifts": {
+      "wanted": "No 12-hour shifts",
+      "actual": "No 12-hour shifts"
+    },
+    "maxRequiredShiftsPerWeek": {
+      "wanted": "Minimum shifts ≤ {value}/week",
+      "actual": "At least {actual} shifts/week"
+    },
+    "minSundayAllowancePct": {
+      "wanted": "Sunday allowance ≥ {value} %",
+      "actual": "Sunday allowance {actual} %"
+    },
+    "minOnCallChfDay": {
+      "wanted": "On-call pay ≥ CHF {value}/day",
+      "actual": "On-call CHF {actual}/day"
+    },
+    "minSkillMixHfFhPct": {
+      "wanted": "Share of HF/FH nurses ≥ {value} %",
+      "actual": "Share of HF/FH nurses {actual} %"
+    },
+    "minEducationBudget": {
+      "wanted": "Education budget ≥ CHF {value}",
+      "actual": "Education budget CHF {actual}"
     }
   },
   "roster": {

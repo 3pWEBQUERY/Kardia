@@ -6,6 +6,7 @@ import {
   PLAN_LIMITS,
   SINGLE_LISTING,
   can,
+  effectivePlan,
   formatChf,
   formatDate,
   formatNumber,
@@ -14,8 +15,9 @@ import {
 import { PlanTier } from '@kardia/db/enums';
 import { Button, Callout, Card, CardBody, CardHeader, StatusChip } from '@kardia/ui';
 
-import { PlanCheckoutButton } from '@/components/employer/Billing';
+import { BillingPortalButton, PlanCheckoutButton } from '@/components/employer/Billing';
 import { db } from '@/server/db';
+import { stripeConfigured } from '@/server/services/billing';
 import { requireOrgPage } from '@/server/session';
 
 const PLANS = [PlanTier.PRAXIS, PlanTier.INSTITUTION, PlanTier.SPITALGRUPPE] as const;
@@ -35,11 +37,14 @@ export default async function BillingPage({
   const [org, partners] = await Promise.all([
     db.organization.findUniqueOrThrow({
       where: { id: ctx.org.id },
-      select: { plan: true, planValidUntil: true, foundingPartner: true },
+      select: { plan: true, planValidUntil: true, foundingPartner: true, stripeCustomerId: true },
     }),
     db.organization.count({ where: { foundingPartner: true } }),
   ]);
   const manage = can(ctx.role, 'billing.manage');
+  const plan = effectivePlan(org);
+  const expired = org.plan !== null && plan === null;
+  const cardPayments = stripeConfigured();
   const limit = (v: number | null) => (v == null ? t('unlimited') : formatNumber(v));
   const freeSlots = Math.max(0, FOUNDING_PARTNER.slots - partners);
 
@@ -48,18 +53,37 @@ export default async function BillingPage({
       <header className="flex flex-col gap-1">
         <h1 className="text-h1">{t('title')}</h1>
         <p className="text-body-s text-ink-700">
-          {org.plan ? t('current', { plan: te(`PlanTier.${org.plan}`) }) : t('noPlan')}
-          {org.planValidUntil
+          {plan ? t('current', { plan: te(`PlanTier.${plan}`) }) : t('noPlan')}
+          {plan && org.planValidUntil
             ? ` · ${t('validUntil', { date: formatDate(org.planValidUntil) })}`
             : ''}
         </p>
       </header>
       {ok ? <Callout>{t('paid')}</Callout> : null}
+      {expired && org.plan && org.planValidUntil ? (
+        <Callout tone="warn" title={t('expiredTitle')}>
+          {t('expired', { plan: te(`PlanTier.${org.plan}`), date: formatDate(org.planValidUntil) })}
+        </Callout>
+      ) : null}
+      {manage && !cardPayments ? <Callout tone="warn">{t('stripeMissing')}</Callout> : null}
+      {manage && cardPayments && org.stripeCustomerId ? (
+        <Card>
+          <CardHeader title={t('portalTitle')} />
+          <CardBody>
+            <div className="flex flex-col gap-3">
+              <p className="text-body-s text-ink-700">{t('portalHint')}</p>
+              <div>
+                <BillingPortalButton label={t('portal')} />
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+      ) : null}
       {org.foundingPartner ? (
         <Callout title={t('foundingTitle')}>
           {t('foundingActive', { months: FOUNDING_PARTNER.months })}
         </Callout>
-      ) : !org.plan || org.plan === PlanTier.PRAXIS ? (
+      ) : !plan || plan === PlanTier.PRAXIS ? (
         <Callout title={t('foundingTitle')}>
           {t('foundingInfo', {
             slots: FOUNDING_PARTNER.slots,
@@ -71,13 +95,13 @@ export default async function BillingPage({
       {!manage ? <Callout tone="warn">{t('noPermission')}</Callout> : null}
 
       <div className="grid gap-4 lg:grid-cols-3">
-        {PLANS.map((plan) => {
-          const l = PLAN_LIMITS[plan];
-          const current = org.plan === plan;
+        {PLANS.map((tier) => {
+          const l = PLAN_LIMITS[tier];
+          const current = plan === tier;
           return (
-            <Card key={plan}>
+            <Card key={tier}>
               <CardHeader
-                title={te(`PlanTier.${plan}`)}
+                title={te(`PlanTier.${tier}`)}
                 meta={current ? <StatusChip tone="ok">{t('currentPlan')}</StatusChip> : undefined}
               />
               <CardBody>
@@ -87,7 +111,7 @@ export default async function BillingPage({
                     <span className="text-body-s text-ink-700"> {t('perMonth')}</span>
                   </p>
                   <p className="text-micro text-ink-500">
-                    {t('yearly', { price: formatChf(yearlyPriceChf(plan)) })}
+                    {t('yearly', { price: formatChf(yearlyPriceChf(tier)) })}
                   </p>
                   <dl className="grid grid-cols-[1fr_auto] gap-x-3 gap-y-1 text-body-s">
                     <dt className="text-ink-700">{t('limits.activeJobs')}</dt>
@@ -111,16 +135,16 @@ export default async function BillingPage({
                   </dl>
                   {manage ? (
                     <div className="flex flex-col gap-2">
-                      <PlanCheckoutButton plan={plan} current={current} label={t('checkout')} />
-                      {plan !== PlanTier.PRAXIS ? (
+                      <PlanCheckoutButton plan={tier} current={current} label={t('checkout')} disabled={!cardPayments} />
+                      {tier !== PlanTier.PRAXIS ? (
                         <div className="flex flex-wrap gap-2">
                           <Button asChild size="s" variant="ghost">
-                            <Link href={`/employer/billing/invoice?plan=${plan}`}>
+                            <Link href={`/employer/billing/invoice?plan=${tier}`}>
                               {t('invoiceMonthly')}
                             </Link>
                           </Button>
                           <Button asChild size="s" variant="ghost">
-                            <Link href={`/employer/billing/invoice?plan=${plan}&yearly=1`}>
+                            <Link href={`/employer/billing/invoice?plan=${tier}&yearly=1`}>
                               {t('invoiceYearly')}
                             </Link>
                           </Button>

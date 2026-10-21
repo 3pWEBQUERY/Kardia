@@ -43,7 +43,8 @@
       "moderation": "Modération",
       "editorial": "Rédaction",
       "audit": "Journal d'audit",
-      "kpis": "Indicateurs"
+      "kpis": "Indicateurs",
+      "privacy": "Demandes des personnes concernées"
     }
   },
   "actions": {
@@ -206,6 +207,38 @@
     "transport": {
       "PT": "TP",
       "CAR": "Voiture"
+    },
+    "noEarlyShifts": {
+      "wanted": "Pas de services du matin",
+      "actual": "Pas de services du matin"
+    },
+    "noLateShifts": {
+      "wanted": "Pas de services du soir",
+      "actual": "Pas de services du soir"
+    },
+    "no12hShifts": {
+      "wanted": "Pas de services de 12 heures",
+      "actual": "Pas de services de 12 heures"
+    },
+    "maxRequiredShiftsPerWeek": {
+      "wanted": "Services minimum ≤ {value}/semaine",
+      "actual": "Au moins {actual} services/semaine"
+    },
+    "minSundayAllowancePct": {
+      "wanted": "Indemnité du dimanche ≥ {value} %",
+      "actual": "Indemnité du dimanche {actual} %"
+    },
+    "minOnCallChfDay": {
+      "wanted": "Indemnité de piquet ≥ CHF {value}/jour",
+      "actual": "Piquet CHF {actual}/jour"
+    },
+    "minSkillMixHfFhPct": {
+      "wanted": "Part ES/HES ≥ {value} %",
+      "actual": "Part ES/HES {actual} %"
+    },
+    "minEducationBudget": {
+      "wanted": "Budget formation continue ≥ CHF {value}",
+      "actual": "Budget formation continue CHF {actual}"
     }
   },
   "roster": {

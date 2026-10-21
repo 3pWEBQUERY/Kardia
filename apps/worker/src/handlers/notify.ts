@@ -60,6 +60,10 @@ export function pushMessageFor(kind: string, data: Record<string, unknown>): Pus
       return { title: data.verified ? 'Nachweis verifiziert' : 'Nachweis nicht verifiziert', body: str(data.title), url: '/me/pass' };
     case 'search.alert':
       return { title: 'Neue Treffer', body: str(data.searchName), url: str(data.searchUrl) || '/search' };
+    case 'offer.expired':
+      return { title: 'Angebot abgelaufen', body: `${str(data.orgName)} · ${str(data.jobTitle)}`, url: '/me/marketplace' };
+    case 'credential.expired':
+      return { title: 'Nachweis abgelaufen', body: str(data.title), url: '/me/pass' };
     default:
       return null;
   }

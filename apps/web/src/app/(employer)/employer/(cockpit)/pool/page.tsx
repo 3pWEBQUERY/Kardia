@@ -4,13 +4,21 @@ import { getTranslations } from 'next-intl/server';
 import { limitsFor } from '@kardia/core';
 import { Button, Callout, Card, CardBody, CardHeader, EmptyState, StatusChip } from '@kardia/ui';
 
-import { PoolCreateForm, PoolInviteForm, ShiftForm, ShiftTable } from '@/components/employer/Pool';
+import {
+  PoolCreateForm,
+  PoolInviteForm,
+  PoolSettingsForm,
+  ShiftForm,
+  ShiftTable,
+} from '@/components/employer/Pool';
 import { db } from '@/server/db';
+import { requireFeature } from '@/server/features';
 import { listPools } from '@/server/services/pool';
 import { requireOrgPage } from '@/server/session';
 
 /** Flex-Pool-Verwaltung (Modul C): Pools, Mitglieder, Schichten, Export. Kardia ist nie Arbeitgeber (AK-C3). */
 export default async function PoolPage() {
+  requireFeature('flexPool');
   const ctx = await requireOrgPage('pool.manage');
   const [t, te] = await Promise.all([getTranslations('employer.pool'), getTranslations('enums')]);
   const limits = limitsFor(ctx.org.plan as Parameters<typeof limitsFor>[0]);
@@ -84,6 +92,12 @@ export default async function PoolPage() {
             }
           />
           <CardBody className="flex flex-col gap-6">
+            <details className="rounded-card border border-line-300 p-4">
+              <summary className="cursor-pointer text-body-s font-medium">{t('settings')}</summary>
+              <div className="mt-4">
+                <PoolSettingsForm poolId={p.id} initial={{ name: p.name, bookingMode: p.bookingMode, cancelDeadlineHours: p.cancelDeadlineHours }} />
+              </div>
+            </details>
             <PoolInviteForm poolId={p.id} />
             <details className="rounded-card border border-line-300 p-4">
               <summary className="cursor-pointer text-body-s font-medium">{t('newShift')}</summary>

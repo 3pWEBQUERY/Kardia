@@ -21,6 +21,7 @@ import {
   Settings,
   ShieldCheck,
   Stethoscope,
+  UserSearch,
   Users,
   type LucideIcon,
 } from 'lucide-react';
@@ -51,6 +52,7 @@ export const NAV_ICONS = {
   moderation: MessagesSquare,
   editorial: FileSearch,
   audit: Scale,
+  privacy: UserSearch,
   kpis: BarChart3,
   bell: Bell,
 } satisfies Record<string, LucideIcon>;

@@ -31,7 +31,8 @@
     "shareDocsHint": "Senza condivisione il datore di lavoro vede solo lo stato «verificato». Revoca possibile in qualsiasi momento.",
     "withdraw": "Ritira la candidatura",
     "withdrawTitle": "Ritirare la candidatura?",
-    "withdrawBody": "Il datore di lavoro viene informato. In seguito non sarà più possibile candidarsi di nuovo a questo posto."
+    "withdrawBody": "Il datore di lavoro viene informato. In seguito non sarà più possibile candidarsi di nuovo a questo posto.",
+    "read": "letto"
   },
   "pass": {
     "title": "Passaporto delle qualifiche",
@@ -94,7 +95,22 @@
     },
     "aiSuggestion": "Proposta IA tratta dal documento",
     "aiApply": "Applica la proposta",
-    "aiSuggestionAvailable": "Proposta IA disponibile – aprire «Modifica» per verificarla"
+    "aiSuggestionAvailable": "Proposta IA disponibile – aprire «Modifica» per verificarla",
+    "terms": "Accetto le <terms>CG</terms> e ho letto la <privacy>dichiarazione sulla protezione dei dati</privacy>.",
+    "termsRequired": "Accettare le CG e la dichiarazione sulla protezione dei dati per salvare il passaporto.",
+    "home": {
+      "legend": "Domicilio per i tempi di percorrenza",
+      "hint": "Facoltativo. L'indirizzo non viene salvato – solo un punto preciso a circa 150 m, affinché Kardia possa calcolare i tempi di percorrenza con i mezzi pubblici e in auto.",
+      "street": "Via e n. (facoltativo)",
+      "postalCode": "NPA",
+      "city": "Località",
+      "use": "Riprendere il domicilio",
+      "replace": "Sostituire il domicilio",
+      "saved": "Domicilio registrato. Le modifiche valgono dopo il salvataggio.",
+      "remove": "Rimuovere",
+      "needPlace": "Indicare NPA o località.",
+      "notFound": "Indirizzo non trovato. Verificare NPA e località."
+    }
   },
   "saved": {
     "title": "Preferiti e confronto",
