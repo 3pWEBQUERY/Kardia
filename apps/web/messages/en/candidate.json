@@ -53,7 +53,15 @@
     "withdraw": "Withdraw application",
     "withdrawTitle": "Withdraw application?",
     "withdrawBody": "The employer will be informed. You will not be able to apply for this job again afterwards.",
-    "read": "read"
+    "read": "read",
+    "lead": "All your applications with status and messages – readable offline too.",
+    "stats": {
+      "active": "Active",
+      "interviews": "Interview or offer",
+      "closed": "Closed"
+    },
+    "backToList": "All applications",
+    "toJob": "View job"
   },
   "pass": {
     "title": "Qualification passport",
@@ -131,6 +139,13 @@
       "remove": "Remove",
       "needPlace": "Please enter a postcode or town.",
       "notFound": "This address was not found. Check the postcode and town."
+    },
+    "sections": {
+      "person": "Person and profession",
+      "personHint": "Employers only see these details once you apply.",
+      "experienceHint": "Years per specialty – Kardia uses them to match you with jobs.",
+      "languagesHint": "Level according to the Common European Framework (A1 to C2).",
+      "saveHint": "Changes apply immediately to new applications."
     }
   },
   "saved": {
@@ -141,7 +156,8 @@
     "emptyJobs": "Nothing saved yet. Save jobs in the search with the heart.",
     "searches": "Saved searches",
     "searchesHint": "Notification of new results by email and push.",
-    "emptySearches": "No saved searches yet."
+    "emptySearches": "No saved searches yet.",
+    "lead": "Compare up to four saved jobs side by side, save searches and get alerts."
   },
   "marketplace": {
     "title": "Marketplace & offers",
@@ -183,7 +199,8 @@
     "interestHint": "If you are interested, you share your name and contact details; you then continue in the application thread.",
     "interested": "Express interest",
     "reason": "Reason for declining (optional, only visible in aggregate)",
-    "decline": "Decline"
+    "decline": "Decline",
+    "backToMarketplace": "Marketplace & offers"
   },
   "shifts": {
     "title": "Shifts",
@@ -201,7 +218,10 @@
     "cancelDeadline": "Cancellation only up to {hours} h before – after that, directly with the employer.",
     "cancelled": "Shift cancelled.",
     "bookedToast": "Shift booked. Confirmation by email.",
-    "interestSent": "Interest registered. The employer will choose."
+    "interestSent": "Interest registered. The employer will choose.",
+    "stats": {
+      "open": "Open shifts"
+    }
   },
   "training": {
     "title": "Postgraduate training",
@@ -219,7 +239,8 @@
   "recognition": {
     "title": "Recognition",
     "empty": "No guides published yet.",
-    "progress": "{done} of {total} steps done"
+    "progress": "{done} of {total} steps done",
+    "lead": "Your progress towards recognition of your diploma in Switzerland – step by step."
   },
   "team": {
     "title": "My ward",
@@ -232,7 +253,11 @@
     "answer": "Answer",
     "answerHint": "Up to 1'500 characters, factual and without names of individuals.",
     "submit": "Send answer",
-    "answered": "Thank you! The answer will appear after moderation."
+    "answered": "Thank you! The answer will appear after moderation.",
+    "lead": "For verified staff: confirm or dispute your ward's details and answer questions – anonymously.",
+    "stats": {
+      "openQuestions": "Open questions"
+    }
   },
   "settings": {
     "title": "Settings",
@@ -257,6 +282,8 @@
     "deleteTitle": "Permanently delete account?",
     "deleteBody": "Your profile, passport documents, applications and messages are deleted immediately. Employers you have applied to will no longer see the application.",
     "deleteType": "Enter {email} to confirm",
-    "deleteConfirm": "Delete permanently"
-  }
+    "deleteConfirm": "Delete permanently",
+    "lead": "Language, display, notifications, passkeys and your data."
+  },
+  "loading": "Loading …"
 }

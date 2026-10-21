@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server';
 import { SPECIALTY_TITLES, trainingGap, yearsClosedByJob } from '@kardia/core';
 import { Card, CardBody, CardHeader, EmptyState } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import { TrainingForm } from '@/components/candidate/TrainingForm';
 import { db } from '@/server/db';
 import { requireCandidate } from '@/server/session';
@@ -13,6 +14,7 @@ export default async function TrainingPage({ searchParams }: { searchParams: Pro
   const sp = await searchParams;
   const { candidate } = await requireCandidate('/me/training');
   const t = await getTranslations('candidate.training');
+  const tm = await getTranslations('candidate.overview');
   const progress = await db.trainingProgress.findMany({ where: { candidateId: candidate.id } });
   const titleName = sp.title ?? progress[0]?.specialtyTitle ?? SPECIALTY_TITLES[0]?.name ?? '';
   const gap = trainingGap(titleName, progress);
@@ -25,10 +27,7 @@ export default async function TrainingPage({ searchParams }: { searchParams: Pro
   const ranked = gap ? jobs.map((j) => ({ j, years: yearsClosedByJob(gap, j) })).filter((x) => x.years > 0).sort((a, b) => b.years - a.years) : [];
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-h1">{t('title')}</h1>
-        <p className="text-body-s text-ink-700">{t('lead')}</p>
-      </header>
+      <PageHeader eyebrow={tm('eyebrow')} title={t('title')} description={t('lead')} />
       <Card>
         <CardHeader title={t('progress')} />
         <CardBody>

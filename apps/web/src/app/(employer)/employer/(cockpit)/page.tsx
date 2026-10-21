@@ -1,4 +1,4 @@
-import { ArrowRight, BriefcaseBusiness, Clock, Inbox, MessageSquareReply, Plus } from 'lucide-react';
+import { ArrowRight, BriefcaseBusiness, CircleCheck, Clock, Inbox, MessageSquareReply, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
@@ -196,7 +196,7 @@ export default async function EmployerOverview() {
           <CardHeader title={t('staleTitle')} meta={t('staleHint')} />
           <CardBody className="flex flex-col gap-2">
             {attention.length === 0 ? (
-              <p className="text-body-s text-ink-700">{t('staleNone')}</p>
+              <p className="flex items-start gap-3 rounded-control bg-accent-50 p-3 text-body-s text-accent-700"><Icon icon={CircleCheck} size={18} className="mt-0.5 shrink-0" />{t('staleNone')}</p>
             ) : null}
             {attention.map((w) => {
               const days = daysUntilStale(w.confirmedAt, now);
@@ -226,7 +226,7 @@ export default async function EmployerOverview() {
           <CardHeader title={t('blockedTitle')} />
           <CardBody className="flex flex-col gap-2">
             {blocked.length === 0 ? (
-              <p className="text-body-s text-ink-700">{t('blockedNone')}</p>
+              <p className="flex items-start gap-3 rounded-control bg-accent-50 p-3 text-body-s text-accent-700"><Icon icon={CircleCheck} size={18} className="mt-0.5 shrink-0" />{t('blockedNone')}</p>
             ) : null}
             {blocked.map((d) => (
               <div

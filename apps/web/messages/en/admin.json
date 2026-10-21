@@ -60,7 +60,11 @@
     "reason": "Reason for rejection",
     "reasonHint": "Required. The person receives this reason and can correct the credential.",
     "decided": "Decision saved.",
-    "back": "Back to queue"
+    "back": "Back to queue",
+    "stats": {
+      "open": "Open reviews",
+      "overdue": "Overdue"
+    }
   },
   "organizations": {
     "title": "Organisations",
@@ -86,7 +90,10 @@
     "planSaved": "Plan saved.",
     "decided": "Status saved.",
     "note": "Note (optional)",
-    "createdAt": "Registered"
+    "createdAt": "Registered",
+    "stats": {
+      "total": "Organisations total"
+    }
   },
   "moderation": {
     "title": "Moderation",
@@ -111,7 +118,8 @@
     "keep": "Keep",
     "duration": "{seconds} s",
     "reportReason": "Reason",
-    "done": "Decision saved."
+    "done": "Decision saved.",
+    "lead": "Review questions, comments, videos and reported content before it becomes or stays public."
   },
   "editorial": {
     "title": "Editorial",
@@ -140,7 +148,8 @@
     "specialties": "Specialist titles (selection, SIWF check Q-3)",
     "years": "{years} years",
     "deviations": "Training centre deviations (AK-F2)",
-    "deviationsEmpty": "No deviations reported between employer information and the registry."
+    "deviationsEmpty": "No deviations reported between employer information and the registry.",
+    "lead": "Maintain recognition guides and review deviations in training details."
   },
   "audit": {
     "title": "Audit log",
@@ -179,5 +188,7 @@
     "deleteType": "Type {email} to confirm",
     "deleteConfirm": "Delete permanently",
     "deleted": "Account deleted."
-  }
+  },
+  "eyebrow": "Admin console",
+  "loading": "Loading …"
 }

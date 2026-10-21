@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server';
 import { limitsFor } from '@kardia/core';
 import { Button, Callout, Card, CardBody, CardHeader, EmptyState, StatusChip } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import {
   PoolCreateForm,
   PoolInviteForm,
@@ -25,7 +26,7 @@ export default async function PoolPage() {
   if (!limits?.flexPool) {
     return (
       <div className="flex flex-col gap-6">
-        <h1 className="text-h1">{t('title')}</h1>
+        <PageHeader eyebrow={ctx.org.name} title={t('title')} />
         <EmptyState
           action={
             <Button asChild variant="primary">
@@ -68,10 +69,7 @@ export default async function PoolPage() {
   };
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-h1">{t('title')}</h1>
-        <p className="text-body-s text-ink-700">{t('lead')}</p>
-      </header>
+      <PageHeader eyebrow={ctx.org.name} title={t('title')} description={t('lead')} />
       <Callout>{t('legal')}</Callout>
       <Card>
         <CardHeader title={t('newPool')} />

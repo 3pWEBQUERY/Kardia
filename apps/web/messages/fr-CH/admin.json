@@ -60,7 +60,11 @@
     "reason": "Motif du refus",
     "reasonHint": "Obligatoire. La personne reçoit ce motif et peut corriger le justificatif.",
     "decided": "Décision enregistrée.",
-    "back": "Vers la file"
+    "back": "Vers la file",
+    "stats": {
+      "open": "Vérifications ouvertes",
+      "overdue": "En retard"
+    }
   },
   "organizations": {
     "title": "Organisations",
@@ -86,7 +90,10 @@
     "planSaved": "Abonnement enregistré.",
     "decided": "Statut enregistré.",
     "note": "Note (facultatif)",
-    "createdAt": "Enregistrée"
+    "createdAt": "Enregistrée",
+    "stats": {
+      "total": "Organisations au total"
+    }
   },
   "moderation": {
     "title": "Modération",
@@ -111,7 +118,8 @@
     "keep": "Conserver",
     "duration": "{seconds} s",
     "reportReason": "Motif",
-    "done": "Décision enregistrée."
+    "done": "Décision enregistrée.",
+    "lead": "Vérifier questions, commentaires, vidéos et contenus signalés avant qu'ils soient ou restent visibles."
   },
   "editorial": {
     "title": "Rédaction",
@@ -140,7 +148,8 @@
     "specialties": "Titres de spécialiste (sélection, comparaison ISFM Q-3)",
     "years": "{years} ans",
     "deviations": "Écarts établissements de formation postgraduée (AK-F2)",
-    "deviationsEmpty": "Aucun écart signalé entre les indications des employeurs et le registre."
+    "deviationsEmpty": "Aucun écart signalé entre les indications des employeurs et le registre.",
+    "lead": "Gérer les guides de reconnaissance et vérifier les écarts dans les indications de formation postgrade."
   },
   "audit": {
     "title": "Journal d'audit",
@@ -179,5 +188,7 @@
     "deleteType": "Saisir {email} pour confirmer",
     "deleteConfirm": "Supprimer définitivement",
     "deleted": "Compte supprimé."
-  }
+  },
+  "eyebrow": "Console d'administration",
+  "loading": "Chargement …"
 }

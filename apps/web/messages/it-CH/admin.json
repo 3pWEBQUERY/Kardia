@@ -60,7 +60,11 @@
     "reason": "Motivo del rifiuto",
     "reasonHint": "Obbligatorio. La persona riceve questo motivo e può correggere il documento.",
     "decided": "Decisione salvata.",
-    "back": "Alla coda"
+    "back": "Alla coda",
+    "stats": {
+      "open": "Verifiche aperte",
+      "overdue": "In ritardo"
+    }
   },
   "organizations": {
     "title": "Organizzazioni",
@@ -86,7 +90,10 @@
     "planSaved": "Abbonamento salvato.",
     "decided": "Stato salvato.",
     "note": "Nota (facoltativa)",
-    "createdAt": "Registrata"
+    "createdAt": "Registrata",
+    "stats": {
+      "total": "Organizzazioni totali"
+    }
   },
   "moderation": {
     "title": "Moderazione",
@@ -111,7 +118,8 @@
     "keep": "Mantieni",
     "duration": "{seconds} s",
     "reportReason": "Motivo",
-    "done": "Decisione salvata."
+    "done": "Decisione salvata.",
+    "lead": "Verificare domande, commenti, video e contenuti segnalati prima che diventino o restino visibili."
   },
   "editorial": {
     "title": "Redazione",
@@ -140,7 +148,8 @@
     "specialties": "Titoli di specialista (selezione, confronto ISFM Q-3)",
     "years": "{years} anni",
     "deviations": "Scostamenti stabilimenti di perfezionamento (AK-F2)",
-    "deviationsEmpty": "Nessuno scostamento segnalato tra le indicazioni dei datori di lavoro e il registro."
+    "deviationsEmpty": "Nessuno scostamento segnalato tra le indicazioni dei datori di lavoro e il registro.",
+    "lead": "Gestire le guide al riconoscimento e verificare le discrepanze nelle indicazioni sul perfezionamento."
   },
   "audit": {
     "title": "Registro di audit",
@@ -179,5 +188,7 @@
     "deleteType": "Inserire {email} per confermare",
     "deleteConfirm": "Cancellare definitivamente",
     "deleted": "Account cancellato."
-  }
+  },
+  "eyebrow": "Console di amministrazione",
+  "loading": "Caricamento …"
 }

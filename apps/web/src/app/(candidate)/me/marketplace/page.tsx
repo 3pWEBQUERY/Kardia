@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { conditionSchema, formatChf, formatDate, formatPlainDate } from '@kardia/core';
 import { Button, Card, CardBody, CardHeader, EmptyState, StatusChip } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import { BlockList } from '@/components/candidate/BlockList';
 import { MarketplaceForm } from '@/components/candidate/MarketplaceForm';
 import { db } from '@/server/db';
@@ -16,7 +17,7 @@ import { requireCandidate } from '@/server/session';
 export default async function MarketplacePage() {
   requireFeature('marketplace');
   const { user, candidate } = await requireCandidate('/me/marketplace');
-  const [t, e] = await Promise.all([getTranslations('candidate.marketplace'), getTranslations('enums')]);
+  const [t, e, tm] = await Promise.all([getTranslations('candidate.marketplace'), getTranslations('enums'), getTranslations('candidate.overview')]);
   const [offers, blocks, orgs] = await Promise.all([
     listMyOffers(user.id),
     db.candidateBlock.findMany({ where: { candidateId: candidate.id }, select: { organizationId: true } }),
@@ -25,10 +26,7 @@ export default async function MarketplacePage() {
   const must = z.array(conditionSchema).catch([]).parse(candidate.mustConditions ?? []);
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-h1">{t('title')}</h1>
-        <p className="text-body-s text-ink-700">{t('lead')}</p>
-      </header>
+      <PageHeader eyebrow={tm('eyebrow')} title={t('title')} description={t('lead')} />
       <Card>
         <CardHeader title={t('offers')} />
         <CardBody className="flex flex-col gap-2">

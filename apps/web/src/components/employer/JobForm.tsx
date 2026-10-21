@@ -1,5 +1,6 @@
 'use client';
 
+import { Briefcase, GraduationCap } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useState, type ReactNode } from 'react';
@@ -15,6 +16,7 @@ import { Profession, ShiftType } from '@kardia/db/enums';
 import { Button, Callout, Checkbox, Combobox, Input, Select, useToast } from '@kardia/ui';
 
 import { saveJob } from '@/app/actions/employer';
+import { FormSaveBar, FormSection } from '@/components/app/Form';
 import { useActionMessage } from '@/lib/useActionError';
 
 export interface JobDraft {
@@ -200,7 +202,8 @@ export function JobForm({
         void submit();
       }}
     >
-      <section className="grid gap-4 sm:grid-cols-2">
+      <FormSection title={t('basics')} icon={Briefcase}>
+      <div className="grid gap-4 sm:grid-cols-2">
         {!jobId ? (
           <Select
             label={t('ward')}
@@ -263,10 +266,11 @@ export function JobForm({
             onCheckedChange={(on) => set('allowsPendingRecog', on)}
           />
         </div>
-      </section>
+      </div>
+      </FormSection>
 
-      <details className="rounded-card border border-line-300 bg-surface-0 p-4">
-        <summary className="cursor-pointer text-body-s font-medium">
+      <details className="group rounded-card border border-line-200 bg-surface-0 p-5 md:p-6">
+        <summary className="cursor-pointer text-body-s font-semibold text-ink-900 marker:text-accent-600">
           {t('overrides', { count: Object.keys(d.overrides).length })}
         </summary>
         <p className="mt-2 text-micro text-ink-500">{t('overridesHint')}</p>
@@ -276,9 +280,7 @@ export function JobForm({
       </details>
 
       {physician ? (
-        <section className="flex flex-col gap-4 rounded-card border border-line-300 bg-surface-0 p-4">
-          <h2 className="text-h3">{t('training')}</h2>
-          <p className="text-micro text-ink-500">{t('trainingHint')}</p>
+        <FormSection title={t('training')} description={t('trainingHint')} icon={GraduationCap}>
           <div className="grid gap-4 sm:grid-cols-2">
             <Combobox
               label={tf('specialtyTitle')}
@@ -340,12 +342,12 @@ export function JobForm({
           {!d.specialtyTitle || !d.trainingCategory ? (
             <Callout tone="warn">{t('noTraining')}</Callout>
           ) : null}
-        </section>
+        </FormSection>
       ) : null}
 
       {extra}
       {error ? <Callout tone="critical">{error}</Callout> : null}
-      <div>
+      <FormSaveBar>
         <Button
           type="submit"
           variant="primary"
@@ -354,7 +356,7 @@ export function JobForm({
         >
           {submitLabel}
         </Button>
-      </div>
+      </FormSaveBar>
     </form>
   );
 }

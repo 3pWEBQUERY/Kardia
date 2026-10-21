@@ -1,4 +1,4 @@
-import { ArrowRight, BadgeCheck, CircleCheck, Circle, Heart, Inbox, Search } from 'lucide-react';
+import { ArrowRight, BadgeCheck, CircleCheck, Circle, Handshake, Heart, Inbox, Search } from 'lucide-react';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
@@ -93,10 +93,10 @@ export default async function MeOverview() {
         </div>
       </WelcomeBand>
 
-      <div className="grid gap-3 sm:grid-cols-3">
-        <Stat label={t('activeApplications')} value={active.length} />
-        {marketplace ? <Stat label={t('openOffers')} value={offers} /> : null}
-        <Stat label={t('verifiedCredentials')} value={`${verified}/${candidate.credentials.length}`} />
+      <div className={`grid grid-cols-2 gap-3 ${marketplace ? 'sm:grid-cols-3 [&>*:last-child]:col-span-2 sm:[&>*:last-child]:col-span-1' : ''}`}>
+        <Stat label={t('activeApplications')} value={active.length} icon={<Icon icon={Inbox} size={16} />} />
+        {marketplace ? <Stat label={t('openOffers')} value={offers} icon={<Icon icon={Handshake} size={16} />} /> : null}
+        <Stat label={t('verifiedCredentials')} value={`${verified}/${candidate.credentials.length}`} icon={<Icon icon={BadgeCheck} size={16} />} />
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">

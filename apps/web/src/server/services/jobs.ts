@@ -51,7 +51,7 @@ export async function listOrgJobs(orgId: string, status?: string) {
       ...(status ? { status: status as 'DRAFT' | 'PUBLISHED' | 'PAUSED' | 'CLOSED' } : {}),
     },
     include: {
-      ward: { select: { id: true, name: true, confirmedAt: true } },
+      ward: { select: { id: true, name: true, confirmedAt: true, department: true } },
       _count: { select: { applications: true } },
     },
     orderBy: { updatedAt: 'desc' },

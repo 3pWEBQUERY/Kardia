@@ -25,11 +25,14 @@ export function CardBody({ className, ...props }: HTMLAttributes<HTMLDivElement>
 }
 
 /** Kennzahl-Kachel für Cockpit und Admin (KPIs). */
-export function Stat({ label, value, hint }: { label: ReactNode; value: ReactNode; hint?: ReactNode }) {
+export function Stat({ label, value, hint, icon }: { label: ReactNode; value: ReactNode; hint?: ReactNode; icon?: ReactNode }) {
   return (
-    <div className="flex flex-col gap-1 rounded-card border border-line-300 bg-surface-0 px-5 py-4">
-      <span className="text-caption text-ink-700">{label}</span>
-      <span className="font-mono text-h2 text-ink-900 tabular">{value}</span>
+    <div className="flex flex-col gap-2 rounded-card border border-line-300 bg-surface-0 px-5 py-4">
+      <div className="flex items-start justify-between gap-3">
+        <span className="text-caption text-ink-700">{label}</span>
+        {icon ? <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-control bg-accent-50 text-accent-700">{icon}</span> : null}
+      </div>
+      <span className="text-display leading-none font-semibold tracking-tight text-ink-900 tabular">{value}</span>
       {hint ? <span className="text-micro text-ink-500">{hint}</span> : null}
     </div>
   );

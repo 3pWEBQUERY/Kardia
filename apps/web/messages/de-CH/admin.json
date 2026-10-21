@@ -60,7 +60,11 @@
     "reason": "Grund der Ablehnung",
     "reasonHint": "Pflicht. Die Person erhält diesen Grund und kann den Nachweis korrigieren.",
     "decided": "Entscheid gespeichert.",
-    "back": "Zur Queue"
+    "back": "Zur Queue",
+    "stats": {
+      "open": "Offene Prüfungen",
+      "overdue": "Überfällig"
+    }
   },
   "organizations": {
     "title": "Organisationen",
@@ -86,7 +90,10 @@
     "planSaved": "Abo gespeichert.",
     "decided": "Status gespeichert.",
     "note": "Notiz (optional)",
-    "createdAt": "Registriert"
+    "createdAt": "Registriert",
+    "stats": {
+      "total": "Organisationen gesamt"
+    }
   },
   "moderation": {
     "title": "Moderation",
@@ -111,7 +118,8 @@
     "keep": "Belassen",
     "duration": "{seconds} s",
     "reportReason": "Grund",
-    "done": "Entscheid gespeichert."
+    "done": "Entscheid gespeichert.",
+    "lead": "Fragen, Kommentare, Videos und gemeldete Inhalte prüfen, bevor sie öffentlich sichtbar werden oder bleiben."
   },
   "editorial": {
     "title": "Redaktion",
@@ -140,7 +148,8 @@
     "specialties": "Facharzttitel (Auswahl, SIWF-Abgleich Q-3)",
     "years": "{years} Jahre",
     "deviations": "Abweichungen Weiterbildungsstätten (AK-F2)",
-    "deviationsEmpty": "Keine Abweichungen zwischen Arbeitgeberangaben und Register gemeldet."
+    "deviationsEmpty": "Keine Abweichungen zwischen Arbeitgeberangaben und Register gemeldet.",
+    "lead": "Anerkennungs-Ratgeber pflegen und Abweichungen bei Weiterbildungsangaben prüfen."
   },
   "audit": {
     "title": "Audit-Log",
@@ -179,5 +188,7 @@
     "deleteType": "Zur Bestätigung {email} eingeben",
     "deleteConfirm": "Endgültig löschen",
     "deleted": "Konto gelöscht."
-  }
+  },
+  "eyebrow": "Admin-Konsole",
+  "loading": "Wird geladen …"
 }

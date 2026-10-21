@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { can, formatDateTime, limitsFor } from '@kardia/core';
 import { Callout, Card, CardBody, CardHeader, StatusChip } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import {
   ApiKeys,
   DomainsForm,
@@ -36,12 +37,15 @@ export default async function TeamPage() {
   ]);
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-h1">{t('title')}</h1>
-        <p className="text-body-s text-ink-700">
-          {t('lead', { role: te(`MemberRole.${ctx.role}`) })}
-        </p>
-      </header>
+      <PageHeader
+        eyebrow={ctx.org.name}
+        title={t('title')}
+        description={t('lead', { role: te(`MemberRole.${ctx.role}`) })}
+        stats={[
+          { label: t('members'), value: limits?.users != null ? `${members.length}/${limits.users}` : members.length },
+          { label: t('stats.role'), value: te(`MemberRole.${ctx.role}`) },
+        ]}
+      />
       <Card>
         <CardHeader
           title={t('members')}

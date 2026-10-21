@@ -34,7 +34,11 @@ export async function assertWardInOrg(wardId: string, orgId: string) {
 }
 
 export async function listLocations(orgId: string) {
-  return db.location.findMany({ where: { organizationId: orgId }, orderBy: { name: 'asc' }, include: { wards: { orderBy: { name: 'asc' } } } });
+  return db.location.findMany({
+    where: { organizationId: orgId },
+    orderBy: { name: 'asc' },
+    include: { wards: { orderBy: { name: 'asc' }, include: { _count: { select: { jobs: { where: { status: 'PUBLISHED' } } } } } } },
+  });
 }
 
 export async function createLocation(ctx: OrgContext, input: LocationInput) {

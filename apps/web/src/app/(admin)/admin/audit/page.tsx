@@ -4,12 +4,14 @@ import { getTranslations } from 'next-intl/server';
 import { formatDateTime } from '@kardia/core';
 import { Button, EmptyState, Input } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import { auditLog } from '@/server/services/admin';
 
 /** Audit-Log (PRD 6, 14.2): Person, Zeit, Objekt, Vorher/Nachher; Filter und Cursor-Paginierung. */
 export default async function AuditPage({ searchParams }: { searchParams: Promise<{ entity?: string; entityId?: string; cursor?: string }> }) {
   const sp = await searchParams;
   const t = await getTranslations('admin.audit');
+  const ta = await getTranslations('admin');
   const filter = {
     ...(sp.entity ? { entity: sp.entity } : {}),
     ...(sp.entityId ? { entityId: sp.entityId } : {}),
@@ -20,10 +22,7 @@ export default async function AuditPage({ searchParams }: { searchParams: Promis
   const next = rows.length === 100 && last ? `/admin/audit?${new URLSearchParams({ ...(sp.entity ? { entity: sp.entity } : {}), ...(sp.entityId ? { entityId: sp.entityId } : {}), cursor: last.id }).toString()}` : null;
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-h1">{t('title')}</h1>
-        <p className="text-body-s text-ink-700">{t('lead')}</p>
-      </header>
+      <PageHeader eyebrow={ta('eyebrow')} title={t('title')} description={t('lead')} />
       <form method="get" className="flex flex-wrap items-end gap-3">
         <Input label={t('entity')} name="entity" defaultValue={sp.entity ?? ''} className="w-48" />
         <Input label={t('entityId')} name="entityId" defaultValue={sp.entityId ?? ''} className="w-72" />
@@ -33,7 +32,7 @@ export default async function AuditPage({ searchParams }: { searchParams: Promis
       {rows.length === 0 ? (
         <EmptyState>{t('empty')}</EmptyState>
       ) : (
-        <div className="overflow-x-auto border border-line-300 bg-surface-0">
+        <div className="relative overflow-x-auto border border-line-300 bg-surface-0">
           <table className="w-full border-collapse text-body-s">
             <caption className="sr-only">{t('title')}</caption>
             <thead>
@@ -64,11 +63,11 @@ export default async function AuditPage({ searchParams }: { searchParams: Promis
                         <div className="mt-2 grid gap-2 md:grid-cols-2">
                           <div>
                             <span className="text-micro text-ink-500">{t('before')}</span>
-                            <pre className="overflow-x-auto font-mono text-micro">{JSON.stringify(r.before, null, 2)}</pre>
+                            <pre className="relative overflow-x-auto font-mono text-micro">{JSON.stringify(r.before, null, 2)}</pre>
                           </div>
                           <div>
                             <span className="text-micro text-ink-500">{t('after')}</span>
-                            <pre className="overflow-x-auto font-mono text-micro">{JSON.stringify(r.after, null, 2)}</pre>
+                            <pre className="relative overflow-x-auto font-mono text-micro">{JSON.stringify(r.after, null, 2)}</pre>
                           </div>
                         </div>
                       </details>

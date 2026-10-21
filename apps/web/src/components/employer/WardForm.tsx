@@ -28,6 +28,8 @@ import {
   cx,
 } from '@kardia/ui';
 
+import { FIELD_GROUP_ICONS, FormSaveBar, FormSection } from '@/components/app/Form';
+
 import { RosterEditor } from './RosterEditor.tsx';
 
 export interface Evidence {
@@ -335,13 +337,14 @@ export function WardForm({
   return (
     <form
       noValidate
-      className="flex flex-col gap-8"
+      className="flex flex-col gap-5"
       onSubmit={(e) => {
         e.preventDefault();
         submit();
       }}
     >
-      <section className="grid gap-4 sm:grid-cols-2">
+      <FormSection title={t('ward.basics')} icon={FIELD_GROUP_ICONS.location}>
+      <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <Input
             label={tf('name')}
@@ -354,13 +357,13 @@ export function WardForm({
           {evidenceNote('name')}
         </div>
         {DEPARTMENT_FIELD ? field(DEPARTMENT_FIELD) : null}
-      </section>
+      </div>
+      </FormSection>
       {GROUPS.map((g) => {
         const list = WARD_FIELDS.filter((f) => f.group === g && f.key !== 'department');
         if (g === 'reentry') {
           return (
-            <section key={g} className="flex flex-col gap-4 border-t border-line-200 pt-6">
-              <h2 className="text-h3">{tf(`groups.${g}`)}</h2>
+            <FormSection key={g} title={tf(`groups.${g}`)} icon={FIELD_GROUP_ICONS[g]}>
               <Checkbox
                 label={tf('reentryFriendly')}
                 description={t('ward.reentryHint')}
@@ -444,17 +447,16 @@ export function WardForm({
                   </fieldset>
                 </div>
               ) : null}
-            </section>
+            </FormSection>
           );
         }
         return (
-          <section key={g} className="flex flex-col gap-4 border-t border-line-200 pt-6">
-            <h2 className="text-h3">{tf(`groups.${g}`)}</h2>
+          <FormSection key={g} title={tf(`groups.${g}`)} icon={FIELD_GROUP_ICONS[g]}>
             <div className="grid gap-4 sm:grid-cols-2">{list.map(field)}</div>
-          </section>
+          </FormSection>
         );
       })}
-      <section className="flex flex-col gap-2 border-t border-line-200 pt-6">
+      <FormSection>
         <Textarea
           label={tf('description')}
           hint={t('ward.descriptionHint')}
@@ -462,7 +464,7 @@ export function WardForm({
           value={draft.description ?? ''}
           onChange={(e) => set('description', e.target.value || null)}
         />
-      </section>
+      </FormSection>
       {extra}
       {touched && (Object.keys(errors).length || unconfirmed.length) ? (
         <Callout tone="critical" title={t('form.fixTitle')}>
@@ -478,7 +480,7 @@ export function WardForm({
           </ul>
         </Callout>
       ) : null}
-      <div className="flex flex-wrap items-center gap-3">
+      <FormSaveBar>
         <Button type="submit" variant="primary" size="l" disabled={busy}>
           {submitLabel}
         </Button>
@@ -490,7 +492,7 @@ export function WardForm({
             })}
           </StatusChip>
         ) : null}
-      </div>
+      </FormSaveBar>
     </form>
   );
 }

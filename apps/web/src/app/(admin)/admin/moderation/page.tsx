@@ -4,6 +4,7 @@ import { formatDateTime } from '@kardia/core';
 import { Card, CardBody, CardHeader, EmptyState, StatusChip } from '@kardia/ui';
 
 import { ModerationButtons } from '@/components/admin/ModerationButtons';
+import { PageHeader } from '@/components/app/PageHeader';
 import { moderationQueue } from '@/server/services/admin';
 
 type Flag = { category?: string; reason?: string } | null;
@@ -11,6 +12,7 @@ type Flag = { category?: string; reason?: string } | null;
 /** Moderation (PRD 6): Fragen, Antworten, Kommentare, Videos, Meldungen – KI-4 gibt nur Hinweise. */
 export default async function ModerationPage() {
   const t = await getTranslations('admin.moderation');
+  const ta = await getTranslations('admin');
   const q = await moderationQueue();
   const flag = (f: unknown) => {
     const x = f as Flag;
@@ -20,7 +22,7 @@ export default async function ModerationPage() {
   };
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="text-h1">{t('title')}</h1>
+      <PageHeader eyebrow={ta('eyebrow')} title={t('title')} description={t('lead')} />
 
       <section className="flex flex-col gap-3">
         <h2 className="text-h2">{t('questions')}</h2>

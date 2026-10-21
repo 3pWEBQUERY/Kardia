@@ -1,9 +1,9 @@
-import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
 import { formatDate, formatDateTime, formatPlainDate } from '@kardia/core';
 import { Callout, Card, CardBody, CardHeader, StatusChip, type Tone } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import { MessageComposer, StatusControl } from '@/components/employer/ApplicationControls';
 import { orNotFound } from '@/lib/orNotFound';
 import { getApplicationForOrg, markCandidateMessagesRead } from '@/server/services/applications';
@@ -34,27 +34,23 @@ export default async function ApplicationPage({ params }: { params: Promise<{ id
   const c = app.candidate;
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-col gap-1">
-        <p className="text-caption text-ink-700">
-          <Link href={`/employer/pipeline?job=${app.jobId}`} className="hover:text-accent-700">
-            {app.job.title}
-          </Link>{' '}
-          · {app.job.ward.name}
-        </p>
-        <h1 className="text-h1">
-          {c.firstName} {c.lastName}
-        </h1>
-        <div className="flex flex-wrap gap-2">
-          <StatusChip tone="accent">{te(`ApplicationStatus.${app.status}`)}</StatusChip>
-          <StatusChip>{te(`Profession.${c.profession}`)}</StatusChip>
-          <StatusChip>{t('received', { date: formatDate(app.createdAt) })}</StatusChip>
-          {c.workAuthorizedCh != null ? (
-            <StatusChip tone={c.workAuthorizedCh ? 'ok' : 'warn'}>
-              {c.workAuthorizedCh ? t('authorized') : t('notAuthorized')}
-            </StatusChip>
-          ) : null}
-        </div>
-      </header>
+      <PageHeader
+        eyebrow={`${app.job.title} · ${app.job.ward.name}`}
+        back={{ href: `/employer/pipeline?job=${app.jobId}`, label: t('backToPipeline') }}
+        title={`${c.firstName} ${c.lastName}`}
+        meta={
+          <>
+            <StatusChip tone="accent">{te(`ApplicationStatus.${app.status}`)}</StatusChip>
+            <StatusChip>{te(`Profession.${c.profession}`)}</StatusChip>
+            <StatusChip>{t('received', { date: formatDate(app.createdAt) })}</StatusChip>
+            {c.workAuthorizedCh != null ? (
+              <StatusChip tone={c.workAuthorizedCh ? 'ok' : 'warn'}>
+                {c.workAuthorizedCh ? t('authorized') : t('notAuthorized')}
+              </StatusChip>
+            ) : null}
+          </>
+        }
+      />
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
         <div className="flex min-w-0 flex-col gap-6">
           {app.message ? (

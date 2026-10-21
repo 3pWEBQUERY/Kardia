@@ -53,7 +53,15 @@
     "withdraw": "Ritira la candidatura",
     "withdrawTitle": "Ritirare la candidatura?",
     "withdrawBody": "Il datore di lavoro viene informato. In seguito non sarà più possibile candidarsi di nuovo a questo posto.",
-    "read": "letto"
+    "read": "letto",
+    "lead": "Tutte le tue candidature con stato e messaggi – leggibili anche offline.",
+    "stats": {
+      "active": "In corso",
+      "interviews": "Colloquio o offerta",
+      "closed": "Concluse"
+    },
+    "backToList": "Tutte le candidature",
+    "toJob": "Vai al posto"
   },
   "pass": {
     "title": "Passaporto delle qualifiche",
@@ -131,6 +139,13 @@
       "remove": "Rimuovere",
       "needPlace": "Indicare NPA o località.",
       "notFound": "Indirizzo non trovato. Verificare NPA e località."
+    },
+    "sections": {
+      "person": "Persona e professione",
+      "personHint": "I datori di lavoro vedono questi dati solo quando vi candidate.",
+      "experienceHint": "Anni per settore – Kardia ne calcola la corrispondenza con i posti.",
+      "languagesHint": "Livello secondo il quadro comune europeo (da A1 a C2).",
+      "saveHint": "Le modifiche valgono subito per le nuove candidature."
     }
   },
   "saved": {
@@ -141,7 +156,8 @@
     "emptyJobs": "Ancora nessun preferito. Nella ricerca, salvare con il cuore.",
     "searches": "Ricerche salvate",
     "searchesHint": "Notifica di nuovi risultati via e-mail e push.",
-    "emptySearches": "Ancora nessuna ricerca salvata."
+    "emptySearches": "Ancora nessuna ricerca salvata.",
+    "lead": "Confrontare fino a quattro posti salvati affiancati, salvare ricerche e ricevere avvisi."
   },
   "marketplace": {
     "title": "Mercato e offerte",
@@ -183,7 +199,8 @@
     "interestHint": "In caso di interesse condivide nome e contatto; in seguito scrive nel thread della candidatura.",
     "interested": "Manifesta interesse",
     "reason": "Motivo del rifiuto (facoltativo, visibile solo in forma aggregata)",
-    "decline": "Rifiuta"
+    "decline": "Rifiuta",
+    "backToMarketplace": "Mercato & offerte"
   },
   "shifts": {
     "title": "Turni",
@@ -201,7 +218,10 @@
     "cancelDeadline": "Disdetta possibile solo fino a {hours} h prima – in seguito direttamente presso il datore di lavoro.",
     "cancelled": "Turno disdetto.",
     "bookedToast": "Turno prenotato. Conferma via e-mail.",
-    "interestSent": "Interesse segnalato. Il datore di lavoro sceglie."
+    "interestSent": "Interesse segnalato. Il datore di lavoro sceglie.",
+    "stats": {
+      "open": "Turni aperti"
+    }
   },
   "training": {
     "title": "Perfezionamento",
@@ -219,7 +239,8 @@
   "recognition": {
     "title": "Riconoscimento",
     "empty": "Ancora nessuna guida pubblicata.",
-    "progress": "{done} passi su {total} completati"
+    "progress": "{done} passi su {total} completati",
+    "lead": "I tuoi progressi verso il riconoscimento del diploma in Svizzera – passo dopo passo."
   },
   "team": {
     "title": "Il mio reparto",
@@ -232,7 +253,11 @@
     "answer": "Risposta",
     "answerHint": "Al massimo 1'500 caratteri, in modo oggettivo e senza nomi di persone.",
     "submit": "Invia la risposta",
-    "answered": "Grazie! La risposta apparirà dopo la moderazione."
+    "answered": "Grazie! La risposta apparirà dopo la moderazione.",
+    "lead": "Per collaboratori verificati: confermare o contestare i dati del tuo reparto e rispondere alle domande – in forma anonima.",
+    "stats": {
+      "openQuestions": "Domande aperte"
+    }
   },
   "settings": {
     "title": "Impostazioni",
@@ -257,6 +282,8 @@
     "deleteTitle": "Eliminare definitivamente il conto?",
     "deleteBody": "Profilo, documenti del passaporto, candidature e messaggi vengono eliminati immediatamente. I datori di lavoro presso cui si è candidato/a non vedranno più la candidatura.",
     "deleteType": "Inserire {email} per confermare",
-    "deleteConfirm": "Elimina definitivamente"
-  }
+    "deleteConfirm": "Elimina definitivamente",
+    "lead": "Lingua, aspetto, notifiche, passkey e i tuoi dati."
+  },
+  "loading": "Caricamento …"
 }

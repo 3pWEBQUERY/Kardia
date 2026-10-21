@@ -10,7 +10,7 @@ export { Callout, EmptyState, Skeleton, SkeletonText } from './components/Feedba
 export { Checkbox, FieldShell, Input, RadioGroup, Select, Switch, Textarea } from './components/Field.tsx';
 export { Icon } from './components/Icon.tsx';
 export { Dialog, Menu, Popover, Sheet, Tabs, Tooltip } from './components/Overlay.tsx';
-export { PipelineCard, PipelineColumn } from './components/Pipeline.tsx';
+export { PipelineCard, PipelineColumn, type StageTone } from './components/Pipeline.tsx';
 export { ProfileFieldList, ProfileFieldRow } from './components/ProfileFieldRow.tsx';
 export { DEFAULT_ROSTER_LABELS, RosterStrip, type RosterCode } from './components/RosterStrip.tsx';
 export { ToastProvider, useToast } from './components/Toast.tsx';

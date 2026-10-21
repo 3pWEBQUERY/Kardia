@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server';
 import { formatDate } from '@kardia/core';
 import { Card, CardBody, CardHeader, EmptyState } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import { AnswerQuestion } from '@/components/candidate/AnswerQuestion';
 import { db } from '@/server/db';
 import { openQuestionsForAmbassador } from '@/server/services/team';
@@ -13,13 +14,22 @@ import { requireUser } from '@/server/session';
 export default async function MyTeamPage() {
   const s = await requireUser('/me/team');
   const t = await getTranslations('candidate.team');
+  const tm = await getTranslations('candidate.overview');
   const [wards, questions] = await Promise.all([
     db.verifiedEmployee.findMany({ where: { userId: s.user.id }, include: { ward: { include: { location: { include: { organization: { select: { name: true } } } } } } } }),
     openQuestionsForAmbassador(s.user.id),
   ]);
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-h1">{t('title')}</h1>
+      <PageHeader
+        eyebrow={tm('eyebrow')}
+        title={t('title')}
+        description={t('lead')}
+        stats={[
+          { label: t('wards'), value: wards.length },
+          { label: t('stats.openQuestions'), value: questions.length },
+        ]}
+      />
       <Card>
         <CardHeader title={t('wards')} />
         <CardBody className="flex flex-col gap-2">

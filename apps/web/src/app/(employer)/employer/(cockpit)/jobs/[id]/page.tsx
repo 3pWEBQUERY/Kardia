@@ -10,6 +10,8 @@ import {
 } from '@kardia/core';
 import { Button, Callout, Card, CardBody, CardHeader, StatusChip, Tabs } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
+import { DEPARTMENT_ICONS } from '@/components/brand/departmentIcons';
 import { Roster } from '@/components/domain/Roster';
 import { WardProfileView } from '@/components/domain/WardProfileView';
 import { JobActions } from '@/components/employer/JobActions';
@@ -50,40 +52,36 @@ export default async function JobDetailPage({
 
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-wrap items-start justify-between gap-3">
-        <div className="flex flex-col gap-1">
-          <p className="text-caption text-ink-700">
-            <Link href={`/employer/wards/${job.wardId}`} className="hover:text-accent-700">
-              {job.ward.name}
-            </Link>{' '}
-            · {job.ward.location.city}
-          </p>
-          <h1 className="text-h1">{job.title}</h1>
-          <div className="flex flex-wrap gap-2">
-            <StatusChip tone={job.status === 'PUBLISHED' ? 'ok' : 'neutral'}>
+      <PageHeader
+        eyebrow={`${job.ward.name} · ${job.ward.location.city}`}
+        back={{ href: '/employer/jobs', label: t('backToJobs') }}
+        icon={DEPARTMENT_ICONS[job.ward.department]}
+        title={job.title}
+        meta={
+          <>
+            <StatusChip tone={job.status === 'PUBLISHED' ? 'ok' : job.status === 'DRAFT' ? 'accent' : job.status === 'PAUSED' ? 'warn' : 'neutral'}>
               {te(`JobStatus.${job.status}`)}
             </StatusChip>
-            {job.publishedAt ? (
-              <StatusChip>{t('publishedOn', { date: formatDate(job.publishedAt) })}</StatusChip>
-            ) : null}
-            {job.paidUntil ? (
-              <StatusChip>{t('paidUntil', { date: formatDate(job.paidUntil) })}</StatusChip>
-            ) : null}
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Button asChild>
-            <Link href={`/employer/pipeline?job=${job.id}`}>
-              {t('pipeline', { count: applications })}
-            </Link>
-          </Button>
-          {job.status === 'PUBLISHED' ? (
+            {job.publishedAt ? <StatusChip>{t('publishedOn', { date: formatDate(job.publishedAt) })}</StatusChip> : null}
+            {job.paidUntil ? <StatusChip>{t('paidUntil', { date: formatDate(job.paidUntil) })}</StatusChip> : null}
+          </>
+        }
+        actions={
+          <>
             <Button asChild>
-              <Link href={`/jobs/${job.id}`}>{t('publicView')}</Link>
+              <Link href={`/employer/wards/${job.wardId}`}>{t('toWard')}</Link>
             </Button>
-          ) : null}
-        </div>
-      </header>
+            {job.status === 'PUBLISHED' ? (
+              <Button asChild>
+                <Link href={`/jobs/${job.id}`}>{t('publicView')}</Link>
+              </Button>
+            ) : null}
+            <Button asChild variant="primary">
+              <Link href={`/employer/pipeline?job=${job.id}`}>{t('pipeline', { count: applications })}</Link>
+            </Button>
+          </>
+        }
+      />
       {sp.created ? <Callout title={t('createdTitle')}>{t('created')}</Callout> : null}
       {sp.paid ? <Callout>{t('paid')}</Callout> : null}
       {blockers.length && job.status !== 'PUBLISHED' ? (

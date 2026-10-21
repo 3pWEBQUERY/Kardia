@@ -2,8 +2,10 @@ import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
 import { decodeFilter, encodeFilter, formatChfRange, searchFilterSchema } from '@kardia/core';
-import { Button, Card, CardBody, CardHeader, EmptyState } from '@kardia/ui';
+import { Button, Card, CardBody, CardHeader, EmptyState, StatusChip } from '@kardia/ui';
 
+import { PageHeader, RowLink } from '@/components/app/PageHeader';
+import { DEPARTMENT_ICONS } from '@/components/brand/departmentIcons';
 import { SavedSearchRow } from '@/components/candidate/SavedSearchRow';
 import { db } from '@/server/db';
 import { requireUser } from '@/server/session';
@@ -11,7 +13,7 @@ import { requireUser } from '@/server/session';
 /** Merkliste & Vergleich, gespeicherte Suchen – Merkliste offline lesbar (PRD 13.2). */
 export default async function SavedPage() {
   const s = await requireUser('/me/saved');
-  const [t, e, cs] = await Promise.all([getTranslations('candidate.saved'), getTranslations('enums'), getTranslations('common.search')]);
+  const [t, e, cs, tm] = await Promise.all([getTranslations('candidate.saved'), getTranslations('enums'), getTranslations('common.search'), getTranslations('candidate.overview')]);
   const candidate = await db.candidateProfile.findUnique({
     where: { userId: s.user.id },
     include: {
@@ -23,21 +25,43 @@ export default async function SavedPage() {
   const compareIds = saved.filter((x) => x.job.status === 'PUBLISHED').slice(0, 4).map((x) => x.jobId);
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-h1">{t('title')}</h1>
+      <PageHeader
+        eyebrow={tm('eyebrow')}
+        title={t('title')}
+        description={t('lead')}
+        actions={
+          compareIds.length >= 2 ? (
+            <Button asChild variant="primary">
+              <Link href={`/compare?ids=${compareIds.join(',')}`}>{t('compare', { count: compareIds.length })}</Link>
+            </Button>
+          ) : null
+        }
+        stats={[
+          { label: t('jobs'), value: saved.length },
+          { label: t('searches'), value: candidate?.savedSearches.length ?? 0 },
+        ]}
+      />
       <Card>
-        <CardHeader
-          title={t('jobs')}
-          actions={compareIds.length >= 2 ? <Button asChild size="s" variant="primary"><Link href={`/compare?ids=${compareIds.join(',')}`}>{t('compare', { count: compareIds.length })}</Link></Button> : null}
-        />
+        <CardHeader title={t('jobs')} />
         <CardBody className="flex flex-col gap-2">
           {saved.length === 0 ? <EmptyState action={<Button asChild><Link href="/search">{t('toSearch')}</Link></Button>}>{t('emptyJobs')}</EmptyState> : null}
           {saved.map(({ job }) => (
-            <Link key={job.id} href={`/jobs/${job.id}`} className="flex flex-col gap-0.5 border-b border-line-200 py-2 last:border-0">
-              <span className="text-body-s font-medium">{job.title}{job.status !== 'PUBLISHED' ? ` · ${e(`JobStatus.${job.status}`)}` : ''}</span>
-              <span className="text-micro text-ink-500 tabular">
-                {job.ward.location.organization.name} · {job.ward.name} · {job.ward.location.city} · {formatChfRange(job.ward.salaryMinChf, job.ward.salaryMaxChf)}
-              </span>
-            </Link>
+            <RowLink
+              key={job.id}
+              href={`/jobs/${job.id}`}
+              icon={DEPARTMENT_ICONS[job.ward.department]}
+              title={job.title}
+              meta={
+                <>
+                  <span>{job.ward.location.organization.name}</span>
+                  <span aria-hidden>·</span>
+                  <span>{job.ward.location.city}</span>
+                  <span aria-hidden>·</span>
+                  <span className="tabular">{formatChfRange(job.ward.salaryMinChf, job.ward.salaryMaxChf)}</span>
+                </>
+              }
+              aside={job.status !== 'PUBLISHED' ? <StatusChip tone="warn">{e(`JobStatus.${job.status}`)}</StatusChip> : null}
+            />
           ))}
         </CardBody>
       </Card>

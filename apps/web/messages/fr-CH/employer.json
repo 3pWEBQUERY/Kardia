@@ -102,7 +102,15 @@
     "quotaTitle": "Contingent de votre abonnement atteint",
     "quotaAction": "Comparer les abonnements",
     "wardQuota": "Votre abonnement comprend une unité. Pour d'autres unités, choisir l'abonnement « Institution » ou « Groupe hospitalier ».",
-    "locationQuota": "Votre abonnement comprend un site. Pour plusieurs sites, choisir l'abonnement « Groupe hospitalier »."
+    "locationQuota": "Votre abonnement comprend un site. Pour plusieurs sites, choisir l'abonnement « Groupe hospitalier ».",
+    "lead": "Chaque unité a ses propres conditions de travail. Tenez les profils à jour – confirmation au plus tard tous les 180 jours.",
+    "stats": {
+      "wards": "Unités",
+      "locations": "Sites",
+      "openJobs": "Postes ouverts",
+      "current": "Profils à jour"
+    },
+    "openJobs": "{count, plural, =0 {aucun poste ouvert} one {# poste ouvert} other {# postes ouverts}}"
   },
   "ward": {
     "newTitle": "Créer une unité",
@@ -146,7 +154,9 @@
     "benchmarkRow": "{value} · médiane {median} ({peers} unités)",
     "noBenchmark": "Affichage seulement à partir de 8 unités comparables dans le même domaine et le même canton.",
     "toBenchmark": "Vers le benchmark",
-    "importedAddress": "Adresse tirée de l'annonce : {address}. Aucun site correspondant – le créer comme nouveau site."
+    "importedAddress": "Adresse tirée de l'annonce : {address}. Aucun site correspondant – le créer comme nouveau site.",
+    "backToWards": "Toutes les unités",
+    "basics": "Données de base du service"
   },
   "reality": {
     "hint": "Des collaborateur·rice·s vérifié·e·s confirment ou contestent vos indications. Les valeurs apparaissent à partir de 5 réponses. Vous pouvez commenter, mais ne pouvez rien supprimer ni masquer.",
@@ -223,7 +233,10 @@
     "colWard": "Unité",
     "colStatus": "Statut",
     "colApplications": "Candidatures",
-    "colUpdated": "Modifié"
+    "colUpdated": "Modifié",
+    "lead": "Toutes les annonces de votre organisation – du brouillon au poste fermé. Les candidatures mènent directement au pipeline.",
+    "updated": "modifié le {date}",
+    "applicants": "{count, plural, =0 {aucune candidature} one {# candidature} other {# candidatures}}"
   },
   "job": {
     "ward": "Unité",
@@ -259,7 +272,10 @@
     "tabPreview": "Aperçu",
     "tabEdit": "Modifier",
     "previewHint": "Voici comment les professionnel·le·s voient le poste : profil de l'unité avec les valeurs remplacées pour ce poste.",
-    "profile": "Profil de l'unité"
+    "profile": "Profil de l'unité",
+    "backToJobs": "Tous les postes",
+    "toWard": "Vers l'unité",
+    "basics": "Données de base du poste"
   },
   "pipeline": {
     "title": "Pipeline",
@@ -287,7 +303,11 @@
     "saveStatus": "Enregistrer le statut",
     "statusSaved": "Statut enregistré. Le ou la professionnel·le est notifié·e.",
     "message": "Message",
-    "send": "Envoyer"
+    "send": "Envoyer",
+    "lead": "Candidatures par poste, de nouvelle à engagé·e. Naviguer avec J/K, changer le statut avec 1–6.",
+    "stats": {
+      "inProgress": "En cours"
+    }
   },
   "application": {
     "received": "reçue le {date}",
@@ -307,7 +327,8 @@
     "statusTitle": "Statut",
     "contact": "Contact",
     "noAutoDecision": "Kardia ne prend aucune décision automatique. La correspondance passeport est une aide au tri, pas une évaluation.",
-    "read": "lu"
+    "read": "lu",
+    "backToPipeline": "Vers le pipeline"
   },
   "marketplace": {
     "title": "Recherche sur la place de marché",
@@ -353,7 +374,11 @@
     "withdrawConfirm": "Retirer l'offre",
     "withdrawCancel": "Annuler",
     "withdrawn": "Offre retirée. La personne est informée.",
-    "toApplication": "Vers la candidature"
+    "toApplication": "Vers la candidature",
+    "stats": {
+      "sent": "Offres envoyées",
+      "quotaLeft": "Offres restantes ce mois"
+    }
   },
   "pool": {
     "title": "Pool flexible",
@@ -411,7 +436,14 @@
     "median": "Médiane",
     "peers": "Comparaison",
     "newWard": "Saisir une unité",
-    "noWards": "Saisissez une unité pour la comparer à d'autres."
+    "noWards": "Saisissez une unité pour la comparer à d'autres.",
+    "peersCount": "{count, plural, one {# service comparable} other {# services comparables}}",
+    "pendingTitle": "Pas encore de comparaison",
+    "pendingChip": "En attente de comparaison",
+    "stats": {
+      "compared": "Services comparés",
+      "pending": "En attente de données"
+    }
   },
   "team": {
     "title": "Équipe et paramètres",
@@ -469,11 +501,11 @@
     "ssoCallback": "URI de redirection pour votre service informatique",
     "ssoDomain": "Domaine e-mail",
     "ssoIssuer": "URL de l'émetteur (issuer)",
-    "ssoIssuerHint": "p. ex. https://login.microsoftonline.com/<ID du tenant>/v2.0",
+    "ssoIssuerHint": "p. ex. https://login.microsoftonline.com/[ID du tenant]/v2.0",
     "ssoClientId": "ID client",
     "ssoClientSecret": "Secret client",
     "ssoDiscovery": "URL de découverte (facultatif)",
-    "ssoDiscoveryHint": "Laisser vide pour <issuer>/.well-known/openid-configuration.",
+    "ssoDiscoveryHint": "Laisser vide pour [issuer]/.well-known/openid-configuration.",
     "ssoSave": "Enregistrer la connexion d'entreprise",
     "ssoSaved": "Connexion d'entreprise enregistrée.",
     "ssoReplace": "Reconfigurer",
@@ -490,7 +522,10 @@
     "logoHint": "PNG, JPG ou SVG, 2 Mo au maximum. Visible publiquement dès que votre organisation est vérifiée.",
     "logoSaved": "Logo enregistré.",
     "logoRemove": "Supprimer le logo",
-    "logoRemoved": "Logo supprimé."
+    "logoRemoved": "Logo supprimé.",
+    "stats": {
+      "role": "Votre rôle"
+    }
   },
   "billing": {
     "title": "Abonnement et factures",
@@ -544,7 +579,12 @@
     "portal": "Gérer l'abonnement",
     "stripeMissing": "Le paiement par carte n'est pas configuré dans cet environnement. Les abonnements Institution et Groupe hospitalier sont possibles sur facture avec bulletin de versement QR.",
     "expiredTitle": "Abonnement expiré",
-    "expired": "L'abonnement « {plan} » a expiré le {date}. Vos postes ne sont plus visibles dans la recherche tant que vous ne le prolongez pas."
+    "expired": "L'abonnement « {plan} » a expiré le {date}. Vos postes ne sont plus visibles dans la recherche tant que vous ne le prolongez pas.",
+    "stats": {
+      "plan": "Abonnement",
+      "validUntil": "Valable jusqu'au",
+      "foundingPartner": "Partenaire fondateur"
+    }
   },
   "sso": {
     "signInToggle": "Se connecter avec la connexion d'entreprise (SSO)",
@@ -552,5 +592,6 @@
     "signInSubmit": "Continuer vers la connexion d'entreprise",
     "signInHint": "Pour les organisations ayant configuré le single sign-on.",
     "signInFailed": "Aucune connexion d'entreprise n'est configurée pour ce domaine e-mail. Veuillez vous connecter avec une passkey ou un lien par e-mail."
-  }
+  },
+  "loading": "Chargement …"
 }

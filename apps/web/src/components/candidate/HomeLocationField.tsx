@@ -12,7 +12,16 @@ import { Button, Callout, Icon, Input } from '@kardia/ui';
  * die swisstopo-Suche in Koordinaten umwandeln. Gespeichert wird nur die Zellmitte
  * (~150 m), nie die Adresse.
  */
-export function HomeLocationField({ value, onChange }: { value: HomeLocation | null | undefined; onChange: (home: HomeLocation | null) => void }) {
+export function HomeLocationField({
+  value,
+  onChange,
+  hideLegend = false,
+}: {
+  value: HomeLocation | null | undefined;
+  onChange: (home: HomeLocation | null) => void;
+  /** Titel und Hilfetext stehen bereits im umgebenden Formularabschnitt. */
+  hideLegend?: boolean;
+}) {
   const t = useTranslations('candidate.pass.home');
   const [street, setStreet] = useState('');
   const [postalCode, setPostalCode] = useState('');
@@ -49,8 +58,8 @@ export function HomeLocationField({ value, onChange }: { value: HomeLocation | n
 
   return (
     <fieldset className="flex flex-col gap-3">
-      <legend className="mb-1 text-caption text-ink-700">{t('legend')}</legend>
-      <p className="text-micro text-ink-500">{t('hint')}</p>
+      <legend className={hideLegend ? 'sr-only' : 'mb-1 text-caption text-ink-700'}>{t('legend')}</legend>
+      {hideLegend ? null : <p className="text-micro text-ink-500">{t('hint')}</p>}
       {value ? (
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-control border border-line-300 bg-surface-0 px-3 py-2">
           <span className="inline-flex items-center gap-2 text-body-s text-ink-900">

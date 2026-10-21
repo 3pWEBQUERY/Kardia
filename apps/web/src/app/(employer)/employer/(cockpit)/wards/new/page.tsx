@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import { emptyWardServer } from '@/components/employer/wardDefaults';
 import { WardEditor } from '@/components/employer/WardEditor';
 import { listLocations } from '@/server/services/wards';
@@ -16,10 +17,7 @@ export default async function NewWardPage({
   const locations = await listLocations(ctx.org.id);
   return (
     <div className="flex max-w-4xl flex-col gap-6">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-h1">{t('newTitle')}</h1>
-        <p className="text-body-s text-ink-700">{t('newLead')}</p>
-      </header>
+      <PageHeader eyebrow={ctx.org.name} title={t('newTitle')} description={t('newLead')} />
       <WardEditor
         {...(location ? { locationId: location } : {})}
         locations={locations.map((l) => ({ id: l.id, name: l.name, city: l.city }))}

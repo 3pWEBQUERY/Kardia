@@ -53,7 +53,15 @@
     "withdraw": "Bewerbung zurückziehen",
     "withdrawTitle": "Bewerbung zurückziehen?",
     "withdrawBody": "Der Arbeitgeber wird informiert. Eine erneute Bewerbung auf diese Stelle ist danach nicht möglich.",
-    "read": "gelesen"
+    "read": "gelesen",
+    "lead": "Alle Bewerbungen mit Status und Nachrichten – auch offline lesbar.",
+    "stats": {
+      "active": "Laufend",
+      "interviews": "Gespräch oder Angebot",
+      "closed": "Abgeschlossen"
+    },
+    "backToList": "Alle Bewerbungen",
+    "toJob": "Zur Stelle"
   },
   "pass": {
     "title": "Qualifikations-Pass",
@@ -131,6 +139,13 @@
       "remove": "Entfernen",
       "needPlace": "Bitte PLZ oder Ort angeben.",
       "notFound": "Diese Adresse wurde nicht gefunden. PLZ und Ort prüfen."
+    },
+    "sections": {
+      "person": "Person und Beruf",
+      "personHint": "Diese Angaben sehen Arbeitgeber erst, wenn Sie sich bewerben.",
+      "experienceHint": "Jahre pro Fachbereich – daraus berechnet Kardia die Passung zu Stellen.",
+      "languagesHint": "Niveau nach dem europäischen Referenzrahmen (A1 bis C2).",
+      "saveHint": "Änderungen gelten sofort für neue Bewerbungen."
     }
   },
   "saved": {
@@ -141,7 +156,8 @@
     "emptyJobs": "Noch nichts gemerkt. In der Suche mit dem Herz merken.",
     "searches": "Gespeicherte Suchen",
     "searchesHint": "Benachrichtigung bei neuen Treffern per E-Mail und Push.",
-    "emptySearches": "Noch keine gespeicherte Suche."
+    "emptySearches": "Noch keine gespeicherte Suche.",
+    "lead": "Gemerkte Stellen bis zu vier nebeneinander vergleichen, Suchen speichern und benachrichtigt werden."
   },
   "marketplace": {
     "title": "Marktplatz & Angebote",
@@ -183,7 +199,8 @@
     "interestHint": "Bei Interesse geben Sie Name und Kontakt frei; danach schreiben Sie im Bewerbungs-Thread.",
     "interested": "Interesse bekunden",
     "reason": "Grund für eine Absage (optional, nur zusammengefasst sichtbar)",
-    "decline": "Ablehnen"
+    "decline": "Ablehnen",
+    "backToMarketplace": "Marktplatz & Angebote"
   },
   "shifts": {
     "title": "Schichten",
@@ -201,7 +218,10 @@
     "cancelDeadline": "Absage nur bis {hours} h vorher – danach direkt beim Arbeitgeber.",
     "cancelled": "Schicht abgesagt.",
     "bookedToast": "Schicht gebucht. Bestätigung per E-Mail.",
-    "interestSent": "Interesse gemeldet. Der Arbeitgeber wählt aus."
+    "interestSent": "Interesse gemeldet. Der Arbeitgeber wählt aus.",
+    "stats": {
+      "open": "Offene Schichten"
+    }
   },
   "training": {
     "title": "Weiterbildung",
@@ -219,7 +239,8 @@
   "recognition": {
     "title": "Anerkennung",
     "empty": "Noch keine Anleitungen veröffentlicht.",
-    "progress": "{done} von {total} Schritten erledigt"
+    "progress": "{done} von {total} Schritten erledigt",
+    "lead": "Dein Fortschritt auf dem Weg zur Anerkennung deines Diploms in der Schweiz – Schritt für Schritt."
   },
   "team": {
     "title": "Meine Station",
@@ -232,7 +253,11 @@
     "answer": "Antwort",
     "answerHint": "Höchstens 1'500 Zeichen, sachlich und ohne Namen von Personen.",
     "submit": "Antwort senden",
-    "answered": "Danke! Die Antwort erscheint nach der Moderation."
+    "answered": "Danke! Die Antwort erscheint nach der Moderation.",
+    "lead": "Für verifizierte Mitarbeitende: Angaben deiner Station bestätigen oder widersprechen und Fragen beantworten – anonym.",
+    "stats": {
+      "openQuestions": "Offene Fragen"
+    }
   },
   "settings": {
     "title": "Einstellungen",
@@ -257,6 +282,8 @@
     "deleteTitle": "Konto endgültig löschen?",
     "deleteBody": "Profil, Pass-Dokumente, Bewerbungen und Nachrichten werden sofort gelöscht. Arbeitgeber, bei denen Sie sich beworben haben, sehen die Bewerbung danach nicht mehr.",
     "deleteType": "Zur Bestätigung {email} eingeben",
-    "deleteConfirm": "Endgültig löschen"
-  }
+    "deleteConfirm": "Endgültig löschen",
+    "lead": "Sprache, Darstellung, Benachrichtigungen, Passkeys und deine Daten."
+  },
+  "loading": "Wird geladen …"
 }
