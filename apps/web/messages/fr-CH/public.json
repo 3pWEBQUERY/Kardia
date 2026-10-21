@@ -157,7 +157,20 @@
     "onlyDifferences": "Différences uniquement",
     "best": "meilleure valeur",
     "eyebrow": "Comparaison",
-    "lead": "Jusqu'à quatre postes côte à côte – champ par champ, issus du profil de l'unité."
+    "lead": "Jusqu'à quatre postes côte à côte – champ par champ, issus du profil de l'unité.",
+    "howTitle": "Comment comparer des unités",
+    "steps": {
+      "pick": "Dans la recherche, cocher « Comparer » pour jusqu’à quatre postes.",
+      "open": "La barre de comparaison apparaît en bas – y choisir « Comparer ».",
+      "read": "Chaque champ côte à côte ; la meilleure valeur est mise en évidence."
+    },
+    "previewA": "Unité A",
+    "previewB": "Unité B",
+    "previewRows": {
+      "lead": "Délai du planning",
+      "weekends": "Week-ends par mois",
+      "ratio": "Ratio d'encadrement (jour)"
+    }
   },
   "guide": {
     "title": "Guide de la reconnaissance",

@@ -157,7 +157,20 @@
     "onlyDifferences": "Solo differenze",
     "best": "valore migliore",
     "eyebrow": "Confronto",
-    "lead": "Fino a quattro posti affiancati – campo per campo dal profilo del reparto."
+    "lead": "Fino a quattro posti affiancati – campo per campo dal profilo del reparto.",
+    "howTitle": "Come confrontare i reparti",
+    "steps": {
+      "pick": "Nella ricerca, spuntare «Confronta» per un massimo di quattro posti.",
+      "open": "In basso appare la barra di confronto – scegliere «Confronta».",
+      "read": "Ogni campo affiancato; il valore migliore è evidenziato."
+    },
+    "previewA": "Reparto A",
+    "previewB": "Reparto B",
+    "previewRows": {
+      "lead": "Anticipo del piano dei turni",
+      "weekends": "Fine settimana al mese",
+      "ratio": "Rapporto di assistenza (giorno)"
+    }
   },
   "guide": {
     "title": "Guida al riconoscimento",

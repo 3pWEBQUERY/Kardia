@@ -157,7 +157,20 @@
     "onlyDifferences": "Differences only",
     "best": "best value",
     "eyebrow": "Comparison",
-    "lead": "Up to four jobs side by side – field by field from the ward profile."
+    "lead": "Up to four jobs side by side – field by field from the ward profile.",
+    "howTitle": "How to compare wards",
+    "steps": {
+      "pick": "In search, tick «Compare» on up to four jobs.",
+      "open": "The compare bar appears at the bottom – choose «Compare» there.",
+      "read": "Every field side by side; the best value is highlighted."
+    },
+    "previewA": "Ward A",
+    "previewB": "Ward B",
+    "previewRows": {
+      "lead": "Roster lead time",
+      "weekends": "Weekends per month",
+      "ratio": "Staffing ratio (day)"
+    }
   },
   "guide": {
     "title": "Recognition guide",

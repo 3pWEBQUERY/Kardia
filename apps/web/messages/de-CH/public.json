@@ -157,7 +157,20 @@
     "onlyDifferences": "Nur Unterschiede",
     "best": "beste Ausprägung",
     "eyebrow": "Vergleich",
-    "lead": "Bis zu vier Stellen nebeneinander – Feld für Feld aus dem Stationsprofil."
+    "lead": "Bis zu vier Stellen nebeneinander – Feld für Feld aus dem Stationsprofil.",
+    "howTitle": "So vergleichst du Stationen",
+    "steps": {
+      "pick": "In der Suche bei bis zu vier Stellen «Vergleichen» anhaken.",
+      "open": "Unten erscheint die Vergleichsleiste – dort «Vergleichen» wählen.",
+      "read": "Jedes Feld nebeneinander; die beste Ausprägung ist markiert."
+    },
+    "previewA": "Station A",
+    "previewB": "Station B",
+    "previewRows": {
+      "lead": "Dienstplan-Vorlauf",
+      "weekends": "Wochenenden pro Monat",
+      "ratio": "Betreuungsschlüssel Tag"
+    }
   },
   "guide": {
     "title": "Ratgeber Anerkennung",
