@@ -20,7 +20,9 @@ RUN pnpm --filter @kardia/db deploy --legacy /tools/db \
 FROM node:22-bookworm-slim AS runtime
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0
 WORKDIR /app
-RUN groupadd -r kardia && useradd -r -m -g kardia kardia
+# openssl: Prisma-CLI im Pre-Deploy erkennt sonst die libssl-Version nicht (Warnung im Log).
+RUN apt-get update && apt-get install -y --no-install-recommends openssl && rm -rf /var/lib/apt/lists/* \
+ && groupadd -r kardia && useradd -r -m -g kardia kardia
 COPY --from=build --chown=kardia:kardia /repo/apps/web/.next/standalone ./
 COPY --from=build --chown=kardia:kardia /repo/apps/web/.next/static ./apps/web/.next/static
 COPY --from=build --chown=kardia:kardia /repo/apps/web/public ./apps/web/public
