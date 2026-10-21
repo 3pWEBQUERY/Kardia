@@ -210,17 +210,20 @@ enum PlanTier {
 // Better Auth nutzt diese Tabelle als "user"-Modell (name/image/updatedAt sind Pflichtfelder
 // von Better Auth); Sessions, Konten, Passkeys usw. stehen weiter unten.
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  emailVerified Boolean   @default(false)
-  name          String    @default("")
-  image         String?
-  locale        Locale    @default(DE_CH)
-  isAdmin       Boolean   @default(false)
-  lastActiveAt  DateTime  @default(now())
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  deletedAt     DateTime?
+  id              String    @id @default(cuid())
+  email           String    @unique
+  emailVerified   Boolean   @default(false)
+  name            String    @default("")
+  image           String?
+  locale          Locale    @default(DE_CH)
+  isAdmin         Boolean   @default(false)
+  lastActiveAt    DateTime  @default(now())
+  /// Zustimmung zu AGB und Datenschutzerklärung (PRD 14.3) mit Version
+  termsAcceptedAt DateTime?
+  termsVersion    String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
 
   candidate   CandidateProfile?
   memberships OrgMember[]
@@ -245,21 +248,25 @@ model PushSubscription {
 // ───────────────────────── Arbeitgeber ─────────────────────────
 
 model Organization {
-  id                 String          @id @default(cuid())
-  name               String
-  uid                String          @unique // CHE-123.456.789
-  verification       OrgVerification @default(PENDING)
-  secoRegistryMatch  Boolean         @default(false)
-  emailDomains       String[]
-  logoFileId         String?         @unique
-  plan               PlanTier?
-  stripeCustomerId   String?         @unique
-  offerQuotaPerMonth Int             @default(0)
-  planValidUntil     DateTime?
-  foundingPartner    Boolean         @default(false)
-  createdAt          DateTime        @default(now())
+  id                      String          @id @default(cuid())
+  name                    String
+  uid                     String          @unique // CHE-123.456.789
+  verification            OrgVerification @default(PENDING)
+  secoRegistryMatch       Boolean         @default(false)
+  emailDomains            String[]
+  logoFileId              String?         @unique
+  plan                    PlanTier?
+  stripeCustomerId        String?         @unique
+  offerQuotaPerMonth      Int             @default(0)
+  planValidUntil          DateTime?
+  /// Stripe-Abo für Kundenportal und Lebenszyklus (Kündigung, Zahlungsausfall)
+  stripeSubscriptionId    String?         @unique
+  foundingPartner         Boolean         @default(false)
+  /// Zustimmung zu den AGB für Arbeitgeber (PRD 14.3)
+  employerTermsAcceptedAt DateTime?
+  createdAt               DateTime        @default(now())
 
-  logo      File?       @relation("OrgLogo", fields: [logoFileId], references: [id])
+  logo      File?             @relation("OrgLogo", fields: [logoFileId], references: [id])
   members   OrgMember[]
   locations Location[]
   pools     FlexPool[]
@@ -304,45 +311,45 @@ model Location {
 
 // Stationsprofil (Modul A) – trägt die Arbeitsbedingungen
 model Ward {
-  id                     String         @id @default(cuid())
-  locationId             String
-  name                   String
-  department             Department
-  salaryMinChf           Int // brutto/Jahr bei 100 %
-  salaryMaxChf           Int
-  thirteenthSalary       Boolean
-  nightAllowanceChfHour  Int
-  sundayAllowancePct     Int
-  onCallChfDay           Int?
-  shiftTypes             ShiftType[]
-  rosterLeadWeeks        Int
-  weekendsPerMonth       Float
-  guaranteedWishDays     Int
-  minWorkloadPct         Int
-  maxWorkloadPct         Int
-  minShiftsPerWeek       Int?
-  patientsPerNurseDay    Float?
-  patientsPerNurseNight  Float?
-  skillMixHfFhPct        Int?
-  skillMixFagePct        Int?
-  skillMixAidPct         Int?
-  onboardingWeeks        Int
-  vacationWeeks          Int
-  educationBudgetChf     Int?
-  educationDays          Int?
-  childcare              ChildcareType  @default(NONE)
-  childcareAllowanceChf  Int?
-  collectiveAgreement    String // GAV-Name oder "kein GAV"
-  rosterPattern          RosterCode[] // genau 28 Einträge, Validierung in Zod
-  reentryFriendly        Boolean        @default(false)
-  reentryOnboardingWeeks Int?
+  id                       String        @id @default(cuid())
+  locationId               String
+  name                     String
+  department               Department
+  salaryMinChf             Int // brutto/Jahr bei 100 %
+  salaryMaxChf             Int
+  thirteenthSalary         Boolean
+  nightAllowanceChfHour    Int
+  sundayAllowancePct       Int
+  onCallChfDay             Int?
+  shiftTypes               ShiftType[]
+  rosterLeadWeeks          Int
+  weekendsPerMonth         Float
+  guaranteedWishDays       Int
+  minWorkloadPct           Int
+  maxWorkloadPct           Int
+  minShiftsPerWeek         Int?
+  patientsPerNurseDay      Float?
+  patientsPerNurseNight    Float?
+  skillMixHfFhPct          Int?
+  skillMixFagePct          Int?
+  skillMixAidPct           Int?
+  onboardingWeeks          Int
+  vacationWeeks            Int
+  educationBudgetChf       Int?
+  educationDays            Int?
+  childcare                ChildcareType @default(NONE)
+  childcareAllowanceChf    Int?
+  collectiveAgreement      String // GAV-Name oder "kein GAV"
+  rosterPattern            RosterCode[] // genau 28 Einträge, Validierung in Zod
+  reentryFriendly          Boolean       @default(false)
+  reentryOnboardingWeeks   Int?
   reentryAccompaniedShifts Int? // Modul H: begleitete Dienste
-  reentryRefresher       Json? // Modul H: [{ provider, durationDays, costCoveredChf }]
-  description            String?
-  translations           Json? // KI-6: { "fr-CH": { description }, … }
-  confirmedAt            DateTime // letzte Bestätigung durch Arbeitgeber
-  createdAt              DateTime       @default(now())
-  updatedAt              DateTime       @updatedAt
+  reentryRefresher         Json? // Modul H: [{ provider, durationDays, costCoveredChf }]
+  description              String?
+  translations             Json? // KI-6: { "fr-CH": { description }, … }
+  confirmedAt              DateTime // letzte Bestätigung durch Arbeitgeber
+  createdAt                DateTime      @default(now())
+  updatedAt                DateTime      @updatedAt
 
   location          Location           @relation(fields: [locationId], references: [id], onDelete: Cascade)
   jobs              Job[]
@@ -363,34 +370,34 @@ model Ward {
 }
 
 model Job {
-  id                 String       @id @default(cuid())
-  wardId             String
-  title              String
-  profession         Profession
-  workloadMinPct     Int
-  workloadMaxPct     Int
-  startDate          DateTime?    @db.Date
-  status             JobStatus    @default(DRAFT)
-  overrides          Json? // überschriebene Ward-Felder
-  allowsPendingRecog Boolean      @default(false) // Modul H
+  id                          String                   @id @default(cuid())
+  wardId                      String
+  title                       String
+  profession                  Profession
+  workloadMinPct              Int
+  workloadMaxPct              Int
+  startDate                   DateTime?                @db.Date
+  status                      JobStatus                @default(DRAFT)
+  overrides                   Json? // überschriebene Ward-Felder
+  allowsPendingRecog          Boolean                  @default(false) // Modul H
   // Modul F – ärztliche Weiterbildung
-  specialtyTitle     String?
-  trainingCategory   String?
-  maxCreditableYears Float?
-  weeklyHours        Int?
+  specialtyTitle              String?
+  trainingCategory            String?
+  maxCreditableYears          Float?
+  weeklyHours                 Int?
   structuredTrainingHoursWeek Int?
-  rotations          String[]     @default([])
-  assistantPositions Int?
+  rotations                   String[]                 @default([])
+  assistantPositions          Int?
   // Abrechnung Einzelinserat und Feed-Import (R2)
-  paidUntil          DateTime?
-  feedId             String?
-  externalRef        String?
-  sourceHash         String?
+  paidUntil                   DateTime?
+  feedId                      String?
+  externalRef                 String?
+  sourceHash                  String?
   // Volltextsuche (per Migration als generierte Spalte + GIN-Index gepflegt)
-  searchVector       Unsupported("tsvector")?
-  publishedAt        DateTime?
-  createdAt          DateTime     @default(now())
-  updatedAt          DateTime     @updatedAt
+  searchVector                Unsupported("tsvector")?
+  publishedAt                 DateTime?
+  createdAt                   DateTime                 @default(now())
+  updatedAt                   DateTime                 @updatedAt
 
   ward         Ward          @relation(fields: [wardId], references: [id], onDelete: Cascade)
   feed         JobFeed?      @relation(fields: [feedId], references: [id], onDelete: SetNull)
@@ -407,8 +414,8 @@ model Job {
 // ───────────────────────── Fachpersonen ─────────────────────────
 
 model CandidateProfile {
-  id                 String    @id @default(cuid())
-  userId             String    @unique
+  id                 String     @id @default(cuid())
+  userId             String     @unique
   firstName          String
   lastName           String
   phone              String?
@@ -416,16 +423,16 @@ model CandidateProfile {
   homeLng            Float?
   homeDistrict       String? // für anonymes Marktplatz-Profil
   profession         Profession
-  yearsExperience    Int       @default(0)
+  yearsExperience    Int        @default(0)
   workAuthorizedCh   Boolean? // nur Ja/Nein, kein Status
   // Modul E – anonymes Marktplatz-Profil
-  marketplaceActive  Boolean   @default(false)
+  marketplaceActive  Boolean    @default(false)
   desiredWorkloadPct Int?
-  earliestStart      DateTime? @db.Date
+  earliestStart      DateTime?  @db.Date
   mustConditions     Json? // gleiches Schema wie Suchfilter
-  createdAt          DateTime  @default(now())
+  createdAt          DateTime   @default(now())
 
-  user          User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   credentials   Credential[]
   experiences   Experience[]
   languages     LanguageSkill[]
@@ -494,15 +501,17 @@ model Credential {
 }
 
 model Application {
-  id               String             @id @default(cuid())
-  jobId            String
-  candidateId      String
-  status           ApplicationStatus  @default(NEW)
-  message          String?            @db.VarChar(500)
-  documentsShared  Boolean            @default(false)
-  rejectionReason  RejectionReason?
-  statusChangedAt  DateTime           @default(now())
-  createdAt        DateTime           @default(now())
+  id              String            @id @default(cuid())
+  jobId           String
+  candidateId     String
+  status          ApplicationStatus @default(NEW)
+  message         String?           @db.VarChar(500)
+  documentsShared Boolean           @default(false)
+  /// Ein-Klick-Bewerbung mit dem Qualifikations-Pass (KPI "Ein-Klick-Quote")
+  viaPass         Boolean           @default(false)
+  rejectionReason RejectionReason?
+  statusChangedAt DateTime          @default(now())
+  createdAt       DateTime          @default(now())
 
   job       Job              @relation(fields: [jobId], references: [id], onDelete: Cascade)
   candidate CandidateProfile @relation(fields: [candidateId], references: [id], onDelete: Cascade)
@@ -514,11 +523,13 @@ model Application {
 }
 
 model Message {
-  id            String   @id @default(cuid())
+  id            String    @id @default(cuid())
   applicationId String
   senderUserId  String
   body          String
-  createdAt     DateTime @default(now())
+  createdAt     DateTime  @default(now())
+  /// Gelesen-Markierung durch die Gegenseite (PRD 13.2, Hintergrund-Sync)
+  readAt        DateTime?
 
   application Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
 }
@@ -582,11 +593,11 @@ model CandidateBlock {
 // ───────────────────────── Flex-Pool (C) ─────────────────────────
 
 model FlexPool {
-  id                 String          @id @default(cuid())
-  organizationId     String
-  name               String
-  bookingMode        PoolBookingMode @default(FIRST_CONFIRMS)
-  cancelDeadlineHours Int            @default(48)
+  id                  String          @id @default(cuid())
+  organizationId      String
+  name                String
+  bookingMode         PoolBookingMode @default(FIRST_CONFIRMS)
+  cancelDeadlineHours Int             @default(48)
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   members      PoolMember[]
@@ -606,17 +617,17 @@ model PoolMember {
 }
 
 model Shift {
-  id             String      @id @default(cuid())
-  poolId         String
-  wardId         String
-  startsAt       DateTime
-  endsAt         DateTime
-  code           RosterCode
-  hourlyRateChf  Int
-  requirements   String?
-  status         ShiftStatus @default(OPEN)
+  id                  String      @id @default(cuid())
+  poolId              String
+  wardId              String
+  startsAt            DateTime
+  endsAt              DateTime
+  code                RosterCode
+  hourlyRateChf       Int
+  requirements        String?
+  status              ShiftStatus @default(OPEN)
   bookedByCandidateId String?
-  bookedAt       DateTime?
+  bookedAt            DateTime?
 
   pool      FlexPool        @relation(fields: [poolId], references: [id], onDelete: Cascade)
   ward      Ward            @relation(fields: [wardId], references: [id], onDelete: Cascade)
@@ -657,13 +668,13 @@ model RealityCheck {
 }
 
 model WardVideo {
-  id           String           @id @default(cuid())
-  wardId       String
-  fileId       String           @unique
-  captionsId   String           @unique
-  posterId     String?          @unique
-  durationSec  Int
-  moderation   ModerationStatus @default(PENDING)
+  id          String           @id @default(cuid())
+  wardId      String
+  fileId      String           @unique
+  captionsId  String           @unique
+  posterId    String?          @unique
+  durationSec Int
+  moderation  ModerationStatus @default(PENDING)
 
   ward     Ward  @relation(fields: [wardId], references: [id], onDelete: Cascade)
   file     File  @relation("VideoFile", fields: [fileId], references: [id])
@@ -802,15 +813,15 @@ model RecognitionGuide {
 
 // Better Auth: Sitzungen, Konten (E-Mail-Link, SSO), Verifikations-Token, Passkeys
 model Session {
-  id        String   @id
-  userId    String
-  token     String   @unique
-  expiresAt DateTime
-  ipAddress String?
-  userAgent String?
+  id         String   @id
+  userId     String
+  token      String   @unique
+  expiresAt  DateTime
+  ipAddress  String?
+  userAgent  String?
   authMethod String? // passkey | magic-link | sso – Admins nur mit Passkey (PRD 14.2)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -895,28 +906,28 @@ model ApiKey {
 
 // Webhooks (Abschnitt 12.2)
 model WebhookEndpoint {
-  id             String    @id @default(cuid())
+  id             String   @id @default(cuid())
   organizationId String
   url            String
   secret         String // verschlüsselt (AES-256-GCM)
   events         String[]
-  active         Boolean   @default(true)
-  createdAt      DateTime  @default(now())
+  active         Boolean  @default(true)
+  createdAt      DateTime @default(now())
 
   organization Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   deliveries   WebhookDelivery[]
 }
 
 model WebhookDelivery {
-  id           String    @id @default(cuid())
-  endpointId   String
-  event        String
-  payload      Json
-  attempts     Int       @default(0)
-  lastStatus   Int?
-  deliveredAt  DateTime?
-  nextAttempt  DateTime?
-  createdAt    DateTime  @default(now())
+  id          String    @id @default(cuid())
+  endpointId  String
+  event       String
+  payload     Json
+  attempts    Int       @default(0)
+  lastStatus  Int?
+  deliveredAt DateTime?
+  nextAttempt DateTime?
+  createdAt   DateTime  @default(now())
 
   endpoint WebhookEndpoint @relation(fields: [endpointId], references: [id], onDelete: Cascade)
 
