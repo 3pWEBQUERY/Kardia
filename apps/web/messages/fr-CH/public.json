@@ -142,14 +142,22 @@
   "organization": {
     "lead": "Les conditions de travail sont saisies par unité. Choisissez une unité.",
     "verified": "Employeur vérifié (IDE)",
-    "jobs": "{count, plural, =0 {aucun poste ouvert} one {# poste ouvert} other {# postes ouverts}}"
+    "jobs": "{count, plural, =0 {aucun poste ouvert} one {# poste ouvert} other {# postes ouverts}}",
+    "eyebrow": "Employeur",
+    "locations": "{count, plural, one {Site} other {Sites}}",
+    "wards": "{count, plural, one {Unité} other {Unités}}",
+    "openJobs": "{count, plural, one {Poste ouvert} other {Postes ouverts}}",
+    "wardsTitle": "Unités et conditions",
+    "toWard": "Voir l'unité"
   },
   "compare": {
     "title": "Comparer des postes",
     "empty": "Sélectionner au moins deux postes à comparer.",
     "toSearch": "Vers la recherche",
     "onlyDifferences": "Différences uniquement",
-    "best": "meilleure valeur"
+    "best": "meilleure valeur",
+    "eyebrow": "Comparaison",
+    "lead": "Jusqu'à quatre postes côte à côte – champ par champ, issus du profil de l'unité."
   },
   "guide": {
     "title": "Guide de la reconnaissance",
@@ -162,7 +170,16 @@
     "steps": "Étapes",
     "progress": "{done} sur {total} effectuées",
     "signInForProgress": "Se connecter pour enregistrer sa propre progression.",
-    "outdated": "Ce guide a été vérifié il y a plus de douze mois. Vérifier les indications auprès de l'autorité."
+    "outdated": "Ce guide a été vérifié il y a plus de douze mois. Vérifier les indications auprès de l'autorité.",
+    "eyebrow": "Guide",
+    "browseTitle": "Instructions par origine et profession",
+    "stepsCount": "{count, plural, one {# étape} other {# étapes}}",
+    "open": "Ouvrir l'instruction",
+    "back": "Toutes les instructions",
+    "infoTitle": "Bon à savoir",
+    "authorityLabel": "Autorité compétente",
+    "reviewedLabel": "Vérifié le",
+    "principles": "Nos principes"
   },
   "employers": {
     "title": "Pourvoir les postes directement – sans majoration d'agence",
@@ -198,7 +215,89 @@
     "agencyTitle": "Sans agences",
     "agencyBody": "Enregistrement avec IDE et comparaison avec le répertoire du SECO des entreprises autorisées de placement et de location de services. Les annonces sans unité concrète ni adresse sont techniquement impossibles.",
     "foundingTitle": "Partenaires fondateurs dans le canton de Zurich",
-    "foundingBody": "Les 30 premières institutions reçoivent l'abonnement «Institution» gratuitement pendant six mois – en échange de profils d'unité complets et d'un entretien de feed-back par mois."
+    "foundingBody": "Les 30 premières institutions reçoivent l'abonnement «Institution» gratuitement pendant six mois – en échange de profils d'unité complets et d'un entretien de feed-back par mois.",
+    "eyebrow": "Pour hôpitaux, EMS, soins à domicile et cabinets",
+    "stats": {
+      "jobs": "postes ouverts sur Kardia",
+      "wards": "unités avec profil",
+      "organizations": "employeurs en direct"
+    },
+    "featuresTitle": "Tout pour recruter en direct",
+    "featuresLead": "Un logiciel, pas un intermédiaire : vous restez l'employeur, Kardia rend vos conditions visibles.",
+    "stepsTitle": "En ligne en trois étapes",
+    "steps": {
+      "register": {
+        "title": "Inscrire l'organisation",
+        "body": "Avec votre IDE. Nous vérifions auprès du registre du commerce et de la liste du SECO."
+      },
+      "import": {
+        "title": "Coller l'annonce",
+        "body": "L'IA pré-remplit le profil de l'unité avec les passages sources. Vous confirmez chaque champ."
+      },
+      "hire": {
+        "title": "Recevoir des candidatures",
+        "body": "Avec passeport de qualifications vérifié, directement dans votre pipeline."
+      }
+    },
+    "previewTitle": "Un aperçu du cockpit",
+    "previewLead": "De vrais éléments de Kardia : voici comment les professionnel·le·s voient votre unité, et comment vous traitez les candidatures.",
+    "preview": {
+      "pipeline": {
+        "title": "Pipeline avec passeport",
+        "body": "Diplôme et inscription au registre sont vérifiés avant que vous n'ouvriez la candidature."
+      },
+      "profile": {
+        "title": "Profil de l'unité",
+        "body": "Conditions par unité, confirmées par l'équipe. Les candidat·e·s savent à quoi s'attendre."
+      },
+      "benchmark": {
+        "title": "Benchmark",
+        "body": "Vos valeurs comparées à la médiane de votre domaine et de votre région."
+      },
+      "candidate": "Infirmier·ère ES · {years} ans",
+      "candidateFage": "ASSC CFC · {years} ans",
+      "passOk": "Passeport vérifié",
+      "ward": "Soins intensifs 2",
+      "yours": "Votre unité",
+      "median": "Médiane région",
+      "rows": {
+        "lead": "Planning publié à l’avance (semaines)",
+        "weekends": "Week-ends par mois",
+        "education": "Jours de formation par an"
+      }
+    },
+    "agencyPoints": {
+      "uid": "Vérification de l'IDE à l'inscription",
+      "seco": "Comparaison avec la liste du SECO",
+      "address": "Chaque annonce avec unité et adresse"
+    },
+    "foundingCta": "S'inscrire comme partenaire fondateur",
+    "foundingSlots": "{slots} places · {months} mois gratuits",
+    "faqTitle": "Questions fréquentes",
+    "faq": [
+      {
+        "q": "Combien coûte un engagement via Kardia ?",
+        "a": "Rien de plus. Vous payez un abonnement logiciel ou une annonce unique – pas de commission de succès ni de frais par engagement."
+      },
+      {
+        "q": "Les agences de placement peuvent-elles publier ?",
+        "a": "Non. Seules les organisations qui sont elles-mêmes employeur du poste publié peuvent le faire. Les correspondances avec la liste du SECO sont contrôlées manuellement."
+      },
+      {
+        "q": "Combien de temps faut-il pour un profil d'unité ?",
+        "a": "Environ dix minutes : collez une annonce existante, l'IA propose les champs avec les passages sources, vous confirmez ou corrigez."
+      },
+      {
+        "q": "Qu'advient-il des retours critiques de l'équipe ?",
+        "a": "Vous pouvez commenter chaque valeur du contrôle de réalité. Elle ne peut être ni supprimée ni masquée – c’est ce qui rend les profils crédibles."
+      },
+      {
+        "q": "Où sont stockées les données ?",
+        "a": "Dans l'UE. Les justificatifs sont chiffrés ; vous ne voyez les documents originaux qu'avec l'accord de la personne."
+      }
+    ],
+    "ctaTitle": "Montrez comment on travaille chez vous.",
+    "ctaBody": "Inscription en cinq minutes, premier profil d'unité en dix."
   },
   "pricing": {
     "title": "Prix",
@@ -232,7 +331,51 @@
       "noAds": "Aucune activité publicitaire : le tri suit uniquement les conditions de la personne qui cherche.",
       "founding": "Partenaires fondateurs (30 premières institutions du canton de Zurich) : 6 mois «Institution» gratuits."
     },
-    "cta": "S'inscrire maintenant"
+    "cta": "S'inscrire maintenant",
+    "eyebrow": "Transparent, sans commission de succès",
+    "talentFree": "Toujours gratuit pour les professionnel·le·s",
+    "recommended": "Recommandé",
+    "choose": "Choisir",
+    "singleCta": "Publier une annonce",
+    "compareTitle": "Fonctions en comparaison",
+    "feature": "Fonction",
+    "unlimited": "Illimité",
+    "included": "Inclus",
+    "notIncluded": "Non inclus",
+    "rows": {
+      "activeJobs": "Postes actifs",
+      "wards": "Unités",
+      "users": "Utilisateur·rice·s",
+      "offersPerMonth": "Offres sur la place de marché par mois",
+      "poolMembers": "Membres du pool flexible",
+      "benchmark": "Benchmark",
+      "multipleLocations": "Plusieurs sites",
+      "sso": "Connexion d'entreprise (SSO)",
+      "api": "API",
+      "webhooks": "Webhooks",
+      "feedImport": "Import de flux"
+    },
+    "faqTitle": "Questions sur les tarifs",
+    "faq": [
+      {
+        "q": "Puis-je résilier chaque mois ?",
+        "a": "Oui. Les abonnements mensuels sont résiliables chaque mois ; les abonnements annuels courent jusqu'à la fin de la période payée."
+      },
+      {
+        "q": "Y a-t-il des coûts cachés ?",
+        "a": "Non. Pas de commission de succès, pas de places de classement payantes, pas de frais par candidature."
+      },
+      {
+        "q": "Comment paient les institutions ?",
+        "a": "Par carte ou TWINT, et pour Institution et Groupe hospitalier aussi sur facture avec QR-facture (30 jours)."
+      },
+      {
+        "q": "Que se passe-t-il à l'échéance d'une annonce unique ?",
+        "a": "Le poste n'apparaît plus dans la recherche. Les candidatures et le profil de l'unité sont conservés."
+      }
+    ],
+    "ctaTitle": "Commencez avec un profil d'unité.",
+    "ctaBody": "Les partenaires fondateurs du canton de Zurich reçoivent « Institution » gratuitement pendant six mois."
   },
   "legal": {
     "draft": "Projet – à faire vérifier juridiquement avant le lancement (PRD 14.3).",
@@ -372,7 +515,9 @@
           ]
         }
       ]
-    }
+    },
+    "eyebrow": "Mentions légales",
+    "toc": "Sommaire"
   },
   "report": {
     "action": "Signaler",

@@ -1,9 +1,11 @@
+import { Search } from 'lucide-react';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
 import { WARD_FIELDS } from '@kardia/core';
-import { Button, CompareTable, EmptyState, type CompareRow } from '@kardia/ui';
+import { Button, CompareTable, EmptyState, Icon, type CompareRow } from '@kardia/ui';
 
+import { TitleBand } from '@/components/marketing/Marketing';
 import { formatFieldValue } from '@/lib/fieldValue';
 import { getJobsForCompare } from '@/server/services/jobs';
 
@@ -18,10 +20,23 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
   const items = await getJobsForCompare(ids);
   if (items.length < 2) {
     return (
-      <div className="mx-auto max-w-content px-4 py-8 md:px-8">
-        <h1 className="mb-4 text-h1">{t('title')}</h1>
-        <EmptyState action={<Button asChild variant="primary"><Link href="/search">{t('toSearch')}</Link></Button>}>{t('empty')}</EmptyState>
-      </div>
+      <>
+        <TitleBand eyebrow={t('eyebrow')} title={t('title')} lead={t('lead')} />
+        <div className="mx-auto max-w-content px-4 py-12 md:px-8">
+          <EmptyState
+            action={
+              <Button asChild variant="primary">
+                <Link href="/search">
+                  <Icon icon={Search} size={18} />
+                  {t('toSearch')}
+                </Link>
+              </Button>
+            }
+          >
+            {t('empty')}
+          </EmptyState>
+        </div>
+      </>
     );
   }
   const fmt = (k: string, v: unknown) => formatFieldValue(k, v, { fields: tf, enums: te, common: tc });
@@ -40,20 +55,24 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
     })),
   ];
   return (
-    <div className="mx-auto flex max-w-content flex-col gap-4 px-4 py-8 md:px-8">
-      <h1 className="text-h1">{t('title')}</h1>
-      <CompareTable
-        caption={t('title')}
-        onlyDifferencesLabel={t('onlyDifferences')}
-        bestLabel={t('best')}
-        columns={items.map((i) => (
-          <Link key={i.job.id} href={`/jobs/${i.job.id}`} className="flex flex-col hover:text-accent-700">
-            <span>{i.job.title}</span>
-            <span className="text-micro font-normal text-ink-500">{i.job.ward.location.organization.name} · {i.job.ward.name}</span>
-          </Link>
-        ))}
-        rows={rows}
-      />
-    </div>
+    <>
+      <TitleBand eyebrow={t('eyebrow')} title={t('title')} lead={t('lead')} />
+      <div className="mx-auto flex max-w-content flex-col gap-4 px-4 py-12 md:px-8">
+        <CompareTable
+          caption={t('title')}
+          onlyDifferencesLabel={t('onlyDifferences')}
+          bestLabel={t('best')}
+          columns={items.map((i) => (
+            <Link key={i.job.id} href={`/jobs/${i.job.id}`} className="flex flex-col hover:text-accent-700">
+              <span>{i.job.title}</span>
+              <span className="text-micro font-normal text-ink-500">
+                {i.job.ward.location.organization.name} · {i.job.ward.name}
+              </span>
+            </Link>
+          ))}
+          rows={rows}
+        />
+      </div>
+    </>
   );
 }

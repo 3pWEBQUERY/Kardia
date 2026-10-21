@@ -142,14 +142,22 @@
   "organization": {
     "lead": "Le condizioni di lavoro sono registrate per reparto. Scelga un reparto.",
     "verified": "Datore di lavoro verificato (IDI)",
-    "jobs": "{count, plural, =0 {nessun posto aperto} one {# posto aperto} other {# posti aperti}}"
+    "jobs": "{count, plural, =0 {nessun posto aperto} one {# posto aperto} other {# posti aperti}}",
+    "eyebrow": "Datore di lavoro",
+    "locations": "{count, plural, one {Sede} other {Sedi}}",
+    "wards": "{count, plural, one {Reparto} other {Reparti}}",
+    "openJobs": "{count, plural, one {Posto aperto} other {Posti aperti}}",
+    "wardsTitle": "Reparti e condizioni",
+    "toWard": "Vedere il reparto"
   },
   "compare": {
     "title": "Confronta posti",
     "empty": "Selezionare almeno due posti da confrontare.",
     "toSearch": "Alla ricerca",
     "onlyDifferences": "Solo differenze",
-    "best": "valore migliore"
+    "best": "valore migliore",
+    "eyebrow": "Confronto",
+    "lead": "Fino a quattro posti affiancati – campo per campo dal profilo del reparto."
   },
   "guide": {
     "title": "Guida al riconoscimento",
@@ -162,7 +170,16 @@
     "steps": "Passi",
     "progress": "{done} di {total} completati",
     "signInForProgress": "Accedere per salvare i propri progressi.",
-    "outdated": "Questa guida è stata verificata più di dodici mesi fa. Verificare le indicazioni presso l'autorità."
+    "outdated": "Questa guida è stata verificata più di dodici mesi fa. Verificare le indicazioni presso l'autorità.",
+    "eyebrow": "Guida",
+    "browseTitle": "Istruzioni per provenienza e professione",
+    "stepsCount": "{count, plural, one {# passo} other {# passi}}",
+    "open": "Aprire l'istruzione",
+    "back": "Tutte le istruzioni",
+    "infoTitle": "Buono a sapersi",
+    "authorityLabel": "Autorità competente",
+    "reviewedLabel": "Verificato il",
+    "principles": "I nostri principi"
   },
   "employers": {
     "title": "Occupare i posti direttamente – senza supplemento d'agenzia",
@@ -198,7 +215,89 @@
     "agencyTitle": "Senza agenzie",
     "agencyBody": "Registrazione con IDI e confronto con il registro della SECO delle agenzie di collocamento e di fornitura di personale a prestito autorizzate. Gli annunci senza reparto concreto e indirizzo sono tecnicamente impossibili.",
     "foundingTitle": "Partner fondatori nel Cantone di Zurigo",
-    "foundingBody": "Le prime 30 istituzioni ricevono gratuitamente per sei mesi l'abbonamento «Istituzione» – in cambio di profili di reparto completi e di un colloquio di feedback al mese."
+    "foundingBody": "Le prime 30 istituzioni ricevono gratuitamente per sei mesi l'abbonamento «Istituzione» – in cambio di profili di reparto completi e di un colloquio di feedback al mese.",
+    "eyebrow": "Per ospedali, case di cura, Spitex e studi medici",
+    "stats": {
+      "jobs": "posti aperti su Kardia",
+      "wards": "reparti con profilo",
+      "organizations": "datori di lavoro diretti"
+    },
+    "featuresTitle": "Tutto per il reclutamento diretto",
+    "featuresLead": "Software invece di intermediazione: rimanete datori di lavoro, Kardia rende visibili le vostre condizioni.",
+    "stepsTitle": "Online in tre passi",
+    "steps": {
+      "register": {
+        "title": "Registrare l'organizzazione",
+        "body": "Con IDI. Verifichiamo con il registro di commercio e l’elenco della SECO."
+      },
+      "import": {
+        "title": "Incollare l'annuncio",
+        "body": "L'IA precompila il profilo del reparto con i passaggi di riferimento. Voi confermate ogni campo."
+      },
+      "hire": {
+        "title": "Ricevere candidature",
+        "body": "Con passaporto delle qualifiche verificato, direttamente nella vostra pipeline."
+      }
+    },
+    "previewTitle": "Uno sguardo al cockpit",
+    "previewLead": "Elementi reali di Kardia: così i professionisti vedono il vostro reparto e così lavorate con le candidature.",
+    "preview": {
+      "pipeline": {
+        "title": "Pipeline con passaporto",
+        "body": "Diploma e iscrizione al registro sono verificati prima che apriate la candidatura."
+      },
+      "profile": {
+        "title": "Profilo del reparto",
+        "body": "Condizioni per reparto, confermate dal team. Chi si candida sa a cosa va incontro."
+      },
+      "benchmark": {
+        "title": "Benchmark",
+        "body": "I vostri valori a confronto con la mediana del vostro ambito e della vostra regione."
+      },
+      "candidate": "Infermiere/a SSS · {years} anni",
+      "candidateFage": "OSS AFC · {years} anni",
+      "passOk": "Passaporto verificato",
+      "ward": "Cure intense 2",
+      "yours": "Il vostro reparto",
+      "median": "Mediana regione",
+      "rows": {
+        "lead": "Anticipo del piano dei turni (settimane)",
+        "weekends": "Fine settimana al mese",
+        "education": "Giorni di formazione all’anno"
+      }
+    },
+    "agencyPoints": {
+      "uid": "Verifica IDI alla registrazione",
+      "seco": "Confronto con l'elenco della SECO",
+      "address": "Ogni annuncio con reparto e indirizzo"
+    },
+    "foundingCta": "Registrarsi come partner fondatore",
+    "foundingSlots": "{slots} posti · {months} mesi gratuiti",
+    "faqTitle": "Domande frequenti",
+    "faq": [
+      {
+        "q": "Quanto costa un'assunzione tramite Kardia?",
+        "a": "Niente in più. Pagate un abbonamento software o un annuncio singolo – nessuna commissione di successo, nessuna provvigione per assunzione."
+      },
+      {
+        "q": "Le agenzie di collocamento possono pubblicare?",
+        "a": "No. Possono pubblicare solo le organizzazioni che sono esse stesse datori di lavoro del posto. Le corrispondenze con l'elenco della SECO vengono verificate manualmente."
+      },
+      {
+        "q": "Quanto lavoro richiede un profilo del reparto?",
+        "a": "Circa dieci minuti: incollate un annuncio esistente, l'IA propone i campi con i passaggi di riferimento, voi confermate o correggete."
+      },
+      {
+        "q": "Cosa succede con i riscontri critici del team?",
+        "a": "Potete commentare ogni valore della verifica della realtà. Non è possibile cancellarlo né nasconderlo – è questo che rende credibili i profili."
+      },
+      {
+        "q": "Dove sono conservati i dati?",
+        "a": "Nell'UE. I documenti giustificativi sono cifrati; vedete i documenti originali solo con il consenso della persona."
+      }
+    ],
+    "ctaTitle": "Mostrate come si lavora da voi.",
+    "ctaBody": "Registrazione in cinque minuti, il primo profilo del reparto in dieci."
   },
   "pricing": {
     "title": "Prezzi",
@@ -232,7 +331,51 @@
       "noAds": "Nessuna attività pubblicitaria: l'ordinamento segue solo le condizioni della persona che cerca.",
       "founding": "Partner fondatori (prime 30 istituzioni nel Cantone di Zurigo): 6 mesi «Istituzione» gratuiti."
     },
-    "cta": "Registrarsi ora"
+    "cta": "Registrarsi ora",
+    "eyebrow": "Trasparente, senza commissione di successo",
+    "talentFree": "Sempre gratuito per i professionisti",
+    "recommended": "Consigliato",
+    "choose": "Scegliere",
+    "singleCta": "Pubblicare un annuncio",
+    "compareTitle": "Funzioni a confronto",
+    "feature": "Funzione",
+    "unlimited": "Illimitato",
+    "included": "Incluso",
+    "notIncluded": "Non incluso",
+    "rows": {
+      "activeJobs": "Posti attivi",
+      "wards": "Reparti",
+      "users": "Utenti",
+      "offersPerMonth": "Offerte nel mercato al mese",
+      "poolMembers": "Membri del pool flessibile",
+      "benchmark": "Benchmark",
+      "multipleLocations": "Più sedi",
+      "sso": "Accesso aziendale (SSO)",
+      "api": "API",
+      "webhooks": "Webhook",
+      "feedImport": "Importazione feed"
+    },
+    "faqTitle": "Domande sui prezzi",
+    "faq": [
+      {
+        "q": "Posso disdire ogni mese?",
+        "a": "Sì. Gli abbonamenti mensili sono disdicibili ogni mese; quelli annuali durano fino alla fine del periodo pagato."
+      },
+      {
+        "q": "Ci sono costi nascosti?",
+        "a": "No. Nessuna commissione di successo, nessun posto in classifica a pagamento, nessun costo per candidatura."
+      },
+      {
+        "q": "Come pagano le istituzioni?",
+        "a": "Con carta o TWINT, per Istituzione e Gruppo ospedaliero anche con fattura QR (30 giorni)."
+      },
+      {
+        "q": "Cosa succede alla scadenza di un annuncio singolo?",
+        "a": "Il posto non appare più nella ricerca. Candidature e profilo del reparto restano conservati."
+      }
+    ],
+    "ctaTitle": "Iniziate con un profilo del reparto.",
+    "ctaBody": "I partner fondatori nel Cantone di Zurigo ricevono «Istituzione» gratuitamente per sei mesi."
   },
   "legal": {
     "draft": "Bozza – da sottoporre a verifica giuridica prima del lancio (PRD 14.3).",
@@ -372,7 +515,9 @@
           ]
         }
       ]
-    }
+    },
+    "eyebrow": "Note legali",
+    "toc": "Indice"
   },
   "report": {
     "action": "Segnalare",

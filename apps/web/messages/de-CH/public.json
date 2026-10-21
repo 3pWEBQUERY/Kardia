@@ -142,14 +142,22 @@
   "organization": {
     "lead": "Arbeitsbedingungen sind pro Station erfasst. Wählen Sie eine Station.",
     "verified": "Arbeitgeber verifiziert (UID)",
-    "jobs": "{count, plural, =0 {keine offenen Stellen} one {# offene Stelle} other {# offene Stellen}}"
+    "jobs": "{count, plural, =0 {keine offenen Stellen} one {# offene Stelle} other {# offene Stellen}}",
+    "eyebrow": "Arbeitgeber",
+    "locations": "{count, plural, one {Standort} other {Standorte}}",
+    "wards": "{count, plural, one {Station} other {Stationen}}",
+    "openJobs": "{count, plural, one {Offene Stelle} other {Offene Stellen}}",
+    "wardsTitle": "Stationen und Bedingungen",
+    "toWard": "Station ansehen"
   },
   "compare": {
     "title": "Stellen vergleichen",
     "empty": "Mindestens zwei Stellen zum Vergleich auswählen.",
     "toSearch": "Zur Suche",
     "onlyDifferences": "Nur Unterschiede",
-    "best": "beste Ausprägung"
+    "best": "beste Ausprägung",
+    "eyebrow": "Vergleich",
+    "lead": "Bis zu vier Stellen nebeneinander – Feld für Feld aus dem Stationsprofil."
   },
   "guide": {
     "title": "Ratgeber Anerkennung",
@@ -162,7 +170,16 @@
     "steps": "Schritte",
     "progress": "{done} von {total} erledigt",
     "signInForProgress": "Anmelden, um den eigenen Fortschritt zu speichern.",
-    "outdated": "Diese Anleitung wurde vor mehr als zwölf Monaten geprüft. Angaben bei der Behörde verifizieren."
+    "outdated": "Diese Anleitung wurde vor mehr als zwölf Monaten geprüft. Angaben bei der Behörde verifizieren.",
+    "eyebrow": "Ratgeber",
+    "browseTitle": "Anleitungen nach Herkunft und Beruf",
+    "stepsCount": "{count, plural, one {# Schritt} other {# Schritte}}",
+    "open": "Anleitung öffnen",
+    "back": "Alle Anleitungen",
+    "infoTitle": "Gut zu wissen",
+    "authorityLabel": "Zuständige Stelle",
+    "reviewedLabel": "Geprüft am",
+    "principles": "Unsere Grundsätze"
   },
   "employers": {
     "title": "Stellen direkt besetzen – ohne Agenturaufschlag",
@@ -198,7 +215,89 @@
     "agencyTitle": "Agenturfrei",
     "agencyBody": "Registrierung mit UID und Abgleich mit dem SECO-Verzeichnis der bewilligten Vermittlungs- und Verleihbetriebe. Inserate ohne konkrete Station und Adresse sind technisch nicht möglich.",
     "foundingTitle": "Gründungspartner im Kanton Zürich",
-    "foundingBody": "Die ersten 30 Institutionen erhalten das Abo «Institution» sechs Monate kostenlos – gegen vollständige Stationsprofile und ein Feedback-Gespräch pro Monat."
+    "foundingBody": "Die ersten 30 Institutionen erhalten das Abo «Institution» sechs Monate kostenlos – gegen vollständige Stationsprofile und ein Feedback-Gespräch pro Monat.",
+    "eyebrow": "Für Spitäler, Heime, Spitex und Praxen",
+    "stats": {
+      "jobs": "offene Stellen auf Kardia",
+      "wards": "Stationen mit Profil",
+      "organizations": "Arbeitgeber direkt"
+    },
+    "featuresTitle": "Alles für die direkte Rekrutierung",
+    "featuresLead": "Software statt Vermittlung: Sie bleiben Arbeitgeber, Kardia macht Ihre Bedingungen sichtbar.",
+    "stepsTitle": "In drei Schritten live",
+    "steps": {
+      "register": {
+        "title": "Organisation registrieren",
+        "body": "Mit UID. Wir gleichen mit dem Handelsregister und dem SECO-Verzeichnis ab."
+      },
+      "import": {
+        "title": "Inserat einfügen",
+        "body": "Die KI füllt das Stationsprofil mit Belegstellen vor. Sie bestätigen jedes Feld."
+      },
+      "hire": {
+        "title": "Bewerbungen erhalten",
+        "body": "Mit verifiziertem Qualifikations-Pass, direkt in Ihrer Pipeline."
+      }
+    },
+    "previewTitle": "Ein Blick ins Cockpit",
+    "previewLead": "Echte Bausteine aus Kardia: So sehen Fachpersonen Ihre Station, und so arbeiten Sie mit Bewerbungen.",
+    "preview": {
+      "pipeline": {
+        "title": "Pipeline mit Pass",
+        "body": "Diplom und Registereintrag sind geprüft, bevor Sie die Bewerbung öffnen."
+      },
+      "profile": {
+        "title": "Stationsprofil",
+        "body": "Bedingungen pro Station, vom Team bestätigt. Bewerbende wissen, worauf sie sich einlassen."
+      },
+      "benchmark": {
+        "title": "Benchmark",
+        "body": "Ihre Werte im Vergleich zum Median Ihres Fachbereichs und Ihrer Region."
+      },
+      "candidate": "Pflegefachperson HF · {years} Jahre",
+      "candidateFage": "FaGe EFZ · {years} Jahre",
+      "passOk": "Pass verifiziert",
+      "ward": "Intensivstation 2",
+      "yours": "Ihre Station",
+      "median": "Median Region",
+      "rows": {
+        "lead": "Dienstplan-Vorlauf (Wochen)",
+        "weekends": "Wochenenden pro Monat",
+        "education": "Weiterbildungstage pro Jahr"
+      }
+    },
+    "agencyPoints": {
+      "uid": "UID-Prüfung bei der Registrierung",
+      "seco": "Abgleich mit dem SECO-Verzeichnis",
+      "address": "Jedes Inserat mit Station und Adresse"
+    },
+    "foundingCta": "Als Gründungspartner registrieren",
+    "foundingSlots": "{slots} Plätze · {months} Monate kostenlos",
+    "faqTitle": "Häufige Fragen",
+    "faq": [
+      {
+        "q": "Was kostet eine Einstellung über Kardia?",
+        "a": "Nichts zusätzlich. Sie zahlen ein Software-Abo oder ein Einzelinserat – keine Erfolgsgebühr, keine Provision pro Einstellung."
+      },
+      {
+        "q": "Dürfen Personalvermittler inserieren?",
+        "a": "Nein. Inserieren dürfen nur Organisationen, die selbst Arbeitgeber der ausgeschriebenen Stelle sind. Treffer im SECO-Verzeichnis werden manuell geprüft."
+      },
+      {
+        "q": "Wie aufwendig ist ein Stationsprofil?",
+        "a": "Rund zehn Minuten: Fügen Sie ein bestehendes Inserat ein, die KI schlägt die Felder mit Belegstellen vor, Sie bestätigen oder korrigieren."
+      },
+      {
+        "q": "Was passiert mit kritischen Rückmeldungen aus dem Team?",
+        "a": "Sie können jeden Wert aus dem Realitäts-Check kommentieren. Löschen oder ausblenden lässt er sich nicht – das macht die Profile glaubwürdig."
+      },
+      {
+        "q": "Wo liegen die Daten?",
+        "a": "In der EU. Nachweise sind verschlüsselt gespeichert; Originaldokumente sehen Sie nur nach Freigabe durch die Fachperson."
+      }
+    ],
+    "ctaTitle": "Zeigen Sie, wie es sich bei Ihnen arbeiten lässt.",
+    "ctaBody": "Registrierung in fünf Minuten, das erste Stationsprofil in zehn."
   },
   "pricing": {
     "title": "Preise",
@@ -232,7 +331,51 @@
       "noAds": "Kein Werbegeschäft: Sortierung folgt nur den Bedingungen der suchenden Person.",
       "founding": "Gründungspartner (erste 30 Institutionen im Kanton Zürich): 6 Monate «Institution» kostenlos."
     },
-    "cta": "Jetzt registrieren"
+    "cta": "Jetzt registrieren",
+    "eyebrow": "Transparent, ohne Erfolgsgebühr",
+    "talentFree": "Für Fachpersonen immer kostenlos",
+    "recommended": "Empfohlen",
+    "choose": "Auswählen",
+    "singleCta": "Inserat aufgeben",
+    "compareTitle": "Funktionen im Vergleich",
+    "feature": "Funktion",
+    "unlimited": "Unbegrenzt",
+    "included": "Inklusive",
+    "notIncluded": "Nicht enthalten",
+    "rows": {
+      "activeJobs": "Aktive Stellen",
+      "wards": "Stationen",
+      "users": "Nutzerinnen und Nutzer",
+      "offersPerMonth": "Angebote im Marktplatz pro Monat",
+      "poolMembers": "Flex-Pool-Mitglieder",
+      "benchmark": "Benchmark",
+      "multipleLocations": "Mehrere Standorte",
+      "sso": "Firmen-Login (SSO)",
+      "api": "API",
+      "webhooks": "Webhooks",
+      "feedImport": "Feed-Import"
+    },
+    "faqTitle": "Fragen zu den Preisen",
+    "faq": [
+      {
+        "q": "Kann ich monatlich kündigen?",
+        "a": "Ja. Monatsabos sind monatlich kündbar; Jahresabos laufen bis zum Ende der bezahlten Periode."
+      },
+      {
+        "q": "Gibt es versteckte Kosten?",
+        "a": "Nein. Keine Erfolgsgebühr, keine bezahlten Ranking-Plätze, keine Kosten pro Bewerbung."
+      },
+      {
+        "q": "Wie bezahlen Institutionen?",
+        "a": "Mit Karte oder TWINT, für Institution und Spitalgruppe auch per Rechnung mit QR-Einzahlungsschein (30 Tage)."
+      },
+      {
+        "q": "Was passiert nach Ablauf eines Einzelinserats?",
+        "a": "Die Stelle erscheint nicht mehr in der Suche. Bewerbungen und Stationsprofil bleiben erhalten."
+      }
+    ],
+    "ctaTitle": "Starten Sie mit einem Stationsprofil.",
+    "ctaBody": "Gründungspartner im Kanton Zürich erhalten «Institution» sechs Monate kostenlos."
   },
   "legal": {
     "draft": "Entwurf – vor dem Launch juristisch zu prüfen (PRD 14.3).",
@@ -372,7 +515,9 @@
           ]
         }
       ]
-    }
+    },
+    "eyebrow": "Rechtliches",
+    "toc": "Inhalt"
   },
   "report": {
     "action": "Melden",
