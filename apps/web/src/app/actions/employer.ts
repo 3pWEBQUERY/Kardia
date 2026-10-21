@@ -6,7 +6,7 @@ import { changeStatus, postMessage } from '@/server/services/applications';
 import { billingPortalUrl, checkoutPlan, checkoutSingleListing } from '@/server/services/billing';
 import { importStatus, startImport } from '@/server/services/import';
 import { createJob, publishJob, setJobStatus, updateJob } from '@/server/services/jobs';
-import { listOrgOffers, searchMarketplace, sendOffer } from '@/server/services/marketplace';
+import { listOrgOffers, searchMarketplace, sendOffer, withdrawOffer } from '@/server/services/marketplace';
 import {
   changeMemberRole,
   createApiKey,
@@ -254,6 +254,14 @@ export async function makeOffer(input: OfferInput): Promise<ActionResult<{ id: s
     const offer = await sendOffer(ctx, input);
     revalidatePath('/employer/marketplace');
     return { id: offer.id };
+  });
+}
+
+export async function retractOffer(offerId: string): Promise<ActionResult> {
+  return actionResult(async () => {
+    const ctx = await requireOrg('marketplace.offer');
+    await withdrawOffer(ctx, offerId);
+    revalidatePath('/employer/marketplace');
   });
 }
 

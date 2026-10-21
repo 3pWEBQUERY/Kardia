@@ -340,7 +340,13 @@
     "sent": "Envoyée",
     "status": "Statut",
     "declineReasons": "Motifs de refus",
-    "declineTooFew": "Les motifs ne sont affichés qu'à partir de 3 refus et uniquement de manière agrégée."
+    "declineTooFew": "Les motifs ne sont affichés qu'à partir de 3 refus et uniquement de manière agrégée.",
+    "actions": "Actions",
+    "withdraw": "Retirer",
+    "withdrawConfirm": "Retirer l'offre",
+    "withdrawCancel": "Annuler",
+    "withdrawn": "Offre retirée. La personne est informée.",
+    "toApplication": "Vers la candidature"
   },
   "pool": {
     "title": "Pool flexible",

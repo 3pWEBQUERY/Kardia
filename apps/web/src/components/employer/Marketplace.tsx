@@ -26,9 +26,10 @@ import {
   SkeletonText,
   StatusChip,
   Textarea,
+  useToast,
 } from '@kardia/ui';
 
-import { makeOffer, marketplaceSearch } from '@/app/actions/employer';
+import { makeOffer, marketplaceSearch, retractOffer } from '@/app/actions/employer';
 import { useActionMessage } from '@/lib/useActionError';
 
 export interface OfferJob {
@@ -333,5 +334,46 @@ function OfferDialog({
         {error ? <Callout tone="critical">{error}</Callout> : null}
       </div>
     </Dialog>
+  );
+}
+
+/** Offenes Angebot zurückziehen (mit Bestätigung); die Fachperson wird benachrichtigt. */
+export function WithdrawOfferButton({ offerId }: { offerId: string }) {
+  const t = useTranslations('employer.marketplace');
+  const router = useRouter();
+  const toast = useToast();
+  const message = useActionMessage();
+  const [confirming, setConfirming] = useState(false);
+  const [busy, setBusy] = useState(false);
+  if (!confirming) {
+    return (
+      <Button size="s" variant="ghost" onClick={() => setConfirming(true)}>
+        {t('withdraw')}
+      </Button>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-2">
+      <Button
+        size="s"
+        variant="danger"
+        disabled={busy}
+        onClick={() => {
+          setBusy(true);
+          void retractOffer(offerId).then((r) => {
+            setBusy(false);
+            setConfirming(false);
+            if (!r.ok) return toast({ tone: 'critical', message: message(r) ?? '' });
+            toast({ tone: 'neutral', message: t('withdrawn') });
+            router.refresh();
+          });
+        }}
+      >
+        {t('withdrawConfirm')}
+      </Button>
+      <Button size="s" variant="ghost" onClick={() => setConfirming(false)}>
+        {t('withdrawCancel')}
+      </Button>
+    </span>
   );
 }

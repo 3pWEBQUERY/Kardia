@@ -340,7 +340,13 @@
     "sent": "Sent",
     "status": "Status",
     "declineReasons": "Reasons for declines",
-    "declineTooFew": "Reasons are only shown from 3 declines and only in aggregate."
+    "declineTooFew": "Reasons are only shown from 3 declines and only in aggregate.",
+    "actions": "Actions",
+    "withdraw": "Withdraw",
+    "withdrawConfirm": "Withdraw offer",
+    "withdrawCancel": "Cancel",
+    "withdrawn": "Offer withdrawn. The person will be notified.",
+    "toApplication": "Go to application"
   },
   "pool": {
     "title": "Flex pool",

@@ -340,7 +340,13 @@
     "sent": "Inviata",
     "status": "Stato",
     "declineReasons": "Motivi dei rifiuti",
-    "declineTooFew": "I motivi vengono mostrati solo a partire da 3 rifiuti e solo in forma aggregata."
+    "declineTooFew": "I motivi vengono mostrati solo a partire da 3 rifiuti e solo in forma aggregata.",
+    "actions": "Azioni",
+    "withdraw": "Ritirare",
+    "withdrawConfirm": "Ritirare l'offerta",
+    "withdrawCancel": "Annullare",
+    "withdrawn": "Offerta ritirata. La persona viene informata.",
+    "toApplication": "Alla candidatura"
   },
   "pool": {
     "title": "Pool flessibile",

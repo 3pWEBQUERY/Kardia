@@ -23,7 +23,7 @@ import {
 import { marketplaceRef, resolveMarketplaceRef } from '@kardia/core/crypto';
 
 
-import { track } from '../audit.ts';
+import { audit, track } from '../audit.ts';
 import { db } from '../db.ts';
 import { assertFeature } from '../features.ts';
 import { enqueue } from '../queue.ts';
@@ -242,6 +242,15 @@ export async function listOrgOffers(ctx: OrgContext) {
     take: 200,
   });
   const declined = offers.filter((o) => o.status === 'DECLINED').map((o) => o.declineReason);
+  // Nach "Interesse" entsteht eine Bewerbung: Link aus der Angebotsliste dorthin.
+  const interested = offers.filter((o) => o.status === 'INTERESTED');
+  const apps = interested.length
+    ? await db.application.findMany({
+        where: { OR: interested.map((o) => ({ jobId: o.jobId, candidateId: o.candidateId })) },
+        select: { id: true, jobId: true, candidateId: true },
+      })
+    : [];
+  const appFor = (o: { jobId: string; candidateId: string }) => apps.find((a) => a.jobId === o.jobId && a.candidateId === o.candidateId)?.id ?? null;
   const used = offers.filter((o) => o.createdAt >= startOfMonth()).length;
   return {
     offers: offers.map((o) => ({
@@ -254,8 +263,24 @@ export async function listOrgOffers(ctx: OrgContext) {
       expiresAt: o.expiresAt,
       createdAt: o.createdAt,
       candidateRef: marketplaceRef(ctx.org.id, o.candidateId),
+      applicationId: o.status === 'INTERESTED' ? appFor(o) : null,
     })),
     declineReasons: aggregateDeclineReasons(declined),
     usedThisMonth: used,
   };
+}
+
+/** Offenes Angebot zurückziehen (Arbeitgeber); die Fachperson wird benachrichtigt. */
+export async function withdrawOffer(ctx: OrgContext, offerId: string) {
+  assertFeature('marketplace');
+  const offer = await db.offer.findFirst({
+    where: { id: offerId, organizationId: ctx.org.id },
+    include: { job: { select: { title: true } }, candidate: { select: { userId: true } } },
+  });
+  if (!offer) throw new ProblemError('notFound');
+  const updated = await db.offer.updateMany({ where: { id: offerId, status: 'SENT' }, data: { status: 'WITHDRAWN' } });
+  if (updated.count === 0) throw new ProblemError('conflict', 'Nur offene Angebote können zurückgezogen werden.');
+  await audit({ actorId: ctx.user.id, action: 'offer.withdrawn', entity: 'Offer', entityId: offerId });
+  await notifyUser(offer.candidate.userId, 'offer.withdrawn', { offerId, orgName: ctx.org.name, jobTitle: offer.job.title });
+  return { id: offerId, status: 'WITHDRAWN' as const };
 }

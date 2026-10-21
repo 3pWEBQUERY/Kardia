@@ -340,7 +340,13 @@
     "sent": "Gesendet",
     "status": "Status",
     "declineReasons": "Gründe für Ablehnungen",
-    "declineTooFew": "Gründe werden erst ab 3 Ablehnungen und nur gesammelt angezeigt."
+    "declineTooFew": "Gründe werden erst ab 3 Ablehnungen und nur gesammelt angezeigt.",
+    "actions": "Aktionen",
+    "withdraw": "Zurückziehen",
+    "withdrawConfirm": "Angebot zurückziehen",
+    "withdrawCancel": "Abbrechen",
+    "withdrawn": "Angebot zurückgezogen. Die Person wird informiert.",
+    "toApplication": "Zur Bewerbung"
   },
   "pool": {
     "title": "Flex-Pool",

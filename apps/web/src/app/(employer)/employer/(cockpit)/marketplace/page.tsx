@@ -20,7 +20,7 @@ import {
   type Tone,
 } from '@kardia/ui';
 
-import { MarketplaceSearch } from '@/components/employer/Marketplace';
+import { MarketplaceSearch, WithdrawOfferButton } from '@/components/employer/Marketplace';
 import { db } from '@/server/db';
 import { requireFeature } from '@/server/features';
 import { listOrgOffers } from '@/server/services/marketplace';
@@ -114,6 +114,9 @@ export default async function MarketplacePage() {
                     <th scope="col" className="px-3">
                       {t('status')}
                     </th>
+                    <th scope="col" className="px-3">
+                      <span className="sr-only">{t('actions')}</span>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -127,6 +130,14 @@ export default async function MarketplacePage() {
                         <StatusChip tone={TONE[o.status] ?? 'neutral'}>
                           {te(`OfferStatus.${o.status}`)}
                         </StatusChip>
+                      </td>
+                      <td className="px-3 text-right">
+                        {o.status === 'SENT' ? <WithdrawOfferButton offerId={o.id} /> : null}
+                        {o.applicationId ? (
+                          <Link href={`/employer/applications/${o.applicationId}`} className="text-accent-700 underline">
+                            {t('toApplication')}
+                          </Link>
+                        ) : null}
                       </td>
                     </tr>
                   ))}

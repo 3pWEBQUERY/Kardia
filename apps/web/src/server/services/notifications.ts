@@ -14,6 +14,7 @@ export type NotificationKind =
   | 'application.message'
   | 'offer.new'
   | 'offer.responded'
+  | 'offer.withdrawn'
   | 'shift.new'
   | 'shift.booked'
   | 'shift.cancelled'
