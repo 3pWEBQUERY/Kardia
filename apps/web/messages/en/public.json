@@ -142,14 +142,22 @@
   "organization": {
     "lead": "Working conditions are recorded per ward. Choose a ward.",
     "verified": "Employer verified (UID)",
-    "jobs": "{count, plural, =0 {no open jobs} one {# open job} other {# open jobs}}"
+    "jobs": "{count, plural, =0 {no open jobs} one {# open job} other {# open jobs}}",
+    "eyebrow": "Employer",
+    "locations": "{count, plural, one {Site} other {Sites}}",
+    "wards": "{count, plural, one {Ward} other {Wards}}",
+    "openJobs": "{count, plural, one {Open job} other {Open jobs}}",
+    "wardsTitle": "Wards and conditions",
+    "toWard": "View ward"
   },
   "compare": {
     "title": "Compare jobs",
     "empty": "Select at least two jobs to compare.",
     "toSearch": "Go to search",
     "onlyDifferences": "Differences only",
-    "best": "best value"
+    "best": "best value",
+    "eyebrow": "Comparison",
+    "lead": "Up to four jobs side by side – field by field from the ward profile."
   },
   "guide": {
     "title": "Recognition guide",
@@ -162,7 +170,16 @@
     "steps": "Steps",
     "progress": "{done} of {total} done",
     "signInForProgress": "Sign in to save your own progress.",
-    "outdated": "This guide was reviewed more than twelve months ago. Verify the information with the authority."
+    "outdated": "This guide was reviewed more than twelve months ago. Verify the information with the authority.",
+    "eyebrow": "Guide",
+    "browseTitle": "Guides by origin and profession",
+    "stepsCount": "{count, plural, one {# step} other {# steps}}",
+    "open": "Open guide",
+    "back": "All guides",
+    "infoTitle": "Good to know",
+    "authorityLabel": "Responsible authority",
+    "reviewedLabel": "Reviewed on",
+    "principles": "Our principles"
   },
   "employers": {
     "title": "Fill positions directly – without agency mark-ups",
@@ -198,7 +215,89 @@
     "agencyTitle": "Agency-free",
     "agencyBody": "Registration with UID and a check against the SECO directory of licensed placement and staff-leasing agencies. Job ads without a specific ward and address are technically impossible.",
     "foundingTitle": "Founding partners in the canton of Zurich",
-    "foundingBody": "The first 30 institutions receive the «Institution» plan free of charge for six months – in return for complete ward profiles and one feedback call per month."
+    "foundingBody": "The first 30 institutions receive the «Institution» plan free of charge for six months – in return for complete ward profiles and one feedback call per month.",
+    "eyebrow": "For hospitals, care homes, home care and practices",
+    "stats": {
+      "jobs": "open jobs on Kardia",
+      "wards": "wards with a profile",
+      "organizations": "employers, direct"
+    },
+    "featuresTitle": "Everything for direct recruitment",
+    "featuresLead": "Software, not an agency: you remain the employer, Kardia makes your conditions visible.",
+    "stepsTitle": "Live in three steps",
+    "steps": {
+      "register": {
+        "title": "Register your organisation",
+        "body": "With your UID. We check against the commercial register and the SECO list."
+      },
+      "import": {
+        "title": "Paste your job ad",
+        "body": "AI pre-fills the ward profile with source passages. You confirm every field."
+      },
+      "hire": {
+        "title": "Receive applications",
+        "body": "With a verified qualification passport, straight into your pipeline."
+      }
+    },
+    "previewTitle": "A look inside the cockpit",
+    "previewLead": "Real building blocks from Kardia: how professionals see your ward, and how you work with applications.",
+    "preview": {
+      "pipeline": {
+        "title": "Pipeline with passport",
+        "body": "Diploma and registry entry are verified before you open the application."
+      },
+      "profile": {
+        "title": "Ward profile",
+        "body": "Conditions per ward, confirmed by the team. Applicants know what to expect."
+      },
+      "benchmark": {
+        "title": "Benchmark",
+        "body": "Your values compared with the median for your department and region."
+      },
+      "candidate": "Registered nurse HF · {years} years",
+      "candidateFage": "Healthcare assistant FaGe · {years} years",
+      "passOk": "Passport verified",
+      "ward": "Intensive care 2",
+      "yours": "Your ward",
+      "median": "Regional median",
+      "rows": {
+        "lead": "Roster published ahead (weeks)",
+        "weekends": "Weekends per month",
+        "education": "Training days per year"
+      }
+    },
+    "agencyPoints": {
+      "uid": "UID check at registration",
+      "seco": "Matched against the SECO list",
+      "address": "Every job ad with ward and address"
+    },
+    "foundingCta": "Register as founding partner",
+    "foundingSlots": "{slots} places · {months} months free",
+    "faqTitle": "Frequently asked questions",
+    "faq": [
+      {
+        "q": "What does a hire through Kardia cost?",
+        "a": "Nothing extra. You pay a software subscription or a single listing – no success fee, no commission per hire."
+      },
+      {
+        "q": "Can recruitment agencies post jobs?",
+        "a": "No. Only organisations that are themselves the employer for the advertised job may post. Matches on the SECO list are checked manually."
+      },
+      {
+        "q": "How much work is a ward profile?",
+        "a": "About ten minutes: paste an existing job ad, the AI suggests the fields with source passages, you confirm or correct."
+      },
+      {
+        "q": "What happens to critical feedback from the team?",
+        "a": "You can comment on every reality-check value. It cannot be deleted or hidden – that is what makes the profiles credible."
+      },
+      {
+        "q": "Where is the data stored?",
+        "a": "In the EU. Credentials are stored encrypted; you only see original documents once the professional releases them."
+      }
+    ],
+    "ctaTitle": "Show what it is like to work with you.",
+    "ctaBody": "Registration in five minutes, your first ward profile in ten."
   },
   "pricing": {
     "title": "Pricing",
@@ -232,7 +331,51 @@
       "noAds": "No advertising business: sorting follows only the conditions of the person searching.",
       "founding": "Founding partners (first 30 institutions in the canton of Zurich): 6 months of «Institution» free of charge."
     },
-    "cta": "Register now"
+    "cta": "Register now",
+    "eyebrow": "Transparent, no success fees",
+    "talentFree": "Always free for healthcare professionals",
+    "recommended": "Recommended",
+    "choose": "Choose",
+    "singleCta": "Post a job",
+    "compareTitle": "Features compared",
+    "feature": "Feature",
+    "unlimited": "Unlimited",
+    "included": "Included",
+    "notIncluded": "Not included",
+    "rows": {
+      "activeJobs": "Active jobs",
+      "wards": "Wards",
+      "users": "Users",
+      "offersPerMonth": "Marketplace offers per month",
+      "poolMembers": "Flex pool members",
+      "benchmark": "Benchmark",
+      "multipleLocations": "Multiple sites",
+      "sso": "Company sign-in (SSO)",
+      "api": "API",
+      "webhooks": "Webhooks",
+      "feedImport": "Feed import"
+    },
+    "faqTitle": "Questions about pricing",
+    "faq": [
+      {
+        "q": "Can I cancel monthly?",
+        "a": "Yes. Monthly plans can be cancelled each month; annual plans run until the end of the paid period."
+      },
+      {
+        "q": "Are there hidden costs?",
+        "a": "No. No success fee, no paid ranking positions, no cost per application."
+      },
+      {
+        "q": "How do institutions pay?",
+        "a": "By card or TWINT; Institution and Hospital group can also pay by invoice with QR bill (30 days)."
+      },
+      {
+        "q": "What happens when a single listing expires?",
+        "a": "The job no longer appears in search. Applications and the ward profile are kept."
+      }
+    ],
+    "ctaTitle": "Start with one ward profile.",
+    "ctaBody": "Founding partners in the canton of Zurich get «Institution» free for six months."
   },
   "legal": {
     "draft": "Draft – to be legally reviewed before launch (PRD 14.3).",
@@ -372,7 +515,9 @@
           ]
         }
       ]
-    }
+    },
+    "eyebrow": "Legal",
+    "toc": "Contents"
   },
   "report": {
     "action": "Report",

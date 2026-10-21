@@ -5,6 +5,7 @@ import { getTranslations } from 'next-intl/server';
 import { ProblemError } from '@kardia/core';
 import { Button, Callout } from '@kardia/ui';
 
+import { AuthLayout } from '@/components/marketing/AuthLayout';
 import { redeemInvite } from '@/server/services/org';
 import { requireUser } from '@/server/session';
 
@@ -23,12 +24,14 @@ export default async function InvitePage({ params }: { params: Promise<{ token: 
   }
   if (target) redirect(target);
   return (
-    <div className="mx-auto flex max-w-md flex-col gap-4 px-4 py-12">
-      <h1 className="text-h1">{t('title')}</h1>
+    <AuthLayout>
+      <h1 className="text-display text-ink-900">{t('title')}</h1>
       <Callout tone="critical">{error}</Callout>
-      <Button asChild>
-        <Link href="/me">{t('toAccount')}</Link>
-      </Button>
-    </div>
+      <div>
+        <Button asChild variant="primary" size="l">
+          <Link href="/me">{t('toAccount')}</Link>
+        </Button>
+      </div>
+    </AuthLayout>
   );
 }
