@@ -37,5 +37,11 @@
     "agencyReview": "La sua organizzazione viene verificata manualmente (corrispondenza nel registro della SECO). Pubblicazione dopo l'approvazione.",
     "planLimit": "Il limite di posti attivi del suo abbonamento è stato raggiunto.",
     "jobWorkloadOutsideWard": "Il grado d'occupazione del posto è al di fuori della fascia del reparto."
+  },
+  "pages": {
+    "notFoundTitle": "Questa pagina non è sulla mappa.",
+    "forbiddenTitle": "Qui ti manca l'accesso.",
+    "home": "Alla pagina iniziale",
+    "search": "Cercare un posto"
   }
 }

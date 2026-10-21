@@ -37,5 +37,11 @@
     "agencyReview": "Ihre Organisation wird manuell geprüft (Treffer im SECO-Verzeichnis). Veröffentlichung nach Freigabe.",
     "planLimit": "Das Limit aktiver Stellen Ihres Abos ist erreicht.",
     "jobWorkloadOutsideWard": "Das Pensum der Stelle liegt ausserhalb der Spanne der Station."
+  },
+  "pages": {
+    "notFoundTitle": "Diese Seite ist nicht auf der Karte.",
+    "forbiddenTitle": "Hier fehlt dir der Zugang.",
+    "home": "Zur Startseite",
+    "search": "Stellen suchen"
   }
 }

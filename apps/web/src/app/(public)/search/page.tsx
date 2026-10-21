@@ -123,7 +123,7 @@ export default async function SearchPage({
             <p className="flex flex-col items-start md:items-end">
               <span className="text-display-l text-ink-900 tabular">{result.total}</span>
               <span className="text-body-s text-ink-700">
-                {x('count', { count: result.total })}
+                {x('countLabel', { count: result.total })}
               </span>
             </p>
           </div>

@@ -1,23 +1,9 @@
-import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
-import { Button, EmptyState } from '@kardia/ui';
+import { StatusPage } from '@/components/brand/StatusPage';
 
-/** 403-Seite: ein Satz plus eine Aktion. */
+/** 403-Seite: fehlende Berechtigung, mit Hinweis auf die passende Rolle. */
 export default async function Forbidden() {
   const t = await getTranslations('errors');
-  const c = await getTranslations('common');
-  return (
-    <main id="main" className="mx-auto flex min-h-dvh max-w-content items-center justify-center px-4 py-16">
-      <EmptyState
-        action={
-          <Button asChild variant="primary">
-            <Link href="/">{c('brand')}</Link>
-          </Button>
-        }
-      >
-        {t('forbidden')}
-      </EmptyState>
-    </main>
-  );
+  return <StatusPage code="403" title={t('pages.forbiddenTitle')} body={t('forbidden')} />;
 }

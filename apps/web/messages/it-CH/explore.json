@@ -6,7 +6,8 @@
     "groupRole": "Professione e grado d'occupazione",
     "emptyTitle": "Qui non batte ancora nessun polso",
     "viewWard": "Vedere il reparto",
-    "details": "Dettagli"
+    "details": "Dettagli",
+    "countLabel": "{count, plural, =0 {nessun posto adatto} one {posto adatto} other {posti adatti}}"
   },
   "job": {
     "back": "Torna alla ricerca",

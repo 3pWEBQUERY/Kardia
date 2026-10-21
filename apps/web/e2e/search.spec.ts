@@ -40,7 +40,9 @@ test.describe('Fachperson – erster Besuch bis Treffer', () => {
     await page.goto('/search');
     await page.locator('main ol > li a').first().click();
     await expect(page.getByRole('heading', { name: 'Dienstrhythmus' })).toBeVisible();
-    await expect(page.getByText(/bestätigt von Arbeitgeber am \d{2}\.\d{2}\.\d{4}/).first()).toBeVisible();
+    // AK-A2: jedes Feld zeigt Quelle und Datum – sichtbar als Kurzform, vollständig für Screenreader.
+    await expect(page.getByText(/Arbeitgeber · \d{2}\.\d{2}\.\d{4}/).first()).toBeVisible();
+    await expect(page.getByText(/bestätigt von Arbeitgeber am \d{2}\.\d{2}\.\d{4}/).first()).toBeAttached();
     const ld = await page.locator('script[type="application/ld+json"]').textContent();
     expect((JSON.parse(ld ?? '{}') as Record<string, unknown>)['@type']).toBe('JobPosting');
     await expectAccessible(page);

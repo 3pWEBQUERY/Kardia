@@ -51,7 +51,7 @@ export function AlpinePulse({ className, animate = true, dots = true }: { classN
  */
 export function AlpineBand({ className, animate = true }: { className?: string; animate?: boolean }) {
   return (
-    <svg viewBox="0 330 1600 570" preserveAspectRatio="xMidYMax slice" aria-hidden focusable="false" className={cx('pointer-events-none select-none', className)}>
+    <svg viewBox="0 380 1600 520" preserveAspectRatio="xMidYMin slice" aria-hidden focusable="false" className={cx('pointer-events-none select-none', className)}>
       <path d={RIDGE_FAR} className="fill-brand-800" />
       <path d={RIDGE_MID} className="fill-brand-900" />
       <path

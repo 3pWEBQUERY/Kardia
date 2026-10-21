@@ -404,5 +404,6 @@
     "linkFailed": "Le lien n'a pas pu être envoyé. Vérifier l'adresse et réessayer.",
     "adminPasskey": "La console d'administration exige une connexion par passkey (valable 12 heures au maximum)."
   },
-  "external": "s'ouvre dans une nouvelle fenêtre"
+  "external": "s'ouvre dans une nouvelle fenêtre",
+  "confirmedShort": "Employeur · {date}"
 }

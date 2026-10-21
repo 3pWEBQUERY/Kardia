@@ -6,7 +6,8 @@
     "groupRole": "Profession et taux d'activité",
     "emptyTitle": "Aucun pouls ici pour le moment",
     "viewWard": "Voir l'unité",
-    "details": "Détails"
+    "details": "Détails",
+    "countLabel": "{count, plural, =0 {aucun poste correspondant} one {poste correspondant} other {postes correspondants}}"
   },
   "job": {
     "back": "Retour à la recherche",

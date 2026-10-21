@@ -55,13 +55,13 @@
   .k-pulse-draw {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
-    animation: k-draw 2.2s var(--k-motion-ease) 0.15s forwards;
+    animation: k-draw 1.4s var(--k-motion-ease) forwards;
   }
 
   .k-ping {
     transform-box: fill-box;
     transform-origin: center;
-    animation: k-ping 2.4s var(--k-motion-ease) 2.2s infinite;
+    animation: k-ping 2.4s var(--k-motion-ease) 1.4s infinite;
   }
 
   /* Riesige Wortmarke im Footer: füllt die Breite. */

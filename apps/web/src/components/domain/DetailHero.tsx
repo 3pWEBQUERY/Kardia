@@ -31,7 +31,8 @@ export function DetailHero({
   back,
   logo,
   org,
-  place,
+  site,
+  city,
   title,
   chips,
   facts,
@@ -43,7 +44,9 @@ export function DetailHero({
   back?: { href: string; label: string };
   logo?: ReactNode;
   org: { href: string; label: string };
-  place: ReactNode;
+  /** Station bzw. Standort (Link erlaubt); der Ort folgt mit Kartennadel. */
+  site: ReactNode;
+  city: string;
   title: string;
   chips: HeroChip[];
   facts: HeroFact[];
@@ -68,16 +71,18 @@ export function DetailHero({
               </span>
               <span className="text-caption font-semibold tracking-wider text-brand-300 uppercase print:text-ink-700">{departmentLabel}</span>
             </div>
-            <h1 className="text-display-l text-brand-100 print:text-ink-900">{title}</h1>
+            <h1 className="text-h1 text-brand-100 sm:text-display-l print:text-ink-900">{title}</h1>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-body text-brand-300 print:text-ink-700">
               {logo}
               <Link href={org.href} className="font-medium text-brand-100 underline-offset-4 hover:underline print:text-ink-900">
                 {org.label}
               </Link>
               <span aria-hidden>·</span>
-              <span className="inline-flex flex-wrap items-center gap-x-3 gap-y-1">
+              <span>{site}</span>
+              <span aria-hidden>·</span>
+              <span className="inline-flex items-center gap-1.5">
                 <Icon icon={MapPin} size={16} />
-                {place}
+                {city}
               </span>
             </div>
             {chips.length ? (

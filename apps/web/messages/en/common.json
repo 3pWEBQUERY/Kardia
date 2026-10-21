@@ -404,5 +404,6 @@
     "linkFailed": "The link could not be sent. Check the address and try again.",
     "adminPasskey": "The admin console requires a passkey sign-in (valid for up to 12 hours)."
   },
-  "external": "opens in a new window"
+  "external": "opens in a new window",
+  "confirmedShort": "Employer · {date}"
 }

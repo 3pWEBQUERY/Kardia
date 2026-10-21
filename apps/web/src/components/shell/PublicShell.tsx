@@ -12,6 +12,7 @@ import { getSession } from '@/server/session';
 
 import { InstallPrompt } from './InstallPrompt.tsx';
 import { Preferences } from './Preferences.tsx';
+import { MobileMenu, PublicNav } from './PublicNav.tsx';
 
 import type { LucideIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
@@ -73,17 +74,8 @@ export async function PublicShell({ children }: { children: ReactNode }) {
           <Link href="/" aria-label={t('brand')} className="rounded-control">
             <KardiaLogo />
           </Link>
-          <nav aria-label={t('nav.menu')} className="hidden flex-1 items-center gap-1 md:flex">
-            {nav.map(([href, label]) => (
-              <Link key={href} href={href} className="rounded-control px-3 py-2 text-body-s font-medium text-ink-700 hover:bg-surface-100 hover:text-ink-900">
-                {label}
-              </Link>
-            ))}
-          </nav>
+          <PublicNav items={nav.map(([href, label]) => ({ href, label }))} label={t('nav.menu')} />
           <div className="ml-auto flex items-center gap-2">
-            <Link href="/search" className="rounded-control px-3 py-2 text-body-s text-ink-700 hover:bg-surface-100 md:hidden">
-              {t('nav.search')}
-            </Link>
             <Link href="/employers" className="hidden items-center gap-1 rounded-control px-3 py-2 text-body-s font-medium text-accent-600 hover:bg-accent-50 lg:inline-flex">
               {t('nav.postJobs')}
               <Icon icon={ArrowUpRight} size={16} />
@@ -97,6 +89,12 @@ export async function PublicShell({ children }: { children: ReactNode }) {
                 <Link href="/sign-in">{t('nav.signIn')}</Link>
               </Button>
             )}
+            <MobileMenu
+              items={nav.map(([href, label]) => ({ href, label }))}
+              label={t('nav.menu')}
+              closeLabel={t('actions.close')}
+              cta={{ href: '/employers', label: t('nav.postJobs') }}
+            />
           </div>
         </div>
       </header>

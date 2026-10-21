@@ -53,6 +53,7 @@ export async function WardProfileView({
   const [tf, te, tc] = await Promise.all([getTranslations('fields'), getTranslations('enums'), getTranslations('common')]);
   const fmt = (k: string, v: unknown) => formatFieldValue(k, v, { fields: tf, enums: te, common: tc });
   const source = tc('confirmedBy', { date: formatDate(confirmedAt) });
+  const short = tc('confirmedShort', { date: formatDate(confirmedAt) });
 
   const rows = WARD_FIELDS.filter((f) => f.key !== 'rosterPattern' && f.key !== 'department' && f.key !== 'salaryMaxChf');
   const grouped = GROUP_ORDER.map((g) => ({ group: g, fields: rows.filter((f) => f.group === g) })).filter((g) => g.fields.length);
@@ -92,6 +93,7 @@ export async function WardProfileView({
                     deviates={reality[f.key]?.deviates ?? false}
                     deviationLabel={tc('states.deviation')}
                     source={overridden.includes(f.key) ? `${source} · ${tc('search.jobOverride')}` : source}
+                    sourceShort={overridden.includes(f.key) ? `${short} · ${tc('search.jobOverride')}` : short}
                     {...(comment ? { employerComment: tc('employerComment', { comment }) } : {})}
                   />
                 );
@@ -104,8 +106,8 @@ export async function WardProfileView({
         <section aria-labelledby="g-location" className="flex flex-col">
           <GroupHeading id="g-location" group="location" label={tf('location')} />
           <ProfileFieldList>
-            <ProfileFieldRow label={tf('location')} value={`${location.street}, ${location.postalCode} ${location.city}`} source={source} />
-            <ProfileFieldRow label={tf('hasParking')} value={location.hasParking ? tc('states.yes') : tc('states.no')} source={source} />
+            <ProfileFieldRow label={tf('location')} value={`${location.street}, ${location.postalCode} ${location.city}`} source={source} sourceShort={short} />
+            <ProfileFieldRow label={tf('hasParking')} value={location.hasParking ? tc('states.yes') : tc('states.no')} source={source} sourceShort={short} />
           </ProfileFieldList>
         </section>
       ) : null}

@@ -404,5 +404,6 @@
     "linkFailed": "Der Link konnte nicht gesendet werden. Adresse prüfen und erneut versuchen.",
     "adminPasskey": "Die Admin-Konsole verlangt eine Passkey-Anmeldung (höchstens 12 Stunden gültig)."
   },
-  "external": "öffnet in neuem Fenster"
+  "external": "öffnet in neuem Fenster",
+  "confirmedShort": "Arbeitgeber · {date}"
 }

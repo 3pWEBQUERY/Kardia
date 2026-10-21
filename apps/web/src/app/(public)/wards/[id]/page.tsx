@@ -76,12 +76,8 @@ export default async function WardPage({ params }: { params: Promise<{ id: strin
         back={{ href: '/search', label: xj('back') }}
         logo={<OrgLogo fileId={ward.location.organization.logoFileId} size={32} />}
         org={{ href: `/organizations/${ward.location.organization.id}`, label: ward.location.organization.name }}
-        place={
-          <>
-            <span>{ward.location.name}</span>
-            <span>{ward.location.city}</span>
-          </>
-        }
+        site={ward.location.name}
+        city={ward.location.city}
         title={ward.name}
         chips={chips}
         facts={[

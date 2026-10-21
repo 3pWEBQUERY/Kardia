@@ -37,5 +37,11 @@
     "agencyReview": "Votre organisation est vérifiée manuellement (correspondance dans le répertoire du SECO). Publication après validation.",
     "planLimit": "La limite de postes actifs de votre abonnement est atteinte.",
     "jobWorkloadOutsideWard": "Le taux d'activité du poste se situe en dehors de la fourchette de l'unité."
+  },
+  "pages": {
+    "notFoundTitle": "Cette page n'est pas sur la carte.",
+    "forbiddenTitle": "L'accès te manque ici.",
+    "home": "Vers l'accueil",
+    "search": "Chercher un poste"
   }
 }

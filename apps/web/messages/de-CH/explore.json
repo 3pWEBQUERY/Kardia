@@ -6,7 +6,8 @@
     "groupRole": "Beruf und Pensum",
     "emptyTitle": "Hier schlägt noch kein Puls",
     "viewWard": "Station ansehen",
-    "details": "Details"
+    "details": "Details",
+    "countLabel": "{count, plural, =0 {keine passende Stelle} one {passende Stelle} other {passende Stellen}}"
   },
   "job": {
     "back": "Zur Suche",

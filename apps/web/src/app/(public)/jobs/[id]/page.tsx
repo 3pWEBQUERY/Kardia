@@ -94,14 +94,12 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
         back={{ href: '/search', label: x('back') }}
         logo={<OrgLogo fileId={ward.location.organization.logoFileId} size={32} />}
         org={{ href: `/organizations/${ward.location.organization.id}`, label: ward.location.organization.name }}
-        place={
-          <>
-            <Link href={`/wards/${ward.id}`} className="text-brand-100 underline-offset-4 hover:underline">
-              {ward.name}
-            </Link>
-            <span>{ward.location.city}</span>
-          </>
+        site={
+          <Link href={`/wards/${ward.id}`} className="text-brand-100 underline-offset-4 hover:underline">
+            {ward.name}
+          </Link>
         }
+        city={ward.location.city}
         title={job.title}
         chips={chips}
         facts={[

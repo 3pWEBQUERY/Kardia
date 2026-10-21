@@ -6,7 +6,8 @@
     "groupRole": "Profession and workload",
     "emptyTitle": "No pulse here yet",
     "viewWard": "View ward",
-    "details": "Details"
+    "details": "Details",
+    "countLabel": "{count, plural, =0 {no matching jobs} one {matching job} other {matching jobs}}"
   },
   "job": {
     "back": "Back to search",

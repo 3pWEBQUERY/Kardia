@@ -37,5 +37,11 @@
     "agencyReview": "Your organisation is being reviewed manually (match in the SECO directory). Publication after approval.",
     "planLimit": "Your plan's limit of active jobs has been reached.",
     "jobWorkloadOutsideWard": "The job's workload is outside the ward's range."
+  },
+  "pages": {
+    "notFoundTitle": "This page is not on the map.",
+    "forbiddenTitle": "You do not have access here.",
+    "home": "Back to home",
+    "search": "Search jobs"
   }
 }
