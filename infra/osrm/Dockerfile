@@ -3,7 +3,7 @@
 # Nur im privaten Railway-Netz erreichbar (osrm.railway.internal:5000, IPv6).
 
 FROM curlimages/curl:8.11.1 AS download
-RUN curl -fsSL -o /tmp/switzerland-latest.osm.pbf https://download.geofabrik.de/europe/switzerland-latest.osm.pbf
+RUN curl -4 -fsSL --retry 5 --retry-delay 10 --retry-all-errors -o /tmp/switzerland-latest.osm.pbf https://download.geofabrik.de/europe/switzerland-latest.osm.pbf
 
 FROM ghcr.io/project-osrm/osrm-backend:v5.27.1 AS prepare
 WORKDIR /data
