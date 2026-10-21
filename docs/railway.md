@@ -1,14 +1,22 @@
 # Betrieb auf Railway
 
-Ein Railway-Projekt in **EU West** (`europe-west4`) mit fünf Diensten (PRD 10.2):
+Ein Railway-Projekt in **EU West** (`europe-west4-drams3a`) mit fünf Diensten (PRD 10.2).
+Die Konfiguration steht als Infrastructure as Code in [`.railway/railway.ts`](../.railway/railway.ts)
+(`railway config plan` / `railway config apply`); `railway.json` ist bei Railway veraltet.
+
+**Live-Demo:** https://web-production-2dbcb.up.railway.app – fiktive Demo-Daten, Ein-Klick-Anmeldung
+unter `/sign-in` (`DEMO_LOGIN=true`). Für den echten Betrieb `DEMO_LOGIN` und `SEED_DEMO` entfernen
+und E-Mail einrichten (`MAIL_TRANSPORT=ses` oder `smtp` mit `SMTP_URL`).
+
+
 
 | Dienst | Quelle | Konfiguration |
 | --- | --- | --- |
-| `web` | `apps/web/Dockerfile` | `apps/web/railway.json` – 2 Replikas, Health-Check `/api/health`, Migrationen als Pre-Deploy |
-| `worker` | `apps/worker/Dockerfile` | `apps/worker/railway.json` – 1 Replika, Entrypoint startet ClamAV und dann `node dist/worker.js`; ffmpeg + pg_dump 18 |
+| `web` | `apps/web/Dockerfile` | 2 Replikas, Health-Check `/api/health`, Pre-Deploy `sh tools/db/scripts/predeploy.sh` (Migrationen, optional Demo-Seed) |
+| `worker` | `apps/worker/Dockerfile` | 1 Replika, Entrypoint startet ClamAV und dann `node dist/worker.js`; ffmpeg + pg_dump 18 |
 | `postgres` | Railway PostgreSQL 18 (Template) | tägliche Railway-Backups; zusätzlich nächtlicher verschlüsselter `pg_dump` in `backup/` |
 | `bucket` | Railway Bucket | privat; Präfixe `pass/`, `video/`, `logo/`, `import/`, `backup/` |
-| `osrm` | `infra/osrm/Dockerfile` | `infra/osrm/railway.json` – Schweiz-Extrakt, nur intern erreichbar |
+| `osrm` | `infra/osrm/Dockerfile` | Schweiz-Extrakt (Geofabrik), beim Build vorbereitet; nur intern über IPv6 (`osrm.railway.internal:5000`) |
 
 Railway Buckets haben keine automatischen Backups; der Worker repliziert `pass/` und
 `backup/` nächtlich in einen zweiten Bucket (`S3_REPLICA_*`).

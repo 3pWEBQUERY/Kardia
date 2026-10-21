@@ -1,15 +1,19 @@
 # OSRM mit Schweiz-Extrakt (OpenStreetMap) für Auto-Pendelzeiten (PRD 10.1).
 # Daten werden beim Build vorbereitet (MLD: extract → partition → customize).
-FROM osrm/osrm-backend:latest AS prepare
-RUN apt-get update && apt-get install -y --no-install-recommends wget ca-certificates && rm -rf /var/lib/apt/lists/* || true
+# Nur im privaten Railway-Netz erreichbar (osrm.railway.internal:5000, IPv6).
+
+FROM curlimages/curl:8.11.1 AS download
+RUN curl -fsSL -o /tmp/switzerland-latest.osm.pbf https://download.geofabrik.de/europe/switzerland-latest.osm.pbf
+
+FROM ghcr.io/project-osrm/osrm-backend:v5.27.1 AS prepare
 WORKDIR /data
-RUN wget -q https://download.geofabrik.de/europe/switzerland-latest.osm.pbf \
- && osrm-extract -p /opt/car.lua switzerland-latest.osm.pbf \
+COPY --from=download /tmp/switzerland-latest.osm.pbf ./
+RUN osrm-extract -p /opt/car.lua switzerland-latest.osm.pbf \
  && osrm-partition switzerland-latest.osrm \
  && osrm-customize switzerland-latest.osrm \
  && rm switzerland-latest.osm.pbf
 
-FROM osrm/osrm-backend:latest
+FROM ghcr.io/project-osrm/osrm-backend:v5.27.1
 COPY --from=prepare /data /data
 EXPOSE 5000
-CMD ["osrm-routed", "--algorithm", "mld", "--max-table-size", "1000", "/data/switzerland-latest.osrm"]
+CMD ["osrm-routed", "--algorithm", "mld", "--ip", "::", "--port", "5000", "--max-table-size", "1000", "/data/switzerland-latest.osrm"]
