@@ -11,7 +11,7 @@ import { requireUser } from '@/server/session';
 /** Merkliste & Vergleich, gespeicherte Suchen – Merkliste offline lesbar (PRD 13.2). */
 export default async function SavedPage() {
   const s = await requireUser('/me/saved');
-  const [t, e] = await Promise.all([getTranslations('candidate.saved'), getTranslations('enums')]);
+  const [t, e, cs] = await Promise.all([getTranslations('candidate.saved'), getTranslations('enums'), getTranslations('common.search')]);
   const candidate = await db.candidateProfile.findUnique({
     where: { userId: s.user.id },
     include: {
@@ -48,7 +48,7 @@ export default async function SavedPage() {
           {candidate?.savedSearches.map((ss) => {
             const parsed = searchFilterSchema.safeParse(ss.filters);
             const href = `/search?f=${encodeFilter(parsed.success ? parsed.data : decodeFilter(null))}`;
-            return <SavedSearchRow key={ss.id} id={ss.id} name={ss.name} href={href} frequency={e(`AlertFrequency.${ss.frequency}`)} />;
+            return <SavedSearchRow key={ss.id} id={ss.id} name={ss.name} href={href} frequency={e(`AlertFrequency.${ss.frequency}`)} channel={cs(`channels.${ss.channel}`)} />;
           })}
         </CardBody>
       </Card>

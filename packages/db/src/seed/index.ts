@@ -442,6 +442,7 @@ async function main(): Promise<void> {
       name: 'Kardia Admin',
       emailVerified: true,
       isAdmin: true,
+      ...SEED_TERMS,
     },
   });
 

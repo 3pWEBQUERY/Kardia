@@ -18,7 +18,7 @@ import {
   searchFilterSchema,
   uploadRequestSchema,
 } from '@kardia/core';
-import { AlertFrequency, ApplicationStatus, CredentialStatus, Department, JobStatus, OfferStatus, Profession, RosterCode, ShiftStatus } from '@kardia/db/enums';
+import { AlertChannel, AlertFrequency, ApplicationStatus, CredentialStatus, Department, JobStatus, OfferStatus, Profession, RosterCode, ShiftStatus } from '@kardia/db/enums';
 
 /**
  * OpenAPI 3.1 aus denselben Zod-Schemas wie Web und Server (PRD 12.1, 13.4). Dient der
@@ -173,7 +173,7 @@ const credential = z
 const message = z.object({ id, body: z.string(), mine: z.boolean(), createdAt: z.string(), readAt: z.string().nullable() }).meta({ id: 'Message' });
 
 const savedSearch = z
-  .object({ id, name: z.string(), filters: searchFilterSchema, frequency: z.enum(AlertFrequency), lastSentAt: z.string().nullable() })
+  .object({ id, name: z.string(), filters: searchFilterSchema, frequency: z.enum(AlertFrequency), channel: z.enum(AlertChannel), lastSentAt: z.string().nullable() })
   .meta({ id: 'SavedSearch' });
 
 const savedJob = z

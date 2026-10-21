@@ -6,13 +6,13 @@ import { createSavedSearch, listSavedSearches } from '@/server/services/savedSea
 import type { SavedSearch } from '@kardia/db';
 
 function savedSearchView(s: SavedSearch) {
-  return { id: s.id, name: s.name, filters: s.filters, frequency: s.frequency, lastSentAt: s.lastSentAt };
+  return { id: s.id, name: s.name, filters: s.filters, frequency: s.frequency, channel: s.channel, lastSentAt: s.lastSentAt };
 }
 
 /** GET /api/v1/me/saved-searches – Suchabos. */
 export const GET = api(async ({ who }) => ({ data: (await listSavedSearches(requireUserPrincipal(who))).map(savedSearchView) }));
 
-/** POST /api/v1/me/saved-searches – {"name","filters":SearchFilter,"frequency"} */
+/** POST /api/v1/me/saved-searches – {"name","filters":SearchFilter,"frequency","channel"?} */
 export const POST = api(async ({ req, who }) => {
   const created = await createSavedSearch(requireUserPrincipal(who), await readJson(req));
   return NextResponse.json(savedSearchView(created), { status: 201 });

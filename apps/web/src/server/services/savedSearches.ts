@@ -18,7 +18,7 @@ export async function listSavedSearches(userId: string) {
 
 export async function createSavedSearch(userId: string, input: unknown) {
   const data = parseOrThrow(savedSearchInputSchema, input);
-  return db.savedSearch.create({ data: { candidateId: await candidateId(userId), name: data.name, filters: data.filters, frequency: data.frequency } });
+  return db.savedSearch.create({ data: { candidateId: await candidateId(userId), name: data.name, filters: data.filters, frequency: data.frequency, channel: data.channel } });
 }
 
 export async function deleteSavedSearch(userId: string, id: string): Promise<void> {

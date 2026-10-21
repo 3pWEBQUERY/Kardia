@@ -198,6 +198,12 @@ enum AlertFrequency {
   WEEKLY
 }
 
+enum AlertChannel {
+  EMAIL
+  PUSH
+  BOTH
+}
+
 enum PlanTier {
   PRAXIS
   INSTITUTION
@@ -551,6 +557,8 @@ model SavedSearch {
   name        String
   filters     Json
   frequency   AlertFrequency @default(DAILY)
+  /// Kanal der Treffermeldung (PRD 13.3): E-Mail, Web Push oder beides
+  channel     AlertChannel   @default(EMAIL)
   lastSentAt  DateTime?
 
   candidate CandidateProfile @relation(fields: [candidateId], references: [id], onDelete: Cascade)

@@ -11,6 +11,9 @@ export const DEMO_PERSONAS = [
   { email: 'leitung@seefeld-ost.example', role: 'owner', next: '/employer' },
   { email: 'recruiting@seefeld-ost.example', role: 'recruiter', next: '/employer' },
   { email: 'leitung@praxis-keller.example', role: 'practice', next: '/employer' },
+  // Admin-Konsole der Demo (SEED_ADMIN_EMAIL wie im Seed); requireAdmin akzeptiert dafür
+  // im Demo-Modus eine E-Mail-Link-Sitzung statt Passkey.
+  { email: process.env.SEED_ADMIN_EMAIL ?? 'admin@kardia.local', role: 'admin', next: '/admin' },
 ] as const;
 
 export type DemoPersona = (typeof DEMO_PERSONAS)[number];
