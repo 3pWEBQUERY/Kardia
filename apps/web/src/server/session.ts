@@ -9,6 +9,7 @@ import { ADMIN_SESSION_MAX_AGE_SEC, ProblemError, can, effectivePlan, type Permi
 
 import { auth } from './auth.ts';
 import { db } from './db.ts';
+import { env } from './env.ts';
 
 import type { MemberRole } from '@kardia/db';
 
@@ -117,12 +118,22 @@ function devAdminMagicLink(): boolean {
   return process.env.NODE_ENV !== 'production' && process.env.DEV_ADMIN_MAGIC_LINK === '1';
 }
 
+/**
+ * Demo-Umgebung (DEMO_LOGIN=true, nur fiktive Daten): Die Admin-Konsole ist dort auch mit
+ * einer E-Mail-Link-Sitzung erreichbar, damit sie ohne Passkey-Gerät gezeigt werden kann.
+ * Ohne DEMO_LOGIN gilt ausschliesslich Passkey (PRD 14.2).
+ */
+function demoAdminMagicLink(): boolean {
+  return env().DEMO_LOGIN;
+}
+
 /** Admin-Konsole: Passkey-Sitzung, höchstens 12 h alt (PRD 14.2). */
 export async function requireAdmin(): Promise<CurrentSession> {
   const s = await requireUser('/admin');
   if (!s.user.isAdmin) throw new ProblemError('forbidden');
   const ageSec = (Date.now() - s.session.createdAt.getTime()) / 1000;
-  const methodOk = s.session.authMethod === 'passkey' || (devAdminMagicLink() && s.session.authMethod === 'magic-link');
+  const magicLinkOk = devAdminMagicLink() || demoAdminMagicLink();
+  const methodOk = s.session.authMethod === 'passkey' || (magicLinkOk && s.session.authMethod === 'magic-link');
   if (!methodOk || ageSec > ADMIN_SESSION_MAX_AGE_SEC) {
     redirect('/sign-in?admin=1&next=/admin');
   }

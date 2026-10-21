@@ -66,6 +66,8 @@ function createAuth() {
       magicLink({
         expiresIn: 15 * 60,
         sendMagicLink: async ({ email, url }) => {
+          // Demo-Umgebung: Link für die Ein-Klick-Anmeldung abfangen statt verschicken.
+          if (e.DEMO_LOGIN && captureDemoLink(email, url)) return;
           const user = await db.user.findUnique({ where: { email }, include: { passkeys: { select: { id: true } } } });
           // Admins melden sich nur mit Passkey an; der E-Mail-Link dient nur der Ersteinrichtung.
           if (user?.isAdmin && user.passkeys.length > 0) return;
@@ -81,8 +83,6 @@ function createAuth() {
             const { appendFile } = await import('node:fs/promises');
             await appendFile(linkFile, `${email} ${url}\n`).catch(() => undefined);
           }
-          // Demo-Umgebung: Link für die Ein-Klick-Anmeldung abfangen statt verschicken.
-          if (e.DEMO_LOGIN && captureDemoLink(email, url)) return;
           await enqueue(QUEUES.emailSend, { template: 'magic-link', to: email, data: { url } });
         },
       }),

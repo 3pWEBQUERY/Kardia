@@ -353,7 +353,14 @@
     "ptLabel": "Transports publics",
     "carLabel": "Voiture",
     "jobOverride": "différent pour ce poste",
-    "commuteUnavailable": "actuellement indisponible"
+    "commuteUnavailable": "actuellement indisponible",
+    "channel": "Notifier par",
+    "channels": {
+      "EMAIL": "E-mail",
+      "PUSH": "Web Push",
+      "BOTH": "E-mail et Web Push"
+    },
+    "channelHint": "Sans appareil abonné, la notification arrive par e-mail."
   },
   "apply": {
     "message": "Message personnel (facultatif)",

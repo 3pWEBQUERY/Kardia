@@ -18,4 +18,11 @@ test.describe('Demo-Zugang', () => {
     await expect(page).toHaveURL(/\/employer$/);
     await expect(page.locator('main h1').first()).toBeVisible();
   });
+
+  test('Admin landet in der Admin-Konsole (Demo ohne Passkey)', async ({ page }) => {
+    await page.goto('/sign-in');
+    await page.getByRole('button', { name: /admin@kardia\.local/ }).click();
+    await expect(page).toHaveURL(/\/admin$/);
+    await expect(page.locator('main h1').first()).toBeVisible();
+  });
 });

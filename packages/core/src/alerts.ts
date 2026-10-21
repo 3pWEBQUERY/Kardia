@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { AlertFrequency } from '@kardia/db/enums';
+import { AlertChannel, AlertFrequency } from '@kardia/db/enums';
 
 import { searchFilterSchema } from './search.ts';
 
@@ -9,6 +9,8 @@ export const savedSearchInputSchema = z.object({
   name: z.string().trim().min(2).max(80),
   filters: searchFilterSchema,
   frequency: z.enum(AlertFrequency),
+  /** Kanal der Treffermeldung; ohne Angabe E-Mail. */
+  channel: z.enum(AlertChannel).default('EMAIL'),
 });
 
 export type SavedSearchInput = z.infer<typeof savedSearchInputSchema>;

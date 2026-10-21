@@ -1,6 +1,17 @@
-import { Body, Button, Container, Head, Heading, Hr, Html, Link, Preview, Section, Text } from '@react-email/components';
+import {
+  Body,
+  Button,
+  Container,
+  Head,
+  Heading,
+  Hr,
+  Html,
+  Link,
+  Preview,
+  Section,
+  Text,
+} from '@react-email/components';
 import { render } from '@react-email/render';
-
 
 import { formatChf, formatDate, formatDateTime } from '@kardia/core';
 
@@ -8,12 +19,14 @@ import { formatChf, formatDate, formatDateTime } from '@kardia/core';
 import { colors } from '../../../../packages/ui/src/tokens.generated.ts';
 import { config } from '../env.ts';
 
+import { EMAIL_TEXT, type EmailLocale, type EmailText } from './strings.ts';
+
 import type { ReactNode } from 'react';
 
 /**
- * Transaktions-E-Mails (PRD 10.1: SES + React Email). Flach wie die UI: keine
- * Schatten, keine Verläufe, keine Emoji; Schweizer Formatierung; Link zu den
- * Einstellungen im Fuss. Inhalte enthalten nie Pass-Dokumente.
+ * Transaktions-E-Mails (PRD 10.1: SES + React Email) in vier Sprachen. Flach wie die
+ * UI: keine Schatten, keine Verläufe, keine Emoji; Schweizer Formatierung; Link zu den
+ * Einstellungen im Fuss. Inhalte enthalten nie Pass-Dokumente. Texte: ./strings.ts.
  */
 export const TEMPLATES = [
   'magic-link',
@@ -50,45 +63,105 @@ export interface RenderedEmail {
 
 const c = (name: keyof typeof colors) => colors[name].light;
 
-const STATUS_LABEL: Record<string, string> = {
-  NEW: 'Neu',
-  SCREENED: 'Gesichtet',
-  INTERVIEW: 'Gespräch',
-  OFFER: 'Angebot',
-  HIRED: 'Angestellt',
-  REJECTED: 'Abgesagt',
-  WITHDRAWN: 'Zurückgezogen',
-};
-
-function Layout({ preview, title, children, action }: { preview: string; title: string; children: ReactNode; action?: { label: string; href: string } }) {
+/** Marken-Layout: dunkles Kopfband mit Wortmarke und Pulslinie, darunter flache Karte (PRD 8.1). */
+function Layout({
+  L,
+  preview,
+  title,
+  children,
+  action,
+}: {
+  L: EmailText;
+  preview: string;
+  title: string;
+  children: ReactNode;
+  action?: { label: string; href: string } | undefined;
+}) {
   return (
-    <Html lang="de-CH">
+    <Html lang={L.lang}>
       <Head />
       <Preview>{preview}</Preview>
-      <Body style={{ backgroundColor: c('surface-50'), color: c('ink-900'), fontFamily: 'Helvetica, Arial, sans-serif', margin: 0, padding: '24px 0' }}>
-        <Container style={{ backgroundColor: c('surface-0'), border: `1px solid ${c('line-300')}`, borderRadius: 10, maxWidth: 560, padding: '24px 28px' }}>
-          <Text style={{ color: c('accent-600'), fontSize: 14, fontWeight: 600, margin: '0 0 16px' }}>Kardia</Text>
-          <Heading as="h1" style={{ fontSize: 20, lineHeight: '28px', fontWeight: 600, margin: '0 0 12px' }}>
-            {title}
-          </Heading>
-          {children}
-          {action ? (
-            <Section style={{ margin: '20px 0 8px' }}>
-              <Button
-                href={action.href}
-                style={{ backgroundColor: c('accent-600'), color: c('on-accent'), borderRadius: 6, fontSize: 14, fontWeight: 600, padding: '10px 16px', textDecoration: 'none' }}
-              >
-                {action.label}
-              </Button>
-            </Section>
-          ) : null}
-          <Hr style={{ borderColor: c('line-200'), margin: '24px 0 12px' }} />
-          <Text style={{ color: c('ink-500'), fontSize: 12, lineHeight: '16px', margin: 0 }}>
-            Sie erhalten diese Nachricht von Kardia, der Stellenplattform für Gesundheitsberufe in der Schweiz.{' '}
-            <Link href={`${config.appOrigin}/me/settings`} style={{ color: c('accent-600') }}>
-              Benachrichtigungen verwalten
-            </Link>
-          </Text>
+      <Body
+        style={{
+          backgroundColor: c('sand-100'),
+          color: c('ink-900'),
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          margin: 0,
+          padding: '24px 0',
+        }}
+      >
+        <Container style={{ maxWidth: 560 }}>
+          <Section
+            style={{
+              backgroundColor: c('brand-950'),
+              borderRadius: '10px 10px 0 0',
+              padding: '20px 28px 0',
+            }}
+          >
+            <Text
+              style={{
+                color: c('brand-100'),
+                fontSize: 22,
+                fontWeight: 700,
+                letterSpacing: '-0.02em',
+                margin: 0,
+              }}
+            >
+              Kardia<span style={{ color: c('pulse-500') }}>.</span>
+            </Text>
+            <Text style={{ color: c('brand-300'), fontSize: 12, margin: '2px 0 16px' }}>
+              {L.tagline}
+            </Text>
+            <div style={{ height: 3, width: 72, backgroundColor: c('pulse-500') }} />
+          </Section>
+          <Section
+            style={{
+              backgroundColor: c('surface-0'),
+              border: `1px solid ${c('sand-200')}`,
+              borderTop: 'none',
+              borderRadius: '0 0 10px 10px',
+              padding: '24px 28px',
+            }}
+          >
+            <Heading
+              as="h1"
+              style={{
+                fontSize: 20,
+                lineHeight: '28px',
+                fontWeight: 600,
+                margin: '0 0 12px',
+                color: c('ink-900'),
+              }}
+            >
+              {title}
+            </Heading>
+            {children}
+            {action ? (
+              <Section style={{ margin: '20px 0 8px' }}>
+                <Button
+                  href={action.href}
+                  style={{
+                    backgroundColor: c('accent-600'),
+                    color: c('on-accent'),
+                    borderRadius: 6,
+                    fontSize: 14,
+                    fontWeight: 600,
+                    padding: '10px 16px',
+                    textDecoration: 'none',
+                  }}
+                >
+                  {action.label}
+                </Button>
+              </Section>
+            ) : null}
+            <Hr style={{ borderColor: c('line-200'), margin: '24px 0 12px' }} />
+            <Text style={{ color: c('ink-500'), fontSize: 12, lineHeight: '16px', margin: 0 }}>
+              {L.footer}{' '}
+              <Link href={url('/me/settings')} style={{ color: c('accent-600') }}>
+                {L.manage}
+              </Link>
+            </Text>
+          </Section>
         </Container>
       </Body>
     </Html>
@@ -96,315 +169,341 @@ function Layout({ preview, title, children, action }: { preview: string; title: 
 }
 
 function P({ children }: { children: ReactNode }) {
-  return <Text style={{ fontSize: 15, lineHeight: '22px', margin: '0 0 10px', color: c('ink-700') }}>{children}</Text>;
+  return (
+    <Text style={{ fontSize: 15, lineHeight: '22px', margin: '0 0 10px', color: c('ink-700') }}>
+      {children}
+    </Text>
+  );
 }
 
+/** Links immer absolut auf APP_ORIGIN (Mail-Clients kennen keine relativen Pfade). */
 const url = (path: string) => `${config.appOrigin}${path}`;
-const s = (v: unknown, fallback = ''): string => (typeof v === 'string' ? v : typeof v === 'number' ? String(v) : fallback);
+const s = (v: unknown, fallback = ''): string =>
+  typeof v === 'string' ? v : typeof v === 'number' ? String(v) : fallback;
+const when = (v: unknown) => (v ? formatDateTime(s(v)) : '');
+const day = (v: unknown) => (v ? formatDate(s(v)) : '');
 
 interface Built {
   subject: string;
   element: ReactNode;
 }
 
-/** Inhalt je Vorlage; `audience` unterscheidet Fachperson und Arbeitgeber bei gleichen Ereignissen. */
-export function buildEmail(template: TemplateName, data: Record<string, unknown>, audience: Audience): Built {
+/**
+ * Inhalt je Vorlage in der Sprache der empfangenden Person; `audience` unterscheidet
+ * Fachperson und Arbeitgeber bei gleichen Ereignissen.
+ */
+export function buildEmail(
+  template: TemplateName,
+  data: Record<string, unknown>,
+  audience: Audience,
+  locale: EmailLocale = 'de',
+): Built {
+  const L = EMAIL_TEXT[locale];
+  const mail = (
+    subject: string,
+    preview: string,
+    title: string,
+    body: ReactNode,
+    action?: { label: string; href: string },
+  ): Built => ({
+    subject,
+    element: (
+      <Layout L={L} preview={preview} title={title} action={action}>
+        {body}
+      </Layout>
+    ),
+  });
   switch (template) {
-    case 'magic-link':
-      return {
-        subject: 'Ihr Anmeldelink für Kardia',
-        element: (
-          <Layout preview="Mit einem Klick anmelden" title="Anmelden bei Kardia" action={{ label: 'Jetzt anmelden', href: s(data.url) }}>
-            <P>Der Link ist 15 Minuten gültig und funktioniert einmal. Haben Sie keine Anmeldung angefordert, können Sie diese E-Mail ignorieren.</P>
-          </Layout>
-        ),
-      };
+    case 'magic-link': {
+      const T = L.magicLink;
+      return mail(T.subject, T.preview, T.title, <P>{T.body}</P>, {
+        label: T.action,
+        href: s(data.url),
+      });
+    }
     case 'application.status': {
-      const status = STATUS_LABEL[s(data.status)] ?? s(data.status);
       if (audience === 'employer') {
-        return {
-          subject: `Neue Bewerbung: ${s(data.jobTitle)}`,
-          element: (
-            <Layout preview="Eine neue Bewerbung ist eingegangen" title="Neue Bewerbung" action={{ label: 'Bewerbung ansehen', href: url(`/employer/applications/${s(data.applicationId)}`) }}>
-              <P>Für die Stelle «{s(data.jobTitle)}» ist eine Bewerbung mit Qualifikations-Pass eingegangen.</P>
-            </Layout>
-          ),
-        };
+        const T = L.applicationNew;
+        return mail(
+          T.subject(s(data.jobTitle)),
+          T.preview,
+          T.title,
+          <P>{T.body(s(data.jobTitle))}</P>,
+          { label: T.action, href: url(`/employer/applications/${s(data.applicationId)}`) },
+        );
       }
-      return {
-        subject: `Status Ihrer Bewerbung: ${status}`,
-        element: (
-          <Layout preview={`Neuer Status: ${status}`} title="Ihre Bewerbung hat einen neuen Status" action={{ label: 'Bewerbung öffnen', href: url(`/me/applications/${s(data.applicationId)}`) }}>
-            <P>
-              Stelle «{s(data.jobTitle)}»: <strong>{status}</strong>.
-            </P>
-          </Layout>
-        ),
-      };
+      const T = L.applicationStatus;
+      const status = L.status[s(data.status)] ?? s(data.status);
+      return mail(
+        T.subject(status),
+        T.preview(status),
+        T.title,
+        <P>
+          {T.body(s(data.jobTitle))} <strong>{status}</strong>
+        </P>,
+        { label: T.action, href: url(`/me/applications/${s(data.applicationId)}`) },
+      );
     }
-    case 'application.message':
-      return {
-        subject: `Neue Nachricht zu «${s(data.jobTitle)}»`,
-        element: (
-          <Layout
-            preview="Sie haben eine neue Nachricht"
-            title="Neue Nachricht im Bewerbungs-Thread"
-            action={{ label: 'Nachricht lesen', href: url(audience === 'employer' ? `/employer/applications/${s(data.applicationId)}` : `/me/applications/${s(data.applicationId)}`) }}
-          >
-            <P>Aus Datenschutzgründen steht der Inhalt nicht in der E-Mail. Sie lesen ihn nach der Anmeldung.</P>
-          </Layout>
-        ),
-      };
-    case 'offer.new':
-      return {
-        subject: `Neues Angebot von ${s(data.orgName)}`,
-        element: (
-          <Layout preview="Ein Arbeitgeber hat Ihnen ein Angebot gesendet" title="Sie haben ein Angebot erhalten" action={{ label: 'Angebot ansehen', href: url(`/offers/${s(data.offerId)}`) }}>
-            <P>
-              {s(data.orgName)} bietet Ihnen die Stelle «{s(data.jobTitle)}» an. Das Angebot ist 14 Tage gültig. Ihr Name wird erst sichtbar, wenn Sie Interesse zeigen.
-            </P>
-          </Layout>
-        ),
-      };
+    case 'application.message': {
+      const T = L.applicationMessage;
+      const href = url(
+        audience === 'employer'
+          ? `/employer/applications/${s(data.applicationId)}`
+          : `/me/applications/${s(data.applicationId)}`,
+      );
+      return mail(T.subject(s(data.jobTitle)), T.preview, T.title, <P>{T.body}</P>, {
+        label: T.action,
+        href,
+      });
+    }
+    case 'offer.new': {
+      const T = L.offerNew;
+      return mail(
+        T.subject(s(data.orgName)),
+        T.preview,
+        T.title,
+        <P>{T.body(s(data.orgName), s(data.jobTitle))}</P>,
+        { label: T.action, href: url(`/offers/${s(data.offerId)}`) },
+      );
+    }
     case 'offer.responded': {
-      const interested = data.action === 'interested';
-      return {
-        subject: interested ? 'Interesse an Ihrem Angebot' : 'Ein Angebot wurde abgelehnt',
-        element: (
-          <Layout
-            preview={interested ? 'Die Fachperson möchte Sie kennenlernen' : 'Antwort auf Ihr Angebot'}
-            title={interested ? 'Die Fachperson hat Interesse' : 'Angebot abgelehnt'}
-            action={
-              interested && data.applicationId
-                ? { label: 'Zum Bewerbungs-Thread', href: url(`/employer/applications/${s(data.applicationId)}`) }
-                : { label: 'Angebote ansehen', href: url('/employer/marketplace') }
-            }
-          >
-            <P>
-              {interested
-                ? 'Name und Kontakt sind jetzt freigegeben. Der Chat steht im Bewerbungs-Thread bereit.'
-                : 'Gründe werden nur zusammengefasst angezeigt, sobald genügend Antworten vorliegen.'}
-            </P>
-          </Layout>
-        ),
-      };
+      const T = L.offerResponded;
+      const yes = data.action === 'interested';
+      const action =
+        yes && data.applicationId
+          ? { label: T.actionThread, href: url(`/employer/applications/${s(data.applicationId)}`) }
+          : { label: T.actionOffers, href: url('/employer/marketplace') };
+      return mail(
+        yes ? T.subjectYes : T.subjectNo,
+        yes ? T.previewYes : T.previewNo,
+        yes ? T.titleYes : T.titleNo,
+        <P>{yes ? T.bodyYes : T.bodyNo}</P>,
+        action,
+      );
     }
-    case 'shift.new':
-      return {
-        subject: `Neue Schicht: ${s(data.wardName)}`,
-        element: (
-          <Layout preview="In Ihrem Pool ist eine Schicht offen" title="Neue Schicht im Flex-Pool" action={{ label: 'Schichten ansehen', href: url('/me/shifts') }}>
-            <P>
-              {s(data.wardName)}, Beginn {data.startsAt ? formatDateTime(s(data.startsAt)) : ''}.
-            </P>
-          </Layout>
-        ),
-      };
-    case 'shift.booked':
+    case 'shift.new': {
+      const T = L.shiftNew;
+      return mail(
+        T.subject(s(data.wardName)),
+        T.preview,
+        T.title,
+        <P>{T.body(s(data.wardName), when(data.startsAt))}</P>,
+        { label: T.action, href: url('/me/shifts') },
+      );
+    }
+    case 'shift.booked': {
+      const T = L.shiftBooked;
       if (audience === 'employer') {
-        return {
-          subject: data.interest ? 'Interesse an einer Schicht' : 'Schicht gebucht',
-          element: (
-            <Layout preview="Neuigkeit im Flex-Pool" title={data.interest ? 'Interesse an einer Schicht' : 'Eine Schicht wurde gebucht'} action={{ label: 'Flex-Pool öffnen', href: url('/employer/pool') }}>
-              <P>{data.interest ? 'Eine Person aus Ihrem Pool hat Interesse angemeldet. Bitte auswählen.' : `${s(data.wardName)}, ${data.startsAt ? formatDateTime(s(data.startsAt)) : ''}.`}</P>
-            </Layout>
-          ),
-        };
+        const interest = Boolean(data.interest);
+        return mail(
+          interest ? T.subjectInterest : T.subjectBooked,
+          T.preview,
+          interest ? T.subjectInterest : T.titleBooked,
+          <P>{interest ? T.bodyInterest : `${s(data.wardName)}, ${when(data.startsAt)}.`}</P>,
+          { label: T.actionPool, href: url('/employer/pool') },
+        );
       }
-      return {
-        subject: 'Ihre Schicht ist bestätigt',
-        element: (
-          <Layout preview="Buchung bestätigt" title="Schicht bestätigt" action={{ label: 'Kalender herunterladen', href: url('/api/v1/me/shifts.ics') }}>
-            <P>
-              {s(data.wardName)}, {data.startsAt ? formatDateTime(s(data.startsAt)) : ''}. Sie erhalten 12 Stunden vorher eine Erinnerung.
-            </P>
-          </Layout>
-        ),
-      };
-    case 'shift.cancelled':
-      return {
-        subject: 'Schicht abgesagt',
-        element: (
-          <Layout preview="Eine Schicht wurde abgesagt" title="Schicht abgesagt" action={{ label: 'Details', href: url(audience === 'employer' ? '/employer/pool' : '/me/shifts') }}>
-            <P>{audience === 'employer' ? 'Eine gebuchte Schicht ist wieder offen.' : `Die Schicht vom ${data.startsAt ? formatDateTime(s(data.startsAt)) : ''} findet für Sie nicht statt.`}</P>
-          </Layout>
-        ),
-      };
+      return mail(
+        T.subjectConfirmed,
+        T.previewConfirmed,
+        T.titleConfirmed,
+        <P>{T.bodyConfirmed(s(data.wardName), when(data.startsAt))}</P>,
+        {
+          label: T.actionIcs,
+          href: url('/api/v1/me/shifts.ics'),
+        },
+      );
+    }
+    case 'shift.cancelled': {
+      const T = L.shiftCancelled;
+      return mail(
+        T.subject,
+        T.preview,
+        T.title,
+        <P>{audience === 'employer' ? T.bodyEmployer : T.bodyCandidate(when(data.startsAt))}</P>,
+        {
+          label: T.action,
+          href: url(audience === 'employer' ? '/employer/pool' : '/me/shifts'),
+        },
+      );
+    }
     case 'credential.reviewed': {
+      const T = L.credentialReviewed;
       const ok = data.verified === true;
-      return {
-        subject: ok ? 'Nachweis verifiziert' : 'Nachweis nicht verifiziert',
-        element: (
-          <Layout preview={s(data.title)} title={ok ? 'Ihr Nachweis ist verifiziert' : 'Ihr Nachweis konnte nicht verifiziert werden'} action={{ label: 'Qualifikations-Pass öffnen', href: url('/me/pass') }}>
-            <P>«{s(data.title)}»{ok ? ' gilt ab sofort bei jeder Bewerbung als verifiziert.' : '.'}</P>
-            {!ok && data.reason ? <P>Grund: {s(data.reason)}</P> : null}
-          </Layout>
-        ),
-      };
+      return mail(
+        ok ? T.subjectOk : T.subjectNo,
+        s(data.title),
+        ok ? T.titleOk : T.titleNo,
+        <>
+          <P>{ok ? T.bodyOk(s(data.title)) : T.bodyNo(s(data.title))}</P>
+          {!ok && data.reason ? <P>{T.reason(s(data.reason))}</P> : null}
+        </>,
+        { label: T.action, href: url('/me/pass') },
+      );
     }
-    case 'org.invite':
+    case 'org.invite': {
       if (data.verification) {
-        const verified = data.verification === 'VERIFIED';
-        return {
-          subject: verified ? 'Ihre Organisation ist freigegeben' : 'Prüfung Ihrer Organisation',
-          element: (
-            <Layout preview="Ergebnis der Prüfung" title={verified ? 'Organisation freigegeben' : 'Organisation nicht freigegeben'} action={{ label: 'Zum Cockpit', href: url('/employer') }}>
-              <P>{verified ? 'Sie können jetzt Stellen veröffentlichen.' : 'Bitte nehmen Sie Kontakt mit dem Kardia-Team auf, um die Angaben zu klären.'}</P>
-            </Layout>
-          ),
-        };
+        const T = L.orgVerification;
+        const ok = data.verification === 'VERIFIED';
+        return mail(
+          ok ? T.subjectOk : T.subjectNo,
+          T.preview,
+          ok ? T.titleOk : T.titleNo,
+          <P>{ok ? T.bodyOk : T.bodyNo}</P>,
+          { label: T.action, href: url('/employer') },
+        );
       }
-      return {
-        subject: `Einladung zu ${s(data.orgName)} auf Kardia`,
-        element: (
-          <Layout preview="Sie wurden ins Team eingeladen" title={`Einladung zu ${s(data.orgName)}`} action={{ label: 'Einladung annehmen', href: s(data.url) }}>
-            <P>Der Link ist 7 Tage gültig.</P>
-          </Layout>
-        ),
-      };
-    case 'employee.invite':
-      return {
-        subject: `${s(data.orgName)} lädt Sie zum Realitäts-Check ein`,
-        element: (
-          <Layout preview="Bestätigen Sie die Angaben Ihrer Station" title="Wie arbeitet es sich auf Ihrer Station?" action={{ label: 'Einladung annehmen', href: s(data.url) }}>
-            <P>
-              Bestätigen oder korrigieren Sie die Angaben im Stationsprofil. Ihre Antworten werden nur zusammengefasst und erst ab 5 Stimmen angezeigt; niemand sieht, wer wie geantwortet hat. Die Einladung wird als «vom Arbeitgeber eingeladen» gekennzeichnet.
-            </P>
-          </Layout>
-        ),
-      };
-    case 'pool.invite':
-      return {
-        subject: `Einladung in den Springerpool von ${s(data.orgName)}`,
-        element: (
-          <Layout preview="Einzelschichten direkt buchen" title="Einladung in den Flex-Pool" action={{ label: 'Pool beitreten', href: s(data.url) }}>
-            <P>Als Pool-Mitglied sehen Sie offene Schichten und buchen sie mit einem Tipp. Ihr Arbeitsvertrag läuft direkt über {s(data.orgName)}.</P>
-          </Layout>
-        ),
-      };
-    case 'search.alert': {
-      const jobs = Array.isArray(data.jobs) ? (data.jobs as { title: string; orgName: string; url: string; salaryMinChf?: number }[]) : [];
-      return {
-        subject: `${jobs.length} neue Treffer: ${s(data.searchName)}`,
-        element: (
-          <Layout preview="Neue Stellen zu Ihrer gespeicherten Suche" title={`Neue Treffer für «${s(data.searchName)}»`} action={{ label: 'Alle Treffer ansehen', href: s(data.searchUrl, url('/search')) }}>
-            {jobs.slice(0, 10).map((j) => (
-              <Text key={j.url} style={{ fontSize: 15, lineHeight: '22px', margin: '0 0 8px' }}>
-                <Link href={j.url} style={{ color: c('accent-600') }}>
-                  {j.title}
-                </Link>
-                <br />
-                <span style={{ color: c('ink-500'), fontSize: 13 }}>
-                  {j.orgName}
-                  {j.salaryMinChf ? ` · ab ${formatChf(j.salaryMinChf)}` : ''}
-                </span>
-              </Text>
-            ))}
-          </Layout>
-        ),
-      };
+      const T = L.orgInvite;
+      return mail(
+        T.subject(s(data.orgName)),
+        T.preview,
+        T.title(s(data.orgName)),
+        <P>{T.body}</P>,
+        { label: T.action, href: s(data.url) },
+      );
     }
-    case 'account.inactive-notice':
-      return {
-        subject: 'Ihr Kardia-Konto wird bald gelöscht',
-        element: (
-          <Layout preview="Melden Sie sich an, um Ihr Konto zu behalten" title="Ihr Konto ist seit 24 Monaten inaktiv" action={{ label: 'Anmelden und Konto behalten', href: url('/sign-in') }}>
-            <P>Wenn Sie sich bis zum {data.deleteOn ? formatDate(s(data.deleteOn)) : ''} nicht anmelden, löschen wir Ihr Konto und alle Daten.</P>
-          </Layout>
-        ),
-      };
-    case 'ward.stale':
-      return {
-        subject: `Bitte bestätigen: ${s(data.wardName)}`,
-        element: (
-          <Layout preview="Stationsprofil bestätigen" title="Ihr Stationsprofil braucht eine Bestätigung" action={{ label: 'Profil prüfen und bestätigen', href: url(`/employer/wards/${s(data.wardId)}`) }}>
-            <P>
-              Das Profil «{s(data.wardName)}» wird in {s(data.daysLeft)} Tagen als veraltet markiert und im Ranking zurückgestuft, wenn es nicht bestätigt wird.
-            </P>
-          </Layout>
-        ),
-      };
-    case 'plan.expiring':
-      return {
-        subject: `Ihr Kardia-Abo endet am ${data.validUntil ? formatDate(s(data.validUntil)) : ''}`,
-        element: (
-          <Layout preview="Abo verlängern, damit Ihre Stellen sichtbar bleiben" title="Ihr Abo läuft bald ab" action={{ label: 'Abo verlängern', href: url('/employer/billing') }}>
-            <P>
-              Das Abo «{s(data.planLabel)}» von {s(data.orgName)} endet in {s(data.daysLeft)} Tagen. Danach sind Ihre veröffentlichten Stellen nicht mehr in der Suche sichtbar und
-              Abo-Funktionen wie Marktplatz und Flex-Pool sind gesperrt.
-            </P>
-          </Layout>
-        ),
-      };
-    case 'plan.payment-failed':
-      return {
-        subject: 'Zahlung für Ihr Kardia-Abo fehlgeschlagen',
-        element: (
-          <Layout preview="Zahlungsmittel prüfen" title="Die Zahlung ist fehlgeschlagen" action={{ label: 'Zahlungsmittel prüfen', href: url('/employer/billing') }}>
-            <P>
-              Stripe konnte die Rechnung für {s(data.orgName)} nicht belasten. Bitte das Zahlungsmittel im Kundenportal aktualisieren; Stripe versucht es automatisch erneut.
-            </P>
-          </Layout>
-        ),
-      };
-    case 'offer.withdrawn':
-      return {
-        subject: `Angebot zurückgezogen: ${s(data.orgName)}`,
-        element: (
-          <Layout preview="Das Angebot ist nicht mehr gültig" title="Ein Angebot wurde zurückgezogen" action={{ label: 'Zum Marktplatz', href: url('/me/marketplace') }}>
-            <P>
-              {s(data.orgName)} hat das Angebot «{s(data.jobTitle)}» zurückgezogen. Ihr anonymes Profil bleibt unverändert sichtbar.
-            </P>
-          </Layout>
-        ),
-      };
-    case 'offer.expired':
+    case 'employee.invite': {
+      const T = L.employeeInvite;
+      return mail(T.subject(s(data.orgName)), T.preview, T.title, <P>{T.body}</P>, {
+        label: T.action,
+        href: s(data.url),
+      });
+    }
+    case 'pool.invite': {
+      const T = L.poolInvite;
+      return mail(
+        T.subject(s(data.orgName)),
+        T.preview,
+        T.title,
+        <P>{T.body(s(data.orgName))}</P>,
+        { label: T.action, href: s(data.url) },
+      );
+    }
+    case 'search.alert': {
+      const T = L.searchAlert;
+      const jobs = Array.isArray(data.jobs)
+        ? (data.jobs as { title: string; orgName: string; url: string; salaryMinChf?: number }[])
+        : [];
+      return mail(
+        T.subject(jobs.length, s(data.searchName)),
+        T.preview,
+        T.title(s(data.searchName)),
+        <>
+          {jobs.slice(0, 10).map((j) => (
+            <Text key={j.url} style={{ fontSize: 15, lineHeight: '22px', margin: '0 0 8px' }}>
+              <Link href={j.url} style={{ color: c('accent-600') }}>
+                {j.title}
+              </Link>
+              <br />
+              <span style={{ color: c('ink-500'), fontSize: 13 }}>
+                {j.orgName}
+                {j.salaryMinChf ? ` · ${T.from(formatChf(j.salaryMinChf))}` : ''}
+              </span>
+            </Text>
+          ))}
+          <Text style={{ fontSize: 13, margin: '12px 0 0' }}>
+            <Link href={url('/me/settings')} style={{ color: c('accent-600') }}>
+              {T.manage}
+            </Link>
+          </Text>
+        </>,
+        { label: T.action, href: s(data.searchUrl, url('/search')) },
+      );
+    }
+    case 'account.inactive-notice': {
+      const T = L.inactive;
+      return mail(T.subject, T.preview, T.title, <P>{T.body(day(data.deleteOn))}</P>, {
+        label: T.action,
+        href: url('/sign-in'),
+      });
+    }
+    case 'ward.stale': {
+      const T = L.wardStale;
+      return mail(
+        T.subject(s(data.wardName)),
+        T.preview,
+        T.title,
+        <P>{T.body(s(data.wardName), s(data.daysLeft))}</P>,
+        { label: T.action, href: url(`/employer/wards/${s(data.wardId)}`) },
+      );
+    }
+    case 'plan.expiring': {
+      const T = L.planExpiring;
+      return mail(
+        T.subject(day(data.validUntil)),
+        T.preview,
+        T.title,
+        <P>{T.body(s(data.planLabel), s(data.orgName), s(data.daysLeft))}</P>,
+        { label: T.action, href: url('/employer/billing') },
+      );
+    }
+    case 'plan.payment-failed': {
+      const T = L.paymentFailed;
+      return mail(T.subject, T.preview, T.title, <P>{T.body(s(data.orgName))}</P>, {
+        label: T.action,
+        href: url('/employer/billing'),
+      });
+    }
+    case 'offer.withdrawn': {
+      const T = L.offerWithdrawn;
+      return mail(
+        T.subject(s(data.orgName)),
+        T.preview,
+        T.title,
+        <P>{T.body(s(data.orgName), s(data.jobTitle))}</P>,
+        { label: T.action, href: url('/me/marketplace') },
+      );
+    }
+    case 'offer.expired': {
+      const T = L.offerExpired;
       return audience === 'employer'
-        ? {
-            subject: `Angebot ohne Antwort abgelaufen: ${s(data.jobTitle)}`,
-            element: (
-              <Layout preview="Die Fachperson hat innert 14 Tagen nicht geantwortet" title="Ein Angebot ist abgelaufen" action={{ label: 'Zur Marktplatz-Suche', href: url('/employer/marketplace') }}>
-                <P>Ihr Angebot für «{s(data.jobTitle)}» wurde innert 14 Tagen nicht beantwortet und ist abgelaufen. Das Kontingent wird nicht zurückerstattet.</P>
-              </Layout>
-            ),
-          }
-        : {
-            subject: `Angebot abgelaufen: ${s(data.orgName)}`,
-            element: (
-              <Layout preview="Das Angebot ist nicht mehr gültig" title="Ein Angebot ist abgelaufen" action={{ label: 'Zum Marktplatz', href: url('/me/marketplace') }}>
-                <P>Das Angebot von {s(data.orgName)} für «{s(data.jobTitle)}» war 14 Tage gültig und ist jetzt abgelaufen. Ihr anonymes Profil bleibt sichtbar.</P>
-              </Layout>
-            ),
-          };
-    case 'credential.expired':
-      return {
-        subject: `Nachweis abgelaufen: ${s(data.title)}`,
-        element: (
-          <Layout preview="Bitte einen aktuellen Nachweis hochladen" title="Ein Nachweis ist abgelaufen" action={{ label: 'Qualifikations-Pass öffnen', href: url('/me/pass') }}>
-            <P>
-              «{s(data.title)}» war gültig bis {data.validUntil ? formatDate(s(data.validUntil)) : ''}. Bei Bewerbungen erscheint er jetzt als abgelaufen. Laden Sie einen aktuellen
-              Nachweis hoch, damit er erneut geprüft wird.
-            </P>
-          </Layout>
-        ),
-      };
-    case 'ops.cost-alarm':
-      return {
-        subject: `KI-Kostenalarm: USD ${Number(data.costUsd ?? 0).toFixed(2)} heute`,
-        element: (
-          <Layout preview="Tagesgrenze der KI-Kosten erreicht" title="KI-Tageskosten über der Grenze">
-            <P>
-              Heutige Kosten: USD {Number(data.costUsd ?? 0).toFixed(2)} (Grenze USD {s(data.limitUsd, '25')}). Details in der Tabelle AiRun.
-            </P>
-          </Layout>
-        ),
-      };
+        ? mail(
+            T.subjectEmployer(s(data.jobTitle)),
+            T.previewEmployer,
+            T.title,
+            <P>{T.bodyEmployer(s(data.jobTitle))}</P>,
+            { label: T.actionEmployer, href: url('/employer/marketplace') },
+          )
+        : mail(
+            T.subjectCandidate(s(data.orgName)),
+            T.previewCandidate,
+            T.title,
+            <P>{T.bodyCandidate(s(data.orgName), s(data.jobTitle))}</P>,
+            {
+              label: T.actionCandidate,
+              href: url('/me/marketplace'),
+            },
+          );
+    }
+    case 'credential.expired': {
+      const T = L.credentialExpired;
+      return mail(
+        T.subject(s(data.title)),
+        T.preview,
+        T.title,
+        <P>{T.body(s(data.title), day(data.validUntil))}</P>,
+        { label: T.action, href: url('/me/pass') },
+      );
+    }
+    case 'ops.cost-alarm': {
+      const T = L.costAlarm;
+      const usd = Number(data.costUsd ?? 0).toFixed(2);
+      return mail(T.subject(usd), T.preview, T.title, <P>{T.body(usd, s(data.limitUsd, '25'))}</P>);
+    }
   }
 }
 
-export async function renderEmail(template: TemplateName, data: Record<string, unknown>, audience: Audience = 'any'): Promise<RenderedEmail> {
-  const built = buildEmail(template, data, audience);
-  const [html, text] = await Promise.all([render(built.element), render(built.element, { plainText: true })]);
+export async function renderEmail(
+  template: TemplateName,
+  data: Record<string, unknown>,
+  audience: Audience = 'any',
+  locale: EmailLocale = 'de',
+): Promise<RenderedEmail> {
+  const built = buildEmail(template, data, audience, locale);
+  const [html, text] = await Promise.all([
+    render(built.element),
+    render(built.element, { plainText: true }),
+  ]);
   return { subject: built.subject, html, text };
 }
 

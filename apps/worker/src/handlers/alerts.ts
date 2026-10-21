@@ -66,6 +66,22 @@ export function jobMatchesFilter(job: JobRow, filter: SearchFilter): boolean {
   return !match.excluded;
 }
 
+/**
+ * Kanal der Treffermeldung (PRD 13.3, Wahl pro Suchabo). Gewählter Web Push ohne
+ * abonniertes Gerät fällt auf E-Mail zurück, damit kein Treffer verloren geht.
+ */
+export function alertChannels(channel: 'EMAIL' | 'PUSH' | 'BOTH', pushDevices: number): { email: boolean; push: boolean } {
+  const canPush = pushDevices > 0;
+  switch (channel) {
+    case 'EMAIL':
+      return { email: true, push: false };
+    case 'PUSH':
+      return { email: !canPush, push: canPush };
+    case 'BOTH':
+      return { email: true, push: canPush };
+  }
+}
+
 export async function handleSearchAlerts(now = new Date()): Promise<{ sent: number; checked: number }> {
   const searches = await db().savedSearch.findMany({ include: { candidate: { select: { userId: true } } } });
   const due = searches.filter((s) => isDueNow(s.frequency, s.lastSentAt, now));
@@ -91,11 +107,10 @@ export async function handleSearchAlerts(now = new Date()): Promise<{ sent: numb
           salaryMinChf: j.ward.salaryMinChf,
         })),
       };
-      // Ein Kanal pro Treffermeldung (PRD 13.3 "per E-Mail oder Web Push"): Web Push, wenn
-      // die Person ein Gerät abonniert hat, sonst E-Mail. Das Suchabo kennt keine Kanalwahl.
-      const pushDevices = await db().pushSubscription.count({ where: { userId: s.candidate.userId } });
-      if (pushDevices > 0) await enqueue(QUEUES.pushSend, { kind: 'search.alert', userId: s.candidate.userId, data: { searchName: s.name, searchUrl } });
-      else await enqueue(QUEUES.emailSend, { template: 'search.alert', userId: s.candidate.userId, data });
+      const pushDevices = s.channel === 'EMAIL' ? 0 : await db().pushSubscription.count({ where: { userId: s.candidate.userId } });
+      const route = alertChannels(s.channel, pushDevices);
+      if (route.push) await enqueue(QUEUES.pushSend, { kind: 'search.alert', userId: s.candidate.userId, data: { searchName: s.name, searchUrl } });
+      if (route.email) await enqueue(QUEUES.emailSend, { template: 'search.alert', userId: s.candidate.userId, data });
       sent++;
     }
     await db().savedSearch.update({ where: { id: s.id }, data: { lastSentAt: now } });

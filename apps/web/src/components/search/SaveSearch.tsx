@@ -23,6 +23,7 @@ export function SaveSearch({ filter, signedIn }: { filter: SearchFilter; signedI
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [frequency, setFrequency] = useState('DAILY');
+  const [channel, setChannel] = useState('EMAIL');
   const [busy, setBusy] = useState(false);
   const [iosHint, setIosHint] = useState(false);
 
@@ -39,7 +40,7 @@ export function SaveSearch({ filter, signedIn }: { filter: SearchFilter; signedI
 
   const submit = async () => {
     setBusy(true);
-    const result = await saveSearch({ name: name || t('defaultName'), filters: filter, frequency });
+    const result = await saveSearch({ name: name || t('defaultName'), filters: filter, frequency, channel });
     setBusy(false);
     if (!result.ok) {
       toast({ tone: 'critical', message: message(result) });
@@ -47,6 +48,8 @@ export function SaveSearch({ filter, signedIn }: { filter: SearchFilter; signedI
     }
     setOpen(false);
     toast({ tone: 'neutral', message: t('savedSearch') });
+    // Push-Erlaubnis nur erfragen, wenn Web Push gewählt ist (PRD 13.3).
+    if (channel === 'EMAIL') return;
     const push = await requestPush().catch(() => 'unsupported' as const);
     if (push === 'ios-install') setIosHint(true);
   };
@@ -82,6 +85,15 @@ export function SaveSearch({ filter, signedIn }: { filter: SearchFilter; signedI
             onValueChange={setFrequency}
             options={(['INSTANT', 'DAILY', 'WEEKLY'] as const).map((f) => ({ value: f, label: e(`AlertFrequency.${f}`) }))}
           />
+          <div className="flex flex-col gap-1">
+            <RadioGroup
+              label={t('channel')}
+              value={channel}
+              onValueChange={setChannel}
+              options={(['EMAIL', 'PUSH', 'BOTH'] as const).map((ch) => ({ value: ch, label: t(`channels.${ch}`) }))}
+            />
+            {channel !== 'EMAIL' ? <p className="text-micro text-ink-500">{t('channelHint')}</p> : null}
+          </div>
         </div>
       </Dialog>
       {iosHint ? <IosInstallHint onClose={() => setIosHint(false)} /> : null}

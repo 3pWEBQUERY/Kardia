@@ -353,7 +353,14 @@
     "ptLabel": "Öffentlicher Verkehr",
     "carLabel": "Auto",
     "jobOverride": "für diese Stelle abweichend",
-    "commuteUnavailable": "zurzeit nicht verfügbar"
+    "commuteUnavailable": "zurzeit nicht verfügbar",
+    "channel": "Benachrichtigen per",
+    "channels": {
+      "EMAIL": "E-Mail",
+      "PUSH": "Web Push",
+      "BOTH": "E-Mail und Web Push"
+    },
+    "channelHint": "Ohne abonniertes Gerät kommt die Meldung per E-Mail."
   },
   "apply": {
     "message": "Persönliche Nachricht (optional)",
