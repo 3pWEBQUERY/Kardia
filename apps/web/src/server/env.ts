@@ -29,6 +29,8 @@ const schema = z.object({
   BILLING_CREDITOR_ZIP: z.string().default('8000'),
   BILLING_CREDITOR_CITY: z.string().default('Zürich'),
   RATE_LIMIT_DISABLED: z.stringbool().default(false),
+  /** Demo-Umgebung: Ein-Klick-Anmeldung als fiktive Seed-Persona. Nie in echter Produktion. */
+  DEMO_LOGIN: z.stringbool().default(false),
 });
 
 type Env = z.infer<typeof schema>;

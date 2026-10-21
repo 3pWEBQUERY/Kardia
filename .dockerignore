@@ -1,0 +1,19 @@
+# Nie ins Image: Abhängigkeiten, Builds, lokale Secrets, Git
+**/node_modules
+**/.next
+**/.turbo
+**/dist
+**/storybook-static
+**/coverage
+**/test-results
+**/playwright-report
+**/*.tsbuildinfo
+packages/db/src/generated
+apps/web/public/sw.js
+apps/web/public/sw.js.map
+**/.env
+**/.env.*
+!**/.env.example
+.git
+.github
+**/*.log

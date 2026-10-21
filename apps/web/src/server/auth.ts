@@ -10,6 +10,7 @@ import { bearer, magicLink } from 'better-auth/plugins';
 import { QUEUES, SESSION_MAX_AGE_SEC } from '@kardia/core';
 
 import { db } from './db.ts';
+import { captureDemoLink } from './demoLogin.ts';
 import { env } from './env.ts';
 import { enqueue } from './queue.ts';
 
@@ -78,6 +79,8 @@ function createAuth() {
             const { appendFile } = await import('node:fs/promises');
             await appendFile(linkFile, `${email} ${url}\n`).catch(() => undefined);
           }
+          // Demo-Umgebung: Link für die Ein-Klick-Anmeldung abfangen statt verschicken.
+          if (e.DEMO_LOGIN && captureDemoLink(email, url)) return;
           await enqueue(QUEUES.emailSend, { template: 'magic-link', to: email, data: { url } });
         },
       }),

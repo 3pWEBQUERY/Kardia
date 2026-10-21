@@ -22,6 +22,7 @@
     "@react-email/render": "^2.1.1",
     "@sentry/node": "^11.8.0",
     "fast-xml-parser": "^5.11.2",
+    "nodemailer": "^7.0.13",
     "pg-boss": "^12.38.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@kardia/config": "workspace:*",
     "@types/node": "^22.19.0",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "^19.3.0",
     "@types/web-push": "^3.6.4",
     "esbuild": "^0.28.2",

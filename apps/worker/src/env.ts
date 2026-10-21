@@ -35,11 +35,15 @@ export const config = {
     region: str('SES_REGION', 'eu-central-1') ?? 'eu-central-1',
     from: str('MAIL_FROM', 'Kardia <noreply@kardia.ch>') ?? 'Kardia <noreply@kardia.ch>',
     opsEmail: str('OPS_EMAIL'),
-    /** `ses` (Standard in Produktion) oder `log` (Entwicklung: nur protokollieren). */
-    get sesConfigured(): boolean {
-      const transport = str('MAIL_TRANSPORT', process.env.NODE_ENV === 'production' ? 'ses' : 'log');
-      return transport === 'ses';
+    /**
+     * `ses` (Standard in Produktion), `smtp` (beliebiger Anbieter über SMTP_URL) oder
+     * `log` (nur protokollieren; in Produktion nur, wenn ausdrücklich gesetzt).
+     */
+    get transport(): 'ses' | 'smtp' | 'log' {
+      const t = str('MAIL_TRANSPORT', process.env.NODE_ENV === 'production' ? 'ses' : 'log');
+      return t === 'smtp' || t === 'log' ? t : 'ses';
     },
+    smtpUrl: str('SMTP_URL'),
   },
   vapid: { publicKey: str('VAPID_PUBLIC_KEY'), privateKey: str('VAPID_PRIVATE_KEY'), subject: str('VAPID_SUBJECT', 'mailto:support@kardia.ch') ?? '' },
   uidRegisterUrl: str('UID_REGISTER_URL'),

@@ -426,10 +426,20 @@ async function reset(): Promise<void> {
 }
 
 async function main(): Promise<void> {
+  // Pre-Deploy (SEED_DEMO=1): nur in eine leere Datenbank, nie über echte Daten.
+  if (process.argv.includes('--if-empty') && (await db.user.count()) > 0) {
+    console.warn('Seed übersprungen: Datenbank enthält bereits Daten.');
+    return;
+  }
   await reset();
 
   const admin = await db.user.create({
-    data: { email: 'admin@kardia.local', name: 'Kardia Admin', emailVerified: true, isAdmin: true },
+    data: {
+      email: process.env.SEED_ADMIN_EMAIL ?? 'admin@kardia.local',
+      name: 'Kardia Admin',
+      emailVerified: true,
+      isAdmin: true,
+    },
   });
 
   const wardIds: { id: string; department: Department; orgId: string }[] = [];

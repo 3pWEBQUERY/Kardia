@@ -7,7 +7,7 @@
   },
   "deploy": {
     "startCommand": "node apps/web/server.js",
-    "preDeployCommand": ["cd packages/db && npx --yes prisma@7.10.1 migrate deploy --config prisma.deploy.config.ts"],
+    "preDeployCommand": ["sh tools/db/scripts/predeploy.sh"],
     "healthcheckPath": "/api/health",
     "healthcheckTimeout": 60,
     "numReplicas": 2,
