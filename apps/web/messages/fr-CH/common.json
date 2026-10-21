@@ -45,7 +45,8 @@
       "audit": "Journal d'audit",
       "kpis": "Indicateurs",
       "privacy": "Demandes des personnes concernées"
-    }
+    },
+    "postJobs": "Publier des postes"
   },
   "actions": {
     "save": "Enregistrer",
@@ -112,7 +113,37 @@
     "privacy": "Protection des données",
     "imprint": "Mentions légales",
     "api": "API",
-    "claim": "Directement chez l'employeur, sans agence de placement. Kardia n'est jamais employeur."
+    "claim": "Directement chez l'employeur, sans agence de placement. Kardia n'est jamais employeur.",
+    "columns": {
+      "talent": "Pour les professionnel·le·s",
+      "employers": "Pour les employeurs",
+      "knowledge": "Savoir",
+      "legal": "Mentions légales"
+    },
+    "links": {
+      "search": "Chercher un poste",
+      "pass": "Passeport de qualifications",
+      "marketplace": "Place de marché",
+      "shifts": "Services flexibles",
+      "compare": "Comparer des unités",
+      "register": "Inscrire une organisation",
+      "cockpit": "Connexion cockpit",
+      "pricing": "Tarifs",
+      "recognition": "Guide de reconnaissance",
+      "api": "Documentation API"
+    },
+    "ctaTitle": "Trouve l'unité qui correspond à ta vie.",
+    "ctaBody": "Planning, fourchette salariale, ratio d'encadrement – avant de postuler.",
+    "ctaButton": "Voir les unités adaptées",
+    "ctaEmployer": "Publier des postes",
+    "facts": {
+      "direct": "Directement chez l'employeur",
+      "eu": "Données dans l'UE",
+      "fees": "Aucune commission de placement"
+    },
+    "rights": "Copyright {year} Kardia",
+    "made": "Pour le système de santé suisse",
+    "top": "Haut de page"
   },
   "confirmedBy": "confirmé par l'employeur le {date}",
   "teamValue": "Équipe {value} · {votes} réponses",

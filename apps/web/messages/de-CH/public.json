@@ -37,7 +37,42 @@
         "title": "Realitäts-Check durch das Team",
         "body": "Mitarbeitende bestätigen oder widersprechen jeder Angabe – anonym und erst ab fünf Antworten sichtbar."
       }
-    }
+    },
+    "eyebrow": "Stellen im Schweizer Gesundheitswesen",
+    "heroTitle": "Wie es sich auf einer Station arbeiten lässt – bevor du dich bewirbst.",
+    "stats": {
+      "jobs": "offene Stellen",
+      "wards": "Stationen mit Profil",
+      "organizations": "Arbeitgeber direkt"
+    },
+    "searchCardTitle": "In 30 Sekunden zur passenden Station",
+    "or": "oder",
+    "departmentsTitle": "Nach Fachbereich",
+    "departmentJobs": "{count, plural, =0 {noch keine Stelle} one {# Stelle} other {# Stellen}}",
+    "howTitle": "So funktioniert Kardia",
+    "howLead": "Drei Schritte statt endloser Inserate.",
+    "steps": {
+      "one": {
+        "title": "Bedingungen festlegen",
+        "body": "Was muss sein, was wäre schön? Keine Nächte, Dienstplan 6 Wochen im Voraus, Lohn ab CHF 90’000."
+      },
+      "two": {
+        "title": "Stationen vergleichen",
+        "body": "Jede Station mit Dienstrhythmus, Lohnband und Betreuungsschlüssel – vom Arbeitgeber bestätigt, vom Team überprüft."
+      },
+      "three": {
+        "title": "Mit einem Klick bewerben",
+        "body": "Dein Qualifikations-Pass enthält Diplom und Registereintrag. Kein Motivationsschreiben, kein Lebenslauf-Upload."
+      }
+    },
+    "latestTitle": "Neu auf Kardia",
+    "latestAll": "Alle Stellen ansehen",
+    "statement": "Keine Vermittler. Keine Provision. Nur ehrliche Bedingungen.",
+    "employerTitle": "Sie suchen Fachpersonen?",
+    "employerBody": "Zeigen Sie, wie es sich bei Ihnen arbeiten lässt – Station für Station. Inserat in 10 Minuten, Bewerbungen mit verifiziertem Pass.",
+    "employerButton": "Für Arbeitgeber",
+    "pricingButton": "Preise ansehen",
+    "perStation": "pro Station"
   },
   "search": {
     "title": "Stellen suchen",

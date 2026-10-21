@@ -32,10 +32,29 @@
   --color-warn-600: var(--k-color-warn-600);
   --color-critical-600: var(--k-color-critical-600);
   --color-overlay: var(--k-color-overlay);
+  --color-brand-950: var(--k-color-brand-950);
+  --color-brand-900: var(--k-color-brand-900);
+  --color-brand-800: var(--k-color-brand-800);
+  --color-brand-700: var(--k-color-brand-700);
+  --color-brand-500: var(--k-color-brand-500);
+  --color-brand-300: var(--k-color-brand-300);
+  --color-brand-100: var(--k-color-brand-100);
+  --color-pulse-500: var(--k-color-pulse-500);
+  --color-sand-100: var(--k-color-sand-100);
+  --color-sand-200: var(--k-color-sand-200);
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
+  /* Hero und grosse Displays skalieren fliessend mit der Viewport-Breite. */
+  --text-hero: clamp(2.75rem, 1.4rem + 5.2vw, var(--k-font-size-hero));
+  --text-hero--line-height: 1.02;
+  --text-hero--font-weight: 650;
+  --text-hero--letter-spacing: -0.035em;
+  --text-display-l: clamp(2.25rem, 1.4rem + 3.2vw, var(--k-font-size-display-l));
+  --text-display-l--line-height: 1.05;
+  --text-display-l--font-weight: 650;
+  --text-display-l--letter-spacing: -0.03em;
   --text-display: var(--k-font-size-display);
   --text-display--line-height: var(--k-font-size-display--line-height);
   --text-display--font-weight: 600;

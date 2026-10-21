@@ -37,7 +37,42 @@
         "title": "Verifica della realtà da parte del team",
         "body": "Le collaboratrici e i collaboratori confermano o contestano ogni indicazione – in forma anonima e visibile solo a partire da cinque risposte."
       }
-    }
+    },
+    "eyebrow": "Posti nel sistema sanitario svizzero",
+    "heroTitle": "Come si lavora in un reparto – prima di candidarti.",
+    "stats": {
+      "jobs": "posti aperti",
+      "wards": "reparti con profilo",
+      "organizations": "datori di lavoro diretti"
+    },
+    "searchCardTitle": "Il reparto adatto in 30 secondi",
+    "or": "oppure",
+    "departmentsTitle": "Per ambito",
+    "departmentJobs": "{count, plural, =0 {ancora nessun posto} one {# posto} other {# posti}}",
+    "howTitle": "Come funziona Kardia",
+    "howLead": "Tre passi invece di annunci infiniti.",
+    "steps": {
+      "one": {
+        "title": "Definire le condizioni",
+        "body": "Cosa è indispensabile, cosa sarebbe bello? Niente notti, piano dei turni con 6 settimane di anticipo, salario da CHF 90'000."
+      },
+      "two": {
+        "title": "Confrontare i reparti",
+        "body": "Ogni reparto con ritmo dei turni, fascia salariale e rapporto di assistenza – confermato dal datore di lavoro, verificato dal team."
+      },
+      "three": {
+        "title": "Candidarsi con un clic",
+        "body": "Il tuo passaporto delle qualifiche contiene diploma e iscrizione al registro. Niente lettera di motivazione, niente caricamento del CV."
+      }
+    },
+    "latestTitle": "Nuovo su Kardia",
+    "latestAll": "Vedere tutti i posti",
+    "statement": "Nessun intermediario. Nessuna provvigione. Solo condizioni oneste.",
+    "employerTitle": "Cercate professionisti?",
+    "employerBody": "Mostrate come si lavora da voi – reparto per reparto. Annuncio in 10 minuti, candidature con passaporto verificato.",
+    "employerButton": "Per datori di lavoro",
+    "pricingButton": "Vedere i prezzi",
+    "perStation": "per reparto"
   },
   "search": {
     "title": "Cerca posti",

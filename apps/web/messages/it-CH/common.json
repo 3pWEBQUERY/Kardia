@@ -45,7 +45,8 @@
       "audit": "Registro di audit",
       "kpis": "Indicatori",
       "privacy": "Richieste delle persone interessate"
-    }
+    },
+    "postJobs": "Pubblicare posti"
   },
   "actions": {
     "save": "Salva",
@@ -112,7 +113,37 @@
     "privacy": "Protezione dei dati",
     "imprint": "Colophon",
     "api": "API",
-    "claim": "Direttamente presso il datore di lavoro, senza agenzie di collocamento. Kardia non è mai datore di lavoro."
+    "claim": "Direttamente presso il datore di lavoro, senza agenzie di collocamento. Kardia non è mai datore di lavoro.",
+    "columns": {
+      "talent": "Per professionisti",
+      "employers": "Per datori di lavoro",
+      "knowledge": "Sapere",
+      "legal": "Note legali"
+    },
+    "links": {
+      "search": "Cercare un posto",
+      "pass": "Passaporto delle qualifiche",
+      "marketplace": "Mercato",
+      "shifts": "Turni flessibili",
+      "compare": "Confrontare reparti",
+      "register": "Registrare un'organizzazione",
+      "cockpit": "Accesso cockpit",
+      "pricing": "Prezzi",
+      "recognition": "Guida al riconoscimento",
+      "api": "Documentazione API"
+    },
+    "ctaTitle": "Trova il reparto adatto alla tua vita.",
+    "ctaBody": "Piano dei turni, fascia salariale, rapporto di assistenza – prima di candidarti.",
+    "ctaButton": "Mostra reparti adatti",
+    "ctaEmployer": "Pubblicare posti",
+    "facts": {
+      "direct": "Direttamente dal datore di lavoro",
+      "eu": "Dati nell'UE",
+      "fees": "Nessuna provvigione"
+    },
+    "rights": "Copyright {year} Kardia",
+    "made": "Per il sistema sanitario svizzero",
+    "top": "Torna su"
   },
   "confirmedBy": "confermato dal datore di lavoro il {date}",
   "teamValue": "Team {value} · {votes} risposte",

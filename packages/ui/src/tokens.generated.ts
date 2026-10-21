@@ -63,6 +63,46 @@ export const colors = {
   "overlay": {
     "light": "#0E111666",
     "dark": "#00000099"
+  },
+  "brand-950": {
+    "light": "#052520",
+    "dark": "#052520"
+  },
+  "brand-900": {
+    "light": "#08332D",
+    "dark": "#08332D"
+  },
+  "brand-800": {
+    "light": "#0C453D",
+    "dark": "#0C453D"
+  },
+  "brand-700": {
+    "light": "#115A50",
+    "dark": "#115A50"
+  },
+  "brand-500": {
+    "light": "#2A8C7D",
+    "dark": "#2A8C7D"
+  },
+  "brand-300": {
+    "light": "#7FC8BB",
+    "dark": "#7FC8BB"
+  },
+  "brand-100": {
+    "light": "#D7EFEA",
+    "dark": "#D7EFEA"
+  },
+  "pulse-500": {
+    "light": "#FF6B4A",
+    "dark": "#FF6B4A"
+  },
+  "sand-100": {
+    "light": "#F5F1E8",
+    "dark": "#17191B"
+  },
+  "sand-200": {
+    "light": "#EAE3D4",
+    "dark": "#23272A"
   }
 } as const;
 

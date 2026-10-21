@@ -49,3 +49,67 @@
   /* stylelint-disable-next-line property-disallowed-list -- überschreibt den Schatten der Bibliothek; design-rules-ignore */
   box-shadow: none !important; /* design-rules-ignore */
 }
+
+/* Markengrafik: Pulslinie zeichnet sich einmal, der Gipfelring pulsiert ruhig. */
+@layer components {
+  .k-pulse-draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: k-draw 2.2s var(--k-motion-ease) 0.15s forwards;
+  }
+
+  .k-ping {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: k-ping 2.4s var(--k-motion-ease) 2.2s infinite;
+  }
+
+  /* Riesige Wortmarke im Footer: füllt die Breite. */
+  .k-wordmark {
+    font-size: clamp(5rem, 22vw, 20rem);
+    line-height: 0.8;
+    letter-spacing: -0.06em;
+    font-weight: 700;
+  }
+
+  /* Laufband mit Fachbereichen (Startseite). */
+  .k-marquee {
+    animation: k-marquee 40s linear infinite;
+  }
+}
+
+@keyframes k-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes k-ping {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@keyframes k-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .k-pulse-draw {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .k-ping,
+  .k-marquee {
+    animation: none;
+  }
+}

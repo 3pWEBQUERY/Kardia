@@ -45,7 +45,8 @@
       "audit": "Audit log",
       "kpis": "Key figures",
       "privacy": "Data subject requests"
-    }
+    },
+    "postJobs": "Post jobs"
   },
   "actions": {
     "save": "Save",
@@ -112,7 +113,37 @@
     "privacy": "Privacy",
     "imprint": "Legal notice",
     "api": "API",
-    "claim": "Directly with the employer, no recruitment agencies. Kardia is never the employer."
+    "claim": "Directly with the employer, no recruitment agencies. Kardia is never the employer.",
+    "columns": {
+      "talent": "For professionals",
+      "employers": "For employers",
+      "knowledge": "Knowledge",
+      "legal": "Legal"
+    },
+    "links": {
+      "search": "Search jobs",
+      "pass": "Qualification passport",
+      "marketplace": "Marketplace",
+      "shifts": "Flex shifts",
+      "compare": "Compare wards",
+      "register": "Register organisation",
+      "cockpit": "Cockpit sign-in",
+      "pricing": "Pricing",
+      "recognition": "Recognition guide",
+      "api": "API documentation"
+    },
+    "ctaTitle": "Find the ward that fits your life.",
+    "ctaBody": "Roster, salary band, staffing ratio – before you apply.",
+    "ctaButton": "Show matching wards",
+    "ctaEmployer": "Post jobs",
+    "facts": {
+      "direct": "Directly with the employer",
+      "eu": "Data in the EU",
+      "fees": "No placement fees"
+    },
+    "rights": "Copyright {year} Kardia",
+    "made": "For the Swiss healthcare system",
+    "top": "Back to top"
   },
   "confirmedBy": "confirmed by employer on {date}",
   "teamValue": "Team {value} · {votes} responses",

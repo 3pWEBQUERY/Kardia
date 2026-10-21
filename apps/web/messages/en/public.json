@@ -37,7 +37,42 @@
         "title": "Reality check by the team",
         "body": "Employees confirm or dispute every detail – anonymously and visible only from five responses."
       }
-    }
+    },
+    "eyebrow": "Jobs in Swiss healthcare",
+    "heroTitle": "What it is like to work on a ward – before you apply.",
+    "stats": {
+      "jobs": "open jobs",
+      "wards": "wards with a profile",
+      "organizations": "employers, direct"
+    },
+    "searchCardTitle": "The right ward in 30 seconds",
+    "or": "or",
+    "departmentsTitle": "By department",
+    "departmentJobs": "{count, plural, =0 {no jobs yet} one {# job} other {# jobs}}",
+    "howTitle": "How Kardia works",
+    "howLead": "Three steps instead of endless job ads.",
+    "steps": {
+      "one": {
+        "title": "Set your conditions",
+        "body": "What is a must, what would be nice? No nights, roster 6 weeks ahead, salary from CHF 90'000."
+      },
+      "two": {
+        "title": "Compare wards",
+        "body": "Every ward with shift rhythm, salary band and staffing ratio – confirmed by the employer, checked by the team."
+      },
+      "three": {
+        "title": "Apply with one click",
+        "body": "Your qualification passport holds your diploma and registry entry. No cover letter, no CV upload."
+      }
+    },
+    "latestTitle": "New on Kardia",
+    "latestAll": "See all jobs",
+    "statement": "No agencies. No commission. Just honest conditions.",
+    "employerTitle": "Looking for healthcare professionals?",
+    "employerBody": "Show what it is like to work with you – ward by ward. Job ad in 10 minutes, applications with a verified passport.",
+    "employerButton": "For employers",
+    "pricingButton": "See pricing",
+    "perStation": "per ward"
   },
   "search": {
     "title": "Search jobs",

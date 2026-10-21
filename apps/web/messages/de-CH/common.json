@@ -45,7 +45,8 @@
       "audit": "Audit-Log",
       "kpis": "Kennzahlen",
       "privacy": "Betroffenenanfragen"
-    }
+    },
+    "postJobs": "Stellen ausschreiben"
   },
   "actions": {
     "save": "Speichern",
@@ -112,7 +113,37 @@
     "privacy": "Datenschutz",
     "imprint": "Impressum",
     "api": "API",
-    "claim": "Direkt beim Arbeitgeber, ohne Personalvermittler. Kardia ist nie Arbeitgeber."
+    "claim": "Direkt beim Arbeitgeber, ohne Personalvermittler. Kardia ist nie Arbeitgeber.",
+    "columns": {
+      "talent": "Für Fachpersonen",
+      "employers": "Für Arbeitgeber",
+      "knowledge": "Wissen",
+      "legal": "Rechtliches"
+    },
+    "links": {
+      "search": "Stellen suchen",
+      "pass": "Qualifikations-Pass",
+      "marketplace": "Marktplatz",
+      "shifts": "Flex-Schichten",
+      "compare": "Stationen vergleichen",
+      "register": "Organisation registrieren",
+      "cockpit": "Cockpit-Login",
+      "pricing": "Preise",
+      "recognition": "Ratgeber Anerkennung",
+      "api": "API-Dokumentation"
+    },
+    "ctaTitle": "Finde die Station, die zu deinem Leben passt.",
+    "ctaBody": "Dienstplan, Lohnband, Betreuungsschlüssel – bevor du dich bewirbst.",
+    "ctaButton": "Passende Stationen zeigen",
+    "ctaEmployer": "Stellen ausschreiben",
+    "facts": {
+      "direct": "Direkt beim Arbeitgeber",
+      "eu": "Daten in der EU",
+      "fees": "Keine Erfolgsgebühr"
+    },
+    "rights": "Copyright {year} Kardia",
+    "made": "Für das Schweizer Gesundheitswesen",
+    "top": "Nach oben"
   },
   "confirmedBy": "bestätigt von Arbeitgeber am {date}",
   "teamValue": "Team {value} · {votes} Antworten",

@@ -37,7 +37,42 @@
         "title": "Contrôle de réalité par l'équipe",
         "body": "Les collaborateur·rice·s confirment ou contestent chaque indication – de manière anonyme et visible uniquement à partir de cinq réponses."
       }
-    }
+    },
+    "eyebrow": "Postes dans le système de santé suisse",
+    "heroTitle": "Comment on travaille dans une unité – avant de postuler.",
+    "stats": {
+      "jobs": "postes ouverts",
+      "wards": "unités avec profil",
+      "organizations": "employeurs en direct"
+    },
+    "searchCardTitle": "L'unité qui te convient en 30 secondes",
+    "or": "ou",
+    "departmentsTitle": "Par domaine",
+    "departmentJobs": "{count, plural, =0 {aucun poste pour le moment} one {# poste} other {# postes}}",
+    "howTitle": "Comment fonctionne Kardia",
+    "howLead": "Trois étapes au lieu d'annonces sans fin.",
+    "steps": {
+      "one": {
+        "title": "Définir tes conditions",
+        "body": "Ce qui est indispensable, ce qui serait bien : pas de nuits, planning 6 semaines à l'avance, salaire dès CHF 90'000."
+      },
+      "two": {
+        "title": "Comparer les unités",
+        "body": "Chaque unité avec rythme de travail, fourchette salariale et ratio d'encadrement – confirmé par l'employeur, vérifié par l'équipe."
+      },
+      "three": {
+        "title": "Postuler en un clic",
+        "body": "Ton passeport de qualifications contient diplôme et inscription au registre. Pas de lettre de motivation, pas de CV à téléverser."
+      }
+    },
+    "latestTitle": "Nouveau sur Kardia",
+    "latestAll": "Voir tous les postes",
+    "statement": "Pas d’intermédiaires. Pas de commission. Seulement des conditions honnêtes.",
+    "employerTitle": "Vous cherchez des professionnel·le·s ?",
+    "employerBody": "Montrez comment on travaille chez vous – unité par unité. Annonce en 10 minutes, candidatures avec passeport vérifié.",
+    "employerButton": "Pour les employeurs",
+    "pricingButton": "Voir les tarifs",
+    "perStation": "par unité"
   },
   "search": {
     "title": "Rechercher des postes",
