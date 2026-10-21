@@ -102,7 +102,15 @@
     "quotaTitle": "Contingente del suo abbonamento raggiunto",
     "quotaAction": "Confrontare gli abbonamenti",
     "wardQuota": "Il suo abbonamento comprende un reparto. Per altri reparti scegliere l'abbonamento «Istituzione» o «Gruppo ospedaliero».",
-    "locationQuota": "Il suo abbonamento comprende una sede. Per più sedi scegliere l'abbonamento «Gruppo ospedaliero»."
+    "locationQuota": "Il suo abbonamento comprende una sede. Per più sedi scegliere l'abbonamento «Gruppo ospedaliero».",
+    "lead": "Ogni reparto ha le proprie condizioni di lavoro. Mantenete aggiornati i profili – conferma al più tardi ogni 180 giorni.",
+    "stats": {
+      "wards": "Reparti",
+      "locations": "Sedi",
+      "openJobs": "Posti aperti",
+      "current": "Profili aggiornati"
+    },
+    "openJobs": "{count, plural, =0 {nessun posto aperto} one {# posto aperto} other {# posti aperti}}"
   },
   "ward": {
     "newTitle": "Creare un reparto",
@@ -146,7 +154,9 @@
     "benchmarkRow": "{value} · mediana {median} ({peers} reparti)",
     "noBenchmark": "Visualizzazione solo a partire da 8 reparti di confronto nello stesso settore e nello stesso cantone.",
     "toBenchmark": "Al benchmark",
-    "importedAddress": "Indirizzo dall'annuncio: {address}. Nessuna sede corrispondente – crearla come nuova sede."
+    "importedAddress": "Indirizzo dall'annuncio: {address}. Nessuna sede corrispondente – crearla come nuova sede.",
+    "backToWards": "Tutti i reparti",
+    "basics": "Dati di base del reparto"
   },
   "reality": {
     "hint": "Collaboratori e collaboratrici verificati confermano o contestano le sue indicazioni. I valori appaiono a partire da 5 risposte. Può commentare, ma non eliminare né nascondere nulla.",
@@ -223,7 +233,10 @@
     "colWard": "Reparto",
     "colStatus": "Stato",
     "colApplications": "Candidature",
-    "colUpdated": "Modificato"
+    "colUpdated": "Modificato",
+    "lead": "Tutti gli annunci della vostra organizzazione – dalla bozza al posto chiuso. Le candidature portano direttamente alla pipeline.",
+    "updated": "modificato il {date}",
+    "applicants": "{count, plural, =0 {nessuna candidatura} one {# candidatura} other {# candidature}}"
   },
   "job": {
     "ward": "Reparto",
@@ -259,7 +272,10 @@
     "tabPreview": "Anteprima",
     "tabEdit": "Modifica",
     "previewHint": "Così i professionisti vedono il posto: profilo del reparto con i valori sovrascritti per questo posto.",
-    "profile": "Profilo del reparto"
+    "profile": "Profilo del reparto",
+    "backToJobs": "Tutti i posti",
+    "toWard": "Al reparto",
+    "basics": "Dati di base del posto"
   },
   "pipeline": {
     "title": "Pipeline",
@@ -287,7 +303,11 @@
     "saveStatus": "Salvare lo stato",
     "statusSaved": "Stato salvato. Il o la professionista viene informato/a.",
     "message": "Messaggio",
-    "send": "Inviare"
+    "send": "Inviare",
+    "lead": "Candidature per posto, da nuova ad assunto/a. Navigare con J/K, impostare lo stato con 1–6.",
+    "stats": {
+      "inProgress": "In corso"
+    }
   },
   "application": {
     "received": "ricevuta il {date}",
@@ -307,7 +327,8 @@
     "statusTitle": "Stato",
     "contact": "Contatto",
     "noAutoDecision": "Kardia non prende decisioni automatiche. La corrispondenza con il passaporto è un aiuto per l'ordinamento, non una valutazione.",
-    "read": "letto"
+    "read": "letto",
+    "backToPipeline": "Alla pipeline"
   },
   "marketplace": {
     "title": "Ricerca nel mercato",
@@ -353,7 +374,11 @@
     "withdrawConfirm": "Ritirare l'offerta",
     "withdrawCancel": "Annullare",
     "withdrawn": "Offerta ritirata. La persona viene informata.",
-    "toApplication": "Alla candidatura"
+    "toApplication": "Alla candidatura",
+    "stats": {
+      "sent": "Offerte inviate",
+      "quotaLeft": "Offerte rimanenti questo mese"
+    }
   },
   "pool": {
     "title": "Pool flessibile",
@@ -411,7 +436,14 @@
     "median": "Mediana",
     "peers": "Confronto",
     "newWard": "Inserire un reparto",
-    "noWards": "Inserisca un reparto per confrontarlo con altri."
+    "noWards": "Inserisca un reparto per confrontarlo con altri.",
+    "peersCount": "{count, plural, one {# reparto di confronto} other {# reparti di confronto}}",
+    "pendingTitle": "Ancora senza confronto",
+    "pendingChip": "In attesa di confronto",
+    "stats": {
+      "compared": "Reparti con confronto",
+      "pending": "In attesa di dati"
+    }
   },
   "team": {
     "title": "Team e impostazioni",
@@ -469,11 +501,11 @@
     "ssoCallback": "URI di reindirizzamento per il suo reparto IT",
     "ssoDomain": "Dominio e-mail",
     "ssoIssuer": "URL issuer",
-    "ssoIssuerHint": "p. es. https://login.microsoftonline.com/<ID tenant>/v2.0",
+    "ssoIssuerHint": "p. es. https://login.microsoftonline.com/[ID tenant]/v2.0",
     "ssoClientId": "ID client",
     "ssoClientSecret": "Secret client",
     "ssoDiscovery": "URL di discovery (facoltativo)",
-    "ssoDiscoveryHint": "Lasciare vuoto per <issuer>/.well-known/openid-configuration.",
+    "ssoDiscoveryHint": "Lasciare vuoto per [issuer]/.well-known/openid-configuration.",
     "ssoSave": "Salvare l'accesso aziendale",
     "ssoSaved": "Accesso aziendale salvato.",
     "ssoReplace": "Configurare di nuovo",
@@ -490,7 +522,10 @@
     "logoHint": "PNG, JPG o SVG, al massimo 2 MB. Visibile pubblicamente non appena l'organizzazione è verificata.",
     "logoSaved": "Logo salvato.",
     "logoRemove": "Rimuovere il logo",
-    "logoRemoved": "Logo rimosso."
+    "logoRemoved": "Logo rimosso.",
+    "stats": {
+      "role": "Il vostro ruolo"
+    }
   },
   "billing": {
     "title": "Abbonamento e fatture",
@@ -544,7 +579,12 @@
     "portal": "Gestire l'abbonamento",
     "stripeMissing": "Il pagamento con carta non è configurato in questo ambiente. Gli abbonamenti Istituzione e Gruppo ospedaliero sono possibili con fattura e polizza di versamento QR.",
     "expiredTitle": "Abbonamento scaduto",
-    "expired": "L'abbonamento «{plan}» è scaduto il {date}. I suoi posti non sono più visibili nella ricerca finché non lo rinnova."
+    "expired": "L'abbonamento «{plan}» è scaduto il {date}. I suoi posti non sono più visibili nella ricerca finché non lo rinnova.",
+    "stats": {
+      "plan": "Abbonamento",
+      "validUntil": "Valido fino al",
+      "foundingPartner": "Partner fondatore"
+    }
   },
   "sso": {
     "signInToggle": "Accedere con il login aziendale (SSO)",
@@ -552,5 +592,6 @@
     "signInSubmit": "Continuare al login aziendale",
     "signInHint": "Per organizzazioni con single sign-on configurato.",
     "signInFailed": "Per questo dominio e-mail non è configurato alcun login aziendale. Accedere con passkey o link via e-mail."
-  }
+  },
+  "loading": "Caricamento …"
 }

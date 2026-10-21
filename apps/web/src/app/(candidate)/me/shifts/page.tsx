@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { canCandidateCancel, formatDateTime, formatTime } from '@kardia/core';
 import { Button, Card, CardBody, CardHeader, EmptyState } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import { ShiftActions } from '@/components/candidate/ShiftActions';
 import { requireFeature } from '@/server/features';
 import { myShifts } from '@/server/services/pool';
@@ -12,18 +13,27 @@ import { requireUser } from '@/server/session';
 export default async function ShiftsPage() {
   requireFeature('flexPool');
   const s = await requireUser('/me/shifts');
-  const [t, e] = await Promise.all([getTranslations('candidate.shifts'), getTranslations('enums')]);
+  const [t, e, tm] = await Promise.all([getTranslations('candidate.shifts'), getTranslations('enums'), getTranslations('candidate.overview')]);
   const { open, booked } = await myShifts(s.user.id);
   const upcoming = booked.filter((x) => x.status === 'BOOKED');
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-wrap items-end justify-between gap-3">
-        <div className="flex flex-col gap-1">
-          <h1 className="text-h1">{t('title')}</h1>
-          <p className="text-body-s text-ink-700">{t('lead')}</p>
-        </div>
-        {upcoming.length ? <Button asChild size="s"><a href="/api/v1/me/shifts.ics">{t('ics')}</a></Button> : null}
-      </header>
+      <PageHeader
+        eyebrow={tm('eyebrow')}
+        title={t('title')}
+        description={t('lead')}
+        actions={
+          upcoming.length ? (
+            <Button asChild>
+              <a href="/api/v1/me/shifts.ics">{t('ics')}</a>
+            </Button>
+          ) : null
+        }
+        stats={[
+          { label: t('booked'), value: upcoming.length },
+          { label: t('stats.open'), value: open.length },
+        ]}
+      />
       <Card>
         <CardHeader title={t('booked')} />
         <CardBody className="flex flex-col gap-2">

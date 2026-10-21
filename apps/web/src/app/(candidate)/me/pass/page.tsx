@@ -1,8 +1,11 @@
+import { BadgeCheck } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { REGISTRY_BY_PROFESSION, TERMS_VERSION } from '@kardia/core';
-import { Callout, Card, CardBody, CardHeader } from '@kardia/ui';
+import { Callout } from '@kardia/ui';
 
+import { FormSection } from '@/components/app/Form';
+import { PageHeader } from '@/components/app/PageHeader';
 import { CredentialList } from '@/components/candidate/CredentialList';
 import { PassForm } from '@/components/candidate/PassForm';
 import { db } from '@/server/db';
@@ -14,6 +17,7 @@ export default async function PassPage({ searchParams }: { searchParams: Promise
   const sp = await searchParams;
   const s = await requireUser('/me/pass');
   const t = await getTranslations('candidate.pass');
+  const tm = await getTranslations('candidate.overview');
   const [pass, user] = await Promise.all([
     getPass(s.user.id),
     db.user.findUnique({ where: { id: s.user.id }, select: { termsAcceptedAt: true, termsVersion: true } }),
@@ -22,15 +26,9 @@ export default async function PassPage({ searchParams }: { searchParams: Promise
   const next = sp.next && sp.next.startsWith('/') && !sp.next.startsWith('//') ? sp.next : null;
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-h1">{t('title')}</h1>
-        <p className="text-body-s text-ink-700">{t('lead')}</p>
-      </header>
+      <PageHeader eyebrow={tm('eyebrow')} title={t('title')} description={t('lead')} />
       {!pass ? <Callout title={t('setupTitle')}>{t('setup')}</Callout> : null}
-      <Card>
-        <CardHeader title={t('profile')} />
-        <CardBody>
-          <PassForm
+      <PassForm
             next={next}
             needsTerms={needsTerms}
             initial={
@@ -50,12 +48,8 @@ export default async function PassPage({ searchParams }: { searchParams: Promise
             }
             defaultName={s.user.name}
           />
-        </CardBody>
-      </Card>
       {pass ? (
-        <Card>
-          <CardHeader title={t('credentials')} meta={t('credentialsHint', { registry: REGISTRY_BY_PROFESSION[pass.profession] })} />
-          <CardBody>
+        <FormSection title={t('credentials')} description={t('credentialsHint', { registry: REGISTRY_BY_PROFESSION[pass.profession] })} icon={BadgeCheck}>
             <CredentialList
               defaultRegistry={REGISTRY_BY_PROFESSION[pass.profession]}
               credentials={pass.credentials.map((c) => ({
@@ -74,8 +68,7 @@ export default async function PassPage({ searchParams }: { searchParams: Promise
                 suggestion: c.suggestion,
               }))}
             />
-          </CardBody>
-        </Card>
+        </FormSection>
       ) : null}
     </div>
   );

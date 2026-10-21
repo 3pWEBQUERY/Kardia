@@ -6,12 +6,24 @@ import { Icon } from './Icon.tsx';
 
 import type { ReactNode } from 'react';
 
-/** Leerzustand: ein Satz + eine Handlung, keine Illustration (PRD 7.4, 8.5). */
-export function EmptyState({ children, action }: { children: ReactNode; action?: ReactNode }) {
+/**
+ * Leerzustand: ein Satz + eine Handlung (PRD 7.4, 8.5). Statt einer Illustration nur die
+ * Pulsmarke der Bildsprache in einer getönten Kachel (dekorativ, flach).
+ */
+export function EmptyState({ children, action, icon }: { children: ReactNode; action?: ReactNode; icon?: ReactNode }) {
   return (
-    <div className="flex flex-col items-start gap-3 rounded-card border border-dashed border-line-300 bg-surface-0 px-5 py-6">
-      <p className="text-body-s text-ink-700">{children}</p>
-      {action}
+    <div className="flex flex-col items-start gap-4 rounded-card border border-dashed border-line-300 bg-surface-0 px-5 py-6 sm:flex-row sm:items-center">
+      <span aria-hidden className="inline-flex size-12 shrink-0 items-center justify-center rounded-card bg-accent-50 text-accent-600">
+        {icon ?? (
+          <svg viewBox="0 0 32 20" className="h-5 w-8" focusable="false">
+            <path d="M1 12 H8 L10 9 L12 12 L15.5 2 L19 18 L21 12 H31" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        )}
+      </span>
+      <div className="flex min-w-0 flex-1 flex-col items-start gap-3">
+        <p className="text-body-s text-ink-700">{children}</p>
+        {action}
+      </div>
     </div>
   );
 }

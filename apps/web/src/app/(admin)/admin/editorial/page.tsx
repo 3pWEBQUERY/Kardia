@@ -6,11 +6,12 @@ import { Department, Profession } from '@kardia/db/enums';
 import { Card, CardBody, CardHeader, EmptyState } from '@kardia/ui';
 
 import { GuideEditor, type GuideDraft } from '@/components/admin/GuideEditor';
+import { PageHeader } from '@/components/app/PageHeader';
 import { listGuides, trainingDeviations } from '@/server/services/admin';
 
 /** Redaktion: Anerkennungs-Tracker, Listen (Fachbereiche, Berufe, Titel), AK-F2-Abweichungen. */
 export default async function EditorialPage() {
-  const [t, e] = await Promise.all([getTranslations('admin.editorial'), getTranslations('enums')]);
+  const [t, e, ta] = await Promise.all([getTranslations('admin.editorial'), getTranslations('enums'), getTranslations('admin')]);
   const [guides, deviations] = await Promise.all([listGuides(), trainingDeviations()]);
   const drafts: GuideDraft[] = guides.map((g) => ({
     id: g.id,
@@ -22,7 +23,7 @@ export default async function EditorialPage() {
   }));
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="text-h1">{t('title')}</h1>
+      <PageHeader eyebrow={ta('eyebrow')} title={t('title')} description={t('lead')} />
       <section className="flex flex-col gap-3">
         <h2 className="text-h2">{t('guides')}</h2>
         <p className="text-body-s text-ink-700">{t('guidesLead')}</p>

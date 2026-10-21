@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { formatNumber, formatPct } from '@kardia/core';
 import { Stat } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import { credentialQueue, kpis } from '@/server/services/admin';
 
 interface Kpi { key: string; value: string | null; target: string }
@@ -10,6 +11,7 @@ interface Kpi { key: string; value: string | null; target: string }
 /** Kennzahlen (PRD 3) mit Zielwert als Hinweis; Betriebswerte für SLA und AK-F2. */
 export default async function AdminKpiPage() {
   const t = await getTranslations('admin.kpis');
+  const ta = await getTranslations('admin');
   const [k, queue] = await Promise.all([kpis(), credentialQueue()]);
   const overdue = queue.filter((q) => q.overdue).length;
   const pct = (v: number | null) => (v == null ? null : formatPct(Math.round(v * 100)));
@@ -27,10 +29,7 @@ export default async function AdminKpiPage() {
   ];
   return (
     <div className="flex flex-col gap-8">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-h1">{t('title')}</h1>
-        <p className="text-body-s text-ink-700">{t('lead')}</p>
-      </header>
+      <PageHeader eyebrow={ta('eyebrow')} title={t('title')} description={t('lead')} />
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {product.map((p) => (
           <Stat key={p.key} label={t(p.key)} value={p.value ?? '–'} hint={p.value == null ? `${t('noData')} · ${t('target', { target: p.target })}` : t('target', { target: p.target })} />

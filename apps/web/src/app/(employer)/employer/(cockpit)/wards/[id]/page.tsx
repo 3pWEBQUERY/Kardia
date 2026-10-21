@@ -19,6 +19,8 @@ import {
   Tabs,
 } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
+import { DEPARTMENT_ICONS } from '@/components/brand/departmentIcons';
 import { ConfirmWardButton } from '@/components/employer/ConfirmWardButton';
 import { wardToDraft } from '@/components/employer/wardDefaults';
 import { WardEditor } from '@/components/employer/WardEditor';
@@ -70,31 +72,31 @@ export default async function WardDetailPage({ params }: { params: Promise<{ id:
 
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-wrap items-start justify-between gap-3">
-        <div className="flex flex-col gap-1">
-          <p className="text-caption text-ink-700">
-            {ward.location.name} · {ward.location.city}
-          </p>
-          <h1 className="text-h1">{ward.name}</h1>
-          <div className="flex flex-wrap gap-2">
+      <PageHeader
+        eyebrow={`${ward.location.name} · ${ward.location.city}`}
+        back={{ href: '/employer/wards', label: t('backToWards') }}
+        icon={DEPARTMENT_ICONS[ward.department]}
+        title={ward.name}
+        meta={
+          <>
             <StatusChip>{te(`Department.${ward.department}`)}</StatusChip>
             <StatusChip tone={stale ? 'warn' : 'ok'}>
-              {stale
-                ? t('staleSince', { days: -daysUntilStale(ward.confirmedAt) })
-                : t('confirmedOn', { date: formatDate(ward.confirmedAt) })}
+              {stale ? t('staleSince', { days: -daysUntilStale(ward.confirmedAt) }) : t('confirmedOn', { date: formatDate(ward.confirmedAt) })}
             </StatusChip>
-          </div>
-        </div>
-        <div className="flex gap-2">
-          <ConfirmWardButton wardId={ward.id} label={t('confirm')} done={t('confirmedToast')} />
-          <Button asChild>
-            <Link href={`/wards/${ward.id}`}>{t('publicView')}</Link>
-          </Button>
-          <Button asChild variant="primary">
-            <Link href={`/employer/jobs/new?ward=${ward.id}`}>{t('newJob')}</Link>
-          </Button>
-        </div>
-      </header>
+          </>
+        }
+        actions={
+          <>
+            <ConfirmWardButton wardId={ward.id} label={t('confirm')} done={t('confirmedToast')} />
+            <Button asChild>
+              <Link href={`/wards/${ward.id}`}>{t('publicView')}</Link>
+            </Button>
+            <Button asChild variant="primary">
+              <Link href={`/employer/jobs/new?ward=${ward.id}`}>{t('newJob')}</Link>
+            </Button>
+          </>
+        }
+      />
       {stale ? <Callout tone="warn">{t('staleHint')}</Callout> : null}
       <Tabs
         label={t('tabs')}

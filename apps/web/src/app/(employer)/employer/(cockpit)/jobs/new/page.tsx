@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import { ImportFlow } from '@/components/employer/ImportFlow';
 import { wardDefaultsFor } from '@/components/employer/wardDefaultsServer';
 import { listLocations, listWardsForOrg } from '@/server/services/wards';
@@ -20,10 +21,7 @@ export default async function NewJobPage({
   ]);
   return (
     <div className="flex max-w-4xl flex-col gap-6">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-h1">{t('title')}</h1>
-        <p className="text-body-s text-ink-700">{t('lead')}</p>
-      </header>
+      <PageHeader eyebrow={ctx.org.name} title={t('title')} description={t('lead')} />
       <ImportFlow
         wards={wards.map((w) => ({ id: w.id, label: `${w.name} · ${w.location.name}` }))}
         locations={locations.map((l) => ({ id: l.id, name: l.name, city: l.city }))}

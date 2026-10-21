@@ -53,7 +53,15 @@
     "withdraw": "Retirer la candidature",
     "withdrawTitle": "Retirer la candidature ?",
     "withdrawBody": "L'employeur en est informé. Il n'est ensuite plus possible de postuler à nouveau à ce poste.",
-    "read": "lu"
+    "read": "lu",
+    "lead": "Toutes tes candidatures avec statut et messages – lisibles même hors ligne.",
+    "stats": {
+      "active": "En cours",
+      "interviews": "Entretien ou offre",
+      "closed": "Terminées"
+    },
+    "backToList": "Toutes les candidatures",
+    "toJob": "Voir le poste"
   },
   "pass": {
     "title": "Passeport de qualifications",
@@ -131,6 +139,13 @@
       "remove": "Supprimer",
       "needPlace": "Veuillez indiquer le NPA ou la localité.",
       "notFound": "Cette adresse est introuvable. Vérifiez le NPA et la localité."
+    },
+    "sections": {
+      "person": "Personne et profession",
+      "personHint": "Les employeurs ne voient ces informations que lorsque vous postulez.",
+      "experienceHint": "Années par domaine – Kardia en déduit la correspondance avec les postes.",
+      "languagesHint": "Niveau selon le cadre européen de référence (A1 à C2).",
+      "saveHint": "Les modifications s’appliquent immédiatement aux nouvelles candidatures."
     }
   },
   "saved": {
@@ -141,7 +156,8 @@
     "emptyJobs": "Rien d'enregistré pour l'instant. Dans la recherche, enregistrer avec le cœur.",
     "searches": "Recherches enregistrées",
     "searchesHint": "Notification par e-mail et push en cas de nouveaux résultats.",
-    "emptySearches": "Pas encore de recherche enregistrée."
+    "emptySearches": "Pas encore de recherche enregistrée.",
+    "lead": "Comparer jusqu'à quatre postes enregistrés côte à côte, enregistrer des recherches et être averti·e."
   },
   "marketplace": {
     "title": "Marché et offres",
@@ -183,7 +199,8 @@
     "interestHint": "En cas d'intérêt, vous partagez votre nom et vos coordonnées ; vous écrivez ensuite dans le fil de la candidature.",
     "interested": "Manifester son intérêt",
     "reason": "Motif du refus (facultatif, visible uniquement sous forme agrégée)",
-    "decline": "Refuser"
+    "decline": "Refuser",
+    "backToMarketplace": "Place de marché & offres"
   },
   "shifts": {
     "title": "Services",
@@ -201,7 +218,10 @@
     "cancelDeadline": "Annulation possible uniquement jusqu'à {hours} h avant – ensuite directement auprès de l'employeur.",
     "cancelled": "Service annulé.",
     "bookedToast": "Service réservé. Confirmation par e-mail.",
-    "interestSent": "Intérêt signalé. L'employeur fait son choix."
+    "interestSent": "Intérêt signalé. L'employeur fait son choix.",
+    "stats": {
+      "open": "Services ouverts"
+    }
   },
   "training": {
     "title": "Formation postgraduée",
@@ -219,7 +239,8 @@
   "recognition": {
     "title": "Reconnaissance",
     "empty": "Aucun guide publié pour l'instant.",
-    "progress": "{done} étapes effectuées sur {total}"
+    "progress": "{done} étapes effectuées sur {total}",
+    "lead": "Ta progression vers la reconnaissance de ton diplôme en Suisse – étape par étape."
   },
   "team": {
     "title": "Mon unité",
@@ -232,7 +253,11 @@
     "answer": "Réponse",
     "answerHint": "1'500 caractères au maximum, factuel et sans nom de personnes.",
     "submit": "Envoyer la réponse",
-    "answered": "Merci ! La réponse s'affichera après la modération."
+    "answered": "Merci ! La réponse s'affichera après la modération.",
+    "lead": "Pour les collaborateur·rice·s vérifié·e·s : confirmer ou contester les données de ton unité et répondre aux questions – anonymement.",
+    "stats": {
+      "openQuestions": "Questions ouvertes"
+    }
   },
   "settings": {
     "title": "Paramètres",
@@ -257,6 +282,8 @@
     "deleteTitle": "Supprimer définitivement le compte ?",
     "deleteBody": "Le profil, les documents du passeport, les candidatures et les messages sont supprimés immédiatement. Les employeurs auprès desquels vous avez postulé ne voient ensuite plus la candidature.",
     "deleteType": "Saisir {email} pour confirmer",
-    "deleteConfirm": "Supprimer définitivement"
-  }
+    "deleteConfirm": "Supprimer définitivement",
+    "lead": "Langue, affichage, notifications, passkeys et tes données."
+  },
+  "loading": "Chargement …"
 }

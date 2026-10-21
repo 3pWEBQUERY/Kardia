@@ -102,7 +102,15 @@
     "quotaTitle": "Kontingent Ihres Abos erreicht",
     "quotaAction": "Abos vergleichen",
     "wardQuota": "Ihr Abo umfasst eine Station. Für weitere Stationen das Abo «Institution» oder «Spitalgruppe» wählen.",
-    "locationQuota": "Ihr Abo umfasst einen Standort. Für mehrere Standorte das Abo «Spitalgruppe» wählen."
+    "locationQuota": "Ihr Abo umfasst einen Standort. Für mehrere Standorte das Abo «Spitalgruppe» wählen.",
+    "lead": "Jede Station trägt ihre eigenen Arbeitsbedingungen. Halten Sie die Profile aktuell – bestätigt wird spätestens alle 180 Tage.",
+    "stats": {
+      "wards": "Stationen",
+      "locations": "Standorte",
+      "openJobs": "Offene Stellen",
+      "current": "Profile aktuell"
+    },
+    "openJobs": "{count, plural, =0 {keine offene Stelle} one {# offene Stelle} other {# offene Stellen}}"
   },
   "ward": {
     "newTitle": "Station anlegen",
@@ -146,7 +154,9 @@
     "benchmarkRow": "{value} · Median {median} ({peers} Stationen)",
     "noBenchmark": "Anzeige erst ab 8 Vergleichsstationen im gleichen Fachbereich und Kanton.",
     "toBenchmark": "Zum Benchmark",
-    "importedAddress": "Adresse aus dem Inserat: {address}. Noch kein passender Standort – als neuen Standort anlegen."
+    "importedAddress": "Adresse aus dem Inserat: {address}. Noch kein passender Standort – als neuen Standort anlegen.",
+    "backToWards": "Alle Stationen",
+    "basics": "Grunddaten der Station"
   },
   "reality": {
     "hint": "Verifizierte Mitarbeitende bestätigen oder widersprechen Ihren Angaben. Werte erscheinen ab 5 Antworten. Sie können kommentieren, aber nichts löschen oder ausblenden.",
@@ -223,7 +233,10 @@
     "colWard": "Station",
     "colStatus": "Status",
     "colApplications": "Bewerbungen",
-    "colUpdated": "Geändert"
+    "colUpdated": "Geändert",
+    "lead": "Alle Inserate Ihrer Organisation – vom Entwurf bis zur geschlossenen Stelle. Bewerbungen führen direkt in die Pipeline.",
+    "updated": "geändert am {date}",
+    "applicants": "{count, plural, =0 {keine Bewerbung} one {# Bewerbung} other {# Bewerbungen}}"
   },
   "job": {
     "ward": "Station",
@@ -259,7 +272,10 @@
     "tabPreview": "Vorschau",
     "tabEdit": "Bearbeiten",
     "previewHint": "So sehen Fachpersonen die Stelle: Stationsprofil mit Überschreibungen dieser Stelle.",
-    "profile": "Stationsprofil"
+    "profile": "Stationsprofil",
+    "backToJobs": "Alle Stellen",
+    "toWard": "Zur Station",
+    "basics": "Grunddaten der Stelle"
   },
   "pipeline": {
     "title": "Pipeline",
@@ -287,7 +303,11 @@
     "saveStatus": "Status speichern",
     "statusSaved": "Status gespeichert. Die Fachperson wird benachrichtigt.",
     "message": "Nachricht",
-    "send": "Senden"
+    "send": "Senden",
+    "lead": "Bewerbungen pro Stelle, von neu bis angestellt. Mit J/K navigieren, mit 1–6 den Status setzen.",
+    "stats": {
+      "inProgress": "In Bearbeitung"
+    }
   },
   "application": {
     "received": "eingegangen am {date}",
@@ -307,7 +327,8 @@
     "statusTitle": "Status",
     "contact": "Kontakt",
     "noAutoDecision": "Kardia trifft keine automatischen Entscheide. Pass-Match ist eine Sortierhilfe, keine Bewertung.",
-    "read": "gelesen"
+    "read": "gelesen",
+    "backToPipeline": "Zur Pipeline"
   },
   "marketplace": {
     "title": "Marktplatz-Suche",
@@ -353,7 +374,11 @@
     "withdrawConfirm": "Angebot zurückziehen",
     "withdrawCancel": "Abbrechen",
     "withdrawn": "Angebot zurückgezogen. Die Person wird informiert.",
-    "toApplication": "Zur Bewerbung"
+    "toApplication": "Zur Bewerbung",
+    "stats": {
+      "sent": "Angebote gesendet",
+      "quotaLeft": "Angebote übrig diesen Monat"
+    }
   },
   "pool": {
     "title": "Flex-Pool",
@@ -411,7 +436,14 @@
     "median": "Median",
     "peers": "Vergleich",
     "newWard": "Station erfassen",
-    "noWards": "Erfassen Sie eine Station, um sie mit anderen zu vergleichen."
+    "noWards": "Erfassen Sie eine Station, um sie mit anderen zu vergleichen.",
+    "peersCount": "{count, plural, one {# Vergleichsstation} other {# Vergleichsstationen}}",
+    "pendingTitle": "Noch ohne Vergleich",
+    "pendingChip": "Wartet auf Vergleich",
+    "stats": {
+      "compared": "Stationen mit Vergleich",
+      "pending": "Warten auf Vergleichsdaten"
+    }
   },
   "team": {
     "title": "Team und Einstellungen",
@@ -469,11 +501,11 @@
     "ssoCallback": "Redirect-URI für Ihre IT",
     "ssoDomain": "E-Mail-Domain",
     "ssoIssuer": "Issuer-URL",
-    "ssoIssuerHint": "z. B. https://login.microsoftonline.com/<Tenant-ID>/v2.0",
+    "ssoIssuerHint": "z. B. https://login.microsoftonline.com/[Tenant-ID]/v2.0",
     "ssoClientId": "Client-ID",
     "ssoClientSecret": "Client-Secret",
     "ssoDiscovery": "Discovery-URL (optional)",
-    "ssoDiscoveryHint": "Leer lassen für <Issuer>/.well-known/openid-configuration.",
+    "ssoDiscoveryHint": "Leer lassen für [Issuer]/.well-known/openid-configuration.",
     "ssoSave": "Firmen-Login speichern",
     "ssoSaved": "Firmen-Login gespeichert.",
     "ssoReplace": "Neu einrichten",
@@ -490,7 +522,10 @@
     "logoHint": "PNG, JPG oder SVG, höchstens 2 MB. Öffentlich sichtbar, sobald Ihre Organisation verifiziert ist.",
     "logoSaved": "Logo gespeichert.",
     "logoRemove": "Logo entfernen",
-    "logoRemoved": "Logo entfernt."
+    "logoRemoved": "Logo entfernt.",
+    "stats": {
+      "role": "Ihre Rolle"
+    }
   },
   "billing": {
     "title": "Abo und Rechnungen",
@@ -544,7 +579,12 @@
     "portal": "Abo verwalten",
     "stripeMissing": "Die Kartenzahlung ist in dieser Umgebung nicht eingerichtet. Abos für Institution und Spitalgruppe sind per Rechnung mit QR-Einzahlungsschein möglich.",
     "expiredTitle": "Abo abgelaufen",
-    "expired": "Das Abo «{plan}» ist am {date} abgelaufen. Ihre Stellen sind nicht mehr in der Suche sichtbar, bis Sie das Abo verlängern."
+    "expired": "Das Abo «{plan}» ist am {date} abgelaufen. Ihre Stellen sind nicht mehr in der Suche sichtbar, bis Sie das Abo verlängern.",
+    "stats": {
+      "plan": "Abo",
+      "validUntil": "Gültig bis",
+      "foundingPartner": "Gründungspartner"
+    }
   },
   "sso": {
     "signInToggle": "Mit Firmen-Login (SSO) anmelden",
@@ -552,5 +592,6 @@
     "signInSubmit": "Weiter zum Firmen-Login",
     "signInHint": "Für Organisationen mit eingerichtetem Single Sign-on.",
     "signInFailed": "Für diese E-Mail-Domain ist kein Firmen-Login eingerichtet. Bitte mit Passkey oder E-Mail-Link anmelden."
-  }
+  },
+  "loading": "Wird geladen …"
 }

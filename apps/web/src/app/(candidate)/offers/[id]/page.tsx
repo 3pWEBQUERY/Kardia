@@ -5,6 +5,7 @@ import { getTranslations } from 'next-intl/server';
 import { ProblemError, formatChf, formatDate, formatPlainDate } from '@kardia/core';
 import { Card, CardBody, CardHeader, StatusChip } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import { OfferResponse } from '@/components/candidate/OfferResponse';
 import { Roster } from '@/components/domain/Roster';
 import { WardProfileView } from '@/components/domain/WardProfileView';
@@ -29,22 +30,30 @@ export default async function OfferPage({ params }: { params: Promise<{ id: stri
   const open = offer.status === 'SENT' && offer.expiresAt > new Date();
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-col gap-1">
-        <p className="text-caption text-ink-700">{offer.organization.name} · {offer.job.ward.name} · {offer.job.ward.location.city}</p>
-        <h1 className="text-h1">{t('title', { job: offer.job.title })}</h1>
-        <div className="flex flex-wrap gap-2">
-          <StatusChip tone={open ? 'accent' : 'neutral'}>{e(`OfferStatus.${open || offer.status !== 'SENT' ? offer.status : 'EXPIRED'}`)}</StatusChip>
-          <StatusChip>{t('validUntil', { date: formatDate(offer.expiresAt) })}</StatusChip>
-        </div>
-      </header>
+      <PageHeader
+        eyebrow={`${offer.organization.name} · ${offer.job.ward.name} · ${offer.job.ward.location.city}`}
+        back={{ href: '/me/marketplace', label: t('backToMarketplace') }}
+        title={t('title', { job: offer.job.title })}
+        meta={
+          <>
+            <StatusChip tone={open ? 'accent' : 'neutral'}>{e(`OfferStatus.${open || offer.status !== 'SENT' ? offer.status : 'EXPIRED'}`)}</StatusChip>
+            <StatusChip>{t('validUntil', { date: formatDate(offer.expiresAt) })}</StatusChip>
+          </>
+        }
+        stats={[
+          { label: t('salary'), value: formatChf(offer.salaryChf) },
+          { label: t('workload'), value: `${offer.workloadPct} %` },
+          { label: t('start'), value: formatPlainDate(offer.startDate) },
+        ]}
+      />
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
         <div className="flex min-w-0 flex-col gap-6">
           <Card>
             <CardHeader title={t('terms')} />
             <CardBody className="grid gap-2 text-body-s sm:grid-cols-3">
-              <p><span className="block text-micro text-ink-500">{t('salary')}</span><span className="font-mono text-h3 tabular">{formatChf(offer.salaryChf)}</span></p>
-              <p><span className="block text-micro text-ink-500">{t('workload')}</span><span className="font-mono text-h3 tabular">{offer.workloadPct} %</span></p>
-              <p><span className="block text-micro text-ink-500">{t('start')}</span><span className="font-mono text-h3 tabular">{formatPlainDate(offer.startDate)}</span></p>
+              <p><span className="block text-micro text-ink-500">{t('salary')}</span><span className="text-h3 font-semibold tabular">{formatChf(offer.salaryChf)}</span></p>
+              <p><span className="block text-micro text-ink-500">{t('workload')}</span><span className="text-h3 font-semibold tabular">{offer.workloadPct} %</span></p>
+              <p><span className="block text-micro text-ink-500">{t('start')}</span><span className="text-h3 font-semibold tabular">{formatPlainDate(offer.startDate)}</span></p>
               {offer.note ? <p className="text-ink-700 sm:col-span-3">{offer.note}</p> : null}
             </CardBody>
           </Card>

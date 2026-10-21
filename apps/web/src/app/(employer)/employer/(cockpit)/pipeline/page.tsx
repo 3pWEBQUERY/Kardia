@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { Button, EmptyState } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import { JobPicker } from '@/components/employer/JobPicker';
 import { PipelineBoard } from '@/components/employer/PipelineBoard';
 import { pipelineForJob } from '@/server/services/applications';
@@ -18,11 +19,12 @@ export default async function PipelinePage({
   const ctx = await requireOrgPage('applications.read');
   const { job: jobParam } = await searchParams;
   const t = await getTranslations('employer.pipeline');
+  const te = await getTranslations('enums');
   const jobs = (await listOrgJobs(ctx.org.id)).filter((j) => j.status !== 'DRAFT');
   if (jobs.length === 0) {
     return (
       <div className="flex flex-col gap-6">
-        <h1 className="text-h1">{t('title')}</h1>
+        <PageHeader eyebrow={ctx.org.name} title={t('title')} description={t('lead')} />
         <EmptyState
           action={
             <Button asChild variant="primary">
@@ -42,19 +44,24 @@ export default async function PipelinePage({
   const { job, applications } = await pipelineForJob(ctx, jobId);
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div className="flex flex-col gap-1">
-          <h1 className="text-h1">{t('title')}</h1>
-          <p className="text-body-s text-ink-700">
-            {job.title} · {job.ward.name}
-          </p>
-        </div>
-        <JobPicker
-          label={t('job')}
-          current={jobId}
-          jobs={jobs.map((j) => ({ id: j.id, label: `${j.title} (${j._count.applications})` }))}
-        />
-      </div>
+      <PageHeader
+        eyebrow={ctx.org.name}
+        title={t('title')}
+        description={`${job.title} · ${job.ward.name}`}
+        actions={
+          <JobPicker
+            label={t('job')}
+            current={jobId}
+            jobs={jobs.map((j) => ({ id: j.id, label: `${j.title} (${j._count.applications})` }))}
+          />
+        }
+        stats={[
+          { label: te('ApplicationStatus.NEW'), value: applications.filter((a) => a.status === 'NEW').length },
+          { label: t('stats.inProgress'), value: applications.filter((a) => ['SCREENED', 'INTERVIEW'].includes(a.status)).length },
+          { label: te('ApplicationStatus.OFFER'), value: applications.filter((a) => a.status === 'OFFER').length },
+          { label: te('ApplicationStatus.HIRED'), value: applications.filter((a) => a.status === 'HIRED').length },
+        ]}
+      />
       {applications.length === 0 ? (
         <EmptyState
           action={

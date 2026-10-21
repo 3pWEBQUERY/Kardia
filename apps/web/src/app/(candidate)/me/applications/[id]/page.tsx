@@ -3,8 +3,11 @@ import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
 import { ProblemError, formatDate, formatDateTime } from '@kardia/core';
-import { Card, CardBody, CardHeader, StatusChip } from '@kardia/ui';
+import { Button, Card, CardBody, CardHeader, StatusChip } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
+import { StatusSteps } from '@/components/app/StatusSteps';
+import { DEPARTMENT_ICONS } from '@/components/brand/departmentIcons';
 import { ApplicationActions } from '@/components/candidate/ApplicationActions';
 import { MessageThread } from '@/components/candidate/MessageThread';
 import { getMyApplication, markMessagesRead } from '@/server/services/applications';
@@ -23,15 +26,25 @@ export default async function ApplicationPage({ params }: { params: Promise<{ id
   const [t, e] = await Promise.all([getTranslations('candidate.applications'), getTranslations('enums')]);
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-col gap-1">
-        <p className="text-caption text-ink-700">{app.job.ward.location.organization.name} · {app.job.ward.name}</p>
-        <h1 className="text-h1"><Link href={`/jobs/${app.jobId}`} className="hover:text-accent-700">{app.job.title}</Link></h1>
-        <div className="flex flex-wrap gap-2">
-          <StatusChip tone="accent">{e(`ApplicationStatus.${app.status}`)}</StatusChip>
-          <StatusChip>{t('appliedOn', { date: formatDate(app.createdAt) })}</StatusChip>
-          {app.rejectionReason ? <StatusChip tone="critical">{e(`RejectionReason.${app.rejectionReason}`)}</StatusChip> : null}
-        </div>
-      </header>
+      <PageHeader
+        eyebrow={`${app.job.ward.location.organization.name} · ${app.job.ward.name}`}
+        back={{ href: '/me/applications', label: t('backToList') }}
+        icon={DEPARTMENT_ICONS[app.job.ward.department]}
+        title={app.job.title}
+        meta={
+          <>
+            <StatusChip tone="accent">{e(`ApplicationStatus.${app.status}`)}</StatusChip>
+            <StatusChip>{t('appliedOn', { date: formatDate(app.createdAt) })}</StatusChip>
+            {app.rejectionReason ? <StatusChip tone="critical">{e(`RejectionReason.${app.rejectionReason}`)}</StatusChip> : null}
+            <StatusSteps status={app.status} className="ml-1" />
+          </>
+        }
+        actions={
+          <Button asChild>
+            <Link href={`/jobs/${app.jobId}`}>{t('toJob')}</Link>
+          </Button>
+        }
+      />
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
         <Card>
           <CardHeader title={t('thread')} meta={t('threadHint')} />

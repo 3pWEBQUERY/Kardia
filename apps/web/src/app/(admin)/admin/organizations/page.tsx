@@ -4,17 +4,25 @@ import { formatDate } from '@kardia/core';
 import { Callout, Card, CardBody, CardHeader, EmptyState, StatusChip } from '@kardia/ui';
 
 import { OrgDecision, OrgPlanForm } from '@/components/admin/OrgActions';
+import { PageHeader } from '@/components/app/PageHeader';
 import { listOrganizations, organizationQueue } from '@/server/services/admin';
 import { orgCheckEvents } from '@/server/services/adminOrgs';
 
 /** Prüfqueue Organisationen (UID, SECO-Treffer, Domain) und alle Organisationen mit Abo (PRD 6, AK-C1). */
 export default async function AdminOrganizationsPage() {
-  const [t, e] = await Promise.all([getTranslations('admin.organizations'), getTranslations('enums')]);
+  const [t, e, ta] = await Promise.all([getTranslations('admin.organizations'), getTranslations('enums'), getTranslations('admin')]);
   const [queue, all] = await Promise.all([organizationQueue(), listOrganizations()]);
   const checks = await orgCheckEvents(queue.map((o) => o.id));
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="text-h1">{t('title')}</h1>
+      <PageHeader
+        eyebrow={ta('eyebrow')}
+        title={t('title')}
+        stats={[
+          { label: t('queue'), value: queue.length },
+          { label: t('stats.total'), value: all.length },
+        ]}
+      />
       <section className="flex flex-col gap-3">
         <h2 className="text-h2">{t('queue')}</h2>
         {queue.length === 0 ? <EmptyState>{t('queueEmpty')}</EmptyState> : null}
@@ -32,7 +40,7 @@ export default async function AdminOrganizationsPage() {
               <div className="flex flex-col gap-1">
                 <span className="text-ink-700">{t('check')}</span>
                 {checks.get(o.id) ? (
-                  <pre className="overflow-x-auto rounded-control border border-line-200 bg-surface-50 p-3 font-mono text-micro">{JSON.stringify(checks.get(o.id), null, 2)}</pre>
+                  <pre className="relative overflow-x-auto rounded-control border border-line-200 bg-surface-50 p-3 font-mono text-micro">{JSON.stringify(checks.get(o.id), null, 2)}</pre>
                 ) : (
                   <span className="text-ink-500">{t('checkNone')}</span>
                 )}
@@ -44,7 +52,7 @@ export default async function AdminOrganizationsPage() {
       </section>
       <section className="flex flex-col gap-3">
         <h2 className="text-h2">{t('all')}</h2>
-        <div className="overflow-x-auto border border-line-300 bg-surface-0">
+        <div className="relative overflow-x-auto border border-line-300 bg-surface-0">
           <table className="w-full border-collapse text-body-s">
             <caption className="sr-only">{t('all')}</caption>
             <thead>

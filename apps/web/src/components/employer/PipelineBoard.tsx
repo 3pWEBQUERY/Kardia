@@ -14,10 +14,19 @@ import {
   RadioGroup,
   StatusChip,
   useToast,
+  type StageTone,
 } from '@kardia/ui';
 
 import { setApplicationStatus } from '@/app/actions/employer';
 import { useActionMessage } from '@/lib/useActionError';
+
+/** Farbmarker je Stufe: neu (Signal), in Arbeit (Akzent), angestellt (ok), abgesagt (neutral). */
+const STAGE_TONE: Partial<Record<ApplicationStatus, StageTone>> = {
+  NEW: 'pulse',
+  HIRED: 'ok',
+  REJECTED: 'neutral',
+  WITHDRAWN: 'neutral',
+};
 
 export interface BoardCard {
   id: string;
@@ -155,9 +164,15 @@ export function PipelineBoard({ cards: initial }: { cards: BoardCard[] }) {
               id={`col-${col}`}
               title={`${i + 1} · ${te(`ApplicationStatus.${col}`)}`}
               count={list.length}
+              tone={STAGE_TONE[col] ?? 'accent'}
             >
               {list.length === 0 ? (
-                <li className="px-2 py-3 text-micro text-ink-500">{t('emptyColumn')}</li>
+                <li className="flex flex-col items-center gap-2 rounded-control border border-dashed border-line-300 px-3 py-5 text-center text-micro text-ink-500">
+                  <svg aria-hidden viewBox="0 0 32 20" className="h-4 w-7 text-line-300" focusable="false">
+                    <path d="M1 12 H8 L10 9 L12 12 L15.5 2 L19 18 L21 12 H31" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  {t('emptyColumn')}
+                </li>
               ) : null}
               {list.map((c) => (
                 <PipelineCard

@@ -20,6 +20,7 @@ import {
   type Tone,
 } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import { MarketplaceSearch, WithdrawOfferButton } from '@/components/employer/Marketplace';
 import { db } from '@/server/db';
 import { requireFeature } from '@/server/features';
@@ -46,7 +47,7 @@ export default async function MarketplacePage() {
   if (!limits || limits.offersPerMonth === 0) {
     return (
       <div className="flex flex-col gap-6">
-        <h1 className="text-h1">{t('title')}</h1>
+        <PageHeader eyebrow={ctx.org.name} title={t('title')} />
         <EmptyState
           action={
             <Button asChild variant="primary">
@@ -78,15 +79,21 @@ export default async function MarketplacePage() {
   }));
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-h1">{t('title')}</h1>
-        <p className="text-body-s text-ink-700">{t('lead')}</p>
-        <div>
+      <PageHeader
+        eyebrow={ctx.org.name}
+        title={t('title')}
+        description={t('lead')}
+        meta={
           <StatusChip tone={usedThisMonth >= quota ? 'warn' : 'neutral'}>
             {t('quota', { used: usedThisMonth, quota })}
           </StatusChip>
-        </div>
-      </header>
+        }
+        stats={[
+          { label: t('stats.sent'), value: offers.length },
+          { label: te('OfferStatus.INTERESTED'), value: offers.filter((o) => o.status === 'INTERESTED').length },
+          { label: t('stats.quotaLeft'), value: Math.max(0, quota - usedThisMonth) },
+        ]}
+      />
       {jobs.length === 0 ? <Callout tone="warn">{t('needJob')}</Callout> : null}
       <MarketplaceSearch jobs={offerJobs} quotaLeft={quota - usedThisMonth} />
       <Card>
@@ -94,7 +101,7 @@ export default async function MarketplacePage() {
         <CardBody className="flex flex-col gap-4">
           {offers.length === 0 ? <p className="text-body-s text-ink-700">{t('noOffers')}</p> : null}
           {offers.length ? (
-            <div className="overflow-x-auto">
+            <div className="relative overflow-x-auto">
               <table className="w-full border-collapse text-body-s">
                 <caption className="sr-only">{t('myOffers')}</caption>
                 <thead>

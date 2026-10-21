@@ -56,6 +56,8 @@ export function AppShell({
   };
 
   const initial = typeof title === 'string' && title.trim() ? title.trim().charAt(0).toUpperCase() : null;
+  // Längster Treffer gewinnt (z. B. /employer/jobs vor /employer).
+  const current = [...items].sort((a, b) => b.href.length - a.href.length).find((i) => pathname === i.href || pathname.startsWith(`${i.href}/`));
 
   return (
     <div className="flex min-h-dvh bg-surface-50">
@@ -127,13 +129,23 @@ export function AppShell({
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 items-center justify-between gap-3 border-b border-line-200 bg-surface-0 px-4 md:hidden print:hidden">
-          <Link href="/" aria-label="Kardia" className="rounded-control">
-            <KardiaLogo />
+        <header className="sticky top-0 z-20 flex h-14 items-center gap-3 border-b border-line-200 bg-surface-0 px-4 md:hidden print:hidden">
+          <Link href="/" aria-label="Kardia" className="shrink-0 rounded-control">
+            <KardiaMark className="size-8" />
           </Link>
-          <span className="truncate text-caption text-ink-700">{title}</span>
+          <span className="min-w-0 flex-1 truncate text-body-s font-semibold text-ink-900">{current?.label ?? title}</span>
+          <button
+            type="button"
+            onClick={() => setMoreOpen(true)}
+            aria-label={labels.more}
+            className="inline-flex size-touch shrink-0 items-center justify-center rounded-full"
+          >
+            <span aria-hidden className="inline-flex size-9 items-center justify-center rounded-full bg-brand-950 text-body-s font-semibold text-brand-100">
+              {initial ?? <Icon icon={Ellipsis} size={18} />}
+            </span>
+          </button>
         </header>
-        <main id="main" className="mx-auto w-full max-w-content flex-1 px-4 pt-6 pb-24 md:px-8 md:pb-12 print:p-0">
+        <main id="main" className="mx-auto w-full max-w-content min-w-0 flex-1 px-4 pt-4 pb-[calc(6rem+env(safe-area-inset-bottom))] md:px-8 md:pt-6 md:pb-12 print:p-0">
           {children}
         </main>
       </div>

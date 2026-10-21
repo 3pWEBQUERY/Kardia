@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { Card, CardBody, CardHeader } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import { AccountActions } from '@/components/candidate/AccountActions';
 import { PasskeyManager } from '@/components/candidate/PasskeyManager';
 import { PushToggle } from '@/components/candidate/PushToggle';
@@ -14,10 +15,11 @@ import { requireUser } from '@/server/session';
 export default async function SettingsPage() {
   const s = await requireUser('/me/settings');
   const t = await getTranslations('candidate.settings');
+  const tm = await getTranslations('candidate.overview');
   const theme = parseTheme((await cookies()).get(THEME_COOKIE)?.value);
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-h1">{t('title')}</h1>
+      <PageHeader eyebrow={tm('eyebrow')} title={t('title')} description={t('lead')} />
       <Card>
         <CardHeader title={t('display')} />
         <CardBody><Preferences theme={theme} /></CardBody>

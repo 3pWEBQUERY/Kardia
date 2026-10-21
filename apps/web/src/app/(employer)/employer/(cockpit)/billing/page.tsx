@@ -15,6 +15,7 @@ import {
 import { PlanTier } from '@kardia/db/enums';
 import { Button, Callout, Card, CardBody, CardHeader, StatusChip } from '@kardia/ui';
 
+import { PageHeader } from '@/components/app/PageHeader';
 import { BillingPortalButton, PlanCheckoutButton } from '@/components/employer/Billing';
 import { db } from '@/server/db';
 import { stripeConfigured } from '@/server/services/billing';
@@ -50,15 +51,19 @@ export default async function BillingPage({
 
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-col gap-1">
-        <h1 className="text-h1">{t('title')}</h1>
-        <p className="text-body-s text-ink-700">
-          {plan ? t('current', { plan: te(`PlanTier.${plan}`) }) : t('noPlan')}
-          {plan && org.planValidUntil
-            ? ` · ${t('validUntil', { date: formatDate(org.planValidUntil) })}`
-            : ''}
-        </p>
-      </header>
+      <PageHeader
+        eyebrow={ctx.org.name}
+        title={t('title')}
+        description={
+          (plan ? t('current', { plan: te(`PlanTier.${plan}`) }) : t('noPlan')) +
+          (plan && org.planValidUntil ? ` · ${t('validUntil', { date: formatDate(org.planValidUntil) })}` : '')
+        }
+        {...(org.foundingPartner ? { meta: <StatusChip tone="accent">{t('stats.foundingPartner')}</StatusChip> } : {})}
+        stats={[
+          { label: t('stats.plan'), value: plan ? te(`PlanTier.${plan}`) : '–' },
+          { label: t('stats.validUntil'), value: plan && org.planValidUntil ? formatDate(org.planValidUntil) : '–' },
+        ]}
+      />
       {ok ? <Callout>{t('paid')}</Callout> : null}
       {expired && org.plan && org.planValidUntil ? (
         <Callout tone="warn" title={t('expiredTitle')}>

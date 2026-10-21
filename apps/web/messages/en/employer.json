@@ -102,7 +102,15 @@
     "quotaTitle": "Plan limit reached",
     "quotaAction": "Compare plans",
     "wardQuota": "Your plan includes one ward. For more wards, choose the «Institution» or «Hospital group» plan.",
-    "locationQuota": "Your plan includes one site. For several sites, choose the «Hospital group» plan."
+    "locationQuota": "Your plan includes one site. For several sites, choose the «Hospital group» plan.",
+    "lead": "Every ward carries its own working conditions. Keep profiles current – confirm them at least every 180 days.",
+    "stats": {
+      "wards": "Wards",
+      "locations": "Sites",
+      "openJobs": "Open jobs",
+      "current": "Profiles current"
+    },
+    "openJobs": "{count, plural, =0 {no open jobs} one {# open job} other {# open jobs}}"
   },
   "ward": {
     "newTitle": "Create ward",
@@ -146,7 +154,9 @@
     "benchmarkRow": "{value} · median {median} ({peers} wards)",
     "noBenchmark": "Shown only once there are 8 comparable wards in the same specialty and canton.",
     "toBenchmark": "Go to benchmark",
-    "importedAddress": "Address from the job ad: {address}. No matching site yet – create it as a new site."
+    "importedAddress": "Address from the job ad: {address}. No matching site yet – create it as a new site.",
+    "backToWards": "All wards",
+    "basics": "Ward basics"
   },
   "reality": {
     "hint": "Verified staff confirm or dispute your details. Values appear from 5 responses. You can comment, but not delete or hide anything.",
@@ -223,7 +233,10 @@
     "colWard": "Ward",
     "colStatus": "Status",
     "colApplications": "Applications",
-    "colUpdated": "Updated"
+    "colUpdated": "Updated",
+    "lead": "All job ads of your organisation – from draft to closed. Applications lead straight into the pipeline.",
+    "updated": "updated {date}",
+    "applicants": "{count, plural, =0 {no applications} one {# application} other {# applications}}"
   },
   "job": {
     "ward": "Ward",
@@ -259,7 +272,10 @@
     "tabPreview": "Preview",
     "tabEdit": "Edit",
     "previewHint": "This is how professionals see the job: ward profile with this job's overrides.",
-    "profile": "Ward profile"
+    "profile": "Ward profile",
+    "backToJobs": "All jobs",
+    "toWard": "To ward",
+    "basics": "Job basics"
   },
   "pipeline": {
     "title": "Pipeline",
@@ -287,7 +303,11 @@
     "saveStatus": "Save status",
     "statusSaved": "Status saved. The professional will be notified.",
     "message": "Message",
-    "send": "Send"
+    "send": "Send",
+    "lead": "Applications per job, from new to hired. Navigate with J/K, set the status with 1–6.",
+    "stats": {
+      "inProgress": "In progress"
+    }
   },
   "application": {
     "received": "received on {date}",
@@ -307,7 +327,8 @@
     "statusTitle": "Status",
     "contact": "Contact",
     "noAutoDecision": "Kardia makes no automated decisions. Passport match is a sorting aid, not an assessment.",
-    "read": "read"
+    "read": "read",
+    "backToPipeline": "Back to pipeline"
   },
   "marketplace": {
     "title": "Marketplace search",
@@ -353,7 +374,11 @@
     "withdrawConfirm": "Withdraw offer",
     "withdrawCancel": "Cancel",
     "withdrawn": "Offer withdrawn. The person will be notified.",
-    "toApplication": "Go to application"
+    "toApplication": "Go to application",
+    "stats": {
+      "sent": "Offers sent",
+      "quotaLeft": "Offers left this month"
+    }
   },
   "pool": {
     "title": "Flex pool",
@@ -411,7 +436,14 @@
     "median": "Median",
     "peers": "Comparison",
     "newWard": "Add ward",
-    "noWards": "Add a ward to compare it with others."
+    "noWards": "Add a ward to compare it with others.",
+    "peersCount": "{count, plural, one {# peer ward} other {# peer wards}}",
+    "pendingTitle": "Not yet comparable",
+    "pendingChip": "Awaiting peers",
+    "stats": {
+      "compared": "Wards compared",
+      "pending": "Awaiting peer data"
+    }
   },
   "team": {
     "title": "Team and settings",
@@ -469,11 +501,11 @@
     "ssoCallback": "Redirect URI for your IT",
     "ssoDomain": "E-mail domain",
     "ssoIssuer": "Issuer URL",
-    "ssoIssuerHint": "e.g. https://login.microsoftonline.com/<tenant ID>/v2.0",
+    "ssoIssuerHint": "e.g. https://login.microsoftonline.com/[tenant ID]/v2.0",
     "ssoClientId": "Client ID",
     "ssoClientSecret": "Client secret",
     "ssoDiscovery": "Discovery URL (optional)",
-    "ssoDiscoveryHint": "Leave empty for <issuer>/.well-known/openid-configuration.",
+    "ssoDiscoveryHint": "Leave empty for [issuer]/.well-known/openid-configuration.",
     "ssoSave": "Save company sign-in",
     "ssoSaved": "Company sign-in saved.",
     "ssoReplace": "Set up again",
@@ -490,7 +522,10 @@
     "logoHint": "PNG, JPG or SVG, max. 2 MB. Publicly visible once your organisation is verified.",
     "logoSaved": "Logo saved.",
     "logoRemove": "Remove logo",
-    "logoRemoved": "Logo removed."
+    "logoRemoved": "Logo removed.",
+    "stats": {
+      "role": "Your role"
+    }
   },
   "billing": {
     "title": "Plan and invoices",
@@ -544,7 +579,12 @@
     "portal": "Manage subscription",
     "stripeMissing": "Card payment is not set up in this environment. Institution and Hospital group plans are available by invoice with QR payment slip.",
     "expiredTitle": "Subscription expired",
-    "expired": "The «{plan}» plan expired on {date}. Your jobs are no longer visible in search until you renew."
+    "expired": "The «{plan}» plan expired on {date}. Your jobs are no longer visible in search until you renew.",
+    "stats": {
+      "plan": "Plan",
+      "validUntil": "Valid until",
+      "foundingPartner": "Founding partner"
+    }
   },
   "sso": {
     "signInToggle": "Sign in with company login (SSO)",
@@ -552,5 +592,6 @@
     "signInSubmit": "Continue to company login",
     "signInHint": "For organisations with single sign-on set up.",
     "signInFailed": "No company login is set up for this e-mail domain. Please sign in with a passkey or e-mail link."
-  }
+  },
+  "loading": "Loading …"
 }

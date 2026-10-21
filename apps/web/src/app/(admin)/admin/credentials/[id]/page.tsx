@@ -1,11 +1,11 @@
 import { ExternalLink } from 'lucide-react';
-import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
 import { formatPlainDate, REGISTRY_SEARCH_URL } from '@kardia/core';
 import { Callout, Card, CardBody, CardHeader, Icon, StatusChip } from '@kardia/ui';
 
 import { CredentialDecision } from '@/components/admin/CredentialDecision';
+import { PageHeader } from '@/components/app/PageHeader';
 import { credentialDetail } from '@/server/services/admin';
 import { requireAdmin } from '@/server/session';
 
@@ -25,7 +25,7 @@ interface Precheck {
 export default async function CredentialDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const s = await requireAdmin();
-  const [t, e] = await Promise.all([getTranslations('admin.credentials'), getTranslations('enums')]);
+  const [t, e, ta] = await Promise.all([getTranslations('admin.credentials'), getTranslations('enums'), getTranslations('admin')]);
   const c = await credentialDetail(s, id);
   const pre = (c.precheck ?? null) as Precheck | null;
   const fileUrl = c.file ? `/api/files/${c.file.id}` : null;
@@ -37,13 +37,12 @@ export default async function CredentialDetailPage({ params }: { params: Promise
   );
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-wrap items-end justify-between gap-3">
-        <div className="flex flex-col gap-1">
-          <Link href="/admin/credentials" className="text-body-s text-accent-600">{t('back')}</Link>
-          <h1 className="text-h1">{t('detailTitle')}</h1>
-        </div>
-        <StatusChip tone={c.status === 'VERIFIED' ? 'ok' : c.status === 'REJECTED' ? 'critical' : 'neutral'}>{e(`CredentialStatus.${c.status}`)}</StatusChip>
-      </header>
+      <PageHeader
+        eyebrow={ta('eyebrow')}
+        back={{ href: '/admin/credentials', label: t('back') }}
+        title={t('detailTitle')}
+        meta={<StatusChip tone={c.status === 'VERIFIED' ? 'ok' : c.status === 'REJECTED' ? 'critical' : 'neutral'}>{e(`CredentialStatus.${c.status}`)}</StatusChip>}
+      />
       <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(320px,2fr)] lg:items-start">
         <Card>
           <CardHeader title={t('document')} />
