@@ -11,7 +11,28 @@
     "all": "Alle",
     "noApplications": "Noch keine Bewerbungen. Passende Stationen finden Sie in der Suche.",
     "toSearch": "Zur Suche",
-    "nextShifts": "Nächste Schichten"
+    "nextShifts": "Nächste Schichten",
+    "eyebrow": "Dein Bereich",
+    "lead": "Hier siehst du, wo deine Bewerbungen stehen und was deinen Pass noch stärker macht.",
+    "passTitle": "Qualifikations-Pass",
+    "passDone": "{done} von {total} Schritten erledigt",
+    "nextSteps": "Nächste Schritte",
+    "allDone": "Alles erledigt – dein Pass ist bereit für Ein-Klick-Bewerbungen.",
+    "steps": {
+      "credential": "Diplom oder Nachweis hochladen",
+      "verified": "Ersten Nachweis prüfen lassen",
+      "home": "Wohnort für die Pendelzeit hinterlegen",
+      "alert": "Suche speichern und benachrichtigt werden",
+      "languages": "Sprachkenntnisse ergänzen"
+    },
+    "quick": "Schnellzugriff",
+    "tiles": {
+      "search": "Stellen suchen",
+      "saved": "Merkliste",
+      "pass": "Pass bearbeiten",
+      "applications": "Bewerbungen"
+    },
+    "savedCount": "{count, plural, =0 {nichts gemerkt} one {# Stelle} other {# Stellen}}"
   },
   "applications": {
     "title": "Bewerbungen",

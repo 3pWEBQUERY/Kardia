@@ -11,7 +11,28 @@
     "all": "Tutte",
     "noApplications": "Ancora nessuna candidatura. Trova reparti adatti nella ricerca.",
     "toSearch": "Alla ricerca",
-    "nextShifts": "Prossimi turni"
+    "nextShifts": "Prossimi turni",
+    "eyebrow": "Il tuo spazio",
+    "lead": "Qui vedi a che punto sono le tue candidature e cosa rafforzerebbe ancora il tuo passaporto.",
+    "passTitle": "Passaporto delle qualifiche",
+    "passDone": "{done} di {total} passi completati",
+    "nextSteps": "Prossimi passi",
+    "allDone": "Tutto fatto – il tuo passaporto è pronto per le candidature con un clic.",
+    "steps": {
+      "credential": "Caricare un diploma o un attestato",
+      "verified": "Far verificare un primo attestato",
+      "home": "Indicare il domicilio per il tempo di tragitto",
+      "alert": "Salvare una ricerca e ricevere avvisi",
+      "languages": "Aggiungere le conoscenze linguistiche"
+    },
+    "quick": "Accesso rapido",
+    "tiles": {
+      "search": "Cercare un posto",
+      "saved": "Posti salvati",
+      "pass": "Modificare il passaporto",
+      "applications": "Candidature"
+    },
+    "savedCount": "{count, plural, =0 {niente salvato} one {# posto} other {# posti}}"
   },
   "applications": {
     "title": "Candidature",

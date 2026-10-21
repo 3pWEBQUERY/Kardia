@@ -1,0 +1,39 @@
+{
+  "search": {
+    "eyebrow": "Ricerca secondo il tuo stile di vita",
+    "lead": "Le condizioni indispensabili escludono posti, i desideri determinano l'ordine. L'intero filtro è nell'indirizzo – da condividere o salvare.",
+    "count": "{count, plural, =0 {Nessun posto adatto} one {# posto adatto} other {# posti adatti}}",
+    "groupRole": "Professione e grado d'occupazione",
+    "emptyTitle": "Qui non batte ancora nessun polso",
+    "viewWard": "Vedere il reparto",
+    "details": "Dettagli"
+  },
+  "job": {
+    "back": "Torna alla ricerca",
+    "facts": "In breve",
+    "salary": "Fascia salariale (100 %)",
+    "workload": "Grado d'occupazione",
+    "rosterLead": "Anticipo del piano dei turni",
+    "ratio": "Pazienti per professionista (giorno)",
+    "weeks": "{count, plural, one {# settimana} other {# settimane}}",
+    "unknown": "non indicato",
+    "onThisPage": "In questa pagina",
+    "apply": "Candidatura",
+    "applyLead": "Candidarsi con il passaporto delle qualifiche – senza lettera di motivazione.",
+    "atWard": "Reparto",
+    "verifiedBy": "Confermato dal datore di lavoro il {date}",
+    "applyNow": "Candidarsi ora"
+  },
+  "ward": {
+    "facts": "Il reparto in cifre",
+    "openJobs": "posti aperti",
+    "verified": "collaboratori verificati",
+    "votes": "risposte del team",
+    "confirmed": "confermato",
+    "voicesTitle": "Voci dal team",
+    "summaryLabel": "Riassunto IA da {count} risposte"
+  },
+  "groups": {
+    "location": "Luogo di lavoro"
+  }
+}

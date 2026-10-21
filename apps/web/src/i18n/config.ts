@@ -4,7 +4,7 @@ export type AppLocale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: AppLocale = 'de-CH';
 export const LOCALE_COOKIE = 'kardia_locale';
 
-export const NAMESPACES = ['common', 'enums', 'fields', 'public', 'candidate', 'employer', 'admin', 'auth', 'errors'] as const;
+export const NAMESPACES = ['common', 'enums', 'fields', 'public', 'candidate', 'employer', 'admin', 'auth', 'errors', 'explore'] as const;
 
 export function isLocale(value: string | undefined | null): value is AppLocale {
   return !!value && (LOCALES as readonly string[]).includes(value);

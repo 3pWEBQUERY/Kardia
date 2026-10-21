@@ -43,7 +43,13 @@
     "empty": "Noch keine Stationen. Legen Sie die erste Station an – sie trägt die Arbeitsbedingungen.",
     "error": "Diese Seite ist für Ihre Rolle nicht freigegeben oder konnte gerade nicht geladen werden. Fragen Sie bei Bedarf die Owner-Person Ihrer Organisation nach mehr Rechten.",
     "errorBack": "Zur Übersicht",
-    "errorRetry": "Erneut versuchen"
+    "errorRetry": "Erneut versuchen",
+    "eyebrow": "Cockpit",
+    "welcome": "Guten Tag – das läuft heute bei {org}.",
+    "pipelineTitle": "Pipeline auf einen Blick",
+    "pipelineEmpty": "Noch keine Bewerbungen. Sobald Fachpersonen sich bewerben, sehen Sie hier jede Stufe.",
+    "tasksTitle": "Zu erledigen",
+    "tasksCount": "{count, plural, =0 {Nichts offen} one {# Aufgabe} other {# Aufgaben}}"
   },
   "onboarding": {
     "title": "Organisation registrieren",
