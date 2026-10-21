@@ -43,7 +43,13 @@
     "empty": "No wards yet. Create the first ward – it holds the working conditions.",
     "error": "This page is not available for your role or could not be loaded right now. If needed, ask the Owner of your organisation for more permissions.",
     "errorBack": "Go to overview",
-    "errorRetry": "Try again"
+    "errorRetry": "Try again",
+    "eyebrow": "Cockpit",
+    "welcome": "Hello – here is what is happening at {org} today.",
+    "pipelineTitle": "Pipeline at a glance",
+    "pipelineEmpty": "No applications yet. As soon as professionals apply, you will see every stage here.",
+    "tasksTitle": "To do",
+    "tasksCount": "{count, plural, =0 {Nothing open} one {# task} other {# tasks}}"
   },
   "onboarding": {
     "title": "Register organisation",

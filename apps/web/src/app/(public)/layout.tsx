@@ -11,7 +11,7 @@ export default async function PublicLayout({ children }: { children: ReactNode }
   const pub = all.public ?? {};
   return (
     <NextIntlClientProvider
-      messages={{ common: all.common, enums: all.enums, fields: all.fields, errors: all.errors, public: { report: pub.report, results: pub.results } }}
+      messages={{ common: all.common, enums: all.enums, fields: all.fields, errors: all.errors, public: { report: pub.report, results: pub.results }, explore: all.explore }}
     >
       <PublicShell>{children}</PublicShell>
     </NextIntlClientProvider>

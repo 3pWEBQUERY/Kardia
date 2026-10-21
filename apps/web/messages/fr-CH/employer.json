@@ -43,7 +43,13 @@
     "empty": "Pas encore d'unité. Créez la première unité – c'est elle qui porte les conditions de travail.",
     "error": "Cette page n'est pas accessible avec votre rôle ou n'a pas pu être chargée pour le moment. Si nécessaire, demandez davantage de droits à la personne Owner de votre organisation.",
     "errorBack": "Vers la vue d'ensemble",
-    "errorRetry": "Réessayer"
+    "errorRetry": "Réessayer",
+    "eyebrow": "Cockpit",
+    "welcome": "Bonjour – voici ce qui se passe aujourd'hui chez {org}.",
+    "pipelineTitle": "Pipeline en un coup d'oeil",
+    "pipelineEmpty": "Aucune candidature pour le moment. Dès que des professionnel·le·s postulent, vous voyez chaque étape ici.",
+    "tasksTitle": "À faire",
+    "tasksCount": "{count, plural, =0 {Rien en suspens} one {# tâche} other {# tâches}}"
   },
   "onboarding": {
     "title": "Enregistrer l'organisation",

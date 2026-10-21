@@ -1,11 +1,35 @@
+import { Baby, Banknote, CalendarClock, FileSignature, Gauge, GraduationCap, HeartHandshake, MapPin, RotateCcw, type LucideIcon } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { WARD_FIELDS, formatDate, formatNumber, type PartialWardProfile, type RealityAggregate, type WardProfileKey } from '@kardia/core';
-import { ProfileFieldList, ProfileFieldRow } from '@kardia/ui';
+import { Icon, ProfileFieldList, ProfileFieldRow } from '@kardia/ui';
 
 import { formatFieldValue } from '@/lib/fieldValue';
 
 const GROUP_ORDER = ['pay', 'shifts', 'workload', 'care', 'development', 'family', 'contract', 'reentry'] as const;
+
+const GROUP_ICONS: Record<(typeof GROUP_ORDER)[number] | 'location', LucideIcon> = {
+  pay: Banknote,
+  shifts: CalendarClock,
+  workload: Gauge,
+  care: HeartHandshake,
+  development: GraduationCap,
+  family: Baby,
+  contract: FileSignature,
+  reentry: RotateCcw,
+  location: MapPin,
+};
+
+function GroupHeading({ id, group, label }: { id: string; group: keyof typeof GROUP_ICONS; label: string }) {
+  return (
+    <h3 id={id} className="mb-2 flex items-center gap-2.5 text-h3">
+      <span className="inline-flex size-8 items-center justify-center rounded-control bg-accent-50 text-accent-700">
+        <Icon icon={GROUP_ICONS[group]} size={18} />
+      </span>
+      {label}
+    </h3>
+  );
+}
 
 /**
  * Stationsprofil als Feldzeilen: Label · Arbeitgeberwert · Team-Wert · Bestätigungsdatum
@@ -50,9 +74,7 @@ export async function WardProfileView({
         if (!visible.length) return null;
         return (
           <section key={group} aria-labelledby={`g-${group}`} className="flex flex-col">
-            <h3 id={`g-${group}`} className="mb-1 text-h3">
-              {tf(`groups.${group}`)}
-            </h3>
+            <GroupHeading id={`g-${group}`} group={group} label={tf(`groups.${group}`)} />
             <ProfileFieldList>
               {visible.map((f) => {
                 const value =
@@ -80,9 +102,7 @@ export async function WardProfileView({
       })}
       {location ? (
         <section aria-labelledby="g-location" className="flex flex-col">
-          <h3 id="g-location" className="mb-1 text-h3">
-            {tf('location')}
-          </h3>
+          <GroupHeading id="g-location" group="location" label={tf('location')} />
           <ProfileFieldList>
             <ProfileFieldRow label={tf('location')} value={`${location.street}, ${location.postalCode} ${location.city}`} source={source} />
             <ProfileFieldRow label={tf('hasParking')} value={location.hasParking ? tc('states.yes') : tc('states.no')} source={source} />

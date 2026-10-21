@@ -43,7 +43,13 @@
     "empty": "Ancora nessun reparto. Crei il primo reparto – è lui a definire le condizioni di lavoro.",
     "error": "Questa pagina non è accessibile per il suo ruolo o non è stato possibile caricarla al momento. Se necessario, chieda più diritti alla persona Owner della sua organizzazione.",
     "errorBack": "Alla panoramica",
-    "errorRetry": "Riprovare"
+    "errorRetry": "Riprovare",
+    "eyebrow": "Cockpit",
+    "welcome": "Buongiorno – ecco cosa succede oggi da {org}.",
+    "pipelineTitle": "Pipeline in breve",
+    "pipelineEmpty": "Ancora nessuna candidatura. Appena i professionisti si candidano, qui vedete ogni fase.",
+    "tasksTitle": "Da fare",
+    "tasksCount": "{count, plural, =0 {Niente in sospeso} one {# compito} other {# compiti}}"
   },
   "onboarding": {
     "title": "Registrare l'organizzazione",

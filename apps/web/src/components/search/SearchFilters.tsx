@@ -1,6 +1,6 @@
 'use client';
 
-import { SlidersHorizontal } from 'lucide-react';
+import { Briefcase, LayoutGrid, ListChecks, Route, SlidersHorizontal, type LucideIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useState, useTransition, type ReactNode } from 'react';
@@ -18,6 +18,8 @@ import {
 } from '@kardia/core';
 import { Department, Profession } from '@kardia/db/enums';
 import { Button, Icon, Select, Sheet } from '@kardia/ui';
+
+import { DEPARTMENT_ICONS } from '@/components/brand/departmentIcons';
 
 /** Bedingungen, die der Filter anbietet, mit Standardwert (Zahl) oder ohne. */
 const OFFERED: { key: ConditionKey; value?: number; step?: number; unit?: string }[] = [
@@ -51,10 +53,15 @@ const OFFERED: { key: ConditionKey; value?: number; step?: number; unit?: string
   { key: 'recognizedTraining' },
 ];
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
+function Section({ title, icon, children }: { title: string; icon: LucideIcon; children: ReactNode }) {
   return (
-    <fieldset className="flex flex-col gap-2 border-t border-line-200 pt-4">
-      <legend className="text-caption text-ink-700">{title}</legend>
+    <fieldset className="flex min-w-0 flex-col gap-3 rounded-card border border-line-200 bg-surface-0 p-4">
+      <legend className="float-left flex w-full items-center gap-2 text-body-s font-semibold text-ink-900">
+        <span className="inline-flex size-7 items-center justify-center rounded-control bg-accent-50 text-accent-700">
+          <Icon icon={icon} size={16} />
+        </span>
+        {title}
+      </legend>
       {children}
     </fieldset>
   );
@@ -67,6 +74,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 export function SearchFilters({ filter, total }: { filter: SearchFilter; total: number }) {
   const t = useTranslations('common');
   const e = useTranslations('enums');
+  const x = useTranslations('explore.search');
   const router = useRouter();
   const [pending, start] = useTransition();
   const [place, setPlace] = useState('');
@@ -107,7 +115,8 @@ export function SearchFilters({ filter, total }: { filter: SearchFilter; total: 
   const commute = current('maxCommute') as Extract<Condition, { key: 'maxCommute' }> | undefined;
 
   const body = (
-    <div className="flex flex-col gap-4" aria-busy={pending}>
+    <div className="flex flex-col gap-3" aria-busy={pending}>
+      <Section title={x('groupRole')} icon={Briefcase}>
       <Select
         label={t('search.profession')}
         placeholder={t('search.any')}
@@ -122,7 +131,8 @@ export function SearchFilters({ filter, total }: { filter: SearchFilter; total: 
         onChange={(ev) => go({ ...filter, workloadPct: ev.target.value ? Number(ev.target.value) : undefined })}
         options={[100, 90, 80, 70, 60, 50, 40, 30, 20, 10].map((v) => ({ value: String(v), label: `${v} %` }))}
       />
-      <Section title={t('search.departments')}>
+      </Section>
+      <Section title={t('search.departments')} icon={LayoutGrid}>
         <div className="flex flex-wrap gap-1.5">
           {Object.values(Department).map((d) => {
             const on = filter.departments?.includes(d) ?? false;
@@ -137,15 +147,16 @@ export function SearchFilters({ filter, total }: { filter: SearchFilter; total: 
                   else list.add(d);
                   go({ ...filter, departments: [...list] });
                 }}
-                className="h-8 rounded-chip border border-line-300 px-3 text-caption text-ink-700 aria-pressed:border-accent-600 aria-pressed:bg-accent-50 aria-pressed:text-accent-700 pointer-coarse:h-touch"
+                className="inline-flex h-8 items-center gap-1.5 rounded-chip border border-line-300 pr-3 pl-2 text-caption text-ink-700 transition-colors hover:border-ink-500 aria-pressed:border-accent-600 aria-pressed:bg-accent-50 aria-pressed:text-accent-700 pointer-coarse:h-touch"
               >
+                <Icon icon={DEPARTMENT_ICONS[d]} size={14} />
                 {e(`Department.${d}`)}
               </button>
             );
           })}
         </div>
       </Section>
-      <Section title={t('search.conditions')}>
+      <Section title={t('search.conditions')} icon={ListChecks}>
         <p className="text-micro text-ink-500">{t('search.conditionsHint')}</p>
         <ul className="flex flex-col divide-y divide-line-200">
           {OFFERED.filter((o, i) => i < 7 || showAll || current(o.key)).map((o) => {
@@ -193,7 +204,7 @@ export function SearchFilters({ filter, total }: { filter: SearchFilter; total: 
           </button>
         ) : null}
       </Section>
-      <Section title={t('search.commute')}>
+      <Section title={t('search.commute')} icon={Route}>
         <div className="flex gap-2">
           <input
             value={place}
@@ -264,7 +275,7 @@ export function SearchFilters({ filter, total }: { filter: SearchFilter; total: 
           {body}
         </Sheet>
       </div>
-      <aside aria-label={t('search.filters')} className="hidden w-80 shrink-0 lg:block">
+      <aside aria-label={t('search.filters')} className="hidden w-80 shrink-0 lg:sticky lg:top-20 lg:block lg:max-h-[calc(100dvh-6rem)] lg:overflow-y-auto lg:pr-1">
         {body}
       </aside>
     </>

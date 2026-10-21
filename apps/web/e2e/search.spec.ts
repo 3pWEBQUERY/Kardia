@@ -45,4 +45,13 @@ test.describe('Fachperson – erster Besuch bis Treffer', () => {
     expect((JSON.parse(ld ?? '{}') as Record<string, unknown>)['@type']).toBe('JobPosting');
     await expectAccessible(page);
   });
+
+  test('Station zeigt Kennzahlen, Sprungnavigation und offene Stellen', async ({ page }) => {
+    await page.goto('/search');
+    await page.locator('main ol > li').first().getByRole('link', { name: /Station ansehen/ }).click();
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Auf dieser Seite' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /offene Stelle/ })).toBeVisible();
+    await expectAccessible(page);
+  });
 });

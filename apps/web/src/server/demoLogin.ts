@@ -15,7 +15,10 @@ export const DEMO_PERSONAS = [
 
 export type DemoPersona = (typeof DEMO_PERSONAS)[number];
 
-const captured = new Map<string, string>();
+// Auf globalThis wie die Auth-Instanz: Server Actions und /api/auth können in Produktion
+// getrennte Modulkopien laden; die gecachte Auth-Instanz muss dieselbe Map sehen.
+const store = globalThis as typeof globalThis & { __kardiaDemoLinks?: Map<string, string> };
+const captured = (store.__kardiaDemoLinks ??= new Map<string, string>());
 
 export function isDemoPersona(email: string): boolean {
   return DEMO_PERSONAS.some((p) => p.email === email);

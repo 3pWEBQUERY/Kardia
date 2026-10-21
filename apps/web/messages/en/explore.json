@@ -1,0 +1,39 @@
+{
+  "search": {
+    "eyebrow": "Life-fit search",
+    "lead": "Must-haves exclude jobs, wishes decide the order. The whole filter lives in the address – share it or save it.",
+    "count": "{count, plural, =0 {No matching job} one {# matching job} other {# matching jobs}}",
+    "groupRole": "Profession and workload",
+    "emptyTitle": "No pulse here yet",
+    "viewWard": "View ward",
+    "details": "Details"
+  },
+  "job": {
+    "back": "Back to search",
+    "facts": "At a glance",
+    "salary": "Salary band (100 %)",
+    "workload": "Workload",
+    "rosterLead": "Roster published ahead",
+    "ratio": "Patients per nurse (day)",
+    "weeks": "{count, plural, one {# week} other {# weeks}}",
+    "unknown": "not specified",
+    "onThisPage": "On this page",
+    "apply": "Application",
+    "applyLead": "Apply with your qualification passport – no cover letter.",
+    "atWard": "Ward",
+    "verifiedBy": "Confirmed by the employer on {date}",
+    "applyNow": "Apply now"
+  },
+  "ward": {
+    "facts": "The ward in numbers",
+    "openJobs": "open jobs",
+    "verified": "verified employees",
+    "votes": "team answers",
+    "confirmed": "confirmed",
+    "voicesTitle": "Voices from the team",
+    "summaryLabel": "AI summary of {count} answers"
+  },
+  "groups": {
+    "location": "Workplace"
+  }
+}

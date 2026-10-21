@@ -11,7 +11,28 @@
     "all": "All",
     "noApplications": "No applications yet. You can find matching wards in the search.",
     "toSearch": "Go to search",
-    "nextShifts": "Upcoming shifts"
+    "nextShifts": "Upcoming shifts",
+    "eyebrow": "Your space",
+    "lead": "See where your applications stand and what would make your passport even stronger.",
+    "passTitle": "Qualification passport",
+    "passDone": "{done} of {total} steps done",
+    "nextSteps": "Next steps",
+    "allDone": "All done – your passport is ready for one-click applications.",
+    "steps": {
+      "credential": "Upload a diploma or certificate",
+      "verified": "Get a first document verified",
+      "home": "Add your home location for commute times",
+      "alert": "Save a search and get notified",
+      "languages": "Add your language skills"
+    },
+    "quick": "Quick access",
+    "tiles": {
+      "search": "Search jobs",
+      "saved": "Saved jobs",
+      "pass": "Edit passport",
+      "applications": "Applications"
+    },
+    "savedCount": "{count, plural, =0 {nothing saved} one {# job} other {# jobs}}"
   },
   "applications": {
     "title": "Applications",

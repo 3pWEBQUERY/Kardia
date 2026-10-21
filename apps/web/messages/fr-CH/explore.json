@@ -1,0 +1,39 @@
+{
+  "search": {
+    "eyebrow": "Recherche selon ton mode de vie",
+    "lead": "Les conditions indispensables excluent des postes, les souhaits déterminent l'ordre. Tout le filtre figure dans l'adresse – à partager ou enregistrer.",
+    "count": "{count, plural, =0 {Aucun poste correspondant} one {# poste correspondant} other {# postes correspondants}}",
+    "groupRole": "Profession et taux d'activité",
+    "emptyTitle": "Aucun pouls ici pour le moment",
+    "viewWard": "Voir l'unité",
+    "details": "Détails"
+  },
+  "job": {
+    "back": "Retour à la recherche",
+    "facts": "En un coup d'oeil",
+    "salary": "Fourchette salariale (100 %)",
+    "workload": "Taux d'activité",
+    "rosterLead": "Planning publié à l'avance",
+    "ratio": "Patient·e·s par professionnel·le (jour)",
+    "weeks": "{count, plural, one {# semaine} other {# semaines}}",
+    "unknown": "non indiqué",
+    "onThisPage": "Sur cette page",
+    "apply": "Candidature",
+    "applyLead": "Postuler avec le passeport de qualifications – sans lettre de motivation.",
+    "atWard": "Unité",
+    "verifiedBy": "Confirmé par l'employeur le {date}",
+    "applyNow": "Postuler maintenant"
+  },
+  "ward": {
+    "facts": "L'unité en chiffres",
+    "openJobs": "postes ouverts",
+    "verified": "collaborateur·rice·s vérifié·e·s",
+    "votes": "réponses de l'équipe",
+    "confirmed": "confirmé",
+    "voicesTitle": "Voix de l'équipe",
+    "summaryLabel": "Résumé IA de {count} réponses"
+  },
+  "groups": {
+    "location": "Lieu de travail"
+  }
+}
