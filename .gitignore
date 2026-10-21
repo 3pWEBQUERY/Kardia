@@ -28,3 +28,6 @@ test-results/
 *.log
 apps/web/next-env.d.ts
 goldset-report.json
+
+# Lokale Agent-Worktrees
+.claude/worktrees/
